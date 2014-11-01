@@ -21,4 +21,5 @@
 //= require masonry.pkgd.min.js
 //= require highcharts.js
 //= require exporting.js
+//= require jquery.twzipcode.min.js
 //= require_tree .

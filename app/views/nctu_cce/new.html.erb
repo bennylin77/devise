@@ -17,13 +17,13 @@
 <div class="form-group">
 	<label class="col-sm-2 control-label">名稱*</label>
 	<div class="col-sm-6">
-		<%= g.text_field :title, class: "form-control" %>
+		<%= g.text_field :title, class: "form-control", placeholder: "名稱" %>
 	</div>
 </div>
 <div class="form-group">
 	<label class="col-sm-2 control-label">簡介*</label>
 	<div class="col-sm-6">
-		<%= g.text_area :description, class: "form-control" %>
+		<%= g.text_area :description, class: "form-control", placeholder: "簡介" %>
 	</div>
 </div>
 
@@ -32,19 +32,19 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">報名人數*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :no_of_user, class: "form-control" %>
+			<%= i.text_field :no_of_user, class: "form-control", placeholder: "報名人數" %>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">金額*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :price, class: "form-control" %>
+			<%= i.text_field :price, class: "form-control", placeholder: "金額" %>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+			<%= i.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名開放時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
@@ -56,7 +56,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">報名結束時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+			<%= i.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名結束時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
@@ -68,7 +68,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">繳費開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :payment_strat_at, class: "form-control", id: 'datetimepicker_payment_strat_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+			<%= i.text_field :payment_strat_at, class: "form-control", id: 'datetimepicker_payment_strat_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費開放時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
@@ -80,7 +80,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">繳費結束時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費結束時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {

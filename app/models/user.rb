@@ -48,8 +48,15 @@ class User
   field :birthday, type: DateTime
   field :gender, type: Boolean  
   field :phone_no, type: String    
+  
+  field :postal, type: String
+  field :county, type: String
+  field :district, type: String
   field :address, type: String
+
   field :id_no_TW, type: String
+  
+  
   
   
   def self.find_for_oauth(auth, signed_in_resource = nil)
