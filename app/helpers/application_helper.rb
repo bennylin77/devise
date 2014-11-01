@@ -4,11 +4,7 @@ module ApplicationHelper
     case hash[:step]
     when 1
       if params[:controller]=='items'
-        if params[:action]=='new'
-          'under'
-        else
-          'done'
-        end
+        params[:action]=='new' ? 'under' : 'done'
       else
         'done'
       end 
@@ -16,19 +12,11 @@ module ApplicationHelper
       if params[:controller]!='items'
         'under'
       else
-        if params[:action]=='new'
-          'todo'
-        else
-          'done'
-        end
+        params[:action]=='new' ? 'todo' : 'done'
       end                 
     when 3
       if params[:controller]=='items'
-        if params[:action]=='createCompletion'
-          'done'
-        else
-          'todo'
-        end
+        params[:action]=='createCompletion' ? 'done' : 'todo'
       else
         'todo'
       end       

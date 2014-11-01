@@ -1,19 +1,96 @@
+<style>
+	/* Main marketing message and sign up button */
+	.jumbotron {
+		text-align: center;
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.jumbotron .btn {
+		padding: 14px 24px;
+		font-size: 21px;
+	}
+</style>
+
+
+<div class="jumbotron">
+<h1><%=@item.group.title%></h1>
+<p class="lead"><%=@item.group.description%></p>
+<p>
+	<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first'}, {class: "btn btn-lg btn-success", role: "button"} %>
+</p>
+</div> 
+
+
+
+
+<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
 
 
 
 
 
-
-<%=render "layouts/menu" %>
-
+<%=render "comments/show" %>
 
 
 
-
-
-
-
-
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: '<%=@item.group.title%>'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: ['推薦', '普通', '不推薦'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '人數',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' 人'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: '人數',
+            colorByPoint: true,
+            data: [{
+						name: '推薦',
+						color: '#66CCFF',
+						y: 60
+					}, {
+						name: '普通',
+						color: '#E6E6E6',
+						y: 35
+				   }, {
+						name: '不推薦',
+						color: '#FF5C33',
+						y: 20
+				   }]
+        }]                      // default blue
+    });
+});
+</script>

@@ -1,11 +1,11 @@
 <%=render "layouts/newStep" %>
-<%= form_for @item, url: { controller: 'nctu_cce', action: "create" }, html: {class: "form-horizontal", role: "form"} do |f| %>
-<% if @item.errors.any? %>
+<%= form_for @group, url: { controller: 'nctu_cce', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
+<% if @group.errors.any? %>
 <div id="error_explanation">
-	<h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+	<h2><%= pluralize(@group.errors.count, "error") %> prohibited this item from being saved:</h2>
 
 	<ul>
-		<% @item.errors.full_messages.each do |message| %>
+		<% @group.errors.full_messages.each do |message| %>
 		<li>
 			<%= message %>
 		</li>
@@ -13,85 +13,87 @@
 	</ul>
 </div>
 <% end %>
-		<%= f.hidden_field :module %>
-		<%= f.hidden_field :verification_code %>
+		<%= g.hidden_field :module %>		
 <div class="form-group">
 	<label class="col-sm-2 control-label">名稱*</label>
 	<div class="col-sm-6">
-		<%= f.text_field :title, class: "form-control" %>
+		<%= g.text_field :title, class: "form-control" %>
 	</div>
 </div>
 <div class="form-group">
 	<label class="col-sm-2 control-label">簡介*</label>
 	<div class="col-sm-6">
-		<%= f.text_area :description, class: "form-control" %>
+		<%= g.text_area :description, class: "form-control" %>
 	</div>
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">報名人數*</label>
-	<div class="col-sm-6">
-		<%= f.text_field :no_of_user, class: "form-control" %>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">金額*</label>
-	<div class="col-sm-6">
-		<%= f.text_field :price, class: "form-control" %>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">報名開放時間*</label>
-	<div class="col-sm-6">
-		<%= f.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
-	</div>
-    <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker_start_at').datetimepicker({
-                });
-            });
-    </script>	
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">報名結束時間*</label>
-	<div class="col-sm-6">
-		<%= f.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
-	</div>
-    <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker_end_at').datetimepicker({
-                });
-            });
-    </script>	
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">繳費開放時間*</label>
-	<div class="col-sm-6">
-		<%= f.text_field :payment_strat_at, class: "form-control", id: 'datetimepicker_payment_strat_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
-	</div>
-    <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker_payment_strat_at').datetimepicker({
-                });
-            });
-    </script>	
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">繳費結束時間*</label>
-	<div class="col-sm-6">
-		<%= f.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
-	</div>
-    <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker_payment_end_at').datetimepicker({
-                });
-            });
-    </script>	
 </div>
 
+  <%= g.fields_for :items do |i| %>
+	<%= i.hidden_field :verification_code %>  
+	<div class="form-group">
+		<label class="col-sm-2 control-label">報名人數*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :no_of_user, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">金額*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :price, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">報名開放時間*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_start_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">報名結束時間*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_end_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">繳費開放時間*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :payment_strat_at, class: "form-control", id: 'datetimepicker_payment_strat_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_payment_strat_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">繳費結束時間*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss' %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_payment_end_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+  <% end %>
 
 <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
-		<%= f.submit '送出',  class: "btn btn-default"  %>
+		<%= g.submit '送出',  class: "btn btn-default"  %>
 	</div>
 </div>
 <% end %>

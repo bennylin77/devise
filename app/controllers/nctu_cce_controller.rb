@@ -3,31 +3,41 @@ class NctuCceController < ApplicationController
   
     
   def new
-    @item = Item.new
-    @item.module=params[:module]  
+    @group = Group.new( module: params[:module])
+    @group.items.build(verification_code: params[:verification_code])    
   end
   
   def create
-    @item = Item.new(item_params)  
-    @item.user = current_user 
-    if @item.save
-      redirect_to controller: :items, action: :createCompletion, id: @item.id
+    @group = Group.new(group_params) 
+    @group.items.first.user = current_user 
+    if @group.save
+      redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id
     else
       render :new
     end    
   end  
   
-  def apply
+  def first
+    @user=current_user
     
   end
+  
+  def second
+    
+  end
+  
+  def third
+    
+  end  
+  
   
   private
     def set_item
       @item = Item.find(params[:id])
     end
 
-    def item_params
-      params.require(:item).permit(:module, :verification_code, :title, :description, :no_of_user, :price,
-                                   :start_at, :end_at, :payment_strat_at, :payment_end_at)
+    def group_params
+      params.require(:group).permit(:module, :title, :description, items_attributes: [ :verification_code, :no_of_user, :price,
+                                    :start_at, :end_at, :payment_strat_at, :payment_end_at])
     end  
 end

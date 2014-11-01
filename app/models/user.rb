@@ -3,6 +3,7 @@ class User
   include Mongoid::Timestamps  
   
   has_many :items  
+  has_many :progresses
   
   #validates_presence_of :uid, :provider
   #validates_uniqueness_of :uid, :scope => :provider    
@@ -17,15 +18,15 @@ class User
 
   ## Recoverable
   field :reset_password_token,   type: String
-  field :reset_password_sent_at, type: Time
+  field :reset_password_sent_at, type: DateTime
 
   ## Rememberable
-  field :remember_created_at, type: Time
+  field :remember_created_at, type: DateTime
 
   ## Trackable
   field :sign_in_count,      type: Integer, default: 0
-  field :current_sign_in_at, type: Time
-  field :last_sign_in_at,    type: Time
+  field :current_sign_in_at, type: DateTime
+  field :last_sign_in_at,    type: DateTime
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
 
@@ -40,9 +41,17 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
-  field :name, type: String  
+  field :name, type: String 
   field :provider, type: String
   field :uid, type: String
+  
+  field :birthday, type: DateTime
+  field :gender, type: Boolean  
+  field :phone_no, type: String    
+  field :address, type: String
+  field :id_no_TW, type: String
+  
+  
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
     # Get the identity and user if they exist

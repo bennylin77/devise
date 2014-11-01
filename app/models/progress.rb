@@ -2,7 +2,8 @@ class Progress
   include Mongoid::Document
   include Mongoid::Timestamps     
   
-  embedded_in :item, inverse_of: :progresses
+  belongs_to :item
+  belongs_to :user
 
   field :stage, type: Integer
   

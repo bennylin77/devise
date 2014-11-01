@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :comments
 
+  get 'nctu_cce/first'
+  get 'nctu_cce/second'  
   get 'nctu_cce/new'
   post 'nctu_cce/create'  
   

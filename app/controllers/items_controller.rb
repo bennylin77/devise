@@ -23,10 +23,9 @@ class ItemsController < ApplicationController
 
   def create
     # check identified code and redirect to right module
-    @item = Item.new(item_params)
-    case @item.module
-    when GLOBAL_VAR['CCE_NCTU']
-      redirect_to controller: :nctu_cce, action: :new, module: @item.module
+    case params[:module]
+    when GLOBAL_VAR['NCTU_CCE'].to_s
+      redirect_to controller: :nctu_cce, action: :new, module: params[:module], verification_code: 'test'
     when 2
 
     when 3
@@ -38,7 +37,7 @@ class ItemsController < ApplicationController
   end
   
   def createCompletion
-    flash[:success]='成功建立 '+@item.title
+    flash[:success]='成功建立 '+@item.group.title
   end  
 
   def update

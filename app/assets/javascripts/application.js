@@ -19,4 +19,6 @@
 //= require jquery.countdown.min.js
 //= require imagesloaded.pkgd.min.js
 //= require masonry.pkgd.min.js
+//= require highcharts.js
+//= require exporting.js
 //= require_tree .
