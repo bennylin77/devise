@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   end
   
   def indexManagement
-    
+    @items = current_user.items
   end
 
   def show
@@ -15,7 +15,6 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
-
   end
 
   def edit
@@ -48,6 +47,10 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     respond_with(@item)
+  end
+  
+  def progress
+    @progesses=current_user.progresses.where(finished: params[:finished])
   end
 
   private

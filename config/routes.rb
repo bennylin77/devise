@@ -1,17 +1,24 @@
 Rails.application.routes.draw do
 
-
   get 'nctu_cce/first'
   get 'nctu_cce/second'  
+  get 'nctu_cce/third'
   get 'nctu_cce/new'
+  get 'nctu_cce/verified'
+  get 'nctu_cce/indexManagement'
+  get 'nctu_cce/showProgress'
+  get 'nctu_cce/cancel'
   post 'nctu_cce/create'  
-  
+  post 'nctu_cce/second'  
+    
   get 'main/index'
-
-  
+ 
+ 
   get 'items/createCompletion' 
   get 'items/showManagement'
   get 'items/indexManagement'
+  get 'items/progress'
+ 
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :items  

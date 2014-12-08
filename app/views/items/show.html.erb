@@ -15,7 +15,13 @@
 <h1><%=@item.group.title%></h1>
 <p class="lead"><%=@item.group.description%></p>
 <p>
-	<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first'}, {class: "btn btn-lg btn-success", role: "button"} %>
+	<%if @item.progresses.where(user_id: current_user.id).count!=0%>	
+	<%=link_to '查看報名狀態', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, 
+							 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
+							 progress_id: @item.progresses.where(user_id: current_user.id).first.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
+	<%else%>
+	<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+	<%end%>
 </p>
 </div> 
 

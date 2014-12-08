@@ -1,1 +1,21 @@
-<%= link_to '新增報名', new_item_path %>
+<%= link_to '新增課程', new_item_path %>
+
+<div id="masonry-container" class="transitions-enabled clearfix">	
+<%= render(:partial => "item_management_block", :collection => @items)|| "none" %>
+</div>	
+
+<%= javascript_tag do %>
+	$(function() 
+	{
+		//initial masonry
+		var $container = $('#masonry-container');
+		$container.imagesLoaded(function(){
+			$container.masonry({
+			      itemSelector: '.item_management_box',
+			      columnWidth: 27,
+			      gutter: 15,
+			      isFitWidth: true
+			});			
+		});			
+	});	
+<% end %>

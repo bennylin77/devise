@@ -31,6 +31,9 @@ body {
 .main .page-header {
   margin-top: 0;
 }
+.table-hover tbody tr:hover > td {
+  cursor: pointer
+}
 /*==================================step menu==========================================*/
 ol.progtrckr {
   margin: 0;

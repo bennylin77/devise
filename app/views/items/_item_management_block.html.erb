@@ -1,0 +1,15 @@
+<div class="item_management_box"  id="item_management_<%=item_management_block.id%>" >
+	<%=link_to "/"+Hash[controllerOptions].rassoc(item_management_block.group.module).first+"/indexManagement?id="+item_management_block.id, {} do%>
+	<div class="content_item_block" id="content_item_management_<%=item_management_block.id%>">				
+			<div class="item_box_title">
+				<%= item_management_block.group.title %>
+			</div>	
+			<div class="item_box_content">
+				<%= item_management_block.group.description%>	
+			</div>		
+			<div class="item_box_date_view">
+				<span class="fb_view_clock-icon icon-clock"></span> 發佈時間 <%=item_management_block.created_at.strftime "%Y-%m-%d"%>
+			</div>				
+	</div> 	
+	<%end%>				
+</div>

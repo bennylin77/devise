@@ -1,5 +1,10 @@
 module ApplicationHelper
   
+  def host
+    "http://instant.tw"
+  end
+    
+  
   def newStepProgress(hash={})
     case hash[:step]
     when 1

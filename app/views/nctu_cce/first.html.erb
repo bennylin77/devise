@@ -1,6 +1,6 @@
 <%=render "step" %>
 
-<%= form_for @user, url: { controller: 'nctu_cce', action: "second" }, html: {class: "form-horizontal", role: "form"} do |u| %>
+<%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>
 <% if @user.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@user.errors.count, "error") %> prohibited this item from being saved:</h2>
@@ -14,6 +14,12 @@
 	</ul>
 </div>
 <% end %>	
+	<%unless @item.blank?%>
+		<%= hidden_field_tag 'item_id', @item.id %>
+	<%end%>
+	<%unless @progress.blank?%>	
+		<%= hidden_field_tag 'progress_id', @progress.id %>	
+	<%end%>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">姓名*</label>
 		<div class="col-sm-6">
@@ -21,9 +27,13 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">生日*</label>
+		<label class="col-sm-2 control-label">出生年月日*</label>
 		<div class="col-sm-6">
+			<%if @user.birthday.blank?%>
 			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>	
+			<%else%>
+			<%= u.text_field :birthday, value: @user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
+			<%end%>
 		</div>
 	    <script type="text/javascript">
 	            $(function () {

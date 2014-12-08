@@ -6,5 +6,6 @@ class Progress
   belongs_to :user
 
   field :stage, type: Integer
-  
+  field :verified, type: Boolean, default: false 
+  field :finished, type: Boolean, default: false
 end

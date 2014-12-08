@@ -11,14 +11,28 @@ module NctuCceHelper
       if params[:controller]=='items'
         'done'
       else
-        params[:action]=='new' ? 'under' : 'done'
+        case params[:action]
+        when 'first'
+          'todo'
+        when 'second'
+          'under'
+        when 'third'    
+          'done'
+        end  
       end                
     when 3
       if params[:controller]=='items'
-        params[:action]=='createCompletion' ? 'done' : 'todo'
+        'done'
       else
-        'todo'
-      end       
+        case params[:action]
+        when 'first'
+          'todo'
+        when 'second'
+          'todo'
+        when 'third'    
+          'under'
+        end  
+      end     
     end      
   end
 end
