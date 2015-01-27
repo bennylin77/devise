@@ -81,7 +81,7 @@ class NctuCceController < ApplicationController
   end  
   
   def indexManagement
-    
+    @progresses = @item.progresses.order('created_at DESC').paginate(page: params[:page], per_page: 30)
   end  
   
   def showProgress

@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
   end
   
   def progress
-    @progesses=current_user.progresses.where(finished: params[:finished])
+    @progesses=current_user.progresses
   end
 
   private

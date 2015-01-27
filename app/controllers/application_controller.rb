@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
-  rescue_from Validations::Failed, with: :ValidationsHandler
-  rescue_from Validations::FailedRemote, with: :ValidationsRemoteHandler  
+  
+  before_action :configure_devise_permitted_parameters, if: :devise_controller?  
+  rescue_from Validations::Failed, with: :validationsHandler
+  rescue_from Validations::FailedRemote, with: :validationsRemoteHandler  
   protect_from_forgery with: :exception
   
   
@@ -36,7 +38,7 @@ private
     end
   end  
   
-  def ValidationsHandler(exception)  
+  def validationsHandler(exception)  
     flash[:error]=""
     exception.args[:errors].each do |e|
       flash[:error]=flash[:error]+e[:message]+'<br>'
@@ -45,7 +47,24 @@ private
     render exception.args[:render]
   end
 
-  def ValidationsRemoteHandler(exception)        
+  def validationsRemoteHandler(exception)        
     render json: {success: false, message: exception.message }  
-  end      
+  end   
+  
+  def configure_devise_permitted_parameters
+    registration_params = [:name, :email, :password, :password_confirmation]
+
+    if params[:action] == 'update'
+      devise_parameter_sanitizer.for(:account_update) { 
+        |u| u.permit(registration_params << :current_password)
+      }
+    elsif params[:action] == 'create'
+      devise_parameter_sanitizer.for(:sign_up) { 
+        |u| u.permit(registration_params) 
+      }
+    end
+  end  
+  
+  
+     
 end
