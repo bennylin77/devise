@@ -1,16 +1,31 @@
-<div class="progress_box"  id="item_<%=progress_block.id%>" >
-	<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.item.group.module).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?progress_id="+progress_block.id, {} do%>
-	<div class="content_progress_block" id="content_item_<%=progress_block.id%>">				
-			<div class="progress_box_title">
-				<%= progress_block.item.group.title %>
-			</div>	
-			<div class="progress_box_content">
-				<%= progress_block.item.group.description%>	
-			</div>		
-			<div class="progress_box_date_view">
-				<span class="fb_view_clock-icon icon-clock"></span> 發佈時間 <%=progress_block.item.group.created_at.strftime "%Y-%m-%d"%>
-			</div>				
-	</div> 	
-	<%end%>				
+<div class="progress_box"  id="progress_box_<%=progress_block.id%>" >
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+		<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.item.group.module).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?progress_id="+progress_block.id, {} do%>
+	    <h3 class="panel-title"><%= progress_block.item.group.title %></h3>
+	    <%end%>	 
+	  </div>
+	  <div class="panel-body">
+		<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.item.group.module).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?progress_id="+progress_block.id, {} do%>
+		    <p><%= progress_block.item.group.description%></p>
+		    <div id="clock_<%=progress_block.id%>"></div>
+	  	<%end%> 
+	   	<div class="container" style="width: 250px;">
+		  	<div class="row">
+		  	</div>	
+	  	</div>	 
+	  </div>
+	
+	</div>		
 </div>
 
+<script type="text/javascript">
+  $('#clock_<%=progress_block.id%>').countdown('<%= progress_block.item.end_at.strftime('%Y/%m/%d %H:%M:%S')%>', function(event) {
+    $(this).html(event.strftime(''+
+		'<span>%-w</span> 週 '+ 
+		'<span>%-d</span> 天 '+ 
+		'<span>%H</span> 時 '+
+		'<span>%M</span> 分 '+ 
+		'<span>%S</span> 秒 截止'));
+  });
+</script> 

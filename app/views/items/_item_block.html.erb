@@ -23,11 +23,11 @@
 
 <script type="text/javascript">
   $('#clock_<%=item_block.id%>').countdown('<%= item_block.end_at.strftime('%Y/%m/%d %H:%M:%S')%>', function(event) {
-    $(this).html(event.strftime('截止剩下：'+
+    $(this).html(event.strftime(''+
 		'<span>%-w</span> 週 '+ 
 		'<span>%-d</span> 天 '+ 
 		'<span>%H</span> 時 '+
 		'<span>%M</span> 分 '+ 
-		'<span>%S</span> 秒 '));
+		'<span>%S</span> 秒 截止'));
   });
 </script>    
