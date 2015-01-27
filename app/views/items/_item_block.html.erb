@@ -1,16 +1,33 @@
 <div class="item_box"  id="item_<%=item_block.id%>" >
-	<%=link_to item_block, class: 'fancybox openitemAjax' do%>
-	<div class="content_item_block" id="content_item_<%=item_block.id%>">				
-			<div class="item_box_title">
-				<%= item_block.group.title %>
-			</div>	
-			<div class="item_box_content">
-				<%= item_block.group.description%>	
-			</div>		
-			<div class="item_box_date_view">
-				<span class="fb_view_clock-icon icon-clock"></span> 發佈時間 <%=item_block.created_at.strftime "%Y-%m-%d"%>
-			</div>				
-	</div> 	
-	<%end%>				
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <%=link_to item_block, class: 'fancybox openitemAjax' do%> 	
+	    <h3 class="panel-title"><%= item_block.group.title %></h3>
+	    <%end%>	 
+	  </div>
+	  <div class="panel-body">
+	    <%=link_to item_block, class: 'fancybox openitemAjax' do%>  	
+		    <p><%= item_block.group.description%></p>
+		    <div id="clock_<%=item_block.id%>"></div>
+	  	<%end%> 
+	   	<div class="container" style="width: 250px;">
+		  	<div class="row">
+		        <div class="pull-left">by <%=item_block.user.name%></div>
+		        <div class="pull-right"><%=item_block.created_at.strftime "%Y-%m-%d"%></div> 		
+		  	</div>	
+	  	</div>	 
+	  </div>
+	
+	</div>		
 </div>
 
+<script type="text/javascript">
+  $('#clock_<%=item_block.id%>').countdown('<%= item_block.end_at.strftime('%Y/%m/%d %H:%M:%S')%>', function(event) {
+    $(this).html(event.strftime('截止剩下：'+
+		'<span>%-w</span> 週 '+ 
+		'<span>%-d</span> 天 '+ 
+		'<span>%H</span> 時 '+
+		'<span>%M</span> 分 '+ 
+		'<span>%S</span> 秒 '));
+  });
+</script>    
