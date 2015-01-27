@@ -13,7 +13,7 @@
 <% flash.each_with_index do |(type, message), i| %>
   <div class="alert <%= alert_class_for(type) %> flash_<%=i%> alert-dismissible fade in">
     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <%= message %>
+    <%= message.html_safe %>
   </div>
 <% end %>
 <%=render "layouts/menu" %>

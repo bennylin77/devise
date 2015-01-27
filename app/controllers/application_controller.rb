@@ -1,50 +1,51 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+  rescue_from Validations::Failed, with: :ValidationsHandler
+  rescue_from Validations::FailedRemote, with: :ValidationsRemoteHandler  
   protect_from_forgery with: :exception
   
   
-  
-  
-  def userBirthdayValidate(i)
-    if i.blank?
-      @user.errors.add :birthday, "請填寫  出生年月日"
-    end  
+  def validations(data)
+    validation_result = [] 
+    data.each do |d|
+      case d[:type]
+      when 'presence'     
+        if d[:data].blank?
+          validation_result.push({type: 'presence', message: '請填寫 '+d[:title]})
+        end         
+      when 'length'       
+      when 'latter_than'  
+         if !d[:data][:first].blank? && !d[:data][:second].blank?
+           if d[:data][:first] > d[:data][:second]
+            validation_result.push({type: 'latter_than', message: d[:title][:first]+' 比 '+d[:title][:second]+'晚'})                
+           end 
+         end      
+      end
+    end      
+    validation_result  
   end  
-  def userGenderValidate(i)
-    if i.blank?
-      @user.errors.add :gender, "請填寫  性別"
-    end      
-  end 
-  def userPhoneNoValidate(i)
-    if i.blank?
-      @user.errors.add :phone_no, "請填寫  聯絡電話"
-    end      
-  end 
-  def userPostalValidate(i)
-    if i.blank?
-      @user.errors.add :postal, "請填寫  郵遞區號"
-    end      
-  end       
-  def userCountyValidate(i)
-    if i.blank?
-      @user.errors.add :county, "請填寫  縣市"
-    end      
-  end 
-  def userDistrictValidate(i)
-    if i.blank?
-      @user.errors.add :district, "請填寫  鄉鎮市區"
-    end      
-  end 
-  def userAddressValidate(i)
-     if i.blank?
-      @user.errors.add :address, "請填寫  地址"
-    end     
-  end     
-  def userIDNoTWValidate(i)
-     if i.blank?
-      @user.errors.add :id_no_TW, "請填寫  身分證字號"
-    end     
+  
+private
+
+  def checkValidations(hash={})
+    unless hash[:validations].count==0  
+      if request.xhr? 
+        raise Validations::FailedRemote
+      else        
+        raise Validations::Failed.new(errors: hash[:validations], render: hash[:render])
+      end   
+    end
   end  
-      
+  
+  def ValidationsHandler(exception)  
+    flash[:error]=""
+    exception.args[:errors].each do |e|
+      flash[:error]=flash[:error]+e[:message]+'<br>'
+    end
+    
+    render exception.args[:render]
+  end
+
+  def ValidationsRemoteHandler(exception)        
+    render json: {success: false, message: exception.message }  
+  end      
 end

@@ -11,7 +11,7 @@ class Group
   field :description, type: String
   field :module, type: Integer  
 
-  validates :title, presence: {message: "名稱 不能是空白"}
-  validates :description, presence: {message: "簡介 不能是空白"}  
+  #validates :title, presence: {message: "名稱 不能是空白"}
+  #validates :description, presence: {message: "簡介 不能是空白"}  
         
 end
