@@ -1,0 +1,22 @@
+<%= form_for @group, url: { controller: 'nctu_cce', action: "updateGroup" }, method: 'post', html: {class: "form-horizontal", role: "form"} do |g| %>
+
+	<%= g.hidden_field :id %>  	
+<div class="form-group">
+	<label class="col-sm-2 control-label">課程名稱*</label>
+	<div class="col-sm-6">
+		<%= g.text_field :title, class: "form-control", placeholder: "課程名稱" %>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-2 control-label">課程簡介*</label>
+	<div class="col-sm-6">
+		<%= g.text_area :description, class: "form-control", placeholder: "課程簡介" %>
+	</div>
+</div>
+
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<%= g.submit '送出',  class: "btn btn-default"  %>
+	</div>
+</div>
+<% end %>

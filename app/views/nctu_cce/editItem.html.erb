@@ -1,0 +1,76 @@
+<%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem" }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
+
+	<%= i.hidden_field :verification_code %>  
+	<%= i.hidden_field :id %>  	
+	<div class="form-group">
+		<label class="col-sm-2 control-label">學年</label>
+		<div class="col-sm-3">
+			<%= i.select :school_year, options_for_select([[Time.now.year-1912, Time.now.year-1912], 
+														   [Time.now.year-1911, Time.now.year-1911],			
+														   [Time.now.year-1910, Time.now.year-1910],	
+														   [Time.now.year-1909, Time.now.year-1909]]), {prompt: '學年'}, class: "form-control" %>		
+		</div>
+		<label class="col-sm-1 control-label">學期</label>
+		<div class="col-sm-2">
+			<%= i.select :semester, options_for_select([["一", 1], ["二", 2]]), {prompt: '學期'}, class: "form-control" %>		
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">期數</label>
+		<div class="col-sm-6">
+			<%= i.text_field :term, class: "form-control", placeholder: "期數" %>
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">報名人數*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :no_of_user, class: "form-control", placeholder: "報名人數" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">金額*</label>
+		<div class="col-sm-6">
+			<%= i.text_field :price, class: "form-control", placeholder: "金額" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">報名開放時間*</label>
+		<div class="col-sm-6">
+			<%= i.datetime_local_field :start_at, value: @item.start_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_start_at', placeholder: "報名開放時間" %>	
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">報名結束時間*</label>
+		<div class="col-sm-6">
+			<%= i.datetime_local_field :end_at, value: @item.end_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_end_at', placeholder: "報名結束時間" %>	
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">繳費開放時間*</label>
+		<div class="col-sm-6">
+			<%= i.datetime_local_field :payment_strat_at, value: @item.payment_strat_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_payment_strat_at', placeholder: "繳費開放時間" %>	
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">繳費結束時間*</label>
+		<div class="col-sm-6">
+			<%= i.datetime_local_field :payment_end_at, value: @item.payment_end_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_payment_end_at', placeholder: "繳費結束時間" %>	
+		</div>
+	</div>
+
+
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<%= i.submit '送出',  class: "btn btn-default"  %>
+	</div>
+</div>
+<% end %>
+
+<script type="text/javascript">
+	$(function () {
+		$('#datetimepicker_start_at, #datetimepicker_end_at, #datetimepicker_payment_strat_at, #datetimepicker_payment_end_at').datetimepicker({
+			use24hours : true,
+			format : 'YYYY/MM/DD HH:mm'		
+	    });   	    
+	});
+</script>	

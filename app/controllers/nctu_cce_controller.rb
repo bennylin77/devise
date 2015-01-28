@@ -1,7 +1,7 @@
 class NctuCceController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :indexManagement]
-  before_action :set_progress, only: [:showProgress, :verified, :cancel]  
-    
+  before_action :set_item, only: [:show, :editItem, :destroy, :indexManagement]
+  before_action :set_group, only: [:editGroup]  
+  before_action :set_progress, only: [:showProgress, :verified, :cancel]    
   def new
     @group = Group.new( module: params[:module])
     @group.items.build()    
@@ -26,12 +26,41 @@ class NctuCceController < ApplicationController
     redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id  
   end 
   
-  def edit
+  def editItem  
   end 
   
-  def update
-    
+  def updateItem
+    @item=Item.find(params[:item][:id])
+    @item.assign_attributes(item_params)
+    validations_result=validations([{type: 'presence', title: '報名人數', data: @item.no_of_user},
+                                    {type: 'presence', title: '金額', data: @item.price},
+                                    {type: 'presence', title: '報名開放時間', data: @item.start_at},                                      
+                                    {type: 'presence', title: '報名結束時間', data: @item.end_at},        
+                                    {type: 'presence', title: '繳費開放時間', data: @item.payment_strat_at},
+                                    {type: 'presence', title: '繳費結束時間', data: @item.payment_end_at},
+                                    {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @item.start_at, second: @item.end_at }},
+                                    {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @item.payment_strat_at, second: @item.payment_end_at }}                                    
+                                    ])                                   
+    checkValidations(validations: validations_result, render: 'editItem' )   
+    @item.save  
+    flash[:success]="成功更新基本資料"
+    redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
   end
+  
+  def editGroup  
+  end 
+  
+  def updateGroup
+    @group=Group.find(params[:group][:id])
+    @group.assign_attributes(group_params)
+    validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
+                                    {type: 'presence', title: '課程簡介', data: @group.description}])                                   
+    checkValidations(validations: validations_result, render: 'editGroup' )   
+    @group.save  
+    flash[:success]="成功更新名稱簡介"
+    redirect_to controller: :nctu_cce, action: :indexManagement, id: @group.items.first.id     
+  end  
+  
   
   def first
     @user=current_user
@@ -81,7 +110,7 @@ class NctuCceController < ApplicationController
   end  
   
   def indexManagement
-    @progresses = @item.progresses.order('created_at DESC').paginate(page: params[:page], per_page: 30)
+    @progresses = @item.progresses.order('created_at DESC').paginate(page: params[:page], per_page: 1)
   end  
   
   def showProgress
@@ -112,9 +141,18 @@ class NctuCceController < ApplicationController
     def set_item
       @item = Item.find(params[:id])
     end
+
+    def set_group
+      @group = Group.find(params[:id])
+    end   
     
     def set_progress
       @progress = Progress.find(params[:id])     
+    end
+    
+    def item_params
+      params.require(:item).permit(:verification_code, :no_of_user, :price,
+                                   :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term)      
     end
     
     def user_params
