@@ -57,7 +57,7 @@ class User
   field :id_no_TW, type: String
  
   
-  validates :name, presence: {message: "名字 不能是空白"}  
+  validates :name, presence: {}  
   
   def self.find_for_oauth(auth, signed_in_resource = nil)
 

@@ -17,12 +17,8 @@
   </div>
 <% end %>
 <%=render "layouts/menu" %>
-<div class="container">
-	<div class="row">
-		<div class="main">
-		<%= yield %>
-		</div>
-	</div>
+<div class="main">
+	<%= yield %>
 </div>
 <script>
 <% flash.each_with_index do |(type, message), i| %>

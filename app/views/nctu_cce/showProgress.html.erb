@@ -1,6 +1,8 @@
+<%= render partial: "header", locals: {item: @progress.item} %>
+<h3>報名學員</h3>
 <div class="container-fluid">
 	<div class="row">	
-		<div class="">
+		<div class="col-md-offset-2">
 		<%unless @progress.verified%>	
 		<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">審核通過</button>		
 		<%else%>
@@ -9,33 +11,34 @@
 		</div>
 	</div>
 </div>
-<div class="container">
+<br>
+<div class="container-fluid">
 <div class="row">
-  <div class="col-md-4">姓名</div>
-  <div class="col-md-8"><%=@progress.user.name%></div>
+  <div class="col-md-3 col-md-offset-2">姓名</div>
+  <div class="col-md-4"><%=@progress.user.name%></div>
 </div>
 <div class="row">
-  <div class="col-md-4">出生年月日</div>
-  <div class="col-md-8"><%=@progress.user.birthday%></div>
+  <div class="col-md-3 col-md-offset-2">出生年月日</div>
+  <div class="col-md-4"><%=@progress.user.birthday.strftime "%Y/%m/%d" %></div>
 </div>
 <div class="row">
-  <div class="col-md-4">性別</div>
-  <div class="col-md-8"><%=@progress.user.gender%></div>
+  <div class="col-md-3 col-md-offset-2">性別</div>
+  <div class="col-md-4"><%if @progress.user.gender%>男<%else%>女<%end%></div>
 </div>
 <div class="row">
-  <div class="col-md-4">身分證字號</div>
-  <div class="col-md-8"><%=@progress.user.id_no_TW%></div>
+  <div class="col-md-3 col-md-offset-2">身分證字號</div>
+  <div class="col-md-4"><%=@progress.user.id_no_TW%></div>
 </div>
 <div class="row">
-  <div class="col-md-4">聯絡電話</div>
-  <div class="col-md-8"><%=@progress.user.phone_no%></div>
+  <div class="col-md-3 col-md-offset-2">聯絡電話</div>
+  <div class="col-md-4"><%=@progress.user.phone_no%></div>
 </div>
 <div class="row">
-  <div class="col-md-4">聯絡地址</div>
-  <div class="col-md-8"><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></div>
+  <div class="col-md-3 col-md-offset-2">聯絡地址</div>
+  <div class="col-md-4"><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></div>
 </div>
 <div class="row">
-  <div class="col-md-4">審核狀態</div>
-  <div class="col-md-8"><%=@progress.verified%></div>
+  <div class="col-md-3 col-md-offset-2">審核狀態</div>
+  <div class="col-md-4"><%if @progress.verified%>通過<%else%>未通過<%end%></div>
 </div>
 </div>

@@ -1,0 +1,14 @@
+zh-TW:
+  mongoid:
+    errors:
+      messages:
+        blank:
+          不能為空白
+        callbacks:
+          "Calling %{method} on %{klass} resulted in a false return from a callback."
+        taken:
+          已被使用
+        too_short:
+          至少 8 碼
+        confirmation:
+          不一致

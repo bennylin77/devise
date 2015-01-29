@@ -1,3 +1,40 @@
-<h3>User</h3>
-<p>Name: <%= @user.name if @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
+<h3>個人資料</h3>
+
+<div class="container-fluid">
+	<div class="row">	
+		<div class="col-md-offset-2">
+		<button type="button" class="btn btn-info">編輯個人資料</button>		
+		</div>
+	</div>
+</div>
+<br>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">Email</div>
+  <div class="col-md-4"><%=@user.email %></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">姓名</div>
+  <div class="col-md-4"><%=@user.name%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">出生年月日</div>
+  <div class="col-md-4"><%=@user.birthday.strftime "%Y/%m/%d" %></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">性別</div>
+  <div class="col-md-4"><%if @user.gender%>男<%else%>女<%end%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">身分證字號</div>
+  <div class="col-md-4"><%=@user.id_no_TW%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">聯絡電話</div>
+  <div class="col-md-4"><%=@user.phone_no%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">聯絡地址</div>
+  <div class="col-md-4"><%=@user.county%><%=@user.district%><%=@user.address%></div>
+</div>
+</div>

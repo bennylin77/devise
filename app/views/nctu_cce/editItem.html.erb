@@ -1,3 +1,5 @@
+<%= render partial: "header", locals: {item: @item} %>
+<h3>基本資料設定</h3>
 <%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem" }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
 
 	<%= i.hidden_field :verification_code %>  
@@ -36,25 +38,25 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.datetime_local_field :start_at, value: @item.start_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_start_at', placeholder: "報名開放時間" %>	
+			<%= i.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', placeholder: "報名開放時間" %>	
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">報名結束時間*</label>
 		<div class="col-sm-6">
-			<%= i.datetime_local_field :end_at, value: @item.end_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_end_at', placeholder: "報名結束時間" %>	
+			<%= i.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', placeholder: "報名結束時間" %>	
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">繳費開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.datetime_local_field :payment_strat_at, value: @item.payment_strat_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_payment_strat_at', placeholder: "繳費開放時間" %>	
+			<%= i.text_field :payment_strat_at, class: "form-control", id: 'datetimepicker_payment_strat_at', placeholder: "繳費開放時間" %>	
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">繳費結束時間*</label>
 		<div class="col-sm-6">
-			<%= i.datetime_local_field :payment_end_at, value: @item.payment_end_at.strftime("%Y/%m/%d %H:%M"), class: "form-control", id: 'datetimepicker_payment_end_at', placeholder: "繳費結束時間" %>	
+			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', placeholder: "繳費結束時間" %>	
 		</div>
 	</div>
 

@@ -41,7 +41,7 @@ private
   def validationsHandler(exception)  
     flash[:error]=""
     exception.args[:errors].each do |e|
-      flash[:error]=flash[:error]+e[:message]+'<br>'
+      flash.now[:error]=flash.now[:error]+e[:message]+'<br>'
     end
     
     render exception.args[:render]
