@@ -24,11 +24,22 @@
 		</div>
 	</div>		
 	<div class="form-group">
-		<label class="col-sm-2 control-label">報名人數*</label>
+		<label class="col-sm-2 control-label">招生人數*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :no_of_user, class: "form-control", placeholder: "報名人數" %>
+			<%= i.text_field :no_of_user, class: "form-control", placeholder: "招生人數" %>
 		</div>
 	</div>
+	<div class="form-group">	
+		<label class="col-sm-2 control-label">接受備取*</label>	
+		<div class="col-sm-6">
+		<label class="radio-inline ">
+			<%=i.radio_button :waiting_available, "true", checked: true %>是
+		</label>
+		<label class="radio-inline ">
+			<%=i.radio_button :waiting_available, "false" %>否
+		</label>
+		</div>
+	</div>		
 	<div class="form-group">
 		<label class="col-sm-2 control-label">金額*</label>
 		<div class="col-sm-6">

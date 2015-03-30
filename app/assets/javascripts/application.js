@@ -22,4 +22,5 @@
 //= require highcharts.js
 //= require exporting.js
 //= require jquery.twzipcode.min.js
+//= require fileinput.min.js 
 //= require_tree .

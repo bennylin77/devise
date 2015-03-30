@@ -14,3 +14,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+/config/initializers/setup_mail.rb
+/config/initializers/vaccount_constants.rb

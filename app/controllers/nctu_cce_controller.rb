@@ -1,4 +1,6 @@
 class NctuCceController < ApplicationController
+  before_filter :authenticate_user! 
+  
   before_action :set_item, only: [:show, :editItem, :destroy, :indexManagement]
   before_action :set_group, only: [:editGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel]    
@@ -89,13 +91,26 @@ class NctuCceController < ApplicationController
                                       {type: 'presence', title: '聯絡地址-縣市', data: user_params[:county]},                                      
                                       {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]}])
-      checkValidations(validations: validations_result, render: 'first' )     
+      checkValidations(validations: validations_result, render: 'first' )           
       @user.save    
-      @progress=Progress.new
-      @progress.stage=2
-      @progress.user = current_user           
-      @progress.item = @item           
-      @progress.save  
+      if @item.progresses.count < @item.no_of_user or @item.waiting_available
+        @progress=Progress.new
+        @progress.stage=2
+        @progress.user = current_user           
+        @progress.item = @item     
+        @progress.save                 
+        #waiting
+        if ( !@item.waiting_start and @item.progresses.count>=@item.no_of_user ) or @item.waiting_start 
+            @item.waiting_start=true 
+            unless @item.progresses.count==@item.no_of_user 
+              @item.no_of_waiting_user+= 1        
+              @progress.waiting_no=@item.no_of_waiting_user
+              @progress.waiting=true   
+            end                     
+        end  
+        @item.save           
+        @progress.save   
+      end               
     else
       @user = current_user    
       #@user.update(user_params)     
@@ -110,11 +125,22 @@ class NctuCceController < ApplicationController
   end  
   
   def indexManagement
-    @progresses = @item.progresses.order('created_at DESC').paginate(page: params[:page], per_page: 30)
+    @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
   end  
   
+  def sendMessage
+    @item = Item.find(params[:id])   
+    if request.post?
+        
+      params[:recipients].each do |r|
+        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
+      end
+        
+      redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
+    end
+  end
+  
   def showProgress
-    
   end
   
   def cancel
@@ -125,17 +151,40 @@ class NctuCceController < ApplicationController
   def verified
     if @progress.verified
       @progress.verified=false
-      @progress.stage=2
+      @progress.stage=-1
+      @progress.reason = params[:reason]
+	  if @progress.vaccount
+	  	@progress.vaccount.active = false 
+	  	@progress.vaccount.save!
+	  end
       @progress.save!
       flash[:alert]="已取消通過 "+@progress.user.name+" 的報名"
     else
-      @progress.verified=true
-      @progress.stage=3      
+      @progress.verified=true 
+      @progress.payment = params[:payment].to_f
+	  @progress.create_vaccount if @progress.payment > 0
+	  @progress.stage= (@progress.payment > 0) ? 3 : 4  
       @progress.save!    
       flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
     end
+	System.verified_result_send(@progress)
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
+  
+  def check_account
+  	if request.post?
+  		vacc = params[:vacc]
+  		vc = Vaccount.new
+  		vc.check_account(vacc)
+  		vc.vacc = vacc
+  		vc.update_status
+  		@row = "<tr><td>#{vacc}</td>"
+  		@row += "<td>#{vc.status["res"]["desc"]}</td>"
+  		@row += "<td>#{vc.status["Amount"]}</td>"
+  		@row += "<td>#{vc.status["PayChnl"]}</td></tr>"
+  		
+  	end
+  end
   
   private
     def set_item
@@ -152,7 +201,7 @@ class NctuCceController < ApplicationController
     
     def item_params
       params.require(:item).permit(:verification_code, :no_of_user, :price,
-                                   :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term)      
+                                   :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available)      
     end
     
     def user_params
@@ -161,6 +210,6 @@ class NctuCceController < ApplicationController
 
     def group_params
       params.require(:group).permit(:module, :title, :description, items_attributes: [:verification_code, :no_of_user, :price,
-                                    :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term])
+                                    :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
     end  
 end

@@ -1,5 +1,7 @@
 defaults: &defaults
   NCTU_CCE: 0
+  NCTU_CCE_credit: 1
+  NCTU_CCE_camp: 2
 
   
     

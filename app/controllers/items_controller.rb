@@ -25,10 +25,10 @@ class ItemsController < ApplicationController
     case params[:module]
     when GLOBAL_VAR['NCTU_CCE'].to_s
       redirect_to controller: :nctu_cce, action: :new, module: params[:module], verification_code: 'test'
-    when 2
-
-    when 3
-
+    when GLOBAL_VAR['NCTU_CCE_credit'].to_s
+      redirect_to controller: :nctu_cce_credit, action: :new, module: params[:module], verification_code: 'test'
+    when GLOBAL_VAR['NCTU_CCE_camp'].to_s
+      redirect_to controller: :nctu_cce_camp, action: :new, module: params[:module], verification_code: 'test'
     else
       flash[:error]='請選擇模組'
       redirect_to new_item_path
@@ -50,7 +50,17 @@ class ItemsController < ApplicationController
   end
   
   def progress
-    @progesses=current_user.progresses
+    @progesses=current_user.progresses.order('stage DESC')
+  end
+  
+  def progress_status
+  	@data = Progress.find(params[:id])
+  	if @data and  @data.user == current_user
+  		
+  	else
+  		flash[:error] = "Action Denied"
+  		redirect_to "/items/progress"
+  	end
   end
 
   private

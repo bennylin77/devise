@@ -1,0 +1,31 @@
+<h3>虛擬帳號檢驗</h3>
+<hr>
+<%=form_tag "/nctu_cce/check_account", :remote=>true, :class=>'row' do %>
+	<div class="form-group col-md-6">
+		<%=text_field_tag "vacc", "", :class=>'form-control col-md-6', :placeholder=>'輸入虛擬帳號'%>	
+  	</div>
+	<%=submit_tag "submit", :class=>'btn btn-primary check-submit'%>
+<% end %>
+<h4>查詢結果</h4>
+<table class="table result-table">
+	<tr>
+		<th>帳號</th>
+		<th>狀態</th>	
+		<th>金額</th>
+		<th>繳費方式</th>
+	</tr>	
+	
+</table>
+
+<script>
+	$('.check-submit').click(function(){
+		vacc = $('#vacc').val();
+		if(vacc.indexOf("95306") > -1)
+			return true;
+		else{
+			alert("invalid vaccount");
+			return false;
+		}	
+	});
+
+</script>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
+<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 130px; border: 2px solid #198EB9;color: #198EB9;	">
+	<div style="width: 80%;
+			    text-align: center;
+				font-size: 26px;
+				line-height: 28px;
+				margin-left: 18px;
+				letter-spacing: 15px;
+    			font-family: Microsoft JhengHei, Palatino Linotype;		
+    			font-style: italic;	">CCE</div>
+	<div style="margin-left: 12%; 
+				width: 80%; 
+				line-height: 13px; 
+				letter-spacing: 7px; 
+				font-size: 10px; 
+				text-align: center;	">國立交通大學</div>	
+	<div style="margin-left: 12%; 
+				width: 80%; 
+				line-height: 13px; 
+				letter-spacing: 7px; 
+				font-size: 10px; 
+				text-align: center;	">推廣教育中心</div>	
+</div>	
+<div style="letter-spacing: 1.5px;
+		    padding-bottom: 30px; 
+		    padding-top: 10px; 	
+		    padding-left: 5px; 		    	    
+		    border-bottom: 1px solid #198EB9; 
+		    border-top: 1px solid #198EB9; 
+		    margin-bottom: 30px;">		
+<div class="masonry" style="-moz-column-count: 4;
+						    -webkit-column-count: 4;
+						    column-count: 4;
+						    -moz-column-gap: 1em;
+						    -webkit-column-gap: 1em;
+						    column-gap: 1em;">
+<%=@data.user.name%> 您好!</br>   
+<b><%=@data.item.group.title%> 第<%=@data.item.term.to_s %>期</b>
+		<% if @data.stage==2%>
+			 已被取消報名，
+		<% else %>
+			 已報名成功</br>
+			 <% if @data.vaccount %>
+			 匯款資訊如下</br>
+			 <table border="1">
+				<tr>
+					<td>銀行</td>
+					<td>帳號</td>
+					<td>金額</td>
+					<td>匯款開始日</td>
+					<td>匯款結束日</td>
+				</tr>
+				<tr>
+					<td>玉山銀行</td>
+					<td><%=@data.vaccount.vacc%></td>
+					<td><%=@data.payment.to_s%> NT</td>
+					<td><%=@data.item.payment_strat_at.strftime("%D %R")%></td>
+					<td><%=@data.item.payment_end_at.strftime("%D %R")%></td>
+				</tr>
+			 </table>
+			 請於時限內匯款，匯款成功後會來信通知您
+			 <% end %>
+		<% end %>
+</div>
+</div>
+</div>
+		
+</body>
+</html>

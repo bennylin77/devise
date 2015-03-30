@@ -15,30 +15,44 @@
 <h1><%=@item.group.title%></h1>
 <p class="lead"><%=@item.group.description%></p>
 <p>
-<% if user_signed_in? %>	
-	<%if @item.progresses.where(user_id: current_user.id).count!=0%>	
-	<%=link_to '查看報名進度', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, 
-							 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
-							 progress_id: @item.progresses.where(user_id: current_user.id).first.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
-	<%else%>
-	<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
-	<%end%>
-<%else%>
-	<%=link_to '登入報名', {controller: 'main', action: 'index'}, {class: "btn btn-lg btn-success", role: "button"} %>
-<%end%>	
+	<% if user_signed_in? %>	
+		<% pg = @item.progresses.where(user_id: current_user.id).last %>
+		<%if pg and pg.stage>0%>	
+<!--
+{controller: Hash[controllerOptions].rassoc(@item.group.module).first, 
+								 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
+								 progress_id: @item.progresses.where(user_id: current_user.id).first.id}
+-->								 		
+		<%=link_to '查看報名進度', "/items/progress_status?"+{id: pg.id}.to_param, {class: "btn btn-lg btn-success", role: "button"} %>	
+		<%else%>
+			<%if @item.waiting_start%>		
+				<%if @item.waiting_available%>
+					<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+				<%else%>
+					<%=link_to '報名已額滿', "", {class: "btn btn-lg btn-success", role: "button"} %>					
+				<%end%>
+			<%else%>
+				<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+			<%end%>				
+		<%end%>
+	<%else%>	
+		<%if @item.waiting_start%>		
+			<%if @item.waiting_available%>
+				<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+			<%else%>
+				<%=link_to '報名已額滿', "", {class: "btn btn-lg btn-success", role: "button"} %>					
+			<%end%>
+		<%else%>
+			<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+		<%end%>	
+	<%end%>	
 </p>
 </div> 
 
 
 
-
+<!--
 <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-
-
-
-
-
-
 <%=render "comments/show" %>
 
 

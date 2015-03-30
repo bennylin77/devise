@@ -3,10 +3,19 @@
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-md-offset-2">
-		<%unless @progress.verified%>	
-		<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">審核通過</button>		
-		<%else%>
-		<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">取消資格</button>				
+		<%if @progress.stage==2%>	
+		<!--<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">審核通過</button>		
+		-->
+		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#agree-confirm">
+  			審核通過
+		</button>
+		
+		<%elsif @progress.stage==3%>
+	<!--	<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">取消資格</button>				
+	-->
+		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel-confirm">
+  			取消資格
+		</button>
 		<%end%>
 		</div>
 	</div>
@@ -41,4 +50,47 @@
   <div class="col-md-3 col-md-offset-2">審核狀態</div>
   <div class="col-md-4"><%if @progress.verified%>通過<%else%>未通過<%end%></div>
 </div>
+</div>
+
+<div class="modal fade" id="agree-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">取消資格</h4>
+      </div>
+      <div class="modal-body">
+       <%=label_tag "金額選擇：（填0會跳過繳費，直接完成報名）"%> 
+       <%= form_tag "/nctu_cce/verified", :class=>"agree-form" do%>
+       	<%=hidden_field_tag "id", @progress.id%>
+       	<%=number_field_tag "payment", @progress.item.price, :class=>"form-control"%>
+       <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('.agree-form').submit();">送出</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="cancel-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">取消資格</h4>
+      </div>
+      <div class="modal-body">
+       <%=label_tag "請填寫原因："%> 
+       <%= form_tag "/nctu_cce/verified", :class=>"cancel-form" do%>
+       	<%=hidden_field_tag "id", @progress.id%>
+       	<%=text_area_tag "reason","",:class=>"form-control"%>
+       <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('.cancel-form').submit();">送出</button>
+      </div>
+    </div>
+  </div>
 </div>

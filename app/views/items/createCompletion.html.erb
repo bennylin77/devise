@@ -1,7 +1,16 @@
 <%=render "layouts/newStep" %>
 <div class="container-fluid">
   <div class="row">
- 	<h1><small>剩</small><div id="clock"></div><small>開報報名</small></h1> 	  
+ 	<h1 class="text-center">
+ 		<p>
+ 		<%=link_to "/"+Hash[controllerOptions].rassoc(@item.group.module).first+"/indexManagement?id="+@item.id, {} do%> 	
+			<%= @item.group.title%>
+		<%end%>	
+		</p>
+ 		<small>剩</small>
+ 		<span id="clock"></span>
+ 		<small>開放報名</small>
+ 	</h1> 	  
   </div>
 </div>
 <script type="text/javascript">

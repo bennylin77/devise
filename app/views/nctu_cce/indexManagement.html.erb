@@ -5,7 +5,10 @@
 		  <li role="presentation" class="active"><a href="#">報名學員表</a></li>
 		  <li role="presentation"><a href="#">匯款入帳表</a></li>
 		</ul>
-		<ul class="nav nav-pills col-md-offset-6  col-md-3">
+		<ul class="nav nav-pills col-md-offset-5  col-md-4">
+		  <li role="presentation">
+		  	<%=link_to '群組寄信', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
+		  </li>			
 		  <li role="presentation">
 		  	<%=link_to '名稱簡介設定', {controller: 'nctu_cce', action: 'editGroup', id: @item.group.id} %>
 		  </li>
@@ -21,14 +24,20 @@
     <th>姓名</th>
     <th>聯絡電話</th>
     <th>email</th>
-    <th>報名進度</th>        
+    <th>報名進度</th>   
+    <th>候補狀態</th>         
   </tr>	
 <%@progresses.each do |p|%>
 <tr id='link1' onclick="document.location='<%=host%>/nctu_cce/showProgress?id=<%=p.id%>';">
     <td><%=p.user.name%></td>
     <td><%=p.user.phone_no%></td>
     <td><%=p.user.email%></td>
-    <td><%=p.stage%></td>
+    <td><%=stage_text p.stage%></td>
+    <%if p.waiting%>
+    <td>候補 <%=p.waiting_no%></td>
+    <%else%>
+    <td>非候補</td>
+    <%end%>    
 </tr>
 <%end%>
 </table>

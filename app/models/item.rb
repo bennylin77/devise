@@ -4,17 +4,23 @@ class Item
 
 #  embeds_many :evaluations
 #  embeds_many :comments
-  has_many :progresses   
+  has_many :progresses  
+  has_many :sub_items   
   belongs_to :user  
   belongs_to :group
+#accepts_nested_attributes_for :sub_items 
+
   
   field :start_at, type: DateTime  
   field :end_at, type: DateTime   
   field :no_of_user, type: Integer
+  field :no_of_waiting_user, type: Integer, default: 0  
+  field :waiting_start, type: Boolean, default: false    
   field :price, type: Float
   field :school_year, type: Integer
   field :semester, type: Integer
   field :term, type: Integer 
+  field :waiting_available, type: Boolean, default: false
    
   #CCE
   field :verification_code, type: String   

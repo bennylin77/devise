@@ -1,5 +1,11 @@
 source 'https://rubygems.org'
 
+# for vaccount
+gem 'nokogiri'
+gem 'htmlentities'
+gem 'curb'
+
+gem 'whenever', :require => false
 
 gem 'rails', '4.1.6'
 gem 'sass-rails', '~> 4.0.3'
