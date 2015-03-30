@@ -55,8 +55,7 @@ module ItemsHelper
   		when 4
   			"您已完成報名程序，廠商將會與您聯絡 謝謝～"
   		when -1
-  			"您已被廠商取消報名資格"	
-  			
+  			"您已被廠商取消報名資格"		
   	end
   end
 end

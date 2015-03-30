@@ -1,19 +1,8 @@
-<%=render "layouts/newStep" %>
+<%=render "newStep" %>
 <%= form_for @group, url: { controller: 'nctu_cce', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
-<% if @group.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@group.errors.count, "error") %> prohibited this item from being saved:</h2>
+<%= hidden_field_tag :step, @step %>
 
-	<ul>
-		<% @group.errors.full_messages.each do |message| %>
-		<li>
-			<%= message %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<% end %>
-		<%= g.hidden_field :module %>		
+<%= g.hidden_field :module %>		
 <div class="form-group">
 	<label class="col-sm-2 control-label">課程名稱*</label>
 	<div class="col-sm-6">

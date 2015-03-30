@@ -1,6 +1,7 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
-  
+
+  before_action :set_new_step, only: [:new, :create]
   before_action :set_item, only: [:show, :editItem, :destroy, :indexManagement]
   before_action :set_group, only: [:editGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel]    
@@ -25,7 +26,7 @@ class NctuCceController < ApplicationController
     checkValidations(validations: validations_result, render: 'new' )   
     @group.items.first.user = current_user 
     @group.save  
-    redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id  
+    redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id
   end 
   
   def editItem  
@@ -182,34 +183,37 @@ class NctuCceController < ApplicationController
   		@row += "<td>#{vc.status["res"]["desc"]}</td>"
   		@row += "<td>#{vc.status["Amount"]}</td>"
   		@row += "<td>#{vc.status["PayChnl"]}</td></tr>"
-  		
   	end
   end
   
   private
-    def set_item
-      @item = Item.find(params[:id])
-    end
+  def set_new_step
+    @step = params[:step]
+  end  
+    
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
-    def set_group
-      @group = Group.find(params[:id])
-    end   
+  def set_group
+    @group = Group.find(params[:id])
+  end   
     
-    def set_progress
-      @progress = Progress.find(params[:id])     
-    end
+  def set_progress
+    @progress = Progress.find(params[:id])     
+  end
     
-    def item_params
-      params.require(:item).permit(:verification_code, :no_of_user, :price,
-                                   :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available)      
-    end
+  def item_params
+    params.require(:item).permit(:verification_code, :no_of_user, :price,
+                                 :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available)      
+  end
     
-    def user_params
-      params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, :postal, :county, :district)      
-    end
+  def user_params
+    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, :postal, :county, :district)      
+  end
 
-    def group_params
-      params.require(:group).permit(:module, :title, :description, items_attributes: [:verification_code, :no_of_user, :price,
-                                    :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
-    end  
+  def group_params
+    params.require(:group).permit(:module, :title, :description, items_attributes: [:verification_code, :no_of_user, :price,
+                                  :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
+  end  
 end
