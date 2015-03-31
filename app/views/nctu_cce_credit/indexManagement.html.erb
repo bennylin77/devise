@@ -7,14 +7,17 @@
 		</ul>
 		<ul class="nav nav-pills col-md-offset-5  col-md-4">
 		  <li role="presentation">
-		  	<%=link_to '群組寄信', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
+		  	<%=link_to '群組寄信', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @item.id}%>
 		  </li>			
 		  <li role="presentation">
-		  	<%=link_to '名稱簡介設定', {controller: 'nctu_cce', action: 'editGroup', id: @item.group.id} %>
+		  	<%=link_to '名稱簡介設定', {controller: 'nctu_cce_credit', action: 'editGroup', id: @item.group.id} %>
 		  </li>
 		  <li role="presentation">
-			<%=link_to '基本資料設定', {controller: 'nctu_cce', action: 'editItem', id: @item.id} %>		  	
+			<%=link_to '基本資料設定', {controller: 'nctu_cce_credit', action: 'editItem', id: @item.id} %>		  	
 		  </li>
+		  <li role="presentation">
+			<%=link_to '課程設定', {controller: 'nctu_cce_credit', action: 'editCourses', id: @item.id} %>		  	
+		  </li>		  
 		</ul>		
 	</div>
 </div>

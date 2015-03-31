@@ -4,9 +4,7 @@
 	<h3 class="col-sm-5 col-sm-offset-1">基本資料設定</h3>
   </div>
 </div>
-<%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem" }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
-
-	<%= i.hidden_field :verification_code %>  
+<%= form_for @item, url: { controller: 'nctu_cce_credit', action: "updateItem" }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
 	<%= i.hidden_field :id %>  	
 	<div class="form-group">
 		<label class="col-sm-2 control-label">學年</label>
@@ -20,36 +18,7 @@
 		<div class="col-sm-2">
 			<%= i.select :semester, options_for_select([["一", 1], ["二", 2]], @item.semester), {prompt: '學期'}, class: "form-control" %>		
 		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">期數</label>
-		<div class="col-sm-6">
-			<%= i.text_field :term, class: "form-control", placeholder: "期數" %>
-		</div>
 	</div>		
-	<div class="form-group">
-		<label class="col-sm-2 control-label">招生人數*</label>
-		<div class="col-sm-6">
-			<%= i.text_field :no_of_user, class: "form-control", placeholder: "招生人數" %>
-		</div>
-	</div>
-	<div class="form-group">	
-		<label class="col-sm-2 control-label">接受備取*</label>	
-		<div class="col-sm-6">
-		<label class="radio-inline ">
-			<%=i.radio_button :waiting_available, "true", checked: true %>是
-		</label>
-		<label class="radio-inline ">
-			<%=i.radio_button :waiting_available, "false" %>否
-		</label>
-		</div>
-	</div>		
-	<div class="form-group">
-		<label class="col-sm-2 control-label">學費*</label>
-		<div class="col-sm-6">
-			<%= i.text_field :price, class: "form-control", placeholder: "學費" %>
-		</div>
-	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
