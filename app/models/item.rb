@@ -8,7 +8,7 @@ class Item
   has_many :sub_items   
   belongs_to :user  
   belongs_to :group
-#accepts_nested_attributes_for :sub_items 
+  accepts_nested_attributes_for :sub_items 
 
   
   field :start_at, type: DateTime  
@@ -24,7 +24,7 @@ class Item
    
   #CCE
   field :verification_code, type: String   
-  field :payment_strat_at, type: DateTime   
+  field :payment_start_at, type: DateTime   
   field :payment_end_at, type: DateTime    
   
   #validates :start_at, presence: {message: "報名開始時間 不能是空白"}  

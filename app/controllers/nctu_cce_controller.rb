@@ -18,10 +18,10 @@ class NctuCceController < ApplicationController
                                     {type: 'presence', title: '金額', data: @group.items.first.price},
                                     {type: 'presence', title: '報名開放時間', data: @group.items.first.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @group.items.first.end_at},        
-                                    {type: 'presence', title: '繳費開放時間', data: @group.items.first.payment_strat_at},
+                                    {type: 'presence', title: '繳費開放時間', data: @group.items.first.payment_start_at},
                                     {type: 'presence', title: '繳費結束時間', data: @group.items.first.payment_end_at},
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @group.items.first.start_at, second: @group.items.first.end_at }},
-                                    {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @group.items.first.payment_strat_at, second: @group.items.first.payment_end_at }}                                    
+                                    {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @group.items.first.payment_start_at, second: @group.items.first.payment_end_at }}                                    
                                     ])                                   
     checkValidations(validations: validations_result, render: 'new' )   
     @group.items.first.user = current_user 
@@ -39,10 +39,10 @@ class NctuCceController < ApplicationController
                                     {type: 'presence', title: '金額', data: @item.price},
                                     {type: 'presence', title: '報名開放時間', data: @item.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @item.end_at},        
-                                    {type: 'presence', title: '繳費開放時間', data: @item.payment_strat_at},
+                                    {type: 'presence', title: '繳費開放時間', data: @item.payment_start_at},
                                     {type: 'presence', title: '繳費結束時間', data: @item.payment_end_at},
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @item.start_at, second: @item.end_at }},
-                                    {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @item.payment_strat_at, second: @item.payment_end_at }}                                    
+                                    {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @item.payment_start_at, second: @item.payment_end_at }}                                    
                                     ])                                   
     checkValidations(validations: validations_result, render: 'editItem' )   
     @item.save  
@@ -205,7 +205,7 @@ class NctuCceController < ApplicationController
     
   def item_params
     params.require(:item).permit(:verification_code, :no_of_user, :price,
-                                 :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available)      
+                                 :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :waiting_available)      
   end
     
   def user_params
@@ -214,6 +214,6 @@ class NctuCceController < ApplicationController
 
   def group_params
     params.require(:group).permit(:module, :title, :description, items_attributes: [:verification_code, :no_of_user, :price,
-                                  :start_at, :end_at, :payment_strat_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
+                                  :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
   end  
 end

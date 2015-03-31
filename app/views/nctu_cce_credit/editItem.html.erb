@@ -34,7 +34,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">繳費開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :payment_strat_at, class: "form-control", id: 'datetimepicker_payment_strat_at', placeholder: "繳費開放時間" %>	
+			<%= i.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', placeholder: "繳費開放時間" %>	
 		</div>
 	</div>
 	<div class="form-group">
@@ -47,14 +47,14 @@
 
 <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
-		<%= i.submit '送出',  class: "btn btn-default"  %>
+		<%= i.submit '儲存',  class: "btn btn-default"  %>
 	</div>
 </div>
 <% end %>
 
 <script type="text/javascript">
 	$(function () {
-		$('#datetimepicker_start_at, #datetimepicker_end_at, #datetimepicker_payment_strat_at, #datetimepicker_payment_end_at').datetimepicker({
+		$('#datetimepicker_start_at, #datetimepicker_end_at, #datetimepicker_payment_start_at, #datetimepicker_payment_end_at').datetimepicker({
 			use24hours : true,
 			format : 'YYYY/MM/DD HH:mm'		
 	    });   	    

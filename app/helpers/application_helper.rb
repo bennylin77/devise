@@ -22,4 +22,11 @@ module ApplicationHelper
     end         
   end   
   
+  def showBlank(s)
+    if s.blank?
+      '--'
+    else  
+      simple_format( s, {}, wrapper_tag: "span")
+    end
+  end  
 end
