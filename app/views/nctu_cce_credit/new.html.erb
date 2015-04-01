@@ -1,6 +1,5 @@
 <%=render "newStep" %>
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "newCourses" }, html: {class: "form-horizontal", role: "form"} do |g| %>
-<%= hidden_field_tag :step, @step %>
 <%= g.hidden_field :module %>		
 <div class="form-group">
 	<label class="col-sm-2 control-label">班級名稱*</label>

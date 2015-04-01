@@ -1,13 +1,14 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
 
-  before_action :set_new_step, only: [:new, :create]
-  before_action :set_item, only: [:show, :editItem, :destroy, :indexManagement]
+  before_action :set_step, only: [:new, :create]
+  before_action :set_item, only: [:show, :editItem, :destroy, :indexManagement, :first]
   before_action :set_group, only: [:editGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel]    
   def new
     @group = Group.new( module: params[:module])
     @group.items.build()    
+    @step = 2
   end
   
   def create
@@ -67,7 +68,6 @@ class NctuCceController < ApplicationController
   
   def first
     @user=current_user
-    @item=Item.find(params[:item_id])
 =begin    
     unless params[:item_id].blank?
       @item=Item.find(params[:item_id])
@@ -187,7 +187,7 @@ class NctuCceController < ApplicationController
   end
   
   private
-  def set_new_step
+  def set_step
     @step = params[:step]
   end  
     

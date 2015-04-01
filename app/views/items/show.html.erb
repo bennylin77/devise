@@ -23,27 +23,27 @@
 								 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
 								 progress_id: @item.progresses.where(user_id: current_user.id).first.id}
 -->								 		
-		<%=link_to '查看報名進度', "/items/progress_status?"+{id: pg.id}.to_param, {class: "btn btn-lg btn-success", role: "button"} %>	
+			<%=link_to '查看報名進度', "/items/progress_status?"+{id: pg.id}.to_param, {class: "btn btn-lg btn-success", role: "button"} %>	
 		<%else%>
 			<%if @item.waiting_start%>		
 				<%if @item.waiting_available%>
-					<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+					<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
 				<%else%>
 					<%=link_to '報名已額滿', "", {class: "btn btn-lg btn-success", role: "button"} %>					
 				<%end%>
 			<%else%>
-				<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+				<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
 			<%end%>				
 		<%end%>
 	<%else%>	
 		<%if @item.waiting_start%>		
 			<%if @item.waiting_available%>
-				<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+				<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
 			<%else%>
 				<%=link_to '報名已額滿', "", {class: "btn btn-lg btn-success", role: "button"} %>					
 			<%end%>
 		<%else%>
-			<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', item_id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
+			<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.module).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>
 		<%end%>	
 	<%end%>	
 </p>

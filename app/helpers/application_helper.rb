@@ -12,7 +12,7 @@ module ApplicationHelper
     }[flash_type.to_sym] || flash_type.to_s
   end  
   
-  def newStepProgress(hash={})
+  def stepProgress(hash={})
     if hash[:step].to_i == hash[:step_now].to_i
       'under'
     elsif hash[:step].to_i > hash[:step_now].to_i 

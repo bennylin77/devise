@@ -1,13 +1,13 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
   
-  before_action :set_new_step, only: [:new, :newCourses, :create]
-  before_action :set_item, only: [:indexManagement, :editItem, :sendMessage, :editCourses]  
+  before_action :set_item, only: [:indexManagement, :editItem, :sendMessage, :editCourses, :first]  
   before_action :set_group, only: [:editGroup]  
     
   def new
     @group = Group.new( module: params[:module])
-    @group.items.build()        
+    @group.items.build()    
+    @step = 2    
   end
   
   def newCourses
@@ -20,7 +20,8 @@ class NctuCceCreditController < ApplicationController
                                     {type: 'presence', title: '繳費結束時間', data: @group.items.first.payment_end_at},
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @group.items.first.start_at, second: @group.items.first.end_at }},
                                     {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @group.items.first.payment_start_at, second: @group.items.first.payment_end_at }}                                    
-                                    ])                                   
+                                    ])          
+    @step = 2                         
     checkValidations(validations: validations_result, render: 'new' ) 
     @step = 3      
   end
@@ -107,25 +108,37 @@ class NctuCceCreditController < ApplicationController
   end
   
   def updateCourses
-    
+    @item=Item.find(params[:item][:id])    
+    @item.assign_attributes(item_params)        
+    @item.sub_items.each do |ii|
+      validations_result=validations([{type: 'presence', title: '課程名稱', data: ii.title},     
+                                      {type: 'presence', title: '學費', data: ii.price},   
+                                      {type: 'presence', title: '招生人數', data: ii.no_of_user}                                                                                   
+                                      ])        
+      checkValidations(validations: validations_result, render: 'editCourses' )                                           
+    end    
+    @item.save  
+    flash[:success]="成功更新課程"
+    redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id        
   end
+# ------------ booking --------------#
+  def first
+    @user=current_user   
+  end  
+  
   
   private
 
   def set_item
     @item = Item.find(params[:id])
-  end
-  
-  def set_new_step
-    @step = params[:step]
-  end  
+  end 
   
   def set_group
     @group = Group.find(params[:id])
   end   
   
   def item_params
-    params.require(:item).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, sub_items_attributes: [:title, :no_of_user, :price])      
+    params.require(:item).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, sub_items_attributes: [:title, :no_of_user, :price, :id])      
   end
   
   def group_params

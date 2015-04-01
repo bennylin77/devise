@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   post 'nctu_cce/second' 
   get  'nctu_cce/check_account' 
   post 'nctu_cce/check_account' 
- 
+
+  get  'nctu_cce_credit/first' 
   get  'nctu_cce_credit/new' 
   get  'nctu_cce_credit/newCourses'  
   post 'nctu_cce_credit/newCourses'

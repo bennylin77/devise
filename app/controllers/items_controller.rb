@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :createCompletion]
-  before_action :set_new_step, only: [:new, :create, :createCompletion]
 
   def index
     @items = Item.all.paginate(per_page: 30, page: params[:page])
@@ -23,11 +22,11 @@ class ItemsController < ApplicationController
     # check identified code and redirect to right module
     case params[:module]
     when GLOBAL_VAR['NCTU_CCE'].to_s
-      redirect_to controller: :nctu_cce, action: :new, module: params[:module], step: 2
+      redirect_to controller: :nctu_cce, action: :new, module: params[:module]
     when GLOBAL_VAR['NCTU_CCE_credit'].to_s
-      redirect_to controller: :nctu_cce_credit, action: :new, module: params[:module], step: 2
+      redirect_to controller: :nctu_cce_credit, action: :new, module: params[:module]
     when GLOBAL_VAR['NCTU_CCE_camp'].to_s
-      redirect_to controller: :nctu_cce_camp, action: :new, module: params[:module], step: 2
+      redirect_to controller: :nctu_cce_camp, action: :new, module: params[:module]
     else
       flash[:error]='請選擇模組'
       redirect_to new_item_path
@@ -63,9 +62,6 @@ class ItemsController < ApplicationController
   end
 
   private
-    def set_new_step
-      @step = params[:step]
-    end
   
     def set_item
       @item = Item.find(params[:id])

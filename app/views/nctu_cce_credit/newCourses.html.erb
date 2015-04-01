@@ -1,6 +1,5 @@
 <%=render "newStep" %>
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
-	<%= hidden_field_tag :step, @step %>
 	<%= g.hidden_field :module %>		
 	<%= g.hidden_field :title%>
 	<%= g.hidden_field :description%>

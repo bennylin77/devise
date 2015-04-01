@@ -60,7 +60,7 @@
 					<td>玉山銀行</td>
 					<td><%=@data.vaccount.vacc%></td>
 					<td><%=@data.payment.to_s%> NT</td>
-					<td><%=@data.item.payment_strat_at.strftime("%D %R")%></td>
+					<td><%=@data.item.payment_start_at.strftime("%D %R")%></td>
 					<td><%=@data.item.payment_end_at.strftime("%D %R")%></td>
 				</tr>
 			 </table>

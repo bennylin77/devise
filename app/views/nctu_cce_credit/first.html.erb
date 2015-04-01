@@ -1,0 +1,93 @@
+<%=render "step" %>
+
+<%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>
+<% if @user.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@user.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+	<ul>
+		<% @user.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>	
+	<%unless @item.blank?%>
+		<%= hidden_field_tag 'item_id', @item.id %>
+	<%end%>
+	<%unless @progress.blank?%>	
+		<%= hidden_field_tag 'progress_id', @progress.id %>	
+	<%end%>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">姓名*</label>
+		<div class="col-sm-6">
+			<%= u.text_field :name, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">出生年月日*</label>
+		<div class="col-sm-6">
+			<%if @user.birthday.blank?%>
+			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>	
+			<%else%>
+			<%= u.text_field :birthday, value: @user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
+			<%end%>
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_birthday').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">性別*</label>
+		<div class="col-sm-6">
+		<label class="radio-inline">
+	  		<%=u.radio_button :gender, "true"%>男			
+		</label>
+		<label class="radio-inline">
+	 	 	<%=u.radio_button :gender, "false"%>女		
+		</label>			
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">身分證字號*</label>
+		<div class="col-sm-6">
+			<%= u.text_field :id_no_TW, class: "form-control" %>
+		</div>
+	</div>			
+	<div class="form-group">
+		<label class="col-sm-2 control-label">聯絡電話*</label>
+		<div class="col-sm-6">
+			<%= u.text_field :phone_no, class: "form-control" %>
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">聯絡地址*</label>
+		<div class="col-sm-6">
+			<span id="twzipcode"></span>		
+			<%= u.text_field :address%>
+		</div>
+	</div>		
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<%= u.submit '送出',  class: "btn btn-default"  %>
+		</div>
+	</div>
+<% end %>
+
+<script>
+$('#twzipcode').twzipcode({
+	zipcodeName: 'user[postal]',
+    countyName: 'user[county]',
+    districtName: 'user[district]',
+    zipcodeIntoDistrict: true,
+    <%unless @user.county.blank?%>
+	countySel: '<%=@user.county%>',
+	districtSel: '<%=@user.district%>'
+	<%end%>    
+});
+</script>
