@@ -4,10 +4,8 @@
 	<h3 class="col-sm-5 col-sm-offset-1">基本資料設定</h3>
   </div>
 </div>
-<%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem" }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
-
-	<%= i.hidden_field :verification_code %>  
-	<%= i.hidden_field :id %>  	
+<%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem", id: @item.id }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
+	
 	<div class="form-group">
 		<label class="col-sm-2 control-label">學年</label>
 		<div class="col-sm-3">

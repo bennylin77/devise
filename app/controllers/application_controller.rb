@@ -25,8 +25,6 @@ class ApplicationController < ActionController::Base
     end      
     validation_result  
   end  
-  
-private
 
   def checkValidations(hash={})
     unless hash[:validations].count==0  
@@ -36,8 +34,38 @@ private
         raise Validations::Failed.new(errors: hash[:validations], render: hash[:render])
       end   
     end
-  end  
+  end   
   
+  def groupCheckUser(id)
+    unless Group.where(id: id).first == nil      
+      if Group.find(id).items.where(user_id: current_user.id).first == nil      
+        flash["error"]="您沒有權限"
+        redirect_to root_url          
+      end  
+    else
+      flash["error"]="項目不存在"
+      redirect_to root_url        
+    end 
+  end
+  
+  [:Item].each do |model|
+    class_eval %Q{
+      def #{model}CheckUser(id)
+       unless #{model}.where(id: id).first == nil
+         if #{model}.find(id).user != current_user
+            flash["error"]="您沒有權限"
+            redirect_to root_url          
+         end  
+       else
+        flash["error"]="項目不存在"
+        redirect_to root_url        
+       end    
+      end
+    }
+  end
+  
+private
+
   def validationsHandler(exception)  
     flash[:error]=""
     exception.args[:errors].each do |e|

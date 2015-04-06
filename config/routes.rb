@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   get  'items/showManagement'
   get  'items/indexManagement'
   get  'items/progress'
-  get  'items/progress_status'  
+  get  'items/progressStatus'  
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :items  

@@ -1,6 +1,9 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :createCompletion]
 
+  before_filter :authenticate_user!, only: [:indexManagement, :new, :create, :progress]   
+  
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :createCompletion]
+  before_action :set_progress, only: [:progressStatus]
   def index
     @items = Item.all.paginate(per_page: 30, page: params[:page])
   end
@@ -13,9 +16,6 @@ class ItemsController < ApplicationController
   end
 
   def new
-  end
-
-  def edit
   end
 
   def create
@@ -36,6 +36,10 @@ class ItemsController < ApplicationController
   def createCompletion
     flash[:success]='成功建立 '+@item.group.title
   end  
+=begin
+
+  def edit
+  end  
 
   def update
     @item.update(item_params)
@@ -46,13 +50,13 @@ class ItemsController < ApplicationController
     @item.destroy
     respond_with(@item)
   end
-  
+=end  
   def progress
-    @progesses=current_user.progresses.order('stage DESC')
+    @progresses = current_user.progresses.order('stage DESC')
   end
   
-  def progress_status
-  	@data = Progress.find(params[:id])
+  def progressStatus
+    
   	if @data and  @data.user == current_user
   		
   	else
@@ -65,6 +69,10 @@ class ItemsController < ApplicationController
   
     def set_item
       @item = Item.find(params[:id])
+    end
+    
+    def set_progress
+      @progress = Item.find(params[:id])      
     end
 
     def item_params

@@ -12,6 +12,7 @@ class NctuCceCreditController < ApplicationController
   
   def newCourses
     @group = Group.new(group_params)      
+    @step = 2     
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
                                     {type: 'presence', title: '課程簡介', data: @group.description},
                                     {type: 'presence', title: '報名開放時間', data: @group.items.first.start_at},                                      
@@ -20,8 +21,7 @@ class NctuCceCreditController < ApplicationController
                                     {type: 'presence', title: '繳費結束時間', data: @group.items.first.payment_end_at},
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @group.items.first.start_at, second: @group.items.first.end_at }},
                                     {type: 'latter_than', title: { first: '繳費開放時間', second: '繳費結束時間' }, data: { first: @group.items.first.payment_start_at, second: @group.items.first.payment_end_at }}                                    
-                                    ])          
-    @step = 2                         
+                                    ])                                  
     checkValidations(validations: validations_result, render: 'new' ) 
     @step = 3      
   end
@@ -31,7 +31,7 @@ class NctuCceCreditController < ApplicationController
     @title = params[:title]
     @price = params[:price]
     @no_of_user = params[:no_of_user]    
-    
+    @step = 3    
     validations_result=validations([{type: 'presence', title: '班級名稱', data: @group.title},
                                     {type: 'presence', title: '班級簡介', data: @group.description},
                                     {type: 'presence', title: '報名開放時間', data: @group.items.first.start_at},                                      

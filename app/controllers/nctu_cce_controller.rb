@@ -1,9 +1,11 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
+  before_action only: [:editItem , :updateItem, :sendMessage] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:editGroup, :updateGroup] { |c| c.groupCheckUser(params[:id])}  
 
   before_action :set_step, only: [:new, :create]
-  before_action :set_item, only: [:show, :editItem, :destroy, :indexManagement, :first]
-  before_action :set_group, only: [:editGroup]  
+  before_action :set_item, only: [:show, :editItem, :updateItem, :destroy, :indexManagement, :sendMessage, :first]
+  before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel]    
   def new
     @group = Group.new( module: params[:module])
@@ -34,7 +36,6 @@ class NctuCceController < ApplicationController
   end 
   
   def updateItem
-    @item=Item.find(params[:item][:id])
     @item.assign_attributes(item_params)
     validations_result=validations([{type: 'presence', title: '報名人數', data: @item.no_of_user},
                                     {type: 'presence', title: '金額', data: @item.price},
@@ -55,7 +56,6 @@ class NctuCceController < ApplicationController
   end 
   
   def updateGroup
-    @group=Group.find(params[:group][:id])
     @group.assign_attributes(group_params)
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
                                     {type: 'presence', title: '課程簡介', data: @group.description}])                                   
@@ -64,25 +64,27 @@ class NctuCceController < ApplicationController
     flash[:success]="成功更新名稱簡介"
     redirect_to controller: :nctu_cce, action: :indexManagement, id: @group.items.first.id     
   end  
-  
+
+  def sendMessage
+    if request.post?        
+      params[:recipients].each do |r|
+        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
+      end        
+      redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
+    end
+  end  
   
   def first
-    @user=current_user
-=begin    
-    unless params[:item_id].blank?
-      @item=Item.find(params[:item_id])
-    end  
-    unless params[:progress_id].blank?
-      @progress=Progress.find(params[:progress_id])      
-    end
-=end    
+    @user = current_user   
+    @step = 1
   end
   
   def second
     if params[:progress_id].blank?
       @user = current_user  
       @user.assign_attributes(user_params) 
-      @item = Item.find(params[:item_id])     
+      @item = Item.find(params[:item_id])    
+      @step = 1       
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
                                       {type: 'presence', title: '性別', data: user_params[:gender]},
@@ -92,7 +94,8 @@ class NctuCceController < ApplicationController
                                       {type: 'presence', title: '聯絡地址-縣市', data: user_params[:county]},                                      
                                       {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]}])
-      checkValidations(validations: validations_result, render: 'first' )           
+      checkValidations(validations: validations_result, render: 'first' )       
+      @step = 2          
       @user.save    
       if @item.progresses.count < @item.no_of_user or @item.waiting_available
         @progress=Progress.new
@@ -113,8 +116,7 @@ class NctuCceController < ApplicationController
         @progress.save   
       end               
     else
-      @user = current_user    
-      #@user.update(user_params)     
+      @user = current_user     
       @progress = Progress.find(params[:progress_id])     
       @progress.stage=2
       @progress.save    
@@ -129,17 +131,7 @@ class NctuCceController < ApplicationController
     @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
   end  
   
-  def sendMessage
-    @item = Item.find(params[:id])   
-    if request.post?
-        
-      params[:recipients].each do |r|
-        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
-      end
-        
-      redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
-    end
-  end
+
   
   def showProgress
   end

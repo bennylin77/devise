@@ -1,19 +1,5 @@
 <%=render "step" %>
-
-<%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>
-<% if @user.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@user.errors.count, "error") %> prohibited this item from being saved:</h2>
-
-	<ul>
-		<% @user.errors.full_messages.each do |message| %>
-		<li>
-			<%= message %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<% end %>	
+<%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'item_id', @item.id %>
 	<%end%>
