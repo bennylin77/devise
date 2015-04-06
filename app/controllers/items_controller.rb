@@ -1,9 +1,9 @@
 class ItemsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:indexManagement, :new, :create, :progress]   
-  
   before_action :set_item, only: [:show, :edit, :update, :destroy, :createCompletion]
   before_action :set_progress, only: [:progressStatus]
+  
   def index
     @items = Item.all.paginate(per_page: 30, page: params[:page])
   end
@@ -36,34 +36,10 @@ class ItemsController < ApplicationController
   def createCompletion
     flash[:success]='成功建立 '+@item.group.title
   end  
-=begin
-
-  def edit
-  end  
-
-  def update
-    @item.update(item_params)
-    respond_with(@item)
-  end
-
-  def destroy
-    @item.destroy
-    respond_with(@item)
-  end
-=end  
+  
   def progress
     @progresses = current_user.progresses.order('stage DESC')
-  end
-  
-  def progressStatus
-    
-  	if @data and  @data.user == current_user
-  		
-  	else
-  		flash[:error] = "Action Denied"
-  		redirect_to "/items/progress"
-  	end
-  end
+  end   
 
   private
   

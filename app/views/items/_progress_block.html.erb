@@ -1,13 +1,12 @@
 <div class="progress_box"  id="progress_box_<%=progress_block.id%>" >
-	<div class="panel panel-<%=stage_color progress_block.stage%>">
+	<div class="panel panel-<%=stageColor progress_block.stage%>">
 	  <div class="panel-heading">
-<!-- "/"+Hash[controllerOptions].rassoc(progress_block.item.group.module).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first -->	  
-		<%=link_to "/items/progressStatus?id="+progress_block.id, {} do%>
+		<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.item.group.module).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?progress_id="+progress_block.id, {} do%>
 	    <h3 class="panel-title"><%= progress_block.item.group.title %></h3>
 	    <%end%>	 
 	  </div>
 	  <div class="panel-body">
-			<%=link_to "/items/progressStatus?id="+progress_block.id, {} do %>
+			<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.item.group.module).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?progress_id="+progress_block.id, {} do %>
 		    <p><%= progress_block.item.group.description%></p>
 		    <div id="clock_<%=progress_block.id%>"></div>
 	  	<%end%> 

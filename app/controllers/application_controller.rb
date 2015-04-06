@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
     end 
   end
   
-  [:Item].each do |model|
+  [:Item, :Progress].each do |model|
     class_eval %Q{
       def #{model}CheckUser(id)
        unless #{model}.where(id: id).first == nil

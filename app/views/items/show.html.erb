@@ -17,13 +17,10 @@
 <p>
 	<% if user_signed_in? %>	
 		<% pg = @item.progresses.where(user_id: current_user.id).last %>
-		<%if pg and pg.stage>0%>	
-<!--
-{controller: Hash[controllerOptions].rassoc(@item.group.module).first, 
-								 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
-								 progress_id: @item.progresses.where(user_id: current_user.id).first.id}
--->								 		
-			<%=link_to '查看報名進度', "/items/progress_status?"+{id: pg.id}.to_param, {class: "btn btn-lg btn-success", role: "button"} %>	
+		<%if pg %>									 		
+			<%=link_to '查看報名進度',{ controller: Hash[controllerOptions].rassoc(@item.group.module).first,
+									 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
+								     progress_id: @item.progresses.where(user_id: current_user.id).first.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
 		<%else%>
 			<%if @item.waiting_start%>		
 				<%if @item.waiting_available%>

@@ -1,6 +1,6 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
-  before_action only: [:editItem , :updateItem, :sendMessage] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:editGroup, :updateGroup] { |c| c.groupCheckUser(params[:id])}  
 
   before_action :set_step, only: [:new, :create]
@@ -69,7 +69,8 @@ class NctuCceController < ApplicationController
     if request.post?        
       params[:recipients].each do |r|
         System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
-      end        
+      end    
+      flash[:success]="成功寄出信件"          
       redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
     end
   end  
@@ -119,19 +120,42 @@ class NctuCceController < ApplicationController
       @user = current_user     
       @progress = Progress.find(params[:progress_id])     
       @progress.stage=2
-      @progress.save    
+      @progress.save   
+      @step = 2       
     end    
   end
   
   def third
-    
+    @step = 3     
+    @progress = Progress.find(params[:progress_id])      
+  end  
+
+  def verified
+    if @progress.verified
+      @progress.verified=false
+      @progress.stage=-1
+      @progress.reason = params[:reason]
+      if @progress.vaccount
+        @progress.vaccount.active = false 
+        @progress.vaccount.save!
+      end
+      @progress.save!
+      flash[:alert]="已取消通過 "+@progress.user.name+" 的報名"
+    else
+      @progress.verified=true 
+      @progress.payment = params[:payment].to_f
+      @progress.create_vaccount if @progress.payment > 0
+      @progress.stage= (@progress.payment > 0) ? 3 : 4  
+      @progress.save!    
+      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
+    end
+    System.verified_result_send(@progress)
+    redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
   
   def indexManagement
     @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
   end  
-  
-
   
   def showProgress
   end
@@ -140,29 +164,6 @@ class NctuCceController < ApplicationController
     @progress.destroy!
     redirect_to controller: 'items', action: 'progress', finished: false   
   end
-  
-  def verified
-    if @progress.verified
-      @progress.verified=false
-      @progress.stage=-1
-      @progress.reason = params[:reason]
-	  if @progress.vaccount
-	  	@progress.vaccount.active = false 
-	  	@progress.vaccount.save!
-	  end
-      @progress.save!
-      flash[:alert]="已取消通過 "+@progress.user.name+" 的報名"
-    else
-      @progress.verified=true 
-      @progress.payment = params[:payment].to_f
-	  @progress.create_vaccount if @progress.payment > 0
-	  @progress.stage= (@progress.payment > 0) ? 3 : 4  
-      @progress.save!    
-      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
-    end
-	System.verified_result_send(@progress)
-    redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
-  end  
   
   def check_account
   	if request.post?

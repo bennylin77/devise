@@ -1,18 +1,17 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
-<h3>報名學員</h3>
+<div class="container" style="margin-bottom: 20px;">
+  <div class="row">
+	<h3 class="col-sm-5 col-sm-offset-1">報名學員</h3>
+  </div>
+</div>
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-md-offset-2">
 		<%if @progress.stage==2%>	
-		<!--<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">審核通過</button>		
-		-->
 		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#agree-confirm">
   			審核通過
-		</button>
-		
+		</button>	
 		<%elsif @progress.stage==3%>
-	<!--	<button type="button" class="btn btn-info" onclick="document.location='<%=host%>/nctu_cce/verified?id=<%=@progress.id%>';">取消資格</button>				
-	-->
 		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel-confirm">
   			取消資格
 		</button>
@@ -57,10 +56,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">取消資格</h4>
+        <h4 class="modal-title" id="myModalLabel">審核通過</h4>
       </div>
       <div class="modal-body">
-       <%=label_tag "金額選擇：（填0會跳過繳費，直接完成報名）"%> 
+       <%=label_tag "學費：（填0元會跳過繳費步驟，直接完成報名）"%> 
        <%= form_tag "/nctu_cce/verified", :class=>"agree-form" do%>
        	<%=hidden_field_tag "id", @progress.id%>
        	<%=number_field_tag "payment", @progress.item.price, :class=>"form-control"%>

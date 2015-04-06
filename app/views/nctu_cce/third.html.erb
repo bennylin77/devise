@@ -1,10 +1,25 @@
 <%=render "step" %>
   <div class="row">
     <div class="col-sm-12">
-    	完成審核, 請匯款至以下玉山銀行帳號, 如有疑問請洽
-
+    	承辦人員已審核通過您的資格, 請匯款至以下玉山銀行帳號, 如有疑問請洽 <%= @progress.item.user.email%>
     </div>
     <div class="col-sm-12">
-
+		<table border="1" class="table">
+			<tr>
+				<td>銀行</td>
+				<td>帳號</td>
+				<td>金額</td>
+				<td>匯款開始日</td>
+				<td>匯款結束日</td>
+			</tr>
+			<tr>
+				<td>玉山銀行</td>
+				<td><%=@progress.vaccount.vacc%></td>
+				<td><%=@progress.payment.to_s%> NT</td>
+				<td><%=@progress.item.payment_start_at.strftime("%D %R")%></td>
+				<td><%=@progress.item.payment_end_at.strftime("%D %R")%></td>
+			</tr>
+		</table>
     </div>
   </div>
+
