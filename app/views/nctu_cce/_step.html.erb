@@ -1,4 +1,6 @@
-<a>退出報名</a>
+<%if step>=2%>
+<%=link_to '退出報名', controller: 'nctu_cce', action: 'cancel', id: progress.id %>
+<%end%>
 <ol class="progtrckr" data-progtrckr-steps="4">
     <li class="progtrckr-<%=stepProgress step: 1, step_now: @step%>">填表</li><!--
  --><li class="progtrckr-<%=stepProgress step: 2, step_now: @step%>">審核</li><!--

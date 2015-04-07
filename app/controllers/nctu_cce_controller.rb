@@ -1,6 +1,7 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}  
 
@@ -19,8 +20,8 @@ class NctuCceController < ApplicationController
     @group = Group.new(group_params)      
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
                                     {type: 'presence', title: '課程簡介', data: @group.description},
-                                    {type: 'presence', title: '報名人數', data: @group.items.first.no_of_user},
-                                    {type: 'presence', title: '金額', data: @group.items.first.price},
+                                    {type: 'presence', title: '招生人數', data: @group.items.first.no_of_user},
+                                    {type: 'presence', title: '學費', data: @group.items.first.price},
                                     {type: 'presence', title: '報名開放時間', data: @group.items.first.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @group.items.first.end_at},        
                                     {type: 'presence', title: '繳費開放時間', data: @group.items.first.payment_start_at},
@@ -39,8 +40,8 @@ class NctuCceController < ApplicationController
   
   def updateItem
     @item.assign_attributes(item_params)
-    validations_result=validations([{type: 'presence', title: '報名人數', data: @item.no_of_user},
-                                    {type: 'presence', title: '金額', data: @item.price},
+    validations_result=validations([{type: 'presence', title: '招生人數', data: @item.no_of_user},
+                                    {type: 'presence', title: '學費', data: @item.price},
                                     {type: 'presence', title: '報名開放時間', data: @item.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @item.end_at},        
                                     {type: 'presence', title: '繳費開放時間', data: @item.payment_start_at},
@@ -76,7 +77,7 @@ class NctuCceController < ApplicationController
       redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
     end
   end  
-  
+ # ------------ booking --------------# 
   def first
     @user = current_user   
     @step = 1
@@ -164,7 +165,7 @@ class NctuCceController < ApplicationController
   
   def cancel
     @progress.destroy!
-    redirect_to controller: 'items', action: 'progress', finished: false   
+    redirect_to controller: 'items', action: 'progress'   
   end
   
   def check_account

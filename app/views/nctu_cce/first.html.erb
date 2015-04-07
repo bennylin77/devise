@@ -1,4 +1,4 @@
-<%=render "step" %>
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
 <%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'item_id', @item.id %>
@@ -53,9 +53,9 @@
 	</div>		
 	<div class="form-group">
 		<label class="col-sm-2 control-label">聯絡地址*</label>
-		<div class="col-sm-6">
-			<span id="twzipcode"></span>		
-			<%= u.text_field :address%>
+		<div class="form-inline col-sm-6">
+			<span id="twzipcode"></span>
+			<%= u.text_field :address, class: "form-control" %>
 		</div>
 	</div>		
 	<div class="form-group">
@@ -71,6 +71,7 @@ $('#twzipcode').twzipcode({
     countyName: 'user[county]',
     districtName: 'user[district]',
     zipcodeIntoDistrict: true,
+    css: ['form-control', 'form-control'], 
     <%unless @user.county.blank?%>
 	countySel: '<%=@user.county%>',
 	districtSel: '<%=@user.district%>'

@@ -1,4 +1,4 @@
-<%=render "step" %>
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
   <div class="row">
     <div class="col-sm-12">
     	承辦人員已審核通過您的資格, 請匯款至以下玉山銀行帳號, 如有疑問請洽 <%= @progress.item.user.email%>

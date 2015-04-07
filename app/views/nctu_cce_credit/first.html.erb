@@ -1,19 +1,5 @@
 <%=render "step" %>
-
-<%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>
-<% if @user.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@user.errors.count, "error") %> prohibited this item from being saved:</h2>
-
-	<ul>
-		<% @user.errors.full_messages.each do |message| %>
-		<li>
-			<%= message %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<% end %>	
+<%= form_for @user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'item_id', @item.id %>
 	<%end%>
@@ -67,11 +53,28 @@
 	</div>		
 	<div class="form-group">
 		<label class="col-sm-2 control-label">聯絡地址*</label>
-		<div class="col-sm-6">
-			<span id="twzipcode"></span>		
-			<%= u.text_field :address%>
+		<div class="form-inline col-sm-6">
+			<span id="twzipcode"></span>
+			<%= u.text_field :address, class: "form-control" %>
 		</div>
-	</div>		
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">選擇課程*</label>		
+	</div>	
+	<div class="form-group">	
+		<label class="col-sm-1 col-sm-offset-2">勾選(複選)</label>		
+		<label class="col-sm-1">課程名稱</label>
+		<label class="col-sm-1">學費</label>
+		<label class="col-sm-2">報名人數 / 招生人數</label>	
+	</div> 
+	<% @item.sub_items.each do |ii|%>
+	<div class="form-group">
+		<div class="col-sm-1 col-sm-offset-2"><input type="checkbox" value="<%= ii.id%>" name="courses[]"></div>
+		<div class="col-sm-1"><%= ii.title%></div>
+		<div class="col-sm-1"><%= ii.price%></div>
+		<div class="col-sm-2"> / <%= ii.no_of_user%></div>
+	</div>			
+	<%end%>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<%= u.submit '送出',  class: "btn btn-default"  %>
@@ -85,6 +88,7 @@ $('#twzipcode').twzipcode({
     countyName: 'user[county]',
     districtName: 'user[district]',
     zipcodeIntoDistrict: true,
+    css: ['form-control', 'form-control'], 
     <%unless @user.county.blank?%>
 	countySel: '<%=@user.county%>',
 	districtSel: '<%=@user.district%>'

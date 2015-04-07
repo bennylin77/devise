@@ -7,7 +7,7 @@ namespace :vaccount do
      	return if res==-1 # 伺服器維修中
      	#p vacc.status.inspect
      	if vacc.status["code"].to_i!=1000 and vacc.status["Amount"].to_f == vacc.progress.payment.to_f
-     		vacc.progress.stage = 4
+     		vacc.progress.stage = 4 #vacc.progress.item.group.module
      		vacc.progress.save!
      		vacc.active = false
      	end

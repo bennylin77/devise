@@ -1,4 +1,4 @@
-<%=render "newStep" %>
+<%= render partial: "newStep", locals: {step: @step} %>
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
 	<%= g.hidden_field :module %>		
 	<%= g.hidden_field :title%>

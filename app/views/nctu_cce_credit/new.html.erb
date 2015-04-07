@@ -1,4 +1,4 @@
-<%=render "newStep" %>
+<%= render partial: "newStep", locals: {step: @step} %>
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "newCourses" }, html: {class: "form-horizontal", role: "form"} do |g| %>
 <%= g.hidden_field :module %>		
 <div class="form-group">
@@ -26,7 +26,7 @@
 		</div>
 		<label class="col-sm-1 control-label">學期</label>
 		<div class="col-sm-2">
-			<%= i.select :semester, options_for_select([["一", 1], ["二", 2]]), {prompt: '學期'}, class: "form-control" %>		
+			<%= i.select :semester, options_for_select([["上", 1], ["寒假", -1], ["下", 2], ["暑假", -2]]), {prompt: '學期'}, class: "form-control" %>		
 		</div>
 	</div>	
 	<div class="form-group">

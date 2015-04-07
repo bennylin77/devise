@@ -3,6 +3,7 @@ class SubItem
   include Mongoid::Timestamps   
   
   belongs_to :item
+  has_many   :registered_sub_items     
   
   field :title, type: String
   field :price, type: Float  

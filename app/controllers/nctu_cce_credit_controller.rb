@@ -1,8 +1,8 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
   
-  before_action :set_item, only: [:indexManagement, :editItem, :sendMessage, :editCourses, :first]  
-  before_action :set_group, only: [:editGroup]  
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :editCourses, :updateCourses, :first]  
+  before_action :set_group, only: [:editGroup, :updateGroup]  
     
   def new
     @group = Group.new( module: params[:module])
@@ -49,7 +49,6 @@ class NctuCceCreditController < ApplicationController
                                       ])        
       checkValidations(validations: validations_result, render: 'newCourses' )                                           
     end
-
     @group.items.first.user = current_user 
     @group.save      
     params[:title].each_with_index do |t, i|
@@ -75,7 +74,6 @@ class NctuCceCreditController < ApplicationController
   end 
   
   def updateItem
-    @item=Item.find(params[:item][:id])
     @item.assign_attributes(item_params)
     validations_result=validations([{type: 'presence', title: '報名開放時間', data: @item.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @item.end_at},        
@@ -94,7 +92,6 @@ class NctuCceCreditController < ApplicationController
   end 
   
   def updateGroup
-    @group=Group.find(params[:group][:id])
     @group.assign_attributes(group_params)
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
                                     {type: 'presence', title: '課程簡介', data: @group.description}])                                   
@@ -107,8 +104,7 @@ class NctuCceCreditController < ApplicationController
   def editCourses     
   end
   
-  def updateCourses
-    @item=Item.find(params[:item][:id])    
+  def updateCourses  
     @item.assign_attributes(item_params)        
     @item.sub_items.each do |ii|
       validations_result=validations([{type: 'presence', title: '課程名稱', data: ii.title},     
@@ -122,9 +118,69 @@ class NctuCceCreditController < ApplicationController
     redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id        
   end
 # ------------ booking --------------#
+  def cancel
+    
+  end
+
   def first
-    @user=current_user   
+    @user=current_user 
+    @step = 1      
   end  
+
+  def second
+    if params[:progress_id].blank?
+      @user = current_user  
+      @user.assign_attributes(user_params) 
+      @item = Item.find(params[:item_id])    
+      @step = 1       
+      validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
+                                      {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
+                                      {type: 'presence', title: '性別', data: user_params[:gender]},
+                                      {type: 'presence', title: '身分證字號', data: user_params[:id_no_TW]},                                      
+                                      {type: 'presence', title: '聯絡電話',data: user_params[:phone_no]},
+                                      {type: 'presence', title: '郵遞區號', data: user_params[:postal]},
+                                      {type: 'presence', title: '聯絡地址-縣市', data: user_params[:county]},                                      
+                                      {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
+                                      {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]}])
+      checkValidations(validations: validations_result, render: 'first' )       
+      @step = 2          
+      @user.save    
+
+      @progress=Progress.new
+      @progress.stage=2
+      @progress.user = current_user           
+      @progress.item = @item     
+      @progress.save      
+      @item.save        
+=begin      
+      if @item.progresses.count < @item.no_of_user or @item.waiting_available
+        @progress=Progress.new
+        @progress.stage=2
+        @progress.user = current_user           
+        @progress.item = @item     
+        @progress.save                 
+        #waiting
+        if ( !@item.waiting_start and @item.progresses.count>=@item.no_of_user ) or @item.waiting_start 
+            @item.waiting_start=true 
+            unless @item.progresses.count==@item.no_of_user 
+              @item.no_of_waiting_user+= 1        
+              @progress.waiting_no=@item.no_of_waiting_user
+              @progress.waiting=true   
+            end                     
+        end  
+        @item.save           
+        @progress.save   
+      end    
+=end      
+                 
+    else
+      @user = current_user     
+      @progress = Progress.find(params[:progress_id])     
+      @progress.stage=2
+      @progress.save   
+      @step = 2       
+    end    
+  end
   
   
   private
@@ -139,6 +195,10 @@ class NctuCceCreditController < ApplicationController
   
   def item_params
     params.require(:item).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, sub_items_attributes: [:title, :no_of_user, :price, :id])      
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, :postal, :county, :district)      
   end
   
   def group_params

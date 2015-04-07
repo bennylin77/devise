@@ -5,7 +5,8 @@ class Progress
   belongs_to :item
   belongs_to :user
 	
-	has_one :vaccount,  :dependent=> :destroy
+	has_one  :vaccount, dependent: :destroy
+  has_many :registered_sub_items, dependent: :destroy   
 
   field :stage, type: Integer
   field :waiting, type: Boolean, default: false
