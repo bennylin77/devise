@@ -1,9 +1,14 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
+  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
+  before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
+  before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}    
   
   before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :editCourses, :updateCourses, :first]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
-    
+  before_action :set_progress, only: [:verified, :cancel] 
+      
   def new
     @group = Group.new( module: params[:module])
     @group.items.build()    
@@ -119,7 +124,9 @@ class NctuCceCreditController < ApplicationController
   end
 # ------------ booking --------------#
   def cancel
-    
+    @progress.destroy
+    flash[:success]="成功退出報名"    
+    redirect_to controller: 'items', action: 'progress'   
   end
 
   def first
@@ -142,16 +149,27 @@ class NctuCceCreditController < ApplicationController
                                       {type: 'presence', title: '聯絡地址-縣市', data: user_params[:county]},                                      
                                       {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]}])
-      checkValidations(validations: validations_result, render: 'first' )       
-      @step = 2          
+      checkValidations(validations: validations_result, render: 'first' )               
       @user.save    
+      
+      validations_result=validations([{type: 'presence', title: '選擇課程', data: params[:courses]}])      
+      checkValidations(validations: validations_result, render: 'first' )      
 
       @progress=Progress.new
       @progress.stage=2
       @progress.user = current_user           
       @progress.item = @item     
-      @progress.save      
-      @item.save        
+      @progress.save 
+      
+      params[:courses].each do |c|
+        registered_sub_item = RegisteredSubItem.new  
+        @progress.registered_sub_items << registered_sub_item
+        @item.sub_items.where(id: c).first.registered_sub_items << registered_sub_item  
+        registered_sub_item.save 
+      end
+      
+      @item.save                  
+      @step = 2          
 =begin      
       if @item.progresses.count < @item.no_of_user or @item.waiting_available
         @progress=Progress.new
@@ -171,8 +189,7 @@ class NctuCceCreditController < ApplicationController
         @item.save           
         @progress.save   
       end    
-=end      
-                 
+=end          
     else
       @user = current_user     
       @progress = Progress.find(params[:progress_id])     
@@ -192,6 +209,10 @@ class NctuCceCreditController < ApplicationController
   def set_group
     @group = Group.find(params[:id])
   end   
+  
+  def set_progress
+    @progress = Progress.find(params[:id])     
+  end
   
   def item_params
     params.require(:item).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, sub_items_attributes: [:title, :no_of_user, :price, :id])      

@@ -1,4 +1,4 @@
-<%=render "step" %>
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
   <div class="row">
     <div class="col-sm-12">
     	完成報名, 請等待中心人員審核報名資格, 如審核通過, 系統將會寄送通知訊息至您的信箱

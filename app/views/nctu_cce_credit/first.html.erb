@@ -1,4 +1,4 @@
-<%=render "step" %>
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
 <%= form_for @user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'item_id', @item.id %>
@@ -72,7 +72,7 @@
 		<div class="col-sm-1 col-sm-offset-2"><input type="checkbox" value="<%= ii.id%>" name="courses[]"></div>
 		<div class="col-sm-1"><%= ii.title%></div>
 		<div class="col-sm-1"><%= ii.price%></div>
-		<div class="col-sm-2"> / <%= ii.no_of_user%></div>
+		<div class="col-sm-2"><%= @item.progresses.size%> / <%= ii.no_of_user%></div>
 	</div>			
 	<%end%>
 	<div class="form-group">

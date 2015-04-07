@@ -78,6 +78,12 @@ class NctuCceController < ApplicationController
     end
   end  
  # ------------ booking --------------# 
+  def cancel
+    @progress.destroy    
+    flash[:success]="成功退出報名"    
+    redirect_to controller: 'items', action: 'progress'   
+  end
+   
   def first
     @user = current_user   
     @step = 1
@@ -161,11 +167,6 @@ class NctuCceController < ApplicationController
   end  
   
   def showProgress
-  end
-  
-  def cancel
-    @progress.destroy!
-    redirect_to controller: 'items', action: 'progress'   
   end
   
   def check_account
