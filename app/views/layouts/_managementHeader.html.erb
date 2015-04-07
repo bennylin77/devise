@@ -3,8 +3,12 @@
 		<div class="page-header">
 		<%=link_to "/"+Hash[controllerOptions].rassoc(item.group.module).first+"/indexManagement?id="+item.id, {} do%> 	
 			<h1 class="text-center"><%= item.group.title%></h1>
-		<%end%>	   	 
-		</div>  
+		<%end%>	
+ 		<p>
+		系統報名網址:
+		<mark><%=host%>/items/<%=item.id%></mark>
+		</p>		   	 
+		</div>  		
   </div>
 </div>
 

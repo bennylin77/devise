@@ -4,8 +4,7 @@
 	<h3 class="col-sm-5 col-sm-offset-1">基本資料設定</h3>
   </div>
 </div>
-<%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem", id: @item.id }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>
-	
+<%= form_for @item, url: { controller: 'nctu_cce', action: "updateItem", id: @item.id }, method: 'post', html: {class: "form-horizontal", role: "form"} do |i| %>	
 	<div class="form-group">
 		<label class="col-sm-2 control-label">學年</label>
 		<div class="col-sm-3">
@@ -72,15 +71,12 @@
 			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', placeholder: "繳費結束時間" %>	
 		</div>
 	</div>
-
-
-<div class="form-group">
-	<div class="col-sm-offset-2 col-sm-10">
-		<%= i.submit '送出',  class: "btn btn-default"  %>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<%= i.submit '送出',  class: "btn btn-default"  %>
+		</div>
 	</div>
-</div>
 <% end %>
-
 <script type="text/javascript">
 	$(function () {
 		$('#datetimepicker_start_at, #datetimepicker_end_at, #datetimepicker_payment_start_at, #datetimepicker_payment_end_at').datetimepicker({

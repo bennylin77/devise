@@ -1,12 +1,14 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement] { |c| c.ItemCheckUser(params[:id])}  
-  before_action only: [:editGroup, :updateGroup] { |c| c.groupCheckUser(params[:id])}  
+  before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
+  before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}  
 
   before_action :set_step, only: [:new, :create]
   before_action :set_item, only: [:show, :editItem, :updateItem, :destroy, :indexManagement, :sendMessage, :first]
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel]    
+  before_action :set_progress, only: [:showProgress, :verified, :cancel] 
+     
   def new
     @group = Group.new( module: params[:module])
     @group.items.build()    

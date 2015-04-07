@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     end
   end   
   
-  def groupCheckUser(id)
+  def GroupCheckUser(id)
     unless Group.where(id: id).first == nil      
       if Group.find(id).items.where(user_id: current_user.id).first == nil      
         flash["error"]="您沒有權限"
@@ -47,7 +47,19 @@ class ApplicationController < ActionController::Base
       redirect_to root_url        
     end 
   end
-  
+
+  def ProgressCheckItemUser(id)
+    unless Progress.where(id: id).first == nil      
+      if Progress.find(id).item.user != current_user      
+        flash["error"]="您沒有權限"
+        redirect_to root_url          
+      end  
+    else
+      flash["error"]="項目不存在"
+      redirect_to root_url        
+    end 
+  end
+    
   [:Item, :Progress].each do |model|
     class_eval %Q{
       def #{model}CheckUser(id)
