@@ -1,0 +1,99 @@
+<%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
+<div class="container" style="margin-bottom: 20px;">
+  <div class="row">
+	<h3 class="col-sm-5 col-sm-offset-1">報名學員</h3>
+  </div>
+</div>
+<div class="container-fluid">
+	<div class="row">	
+		<div class="col-md-offset-2">
+		<%if @progress.stage==2%>	
+		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#agree-confirm">
+  			審核通過
+		</button>	
+		<%elsif @progress.stage==3%>
+		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel-confirm">
+  			取消資格
+		</button>
+		<%end%>
+		</div>
+	</div>
+</div>
+<br>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">姓名</div>
+  <div class="col-md-4"><%=@progress.user.name%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">出生年月日</div>
+  <div class="col-md-4"><%=@progress.user.birthday.strftime "%Y/%m/%d" %></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">性別</div>
+  <div class="col-md-4"><%if @progress.user.gender%>男<%else%>女<%end%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">身分證字號</div>
+  <div class="col-md-4"><%=@progress.user.id_no_TW%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">聯絡電話</div>
+  <div class="col-md-4"><%=@progress.user.phone_no%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">聯絡地址</div>
+  <div class="col-md-4"><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">審核狀態</div>
+  <div class="col-md-4"><%if @progress.verified%>通過<%else%>未通過<%end%></div>
+</div>
+</div>
+
+<div class="modal fade" id="agree-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">審核通過</h4>
+      </div>
+      <div class="modal-body">
+       <%=label_tag "學費：（總和為0元會直接幫使用者完成報名）"%> 
+       <%= form_tag "/nctu_cce_credit/verified", :id=>"agree-form" do%>
+       	<%=hidden_field_tag :id, params[:id]%>	
+       	<% @progress.registered_sub_items.each do |sub_item|%>
+       		<%=hidden_field_tag "sub_item_ids[]", sub_item.id%>
+       		<%=label_tag sub_item.sub_item.title%>
+       		<%=number_field_tag "sub_item_payments[]", sub_item.sub_item.price, :class=>"form-control"%>
+       	<% end %>	
+       <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#agree-form').submit();">送出</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="cancel-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">取消資格</h4>
+      </div>
+      <div class="modal-body">
+       <%=label_tag "請填寫原因："%> 
+       <%= form_tag "/nctu_cce_credit/verified", :id=>"cancel-form" do%>
+       	<%=hidden_field_tag "id", @progress.id%>
+       	<%=text_area_tag "reason","",:class=>"form-control"%>
+       <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#cancel-form').submit();">送出</button>
+      </div>
+    </div>
+  </div>
+</div>

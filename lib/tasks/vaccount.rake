@@ -4,7 +4,10 @@ namespace :vaccount do
   task :update_status => :environment do
      Vaccount.where(active: true).each do |vacc|
      	res = vacc.update_status
-     	return if res==-1 # 伺服器維修中
+     	if res==-1 # 伺服器維修中
+				p "can't connect to esun server "
+				return 
+			end
      	#p vacc.status.inspect
      	if vacc.status["code"].to_i!=1000 and vacc.status["Amount"].to_f == vacc.progress.payment.to_f
      		vacc.progress.stage = 4 #vacc.progress.item.group.module

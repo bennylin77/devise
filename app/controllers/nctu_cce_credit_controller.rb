@@ -3,7 +3,7 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
-  before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}    
+ # before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}    
   
   before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :editCourses, :updateCourses, :first]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
@@ -95,6 +95,39 @@ class NctuCceCreditController < ApplicationController
   
   def editGroup  
   end 
+  
+  def verified
+  	if @progress.verified
+      @progress.verified=false
+      @progress.stage=-1
+      @progress.reason = params[:reason]
+      if @progress.vaccount
+        @progress.vaccount.active = false 
+        @progress.vaccount.save!
+      end
+      @progress.save!
+      flash[:alert]="已取消通過 "+@progress.user.name+" 的報名"
+    else
+      @progress.verified=true 
+      
+      @progress.payment = params[:sub_item_payments].map(&:to_i).reduce(0, :+)
+      params[:sub_item_ids].each_with_index do |id, idx|
+      	item = @progress.registered_sub_items.find(id)
+      	item.payment = params[:sub_item_payments][idx].to_f
+      	item.save!
+      end
+      @progress.create_vaccount if @progress.payment > 0
+      @progress.stage= (@progress.payment > 0) ? 3 : 4  
+      @progress.save!    
+      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
+    end
+    System.verified_result_send(@progress)
+    redirect_to controller: 'nctu_cce_credit', action: 'showProgress', id: @progress.id
+  end
+  
+  def showProgress
+  	@progress = Progress.find(params[:id])
+  end
   
   def updateGroup
     @group.assign_attributes(group_params)
@@ -199,6 +232,14 @@ class NctuCceCreditController < ApplicationController
     end    
   end
   
+  
+  def third
+  	@progress = Progress.find(params[:progress_id])
+  end
+  
+  def fourth
+  
+  end
   
   private
 

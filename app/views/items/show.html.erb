@@ -16,7 +16,7 @@
 <p class="lead"><%=@item.group.description%></p>
 <p>
 	<% if user_signed_in? %>	
-		<% pg = @item.progresses.where(user_id: current_user.id).last %>
+		<% pg = @item.progresses.where(:user_id=> current_user.id, :verified=>true).last %>
 		<%if pg %>									 		
 			<%=link_to '查看報名進度',{ controller: Hash[controllerOptions].rassoc(@item.group.module).first,
 									 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 

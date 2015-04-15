@@ -16,13 +16,14 @@ Rails.application.routes.draw do
   post 'nctu_cce/updateItem'   
   post 'nctu_cce/updateGroup'        
   post 'nctu_cce/second' 
-  get  'nctu_cce/check_account' 
-  post 'nctu_cce/check_account' 
+	get 'nctu_cce/forth'
+
 
   get  'nctu_cce_credit/cancel' 
   get  'nctu_cce_credit/first' 
   get  'nctu_cce_credit/second'    
   post 'nctu_cce_credit/second' 
+  get 'nctu_cce_credit/third'
   get  'nctu_cce_credit/new' 
   get  'nctu_cce_credit/newCourses'  
   post 'nctu_cce_credit/newCourses'
@@ -36,8 +37,13 @@ Rails.application.routes.draw do
   post 'nctu_cce_credit/updateItem'   
   post 'nctu_cce_credit/updateGroup'  
   post 'nctu_cce_credit/updateCourses'  
+  get 'nctu_cce_credit/showProgress'
+  post 'nctu_cce_credit/verified' 	
       
   get  'main/index'
+	get 'main/check_account'
+	post 'main/check_account'
+  get 'main/vaccounts'
  
   get  'items/createCompletion' 
   get  'items/showManagement'

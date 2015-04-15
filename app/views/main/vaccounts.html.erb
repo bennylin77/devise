@@ -1,0 +1,19 @@
+<table class="table table-border">
+<tr>
+	<td>帳號</td>
+	<td>所屬報名</td>
+	<td>所有人</td>
+	<td>內涵金額</td>
+	<td>銷帳</td>
+</tr>
+<% @vaccounts.each do |vacc| %>
+<tr>
+	<td><%= vacc.vacc %></td>
+	<td><%= vacc.progress.item.school_year %></td>
+	<td><%= vacc.progress.user.name %></td>
+	<td><%= (vacc.status) ? vacc.status["Amount"] : "" %></td>
+	<td>No</td>
+</tr>
+<% end %>
+
+</table>
