@@ -1,12 +1,12 @@
 <div class="item_management_box"  id="item_management_<%=item_management_block.id%>" >
 	<div class="panel panel-default">
 	  <div class="panel-heading">
-	    <%=link_to "/"+Hash[controllerOptions].rassoc(item_management_block.group.module).first+"/indexManagement?id="+item_management_block.id, {} do%> 	
+	    <%=link_to "/"+Hash[controllerOptions].rassoc(item_management_block.group.system_module.serial_code).first+"/indexManagement?id="+item_management_block.id, {} do%> 	
 	    <h3 class="panel-title"><%= item_management_block.group.title %></h3>
 	    <%end%>	 
 	  </div>
 	  <div class="panel-body">
-	    <%=link_to "/"+Hash[controllerOptions].rassoc(item_management_block.group.module).first+"/indexManagement?id="+item_management_block.id, {} do%>  	
+	    <%=link_to "/"+Hash[controllerOptions].rassoc(item_management_block.group.system_module.serial_code).first+"/indexManagement?id="+item_management_block.id, {} do%>  	
 		    <p><%= item_management_block.group.description%></p>
 		    <div id="clock_<%=item_management_block.id%>"></div>
 	  	<%end%> 

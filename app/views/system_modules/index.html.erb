@@ -1,0 +1,27 @@
+<h1>模組列表</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>名稱</th>
+      <th>編號</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @system_modules.each do |system_module| %>
+      <tr>
+        <td><%= system_module.title %></td>
+        <td><%= system_module.serial_code %></td>
+        <td><%= link_to 'Show', system_module %></td>
+        <td><%= link_to 'Edit', edit_system_module_path(system_module) %></td>
+        <td><%= link_to 'Destroy', system_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New System module', new_system_module_path %>

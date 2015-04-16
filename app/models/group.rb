@@ -4,6 +4,8 @@ class Group
   
   embeds_many :comments
   has_many :items
+  belongs_to :system_module
+  
   
   accepts_nested_attributes_for :items 
   

@@ -1,0 +1,25 @@
+<%= form_for(@system_module) do |f| %>
+  <% if @system_module.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@system_module.errors.count, "error") %> prohibited this system_module from being saved:</h2>
+
+      <ul>
+      <% @system_module.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :serial_code %><br>
+    <%= f.number_field :serial_code %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

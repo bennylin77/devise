@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @system_module.title %>
+</p>
+
+<p>
+  <strong>Serial code:</strong>
+  <%= @system_module.serial_code %>
+</p>
+
+<% @system_module.module_user_lists.each do |mu|%>
+
+<%= mu.user.name %>
+
+<%end%>
+
+
+<%= link_to '新增管理員', { controller: 'system_modules', action: 'addAdmin', id: @system_module.id }, class: 'btn btn-info'%> |
+<%= link_to 'Edit', edit_system_module_path(@system_module) %> |
+<%= link_to 'Back', system_modules_path %>

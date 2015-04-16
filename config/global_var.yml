@@ -3,7 +3,9 @@ defaults: &defaults
   NCTU_CCE_credit: 1
   NCTU_CCE_camp: 2
   
-  
+  ROLE_ADMIN: 0
+  ROLE_MEMBER: 1
+    
     
 development:
   <<: *defaults

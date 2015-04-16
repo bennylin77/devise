@@ -1,6 +1,5 @@
 <%= render partial: "newStep", locals: {step: @step} %>
-<%= form_for @group, url: { controller: 'nctu_cce_credit', action: "newCourses" }, html: {class: "form-horizontal", role: "form"} do |g| %>
-<%= g.hidden_field :module %>		
+<%= form_for @group, url: { controller: 'nctu_cce_credit', action: "newCourses" }, html: {class: "form-horizontal", role: "form"} do |g| %>	
 <div class="form-group">
 	<label class="col-sm-2 control-label">班級名稱*</label>
 	<div class="col-sm-6">

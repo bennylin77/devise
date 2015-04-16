@@ -31,6 +31,7 @@ class NctuCceController < ApplicationController
                                     ])                                   
     checkValidations(validations: validations_result, render: 'new' )   
     @group.items.first.user = current_user 
+    @group.system_module = SystemModule.where(serial_code: GLOBAL_VAR['NCTU_CCE']).first
     @group.save  
     redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id
   end 
@@ -202,7 +203,7 @@ class NctuCceController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:module, :title, :description, items_attributes: [:verification_code, :no_of_user, :price,
+    params.require(:group).permit(:title, :description, items_attributes: [:verification_code, :no_of_user, :price,
                                   :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
   end  
 end

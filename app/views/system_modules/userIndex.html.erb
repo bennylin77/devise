@@ -1,0 +1,19 @@
+<div id="masonry-container" class="transitions-enabled clearfix" style="margin-top: 40px;">	
+<%= render(:partial => "module_management_block", collection: @module_user_lists)|| "none" %>
+</div>	
+
+<%= javascript_tag do %>
+	$(function() 
+	{
+		//initial masonry
+		var $container = $('#masonry-container');
+		$container.imagesLoaded(function(){
+			$container.masonry({
+			      itemSelector: '.item_management_box',
+			      columnWidth: 27,
+			      gutter: 15,
+			      isFitWidth: true
+			});			
+		});			
+	});	
+<% end %>

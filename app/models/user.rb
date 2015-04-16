@@ -4,6 +4,7 @@ class User
   
   has_many :items  
   has_many :progresses
+  has_many :module_user_lists  
   
   #validates_presence_of :uid, :provider
   #validates_uniqueness_of :uid, :scope => :provider    

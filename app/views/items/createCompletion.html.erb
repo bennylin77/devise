@@ -4,7 +4,7 @@
   <div class="row">
  	<h1 class="text-center">
  		<p>
- 		<%=link_to "/"+Hash[controllerOptions].rassoc(@item.group.module).first+"/indexManagement?id="+@item.id, {} do%> 	
+ 		<%=link_to "/"+Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first+"/indexManagement?id="+@item.id, {} do%> 	
 			<%= @item.group.title%>
 		<%end%>	
 		</p>

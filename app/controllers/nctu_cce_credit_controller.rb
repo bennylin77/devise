@@ -10,7 +10,7 @@ class NctuCceCreditController < ApplicationController
   before_action :set_progress, only: [:verified, :cancel] 
       
   def new
-    @group = Group.new( module: params[:module])
+    @group = Group.new()
     @group.items.build()    
     @step = 2    
   end
@@ -55,6 +55,7 @@ class NctuCceCreditController < ApplicationController
       checkValidations(validations: validations_result, render: 'newCourses' )                                           
     end
     @group.items.first.user = current_user 
+    @group.system_module = SystemModule.where(serial_code: GLOBAL_VAR['NCTU_CCE_credit']).first    
     @group.save      
     params[:title].each_with_index do |t, i|
       @group.items.first.sub_items.create(title: t, price: params[:price][i], no_of_user: params[:no_of_user][i])    
@@ -264,7 +265,7 @@ class NctuCceCreditController < ApplicationController
   end
   
   def group_params
-    params.require(:group).permit(:module, :title, :description, items_attributes: [:verification_code, :no_of_user, :price,
+    params.require(:group).permit(:title, :description, items_attributes: [:verification_code, :no_of_user, :price,
                                   :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
   end      
 end

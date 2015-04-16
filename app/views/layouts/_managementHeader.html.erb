@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
 		<div class="page-header">
-		<%=link_to "/"+Hash[controllerOptions].rassoc(item.group.module).first+"/indexManagement?id="+item.id, {} do%> 	
+		<%=link_to "/"+Hash[controllerOptions].rassoc(item.group.system_module.serial_code).first+"/indexManagement?id="+item.id, {} do%> 	
 			<h1 class="text-center"><%= item.group.title%></h1>
 		<%end%>	
  		<p>
