@@ -1,6 +1,6 @@
 <%= form_tag  '/system_modules/userAdd', method: 'post', class: "form-horizontal", role: "form" do %>
 <div>
-    <%= hidden_field_tag  :id,  @system_module.id %>	
+    <%= hidden_field_tag  :id,  @system_module.id  %>	
 	<%= text_field_tag :email, '',size: 40, placeholder: '會員信箱' %>
 	<%= select_tag  :role, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ]) %>	
 </div>
@@ -15,17 +15,19 @@
 <%@system_module.module_user_lists.order('id desc').each do |mu| %>
 <%= mu.user.name%>
 <%= select_tag 'role_'+mu.id, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ], mu.role ), onchange: 'selectAjaxHandler("'+mu.id+'")' %>
+
+<%=link_to '刪除', {controller: 'system_modules', action: 'userDestroy', module_user_id: mu.id, id: @system_module.id }, class: 'btn btn-info' , data: { confirm: '您確定要刪除？' } %>
 <br>
 <%end%>
 
 
 <script>
 $(function(){ 
-	$( "#user_email" ).autocomplete({
+	$( "#email" ).autocomplete({
 		source: function (request, response) {
 			$.ajax({
         		url: "/system_modules/userInfo",
-        		data: {email: request.term},
+        		data: {email: request.term, id: '<%= @system_module.id%>' },
         		dataType: "json",
         		success: function( data ) {
             		response( $.map( data, function( item ) {
@@ -49,11 +51,11 @@ function selectAjaxHandler(id)
 	var request = $.ajax({
 	url: "/system_modules/userRole",
 	type: "POST",
-	data: { id : id, val: $( "#role_"+id ).val() },
+	data: { module_user_id: id, val: $( "#role_"+id ).val(), id: '<%= @system_module.id%>'  },
 	dataType: "json"
 	});
-	request.done(function( msg ) {
-		alert(123)	
+	request.done(function( message ) {
+		addAlert('success', message.message)
 	});
 	request.fail(function( jqXHR, textStatus ) {
 		 $.gritter.add({

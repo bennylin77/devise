@@ -1,5 +1,6 @@
 class SystemModulesController < ApplicationController
-  before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd]
+  before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy]
+  before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
 
   respond_to :html
 
@@ -61,19 +62,18 @@ class SystemModulesController < ApplicationController
         mu.user = User.where(email: params[:email]).first   
         mu.system_module = @system_module
         mu.save!
-        flash.now[:success] = '成功加入模組'      
+        flash[:success] = '成功加入模組'      
       else
-        flash.now[:error] = '查無此會員'  
+        flash[:error] = '查無此會員'  
       end  
     else
-      flash.now[:error] = '此會員已加入模組'
+      flash[:error] = '此會員已加入模組'
     end   
-    
-    render :userEdit 
+    redirect_to controller: 'system_modules', action: 'userEdit', id: @system_module.id
   end
 
   def userInfo
-    @users_json=Array.new
+    @users_json = Array.new
     @users = User.where(email: /.*#{params[:email]}.*/)
     @users.each do |c|
       @users_json << 
@@ -86,11 +86,20 @@ class SystemModulesController < ApplicationController
   end
   
   def userRole
-    mu = ModuleUserList.find(params[:id])
+    mu = ModuleUserList.find(params[:module_user_id])
     mu.role = params[:val]
     mu.save!
-    render json: {success: true, message: '成功更改模組權限'}       
+    render json: {success: true, message: '成功更改成員權限'}       
   end
+  
+  def userDestroy
+    mu = ModuleUserList.find(params[:module_user_id])
+    mu.destroy!    
+    flash[:success] = '成功刪除成員'
+    
+    redirect_to controller: 'system_modules', action: 'userEdit', id: @system_module.id    
+  end
+  
   private
     def set_system_module
       @system_module = SystemModule.find(params[:id])

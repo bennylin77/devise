@@ -36,6 +36,20 @@ class ApplicationController < ActionController::Base
     end
   end   
   
+  def ModuleCheckUser(id, role)
+    unless SystemModule.where(id: id).first == nil      
+      if SystemModule.find(id).module_user_lists.where(user_id: current_user.id).first.role != role      
+        flash["error"]="您沒有權限"
+        redirect_to root_url          
+      end  
+    else
+      flash["error"]="項目不存在"
+      redirect_to root_url        
+    end     
+    
+    
+  end
+  
   def GroupCheckUser(id)
     unless Group.where(id: id).first == nil      
       if Group.find(id).items.where(user_id: current_user.id).first == nil      

@@ -61,7 +61,8 @@ Rails.application.routes.draw do
   get  'system_modules/userInfo'    
   post 'system_modules/userRole'    
   post 'system_modules/userAdd'  
-  post 'system_modules/userDestroy'    
+  get 'system_modules/userDestroy'    
+  
   
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
