@@ -1,32 +1,35 @@
+<div class="container" >
 <%= form_for(@user, html: {class: "form-horizontal", role: "form"}) do |f| %>
  	<div class="form-group">
-		<label class="col-sm-2 control-label">Email</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">Email</label>
 		<div class="col-sm-6"><%= @user.email %></div>
 	</div>	
  	<div class="form-group">
-		<label class="col-sm-2 control-label">姓名</label>
-		<div class="form-inline col-sm-6">
+		<label class="col-sm-offset-1 col-sm-2 control-label">姓名</label>
+		<div class="col-sm-6">
 			<%= f.text_field :name, class: "form-control", placeholder: '姓名' %>			
 		</div>
 	</div>		 
 	<div class="form-group">
-		<label class="col-sm-2 control-label">聯絡電話</label>
-		<div class="col-sm-6"><%= f.text_field :phone_no %></div>
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話</label>
+		<div class="col-sm-6">
+			<%= f.text_field :phone_no, class: "form-control", placeholder: "聯絡電話" %>
+		</div>
 	</div>						
 	<div class="form-group">
-		<label class="col-sm-2 control-label">聯絡地址</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡地址</label>
 		<div class="form-inline col-sm-6">
 			<span id="twzipcode"></span>
 			<%= f.text_field :address, class: "form-control" %>
 		</div>
 	</div>	
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-sm-offset-3 col-sm-6">
 			<%= f.submit '送出',  class: "btn btn-default"  %>
 		</div>
 	</div>
-
 <% end %>
+</div>
 
 <script>
 $('#twzipcode').twzipcode({
@@ -40,7 +43,6 @@ $('#twzipcode').twzipcode({
 	districtSel: '<%=@user.district%>'
 	<%end%>    
 });
-  	
 <% @user.errors.full_messages.each do |message| %>
 	addAlert('error', '<%=message%>')
 <% end %>
