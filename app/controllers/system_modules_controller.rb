@@ -1,6 +1,9 @@
 class SystemModulesController < ApplicationController
+  
+  before_filter :authenticate_user!   
   before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy]
   before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
+  before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy] { |c| c.ModuleCheckAdmin()}  
 
   respond_to :html
 
@@ -99,6 +102,14 @@ class SystemModulesController < ApplicationController
     
     redirect_to controller: 'system_modules', action: 'userEdit', id: @system_module.id    
   end
+  
+   
+  def ModuleCheckAdmin
+    if current_user.email != 'bennylin77@gmail.com'      
+      flash["error"]="您沒有權限"
+      redirect_to root_url          
+    end      
+  end  
   
   private
     def set_system_module

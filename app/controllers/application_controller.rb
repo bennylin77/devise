@@ -46,8 +46,6 @@ class ApplicationController < ActionController::Base
       flash["error"]="項目不存在"
       redirect_to root_url        
     end     
-    
-    
   end
   
   def GroupCheckUser(id)
