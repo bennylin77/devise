@@ -1,27 +1,16 @@
-<h1>模組列表</h1>
+<h1 class="text-center">模組列表</h1>
+<%= link_to '新增模組', new_system_module_path, class: 'btn btn-success' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>名稱</th>
-      <th>編號</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<table class="table table-striped table-hover" style="margin-top: 20px;">
+  <tr>
+    <th>代碼</th>
+    <th>名稱</th>   
+  </tr>	
     <% @system_modules.each do |system_module| %>
-      <tr>
-        <td><%= system_module.title %></td>
-        <td><%= system_module.serial_code %></td>
-        <td><%= link_to 'Show', system_module %></td>
-        <td><%= link_to 'Edit', edit_system_module_path(system_module) %></td>
-        <td><%= link_to 'Destroy', system_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <tr id='link1' onclick="document.location='<%=host%>system_modules/<%=system_module.id%>';">
+    <td><%= system_module.serial_code %></td>	
+    <td><%= system_module.title %></td>
+  </tr>
+	<%end%>
 </table>
 
-<br>
-
-<%= link_to 'New System module', new_system_module_path %>

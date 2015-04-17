@@ -1,6 +1,12 @@
-<h1>Editing system_module</h1>
-
+<h3 class="text-center">編輯模組</h3>
 <%= render 'form' %>
+<div class="container" >
+	<div class="row">
+		<div class="col-sm-offset-3 col-sm-2">
+		<%= link_to '詳細', @system_module %> |
+		<%= link_to '回模組列表', system_modules_path %>
+		</div>
+	</div>
+</div>
+		
 
-<%= link_to 'Show', @system_module %> |
-<%= link_to 'Back', system_modules_path %>

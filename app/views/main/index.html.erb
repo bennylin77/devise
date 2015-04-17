@@ -1,4 +1,4 @@
-
+<div class="container" >
 <% if user_signed_in? %>
 Signed in as <%= current_user.name %>. Not you?
 <%= link_to "登出", destroy_user_session_path,:method => :delete %>
@@ -7,3 +7,4 @@ Signed in as <%= current_user.name %>. Not you?
 <%= link_to "一般登入", new_user_session_path %>,
 <%= link_to "使用Facebook登入", user_omniauth_authorize_path(:facebook) %>
 <% end %>
+</div>

@@ -1,4 +1,5 @@
-<%= form_for(@system_module) do |f| %>
+<div class="container" >
+<%= form_for(@system_module, html: {class: "form-horizontal"} ) do |f| %>
   <% if @system_module.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@system_module.errors.count, "error") %> prohibited this system_module from being saved:</h2>
@@ -11,15 +12,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :serial_code %><br>
-    <%= f.number_field :serial_code %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">代碼</label>
+    <div class="col-sm-6">
+    <%= f.number_field :serial_code, class: "form-control", placeholder: "代碼" %>	
+    </div>
+  </div>   
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">名稱</label>
+    <div class="col-sm-6">
+  	<%= f.text_field :title, class: "form-control", placeholder: "名稱" %>  	
+    </div>
+  </div>     
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-6">
+      <%= f.submit "送出", class:"btn btn-default" %>
+    </div>
+  </div>  
 <% end %>
+</div>

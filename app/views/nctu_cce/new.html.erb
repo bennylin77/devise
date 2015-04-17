@@ -1,14 +1,15 @@
 <%= render partial: "newStep", locals: {step: @step} %>
+<div class="container" >
 <%= form_for @group, url: { controller: 'nctu_cce', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
 <%= hidden_field_tag :step, @step %>
 <div class="form-group">
-	<label class="col-sm-2 control-label">課程名稱*</label>
+	<label class="col-sm-offset-1 col-sm-2 control-label">課程名稱*</label>
 	<div class="col-sm-6">
 		<%= g.text_field :title, class: "form-control", placeholder: "課程名稱" %>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-sm-2 control-label">課程簡介*</label>
+	<label class="col-sm-offset-1 col-sm-2 control-label">課程簡介*</label>
 	<div class="col-sm-6">
 		<%= g.text_area :description, class: "form-control", placeholder: "課程簡介" %>
 	</div>
@@ -17,7 +18,7 @@
   <%= g.fields_for :items do |i| %>
 	<%= i.hidden_field :verification_code %>  
 	<div class="form-group">
-		<label class="col-sm-2 control-label">學年</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">學年</label>
 		<div class="col-sm-3">
 			<%= i.select :school_year, options_for_select([[Time.now.year-1912, Time.now.year-1912], 
 														   [Time.now.year-1911, Time.now.year-1911],			
@@ -30,19 +31,19 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">期數</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">期數</label>
 		<div class="col-sm-6">
 			<%= i.text_field :term, class: "form-control", placeholder: "期數" %>
 		</div>
 	</div>		
 	<div class="form-group">
-		<label class="col-sm-2 control-label">招生人數*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">招生人數*</label>
 		<div class="col-sm-6">
 			<%= i.text_field :no_of_user, class: "form-control", placeholder: "招生人數" %>
 		</div>
 	</div>
 	<div class="form-group">	
-		<label class="col-sm-2 control-label">接受備取*</label>	
+		<label class="col-sm-offset-1 col-sm-2 control-label">接受備取*</label>	
 		<div class="col-sm-6">
 		<label class="radio-inline ">
 			<%=i.radio_button :waiting_available, "true", checked: true %>是
@@ -53,13 +54,13 @@
 		</div>
 	</div>	
 	<div class="form-group">
-		<label class="col-sm-2 control-label">學費*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">學費*</label>
 		<div class="col-sm-6">
 			<%= i.text_field :price, class: "form-control", placeholder: "學費" %>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">報名開放時間*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
 			<%= i.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名開放時間" %>	
 		</div>
@@ -71,7 +72,7 @@
 	    </script>	
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">報名結束時間*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">報名結束時間*</label>
 		<div class="col-sm-6">
 			<%= i.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名結束時間" %>	
 		</div>
@@ -83,7 +84,7 @@
 	    </script>	
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">繳費開放時間*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">繳費開放時間*</label>
 		<div class="col-sm-6">
 			<%= i.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費開放時間" %>	
 		</div>
@@ -95,7 +96,7 @@
 	    </script>	
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">繳費結束時間*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">繳費結束時間*</label>
 		<div class="col-sm-6">
 			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費結束時間" %>	
 		</div>
@@ -109,8 +110,9 @@
   <% end %>
 
 <div class="form-group">
-	<div class="col-sm-offset-2 col-sm-10">
+	<div class="col-sm-offset-3 col-sm-10">
 		<%= g.submit '送出',  class: "btn btn-default"  %>
 	</div>
 </div>
 <% end %>
+</div>

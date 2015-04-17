@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Title:</strong>
@@ -10,6 +9,10 @@
   <%= @system_module.serial_code %>
 </p>
 
+<%= link_to '新增管理員', { controller: 'system_modules', action: 'addAdmin', id: @system_module.id }, class: 'btn btn-success'%> 
+<%= link_to '編輯', edit_system_module_path(@system_module), class: 'btn btn-info'%> 
+<%= link_to '刪除', @system_module, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+
 <% @system_module.module_user_lists.each do |mu|%>
 
 <%= mu.user.name %>
@@ -17,6 +20,3 @@
 <%end%>
 
 
-<%= link_to '新增管理員', { controller: 'system_modules', action: 'addAdmin', id: @system_module.id }, class: 'btn btn-info'%> |
-<%= link_to 'Edit', edit_system_module_path(@system_module) %> |
-<%= link_to 'Back', system_modules_path %>

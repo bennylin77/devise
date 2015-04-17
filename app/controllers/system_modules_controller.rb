@@ -27,9 +27,13 @@ class SystemModulesController < ApplicationController
   def addAdmin
     if request.post?
       mu = ModuleUserList.new(role: GLOBAL_VAR['ROLE_ADMIN'])
-      mu.user = User.find(params[:user_id])     
-      mu.system_module = @system_module
-      mu.save!
+      unless User.where(email: params[:email]).first.blank?  
+        mu.user = User.where(email: params[:email]).first           
+        mu.system_module = @system_module
+        mu.save!
+      else
+        flash[:error] = '無此會員信箱'  
+      end    
       redirect_to @system_module
     end
   end
