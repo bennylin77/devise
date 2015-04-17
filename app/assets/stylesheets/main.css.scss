@@ -34,6 +34,10 @@ body {
 .table-hover tbody tr:hover > td {
   cursor: pointer
 }
+
+.ui-autocomplete{
+  list-style: none;
+}
 /*==================================step menu==========================================*/
 ol.progtrckr {
   margin: 0;
