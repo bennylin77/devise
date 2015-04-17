@@ -22,4 +22,12 @@ zh-TW:
             the Mongoid.raise_not_found_error configuration option to false,
             which will cause a nil to be returned instead of raising this error when
             searching for a single id, or only the matched documents when searching
-            for multiples."                   
+            for multiples."     
+      models:
+        user:
+          attributes:
+            email: 
+              invalid: "格式錯誤"     
+            current_password:
+              invalid: "錯誤" 
+                                 
