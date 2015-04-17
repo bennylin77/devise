@@ -29,4 +29,11 @@ module ApplicationHelper
       simple_format( s, {}, wrapper_tag: "span")
     end
   end  
+  
+  def active(hash={}) 
+    if current_page?(controller: hash[:controller], action: hash[:action])
+      "class='active'".html_safe     
+    end
+  end
+  
 end
