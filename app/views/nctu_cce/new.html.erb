@@ -14,7 +14,6 @@
 		<%= g.text_area :description, class: "form-control", placeholder: "課程簡介" %>
 	</div>
 </div>
-
   <%= g.fields_for :items do |i| %>
 	<%= i.hidden_field :verification_code %>  
 	<div class="form-group">
@@ -108,10 +107,9 @@
 	    </script>	
 	</div>
   <% end %>
-
 <div class="form-group">
-	<div class="col-sm-offset-3 col-sm-10">
-		<%= g.submit '送出',  class: "btn btn-default"  %>
+	<div class="col-sm-offset-3 col-sm-9">
+		<%= g.submit '完成送出',  class: "btn btn-primary"  %>
 	</div>
 </div>
 <% end %>

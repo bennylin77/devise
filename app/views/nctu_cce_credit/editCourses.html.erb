@@ -1,25 +1,23 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
-<div class="container" style="margin-bottom: 20px;">
-  <div class="row">
-	<h3 class="col-sm-5 col-sm-offset-1">課程設定</h3>
-  </div>
-</div>
+<h3 class="text-center">課程設定</h3><br>
+<div class="container" >
 <%= form_for @item, url: { controller: 'nctu_cce_credit', action: "updateCourses", id: @item.id }, html: {class: "form-horizontal", role: "form"}, method: :post do |i| %>
 	<div class="form-group">
-		<label class="col-sm-offset-2 col-sm-3">課程名稱*</label>
+		<label class="col-sm-offset-3 col-sm-3">課程名稱*</label>
 		<label class="col-sm-2">學費*</label>
 		<label class="col-sm-2">招生人數*</label>
 	</div>  
 	<%= i.fields_for :sub_items do |ii| %>	
 	<div class="form-group">
-		<label class="col-sm-offset-2 col-sm-3"><%= ii.text_field :title, class: "form-control", placeholder: "課程名稱" %></label>
+		<label class="col-sm-offset-3 col-sm-3"><%= ii.text_field :title, class: "form-control", placeholder: "課程名稱" %></label>
 		<label class="col-sm-2"><%= ii.text_field :price, class: "form-control", placeholder: "學費" %></label>
 		<label class="col-sm-2"><%= ii.text_field :no_of_user, class: "form-control", placeholder: "招生人數" %></label>
 	</div> 
   	<% end %>	
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-sm-offset-3 col-sm-9">
 			<%= i.submit '儲存',  class: "btn btn-primary" %>
 		</div>
 	</div>
 <% end %>
+</div>

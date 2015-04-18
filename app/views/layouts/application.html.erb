@@ -16,7 +16,7 @@
 </div>
 <script>  	
 <% flash.each do |type, message| %>
-	addAlert('<%=type%>', '<%=message%>')
+	addAlert('<%=type%>', '<%=message.html_safe%>')
 <% end %>
  </script>
 </body>
