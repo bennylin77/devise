@@ -1,4 +1,5 @@
 <%= render partial: "step", locals: {progress: @progress, step: @step} %>
+<div class="container" >
 <%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'item_id', @item.id %>
@@ -7,16 +8,22 @@
 		<%= hidden_field_tag 'progress_id', @progress.id %>	
 	<%end%>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">姓名*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">姓名*</label>
 		<div class="col-sm-6">
-			<%= u.text_field :name, class: "form-control" %>
+			<%= u.text_field :name, placeholder: '姓名', class: "form-control" %>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">出生年月日*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">英文姓名</label>
+		<div class="col-sm-6">
+			<%= u.text_field :name_en, placeholder: '英文姓名', class: "form-control" %>
+		</div>
+	</div>	
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">出生年月日*</label>
 		<div class="col-sm-6">
 			<%if @user.birthday.blank?%>
-			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>	
+			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日"  %>	
 			<%else%>
 			<%= u.text_field :birthday, value: @user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
 			<%end%>
@@ -29,7 +36,7 @@
 	    </script>	
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">性別*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">性別*</label>
 		<div class="col-sm-6">
 		<label class="radio-inline">
 	  		<%=u.radio_button :gender, "true"%>男			
@@ -40,41 +47,82 @@
 		</div>
 	</div>		
 	<div class="form-group">
-		<label class="col-sm-2 control-label">身分證字號*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">身分證字號*</label>
 		<div class="col-sm-6">
-			<%= u.text_field :id_no_TW, class: "form-control" %>
+			<%= u.text_field :id_no_TW, placeholder: '身分證字號', class: "form-control" %>
 		</div>
+	</div>		
+	
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">最高(畢/肄/就讀)學校</label>
+		<div class="col-sm-2">
+			<%= u.text_field :hightest_education_school, class: "form-control", placeholder: '最高(畢/肄/就讀)學校' %>
+		</div>
+		<label class="col-sm-2 control-label">最高(科/系/所)</label>
+		<div class="col-sm-2">
+			<%= u.text_field :hightest_education_department, class: "form-control", placeholder: '最高(科/系/所)' %>
+		</div>			
 	</div>			
 	<div class="form-group">
-		<label class="col-sm-2 control-label">聯絡電話*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話*</label>
 		<div class="col-sm-6">
-			<%= u.text_field :phone_no, class: "form-control" %>
+			<%= u.text_field :phone_no, class: "form-control", placeholder: '聯絡電話'  %>
 		</div>
 	</div>		
 	<div class="form-group">
-		<label class="col-sm-2 control-label">聯絡地址*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡地址*</label>
 		<div class="form-inline col-sm-6">
 			<span id="twzipcode"></span>
 			<%= u.text_field :address, class: "form-control" %>
 		</div>
 	</div>		
-	
 
-	
-	
-	
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<label class="col-sm-offset-1 col-sm-2 control-label">服務單位名稱</label>
+		<div class="col-sm-3">
+			<%= u.text_field :work_name, class: "form-control", placeholder: '服務單位名稱' %>
+		</div>
+		<label class="col-sm-1 control-label">職稱</label>
+		<div class="col-sm-2">
+			<%= u.text_field :work_title, class: "form-control", placeholder: '職稱' %>
+		</div>			
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">服務單位聯絡電話</label>
+		<div class="col-sm-6">
+			<%= u.text_field :work_phone_no, class: "form-control", placeholder: '服務單位聯絡電話'  %>
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">服務單位聯絡地址</label>
+		<div class="form-inline col-sm-6">
+			<span id="twzipcode_1"></span>
+			<%= u.text_field :work_address, class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-6">
 			<%= u.submit '送出',  class: "btn btn-default"  %>
 		</div>
 	</div>
 <% end %>
-
+</div>
 <script>
 $('#twzipcode').twzipcode({
 	zipcodeName: 'user[postal]',
     countyName: 'user[county]',
     districtName: 'user[district]',
+    zipcodeIntoDistrict: true,
+    css: ['form-control', 'form-control'], 
+    <%unless @user.county.blank?%>
+	countySel: '<%=@user.county%>',
+	districtSel: '<%=@user.district%>'
+	<%end%>    
+});
+$('#twzipcode_1').twzipcode({
+	zipcodeName: 'user[work_postal]',
+    countyName: 'user[work_county]',
+    districtName: 'user[work_district]',
     zipcodeIntoDistrict: true,
     css: ['form-control', 'form-control'], 
     <%unless @user.county.blank?%>

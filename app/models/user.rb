@@ -43,6 +43,8 @@ class User
   # field :locked_at,       type: Time
 
   field :name, type: String 
+  field :name_en, type: String 
+    
   field :provider, type: String
   field :uid, type: String
   
@@ -56,7 +58,17 @@ class User
   field :address, type: String
 
   field :id_no_TW, type: String
- 
+  field :hightest_education_school, type: String
+  field :hightest_education_department, type: String  
+  
+  field :work_name, type: String
+  field :work_title, type: String
+  field :work_phone_no, type: String   
+  field :work_postal, type: String
+  field :work_county, type: String
+  field :work_district, type: String
+  field :work_address, type: String   
+  
   
   validates :name, presence: {}  
   
