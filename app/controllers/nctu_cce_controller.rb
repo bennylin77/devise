@@ -199,7 +199,9 @@ class NctuCceController < ApplicationController
   end
     
   def user_params
-    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, :postal, :county, :district)      
+    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, 
+                                 :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
+                                 :work_name, :work_title, :work_phone_no, :work_address)      
   end
 
   def group_params
