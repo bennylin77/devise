@@ -60,17 +60,17 @@
 		<label class="col-sm-offset-1 col-sm-2 control-label">選擇課程*</label>		
 	</div>	
 	<div class="form-group">	
-		<label class="col-sm-1 col-sm-offset-2">勾選(複選)</label>		
-		<label class="col-sm-1">課程名稱</label>
-		<label class="col-sm-1">學費</label>
+		<label class="col-sm-2 col-sm-offset-2">勾選(複選)</label>		
+		<label class="col-sm-2">課程名稱</label>
+		<label class="col-sm-2">學費</label>
 		<label class="col-sm-2">報名人數 / 招生人數</label>	
 	</div> 
 	<% @item.sub_items.each do |ii|%>
 	<div class="form-group">
-		<div class="col-sm-1 col-sm-offset-2"><input type="checkbox" value="<%= ii.id%>" name="courses[]"></div>
-		<div class="col-sm-1"><%= ii.title%></div>
-		<div class="col-sm-1"><%= ii.price%></div>
-		<div class="col-sm-2"><%= @item.progresses.size%> / <%= ii.no_of_user%></div>
+		<div class="col-sm-2 col-sm-offset-2"><input type="checkbox" value="<%= ii.id%>" name="courses[]"></div>
+		<div class="col-sm-2"><%= ii.title%></div>
+		<div class="col-sm-2"><%= ii.price%></div>
+		<div class="col-sm-2"><%= @item.progresses.size-1%> / <%= ii.no_of_user%></div>
 	</div>			
 	<%end%>
 	<div class="form-group">

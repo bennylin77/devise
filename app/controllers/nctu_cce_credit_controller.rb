@@ -32,7 +32,10 @@ class NctuCceCreditController < ApplicationController
   end
   
   def create
-    @group = Group.new(group_params)       
+    @group = Group.new(group_params)      
+    @title = params[:title]
+    @price = params[:price]
+    @no_of_user = params[:no_of_user]    
     @step = 3    
     validations_result=validations([{type: 'presence', title: '班級名稱', data: @group.title},
                                     {type: 'presence', title: '班級簡介', data: @group.description},
@@ -64,15 +67,6 @@ class NctuCceCreditController < ApplicationController
     @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
   end  
 
-  def sendMessage 
-    if request.post?       
-      params[:recipients].each do |r|
-        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
-      end 
-      redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id     
-    end
-  end
-
   def editItem  
   end 
   
@@ -94,39 +88,6 @@ class NctuCceCreditController < ApplicationController
   def editGroup  
   end 
   
-  def verified
-  	if @progress.verified
-      @progress.verified=false
-      @progress.stage=-1
-      @progress.reason = params[:reason]
-      if @progress.vaccount
-        @progress.vaccount.active = false 
-        @progress.vaccount.save!
-      end
-      @progress.save!
-      flash[:alert]="已取消通過 "+@progress.user.name+" 的報名"
-    else
-      @progress.verified=true 
-      
-      @progress.payment = params[:sub_item_payments].map(&:to_i).reduce(0, :+)
-      params[:sub_item_ids].each_with_index do |id, idx|
-      	item = @progress.registered_sub_items.find(id)
-      	item.payment = params[:sub_item_payments][idx].to_f
-      	item.save!
-      end
-      @progress.create_vaccount if @progress.payment > 0
-      @progress.stage= (@progress.payment > 0) ? 3 : 4  
-      @progress.save!    
-      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
-    end
-    System.verified_result_send(@progress)
-    redirect_to controller: 'nctu_cce_credit', action: 'showProgress', id: @progress.id
-  end
-  
-  def showProgress
-  	@progress = Progress.find(params[:id])
-  end
-  
   def updateGroup
     @group.assign_attributes(group_params)
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
@@ -135,7 +96,7 @@ class NctuCceCreditController < ApplicationController
     @group.save  
     flash[:success]="成功更新名稱簡介"
     redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @group.items.first.id     
-  end   
+  end    
   
   def editCourses     
   end
@@ -153,6 +114,59 @@ class NctuCceCreditController < ApplicationController
     flash[:success]="成功更新課程"
     redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id        
   end
+    
+  def sendMessage 
+    if request.post?       
+      params[:recipients].each do |r|
+        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
+      end 
+      flash[:success]="成功寄出信件"                
+      redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id     
+    end
+  end  
+  
+  def verified
+    if params[:verify] == 'false'
+      @progress.verified=false
+      @progress.stage=-1
+      @progress.reason = params[:reason]
+      if @progress.vaccount
+        @progress.vaccount.active = false 
+        @progress.vaccount.save!
+      end
+      @progress.save!
+      flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
+      System.sendUnverified(user: @progress.user, progress: @progress).deliver         
+    else
+      @progress.verified=true 
+      @progress.payment = params[:sub_item_payments].map(&:to_i).reduce(0, :+)
+      params[:sub_item_ids].each_with_index do |id, idx|
+      	item = @progress.registered_sub_items.find(id)
+      	item.payment = params[:sub_item_payments][idx].to_f
+      	item.save!
+      end
+      @progress.create_vaccount if @progress.payment > 0
+      @progress.stage= (@progress.payment > 0) ? 3 : 4  
+      @progress.save!    
+      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
+      System.sendVerified(user: @progress.user, progress: @progress).deliver         
+    end
+    redirect_to controller: 'nctu_cce_credit', action: 'showProgress', id: @progress.id
+  end
+
+  def destroyProgress
+    item = @progress.item
+    @progress.destroy    
+    flash[:success]="成功刪除報名"    
+    redirect_to controller: 'nctu_cce_credit', action: 'indexManagement', id: item.id       
+  end
+  
+  def showProgress
+  	@progress = Progress.find(params[:id])
+  end
+  
+ 
+
 # ------------ booking --------------#
   def cancel
     @progress.destroy
@@ -162,15 +176,25 @@ class NctuCceCreditController < ApplicationController
 
   def first
     @user=current_user 
+    progress = @item.progresses.where(user_id: current_user.id).first
+    if progress.blank?
+      @progress=Progress.new
+      @progress.stage=1
+      @progress.user = current_user           
+      @progress.item = @item                  
+      @item.save           
+    else
+      @progress = progress        
+    end    
     @step = 1      
   end  
 
   def second
-    if params[:progress_id].blank?
-      @user = current_user  
-      @user.assign_attributes(user_params) 
-      @item = Item.find(params[:item_id])    
-      @step = 1       
+    if request.post?
+      user = current_user  
+      user.assign_attributes(user_params) 
+      @step = 1      
+      @progress = @item.progresses.where(user_id: current_user.id).first                   
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
                                       {type: 'presence', title: '性別', data: user_params[:gender]},
@@ -181,42 +205,35 @@ class NctuCceCreditController < ApplicationController
                                       {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]}])
       checkValidations(validations: validations_result, render: 'first' )               
-      @user.save    
-      
+      user.save    
       validations_result=validations([{type: 'presence', title: '選擇課程', data: params[:courses]}])      
       checkValidations(validations: validations_result, render: 'first' )      
-
-      @progress=Progress.new
       @progress.stage=2
-      @progress.user = current_user           
-      @progress.item = @item     
-      @progress.save 
-      
+      @progress.reason = ''        
+      @progress.save   
       params[:courses].each do |c|
         registered_sub_item = RegisteredSubItem.new  
         @progress.registered_sub_items << registered_sub_item
         @item.sub_items.where(id: c).first.registered_sub_items << registered_sub_item  
         registered_sub_item.save 
       end
-      
       @item.save                  
-      @step = 2                  
+      System.sendVerifyNotification(user: @progress.item.user, progress: @progress).deliver                              
     else
-      @user = current_user     
-      @progress = Progress.find(params[:progress_id])     
-      @progress.stage=2
-      @progress.save   
-      @step = 2       
-    end    
+      @progress = @item.progresses.where(user_id: current_user.id).first               
+    end 
+    @step = 2         
   end
   
   
   def third
-  	@progress = Progress.find(params[:progress_id])
+    @step = 3     
+    @progress = @item.progresses.where(user_id: current_user.id).first  
   end
   
   def fourth
-  
+    @step = 4       
+    @progress = @item.progresses.where(user_id: current_user.id).first    
   end
   
   private

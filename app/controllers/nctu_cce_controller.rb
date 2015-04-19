@@ -83,17 +83,43 @@ class NctuCceController < ApplicationController
       redirect_to controller: :nctu_cce, action: :indexManagement, id: @item.id     
     end
   end  
- # ------------ booking --------------# 
-  def cancel
-=begin    
-    if @progress.item.waiting_start
-      @progress.item.no_of_waiting_user-= 1
-      if @progress.item.no_of_waiting_user == 0
-        @progress.item.waiting_start = false      
+  
+  def verified
+    if params[:verify] == 'false'
+      @progress.verified = false
+      @progress.stage = 1
+      @progress.reason = params[:reason]
+      if @progress.vaccount
+        @progress.vaccount.active = false 
+        @progress.vaccount.save!
       end
-      @progress.item.save!         
-    end    
-=end    
+      @progress.save!
+      flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
+      System.sendUnverified(user: @progress.user, progress: @progress).deliver   
+    else
+      @progress.verified=true 
+      @progress.payment = params[:payment].to_f
+      @progress.create_vaccount if @progress.payment > 0
+      @progress.stage= (@progress.payment > 0) ? 3 : 4  
+      @progress.save!    
+      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
+      System.sendVerified(user: @progress.user, progress: @progress).deliver   
+    end
+    redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
+  end  
+  
+  def destroyProgress
+    item = @progress.item
+    @progress.destroy    
+    flash[:success]="成功刪除報名"    
+    redirect_to controller: 'nctu_cce', action: 'indexManagement', id: item.id       
+  end
+
+  def showProgress
+  end  
+  
+ # ------------ booking --------------# 
+  def cancel  
     @progress.destroy    
     flash[:success]="成功退出報名"    
     redirect_to controller: 'items', action: 'progress'   
@@ -164,43 +190,6 @@ class NctuCceController < ApplicationController
     @progress = @item.progresses.where(user_id: current_user.id).first         
   end   
 
-  def verified
-    if params[:verify] == 'false'
-      @progress.verified = false
-      @progress.stage = 1
-      @progress.reason = params[:reason]
-      if @progress.vaccount
-        @progress.vaccount.active = false 
-        @progress.vaccount.save!
-      end
-      @progress.save!
-      flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
-      System.sendUnverified(user: @progress.user, progress: @progress).deliver   
-    else
-      @progress.verified=true 
-      @progress.payment = params[:payment].to_f
-      @progress.create_vaccount if @progress.payment > 0
-      @progress.stage= (@progress.payment > 0) ? 3 : 4  
-      @progress.save!    
-      flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
-      System.sendVerified(user: @progress.user, progress: @progress).deliver   
-    end
-    redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
-  end  
-  
-  def destroyProgress
-    item = @progress.item
-    @progress.destroy    
-    flash[:success]="成功刪除報名"    
-    redirect_to controller: 'nctu_cce', action: 'indexManagement', id: item.id       
-  end
-  
-
-  
-  def showProgress
-  end
-  
- 
   private
     
   def set_item
