@@ -1,23 +1,23 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
-  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :destroy] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}  
 
-  before_action :set_step, only: [:new, :create]
-  before_action :set_item, only: [:show, :editItem, :updateItem, :destroy, :indexManagement, :sendMessage, :first, :second, :third, :forth]
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :destroy, :first, :second, :third, :forth]
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
      
   def new
-    @group = Group.new( module: params[:module])
+    @group = Group.new()
     @group.items.build()    
     @step = 2
   end
   
   def create
     @group = Group.new(group_params)      
+    @step = 2    
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
                                     {type: 'presence', title: '課程簡介', data: @group.description},
                                     {type: 'presence', title: '招生人數', data: @group.items.first.no_of_user},
@@ -35,6 +35,11 @@ class NctuCceController < ApplicationController
     @group.save  
     redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id
   end 
+  
+  def indexManagement
+    @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
+  end    
+  
   
   def editItem  
   end 
@@ -190,18 +195,13 @@ class NctuCceController < ApplicationController
     redirect_to controller: 'nctu_cce', action: 'indexManagement', id: item.id       
   end
   
-  def indexManagement
-    @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
-  end  
+
   
   def showProgress
   end
   
  
   private
-  def set_step
-    @step = params[:step]
-  end  
     
   def set_item
     @item = Item.find(params[:id])

@@ -1,13 +1,13 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}    
   
-  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :editCourses, :updateCourses, :first]  
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:verified, :cancel] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
       
   def new
     @group = Group.new()
@@ -32,10 +32,7 @@ class NctuCceCreditController < ApplicationController
   end
   
   def create
-    @group = Group.new(group_params)      
-    @title = params[:title]
-    @price = params[:price]
-    @no_of_user = params[:no_of_user]    
+    @group = Group.new(group_params)       
     @step = 3    
     validations_result=validations([{type: 'presence', title: '班級名稱', data: @group.title},
                                     {type: 'presence', title: '班級簡介', data: @group.description},

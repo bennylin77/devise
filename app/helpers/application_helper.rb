@@ -35,6 +35,14 @@ module ApplicationHelper
       "class='active'".html_safe     
     end
   end
+  
+  def waitingFunction(code)
+    if code == GLOBAL_VAR['NCTU_CCE']
+      true
+    else
+      false  
+    end
+  end
 
   def moduleOptions
     [['交大推廣教育中心培訓班', GLOBAL_VAR['NCTU_CCE']],

@@ -1,24 +1,22 @@
 <%= render partial: "step", locals: {progress: @progress, step: @step} %>
-<%= form_for @user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
+<div class="container" >
+<%= form_for current_user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'item_id', @item.id %>
 	<%end%>
-	<%unless @progress.blank?%>	
-		<%= hidden_field_tag 'progress_id', @progress.id %>	
-	<%end%>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">姓名*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">姓名*</label>
 		<div class="col-sm-6">
-			<%= u.text_field :name, class: "form-control" %>
+			<%= u.text_field :name, placeholder: '姓名', class: "form-control" %>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">出生年月日*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">出生年月日*</label>
 		<div class="col-sm-6">
-			<%if @user.birthday.blank?%>
-			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>	
+			<%if current_user.birthday.blank?%>
+			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日" %>	
 			<%else%>
-			<%= u.text_field :birthday, value: @user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
+			<%= u.text_field :birthday, value: current_user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
 			<%end%>
 		</div>
 	    <script type="text/javascript">
@@ -29,7 +27,7 @@
 	    </script>	
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">性別*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">性別*</label>
 		<div class="col-sm-6">
 		<label class="radio-inline">
 	  		<%=u.radio_button :gender, "true"%>男			
@@ -40,26 +38,26 @@
 		</div>
 	</div>		
 	<div class="form-group">
-		<label class="col-sm-2 control-label">身分證字號*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">身分證字號*</label>
 		<div class="col-sm-6">
 			<%= u.text_field :id_no_TW, class: "form-control" %>
 		</div>
 	</div>			
 	<div class="form-group">
-		<label class="col-sm-2 control-label">聯絡電話*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話*</label>
 		<div class="col-sm-6">
 			<%= u.text_field :phone_no, class: "form-control" %>
 		</div>
 	</div>		
 	<div class="form-group">
-		<label class="col-sm-2 control-label">聯絡地址*</label>
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡地址*</label>
 		<div class="form-inline col-sm-6">
 			<span id="twzipcode"></span>
 			<%= u.text_field :address, class: "form-control" %>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">選擇課程*</label>		
+		<label class="col-sm-offset-1 col-sm-2 control-label">選擇課程*</label>		
 	</div>	
 	<div class="form-group">	
 		<label class="col-sm-1 col-sm-offset-2">勾選(複選)</label>		
@@ -89,9 +87,9 @@ $('#twzipcode').twzipcode({
     districtName: 'user[district]',
     zipcodeIntoDistrict: true,
     css: ['form-control', 'form-control'], 
-    <%unless @user.county.blank?%>
-	countySel: '<%=@user.county%>',
-	districtSel: '<%=@user.district%>'
+    <%unless current_user.county.blank?%>
+	countySel: '<%=current_user.county%>',
+	districtSel: '<%=current_user.district%>'
 	<%end%>    
 });
 </script>

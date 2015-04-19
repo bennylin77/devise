@@ -20,7 +20,7 @@
 		<label class="col-sm-offset-1 col-sm-2 control-label">出生年月日*</label>
 		<div class="col-sm-6">
 			<%if current_user.birthday.blank?%>
-			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日"  %>	
+			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日" %>	
 			<%else%>
 			<%= u.text_field :birthday, value: current_user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
 			<%end%>
