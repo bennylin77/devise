@@ -3,7 +3,7 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
- # before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}    
+  before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}    
   
   before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :editCourses, :updateCourses, :first]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
