@@ -1,7 +1,7 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
 <h3 class="text-center">群組寄信</h3><br>
 <div class="container" >
-<%= form_tag('/nctu_cce/sendMessage', multipart: true, class: "form-horizontal") do%>
+<%= form_tag('/nctu_cce_credit/sendMessage', multipart: true, class: "form-horizontal") do%>
   <%=hidden_field_tag 'id', @item.id%>
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label">標題</label>

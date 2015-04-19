@@ -3,7 +3,7 @@ class Group
   include Mongoid::Timestamps     
   
   embeds_many :comments
-  has_many :items
+  has_many :items, dependent: :destroy
   belongs_to :system_module
   
   

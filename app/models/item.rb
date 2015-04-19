@@ -4,8 +4,8 @@ class Item
 
 #  embeds_many :evaluations
 #  embeds_many :comments
-  has_many :progresses  
-  has_many :sub_items   
+  has_many :progresses, dependent: :destroy  
+  has_many :sub_items, dependent: :destroy   
   belongs_to :user  
   belongs_to :group
   accepts_nested_attributes_for :sub_items 

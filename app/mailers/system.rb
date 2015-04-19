@@ -10,8 +10,9 @@ class System < ActionMailer::Base
         attachments[file.original_filename] = File.open(file.path, 'rb'){|f| f.read}  
       end
     end    
-    @user=hash[:user]
-    @content=hash[:content]
+    @user = hash[:user]
+    @content = hash[:content]
+    @sender = hash[:sender]
     mail( to: @user.email, subject: hash[:subject])    
   end 
   

@@ -63,6 +63,12 @@ class NctuCceCreditController < ApplicationController
     redirect_to controller: :items, action: :createCompletion, id: @group.items.first.id  
   end  
 
+  def destroy
+    @item.group.destroy    
+    flash[:success]="成功刪除學分班"    
+    redirect_to controller: 'items', action: 'indexManagement'  
+  end
+
   def indexManagement
     @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
   end  
@@ -118,7 +124,7 @@ class NctuCceCreditController < ApplicationController
   def sendMessage 
     if request.post?       
       params[:recipients].each do |r|
-        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment]).deliver
+        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user).deliver
       end 
       flash[:success]="成功寄出信件"                
       redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id     

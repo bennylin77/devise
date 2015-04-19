@@ -26,8 +26,11 @@
 						    -moz-column-gap: 1em;
 						    -webkit-column-gap: 1em;
 						    column-gap: 1em;">
-<%=@user.name %> 您好!   
-<%=@content %>   
+<%=@user.name %> 您好!<br><br>      
+<%=@content %>
+<br>
+<br>
+<%='從 '+@sender.name+' '+@sender.email+' 寄出' %>   
 </div>
 </div>
 </div>
