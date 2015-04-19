@@ -128,7 +128,7 @@ class NctuCceCreditController < ApplicationController
   def verified
     if params[:verify] == 'false'
       @progress.verified=false
-      @progress.stage=-1
+      @progress.stage= 1
       @progress.reason = params[:reason]
       if @progress.vaccount
         @progress.vaccount.active = false 
@@ -182,7 +182,7 @@ class NctuCceCreditController < ApplicationController
       @progress.stage=1
       @progress.user = current_user           
       @progress.item = @item                  
-      @item.save           
+      @progress.save           
     else
       @progress = progress        
     end    

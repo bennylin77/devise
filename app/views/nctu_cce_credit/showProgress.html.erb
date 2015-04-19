@@ -1,55 +1,50 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
+<h3 class="text-center">報名資料 (<%=stageText @progress.stage%>)</h3><br>
+
 <div class="container" style="margin-bottom: 20px;">
-  <div class="row">
-	<h3 class="col-sm-5 col-sm-offset-1">報名學員</h3>
-  </div>
-</div>
-<div class="container-fluid">
 	<div class="row">	
-		<div class="col-md-offset-2">
-		<%if @progress.stage==2%>	
-		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#agree-confirm">
-  			審核通過
-		</button>	
-		<%elsif @progress.stage==3%>
-		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel-confirm">
-  			取消資格
-		</button>
-		<%end%>
+		<div class="">
+		<%if @progress.stage >= 2%>	
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#agree-confirm">
+		  	審核通過
+			</button>	
+			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cancel-confirm">
+		  	審核不通過/取消資格
+			</button>			
+		<%end%>		
+			<%=link_to '刪除報名', {controller: 'nctu_cce', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>
 		</div>
-	</div>
+	</div><br>
+<table class="table">
+  <tr>
+    <th>姓名</th>
+    <td><%=@progress.user.name%></td>
+    <th>英文姓名</th>
+    <td><%=@progress.user.name_en%></td>    
+  </tr>
+  <tr>
+    <th>出生年月日</th>
+    <td><%if !@progress.user.birthday.blank? %><%=@progress.user.birthday.strftime "%Y/%m/%d" %><%end%></td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td><%if @progress.user.gender%>男<%else%>女<%end%></td>
+  </tr>  
+  <tr>
+    <th>身分證字號</th>
+    <td><%=@progress.user.id_no_TW%></td>
+  </tr>   
+  <tr>
+    <th>聯絡電話</th>
+    <td><%=@progress.user.phone_no%></td>
+  </tr>   
+  <tr>
+    <th>聯絡地址</th>
+    <td><%=@progress.user.postal%><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></td>
+  </tr> 
+</table> 	
 </div>
-<br>
-<div class="container-fluid">
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">姓名</div>
-  <div class="col-md-4"><%=@progress.user.name%></div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">出生年月日</div>
-  <div class="col-md-4"><%=@progress.user.birthday.strftime "%Y/%m/%d" %></div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">性別</div>
-  <div class="col-md-4"><%if @progress.user.gender%>男<%else%>女<%end%></div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">身分證字號</div>
-  <div class="col-md-4"><%=@progress.user.id_no_TW%></div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">聯絡電話</div>
-  <div class="col-md-4"><%=@progress.user.phone_no%></div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">聯絡地址</div>
-  <div class="col-md-4"><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-md-offset-2">審核狀態</div>
-  <div class="col-md-4"><%if @progress.verified%>通過<%else%>未通過<%end%></div>
-</div>
-</div>
+
 
 <div class="modal fade" id="agree-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -60,7 +55,7 @@
       </div>
       <div class="modal-body">
        <%=label_tag "學費：（總和為0元會直接幫使用者完成報名）"%> 
-       <%= form_tag "/nctu_cce_credit/verified", :id=>"agree-form" do%>
+       <%= form_tag "/nctu_cce_credit/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag :id, params[:id]%>	
        	<% @progress.registered_sub_items.each do |sub_item|%>
        		<%=hidden_field_tag "sub_item_ids[]", sub_item.id%>
@@ -82,11 +77,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">取消資格</h4>
+        <h4 class="modal-title" id="myModalLabel">審核不通過/取消資格</h4>
       </div>
       <div class="modal-body">
        <%=label_tag "請填寫原因："%> 
-       <%= form_tag "/nctu_cce_credit/verified", :id=>"cancel-form" do%>
+       <%= form_tag "/nctu_cce_credit/verified?verify=false", :id=>"cancel-form" do%>
        	<%=hidden_field_tag "id", @progress.id%>
        	<%=text_area_tag "reason","",:class=>"form-control"%>
        <% end %>
