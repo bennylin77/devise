@@ -26,8 +26,11 @@
 						    -moz-column-gap: 1em;
 						    -webkit-column-gap: 1em;
 						    column-gap: 1em;">
-<%=@user.name %> 您好!   
-<%=@content %>   
+<%=@user.name %> 您好!  
+<br> 
+學員 <%=@progress.user.name %>，報名了 <%= @progress.item.group.title%> 需要您的審核，請點擊以下連結進行審核。
+<br>
+<%= host+Hash[controllerOptions].rassoc(@progress.item.group.system_module.serial_code).first+'/showProgress?id='+@progress.id%>    
 </div>
 </div>
 </div>

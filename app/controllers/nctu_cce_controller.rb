@@ -80,6 +80,15 @@ class NctuCceController < ApplicationController
   end  
  # ------------ booking --------------# 
   def cancel
+=begin    
+    if @progress.item.waiting_start
+      @progress.item.no_of_waiting_user-= 1
+      if @progress.item.no_of_waiting_user == 0
+        @progress.item.waiting_start = false      
+      end
+      @progress.item.save!         
+    end    
+=end    
     @progress.destroy    
     flash[:success]="成功退出報名"    
     redirect_to controller: 'items', action: 'progress'   
@@ -131,7 +140,8 @@ class NctuCceController < ApplicationController
       checkValidations(validations: validations_result, render: 'first' )                
       user.save  
       @progress.stage = 2
-      @progress.save         
+      @progress.save  
+      System.sendVerifyNotification(user: @progress.item.user, progress: @progress).deliver        
     else
       @progress = @item.progresses.where(user_id: current_user.id).first          
     end     
@@ -162,7 +172,7 @@ class NctuCceController < ApplicationController
       @progress.save!    
       flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
     end
-    System.verified_result_send(@progress)
+    System.verified_result_send(@progress).deliver
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
 
@@ -205,7 +215,7 @@ class NctuCceController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, 
                                  :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
-                                 :work_name, :work_title, :work_phone_no, :work_address)      
+                                 :work_name, :work_title, :work_phone_no, :work_county, :work_district, :work_postal, :work_address)      
   end
 
   def group_params

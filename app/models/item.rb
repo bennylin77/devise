@@ -20,7 +20,7 @@ class Item
   field :school_year, type: Integer
   field :semester, type: Integer
   field :term, type: Integer 
-  field :waiting_available, type: Boolean, default: false
+  field :waiting_available, type: Boolean, default: false     # accept waiting?
    
   #CCE
   field :verification_code, type: String   

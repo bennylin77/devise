@@ -1,6 +1,8 @@
 module NctuCceHelper  
-  def stage_text(stage)
+  def stageText(stage)
   	case stage 		
+      when 1
+        "填表中"  	  
   		when 2
   			"待審核"
   		when 3
