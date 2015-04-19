@@ -33,7 +33,6 @@ class System < ActionMailer::Base
     @user = hash[:user]
     @progress=hash[:progress] 
     subject = "課程報名系統 #{@progress.item.group.title} 審核通過"
-		subject += (@data.stage==2) ? "已被取消報名" : "已報名成功"
 		mail( to: @user.email, subject: subject)
 	end	 
 end
