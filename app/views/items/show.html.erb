@@ -20,7 +20,7 @@
 		<%if pg %>									 		
 			<%=link_to '查看報名進度',{ controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first,
 									 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
-								     progress_id: @item.progresses.where(user_id: current_user.id).first.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
+								     id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
 		<%else%>
 			<%if @item.waiting_start%>		
 				<%if @item.waiting_available%>

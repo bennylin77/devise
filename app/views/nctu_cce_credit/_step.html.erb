@@ -1,6 +1,4 @@
-<%if !progress.blank? %>
 <%=link_to '退出報名', {controller: 'nctu_cce_credit', action: 'cancel', id: progress.id}, class: 'btn btn-danger' %>
-<%end%>
 <ol class="progtrckr" data-progtrckr-steps="4">
     <li class="progtrckr-<%=stepProgress step: 1, step_now: step%>">填表</li><!--
  --><li class="progtrckr-<%=stepProgress step: 2, step_now: step%>">審核</li><!--

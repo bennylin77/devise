@@ -86,18 +86,39 @@ class NctuCceController < ApplicationController
   end
    
   def first
-    @user = current_user   
-    @step = 1
+    @user = current_user     
+    progress = @item.progresses.where(user_id: current_user.id).first
+    if progress.blank?
+      if ( @item.progresses.count < @item.no_of_user ) or @item.waiting_available
+        @progress=Progress.new
+        @progress.stage=1
+        @progress.user = current_user           
+        @progress.item = @item     
+        @progress.save                 
+        #waiting
+        if ( !@item.waiting_start and @item.progresses.count == @item.no_of_user ) or @item.waiting_start 
+          @item.waiting_start = true 
+          if @item.progresses.count > @item.no_of_user 
+            @item.no_of_waiting_user+= 1        
+            @progress.waiting_no = @item.no_of_waiting_user
+            @progress.waiting = true   
+          end                     
+        end  
+        @item.save           
+        @progress.save   
+      end               
+    else
+      @progress = progress        
+    end  
+    @step = 1  
   end
   
-  def second
-    progress = @item.progresses.where(user_id: current_user.id).first
-    
+  def second    
     if request.post?
-      @user = current_user  
-      @user.assign_attributes(user_params) 
-      @item = Item.find(params[:item_id])    
+      user = current_user  
+      user.assign_attributes(user_params)  
       @step = 1       
+      @progress = @item.progresses.where(user_id: current_user.id).first            
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
                                       {type: 'presence', title: '性別', data: user_params[:gender]},
@@ -107,43 +128,14 @@ class NctuCceController < ApplicationController
                                       {type: 'presence', title: '聯絡地址-縣市', data: user_params[:county]},                                      
                                       {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]}])
-      checkValidations(validations: validations_result, render: 'first' )       
-      @step = 2          
-      @user.save    
-      if @item.progresses.count < @item.no_of_user or @item.waiting_available
-        @progress=Progress.new
-        @progress.stage=2
-        @progress.user = current_user           
-        @progress.item = @item     
-        @progress.save                 
-        #waiting
-        if ( !@item.waiting_start and @item.progresses.count>=@item.no_of_user ) or @item.waiting_start 
-            @item.waiting_start=true 
-            unless @item.progresses.count==@item.no_of_user 
-              @item.no_of_waiting_user+= 1        
-              @progress.waiting_no=@item.no_of_waiting_user
-              @progress.waiting=true   
-            end                     
-        end  
-        @item.save           
-        @progress.save   
-      end               
+      checkValidations(validations: validations_result, render: 'first' )                
+      user.save  
+      @progress.stage = 2
+      @progress.save         
     else
-      unless progress.blank?
-        #@user = current_user     
-        @progress = Progress.find(params[:progress_id])     
-        @progress.stage=2
-        @progress.save   
-        @step = 2       
-      else
-        
-      end      
-    end   
-    
-    
-    
-    
-     
+      @progress = @item.progresses.where(user_id: current_user.id).first          
+    end     
+    @step = 2      
   end
   
   def third
@@ -173,9 +165,11 @@ class NctuCceController < ApplicationController
     System.verified_result_send(@progress)
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
+
+  def forth
+  end
   
   def return
-    
   end  
   
   def indexManagement
@@ -185,12 +179,7 @@ class NctuCceController < ApplicationController
   def showProgress
   end
   
-  
-	
-	def forth
-	
-	end
-  
+ 
   private
   def set_step
     @step = params[:step]

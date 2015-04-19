@@ -20,7 +20,8 @@ module ItemsHelper
   
   def stageColor(stage)
   	case stage
-  		when 1
+  		when 1 # 待審核
+        "default"  		  
   		when 2 # 待審核
   			"default"
   		when 3 # 待繳費

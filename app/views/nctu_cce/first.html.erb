@@ -1,6 +1,6 @@
 <%= render partial: "step", locals: {progress: @progress, step: @step} %>
 <div class="container" >
-<%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
+<%= form_for current_user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'id', @item.id %>
 	<%end%>
@@ -19,10 +19,10 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">出生年月日*</label>
 		<div class="col-sm-6">
-			<%if @user.birthday.blank?%>
+			<%if current_user.birthday.blank?%>
 			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日"  %>	
 			<%else%>
-			<%= u.text_field :birthday, value: @user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
+			<%= u.text_field :birthday, value: current_user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
 			<%end%>
 		</div>
 	    <script type="text/javascript">
@@ -112,9 +112,9 @@ $('#twzipcode').twzipcode({
     districtName: 'user[district]',
     zipcodeIntoDistrict: true,
     css: ['form-control', 'form-control'], 
-    <%unless @user.county.blank?%>
-	countySel: '<%=@user.county%>',
-	districtSel: '<%=@user.district%>'
+    <%unless current_user.county.blank?%>
+	countySel: '<%=current_user.county%>',
+	districtSel: '<%=current_user.district%>'
 	<%end%>    
 });
 $('#twzipcode_1').twzipcode({
@@ -123,9 +123,9 @@ $('#twzipcode_1').twzipcode({
     districtName: 'user[work_district]',
     zipcodeIntoDistrict: true,
     css: ['form-control', 'form-control'], 
-    <%unless @user.county.blank?%>
-	countySel: '<%=@user.county%>',
-	districtSel: '<%=@user.district%>'
+    <%unless current_user.county.blank?%>
+	countySel: '<%=current_user.county%>',
+	districtSel: '<%=current_user.district%>'
 	<%end%>    
 });
 </script>

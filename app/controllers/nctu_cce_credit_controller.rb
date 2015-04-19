@@ -203,27 +203,7 @@ class NctuCceCreditController < ApplicationController
       end
       
       @item.save                  
-      @step = 2          
-=begin      
-      if @item.progresses.count < @item.no_of_user or @item.waiting_available
-        @progress=Progress.new
-        @progress.stage=2
-        @progress.user = current_user           
-        @progress.item = @item     
-        @progress.save                 
-        #waiting
-        if ( !@item.waiting_start and @item.progresses.count>=@item.no_of_user ) or @item.waiting_start 
-            @item.waiting_start=true 
-            unless @item.progresses.count==@item.no_of_user 
-              @item.no_of_waiting_user+= 1        
-              @progress.waiting_no=@item.no_of_waiting_user
-              @progress.waiting=true   
-            end                     
-        end  
-        @item.save           
-        @progress.save   
-      end    
-=end          
+      @step = 2                  
     else
       @user = current_user     
       @progress = Progress.find(params[:progress_id])     

@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
   end
   
   def createCompletion
-    flash[:success]='成功建立 '+@item.group.title
+    flash.now[:success]='成功建立 '+@item.group.title
   end  
   
   def progress
