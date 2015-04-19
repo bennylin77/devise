@@ -18,14 +18,22 @@ class System < ActionMailer::Base
   def sendVerifyNotification(hash={}) 
     @user = hash[:user]
     @progress=hash[:progress]
-    subject = "課程報名系統 #{@progress.item.group.title} 報名審核通知"    
+    subject = "課程報名系統 #{@progress.item.group.title} 報名審核"    
     mail( to: @user.email, subject: subject)    
   end   
+
+  def sendUnverified(hash={})
+    @user = hash[:user]
+    @progress=hash[:progress]    
+    subject = "課程報名系統 #{@progress.item.group.title} 審核不通過/取消資格"
+    mail( to: @user.email, subject: subject)
+  end  
   
-	def sendVerifiedResult(progress)
-    @data = progress
-		subject = "課程報名系統 #{@data.item.group.title}"
+	def sendVerified(hash={})
+    @user = hash[:user]
+    @progress=hash[:progress] 
+    subject = "課程報名系統 #{@progress.item.group.title} 審核通過"
 		subject += (@data.stage==2) ? "已被取消報名" : "已報名成功"
-		mail( to: @data.user.email, subject: subject)
+		mail( to: @user.email, subject: subject)
 	end	 
 end

@@ -140,6 +140,7 @@ class NctuCceController < ApplicationController
       checkValidations(validations: validations_result, render: 'first' )                
       user.save  
       @progress.stage = 2
+      @progress.reason = ''
       @progress.save  
       System.sendVerifyNotification(user: @progress.item.user, progress: @progress).deliver        
     else
@@ -171,8 +172,8 @@ class NctuCceController < ApplicationController
       @progress.stage= (@progress.payment > 0) ? 3 : 4  
       @progress.save!    
       flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
+      System.sendVerifiedResult(@progress).deliver   
     end
-    System.sendVerifiedResult(@progress).deliver
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
 
