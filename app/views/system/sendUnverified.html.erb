@@ -26,29 +26,10 @@
 						    -moz-column-gap: 1em;
 						    -webkit-column-gap: 1em;
 						    column-gap: 1em;">
-<%=@progress.user.name%> 您好!</br>   
+<%=@progress.user.name%> 您好!
+<br>   
 <b><%=@progress.item.group.title%></b>
-已審核成功</br>
-<% if @progress.vaccount %>
-匯款資訊如下</br>
-			 <table border="1">
-				<tr>
-					<td>銀行</td>
-					<td>帳號</td>
-					<td>金額</td>
-					<td>匯款開始日</td>
-					<td>匯款結束日</td>
-				</tr>
-				<tr>
-					<td>玉山銀行</td>
-					<td><%=@progress.vaccount.vacc%></td>
-					<td><%=@progress.payment.to_s%> NT</td>
-					<td><%=@progress.item.payment_start_at.strftime("%D %R")%></td>
-					<td><%=@progress.item.payment_end_at.strftime("%D %R")%></td>
-				</tr>
-			 </table>
-請於時限內匯款，匯款成功後會來信通知您
-<% end %>
+審核不通過/取消資格 原因: <%=@progress.reason%></br>
 </div>
 </div>
 </div>
