@@ -2,10 +2,7 @@
 <div class="container" >
 <%= form_for @user, url: { controller: 'nctu_cce', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
 	<%unless @item.blank?%>
-		<%= hidden_field_tag 'item_id', @item.id %>
-	<%end%>
-	<%unless @progress.blank?%>	
-		<%= hidden_field_tag 'progress_id', @progress.id %>	
+		<%= hidden_field_tag 'id', @item.id %>
 	<%end%>
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">姓名*</label>

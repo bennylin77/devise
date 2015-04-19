@@ -6,7 +6,7 @@ class NctuCceController < ApplicationController
   before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}  
 
   before_action :set_step, only: [:new, :create]
-  before_action :set_item, only: [:show, :editItem, :updateItem, :destroy, :indexManagement, :sendMessage, :first]
+  before_action :set_item, only: [:show, :editItem, :updateItem, :destroy, :indexManagement, :sendMessage, :first, :second]
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel] 
      
@@ -91,7 +91,9 @@ class NctuCceController < ApplicationController
   end
   
   def second
-    if params[:progress_id].blank?
+    progress = @item.progresses.where(user_id: current_user.id).first
+    
+    if request.post?
       @user = current_user  
       @user.assign_attributes(user_params) 
       @item = Item.find(params[:item_id])    
@@ -127,12 +129,21 @@ class NctuCceController < ApplicationController
         @progress.save   
       end               
     else
-      @user = current_user     
-      @progress = Progress.find(params[:progress_id])     
-      @progress.stage=2
-      @progress.save   
-      @step = 2       
-    end    
+      unless progress.blank?
+        #@user = current_user     
+        @progress = Progress.find(params[:progress_id])     
+        @progress.stage=2
+        @progress.save   
+        @step = 2       
+      else
+        
+      end      
+    end   
+    
+    
+    
+    
+     
   end
   
   def third
@@ -161,6 +172,10 @@ class NctuCceController < ApplicationController
     end
     System.verified_result_send(@progress)
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
+  end  
+  
+  def return
+    
   end  
   
   def indexManagement
