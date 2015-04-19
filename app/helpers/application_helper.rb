@@ -30,7 +30,7 @@ module ApplicationHelper
     end
   end  
   
-  def active(hash={}) 
+  def active(hash={})     
     if current_page?(controller: hash[:controller], action: hash[:action])
       "class='active'".html_safe     
     end

@@ -14,19 +14,19 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<%if user_signed_in?%>
-				<li <%= active( controller: 'items', action: 'progress' )%> >
+				<li <%= active( controller: '/items', action: 'progress' )%> >
 				<%=link_to '/items/progress', {} do%>
 					已報名課程			
 				<%end%>							
 				</li>
 				<%if current_user.module_user_lists.size!=0 %>
-					<li <%= active( controller: 'items', action: 'indexManagement') %> >
+					<li <%= active( controller: '/items', action: 'indexManagement') %> >
 					<%=link_to '/items/indexManagement', {} do%>
 						主辦者
 					<%end%>							
 					</li>
 					<%if current_user.module_user_lists.where(role: GLOBAL_VAR['ROLE_ADMIN']).count!=0 %>
-					<li <%= active( controller: 'system_modules', action: 'userIndex' )%> >
+					<li <%= active( controller: '/system_modules', action: 'userIndex' )%> >
 					<%=link_to '/system_modules/userIndex', {} do%>
 						模組管理
 					<%end%>							
