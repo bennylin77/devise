@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get  'nctu_cce/editGroup'  
   get  'nctu_cce/new'
   post 'nctu_cce/verified'
+  get  'nctu_cce/destroyProgress'
   get  'nctu_cce/indexManagement'
   get  'nctu_cce/showProgress'
   get  'nctu_cce/cancel'

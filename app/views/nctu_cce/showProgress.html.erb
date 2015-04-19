@@ -15,6 +15,7 @@
 	  			審核不通過/取消資格
 			</button>			
 			<%end%>		
+			<%=link_to '刪除報名', {controller: 'nctu_cce', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>
 		</div>
 	</div>
 </div>

@@ -3,12 +3,12 @@ class NctuCceController < ApplicationController
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
-  before_action only: [:verified] { |c| c.ProgressCheckItemUser(params[:id])}  
+  before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}  
 
   before_action :set_step, only: [:new, :create]
   before_action :set_item, only: [:show, :editItem, :updateItem, :destroy, :indexManagement, :sendMessage, :first, :second, :third, :forth]
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
      
   def new
     @group = Group.new( module: params[:module])
@@ -182,6 +182,13 @@ class NctuCceController < ApplicationController
     end
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
+  
+  def destroyProgress
+    item = @progress.item
+    @progress.destroy    
+    flash[:success]="成功刪除報名"    
+    redirect_to controller: 'nctu_cce', action: 'indexManagement', id: item.id       
+  end
   
   def indexManagement
     @progresses = @item.progresses.paginate(page: params[:page], per_page: 30)
