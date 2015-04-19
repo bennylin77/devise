@@ -154,16 +154,16 @@ class NctuCceController < ApplicationController
   end  
 
   def verified
-    if @progress.verified
-      @progress.verified=false
-      @progress.stage=-1
+    if params[:verify] == 'false'
+      @progress.verified = false
+      @progress.stage = 1
       @progress.reason = params[:reason]
       if @progress.vaccount
         @progress.vaccount.active = false 
         @progress.vaccount.save!
       end
       @progress.save!
-      flash[:alert]="已取消通過 "+@progress.user.name+" 的報名"
+      flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
     else
       @progress.verified=true 
       @progress.payment = params[:payment].to_f
@@ -172,7 +172,7 @@ class NctuCceController < ApplicationController
       @progress.save!    
       flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
     end
-    System.verified_result_send(@progress).deliver
+    System.sendVerifiedResult(@progress).deliver
     redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
 

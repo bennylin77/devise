@@ -22,7 +22,7 @@ class System < ActionMailer::Base
     mail( to: @user.email, subject: subject)    
   end   
   
-	def verified_result_send(progress)
+	def sendVerifiedResult(progress)
     @data = progress
 		subject = "課程報名系統 #{@data.item.group.title}"
 		subject += (@data.stage==2) ? "已被取消報名" : "已報名成功"
