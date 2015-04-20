@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 			</button>
 			<%=link_to items_path, class: 'navbar-brand' do%>
-			課程報名系統
+			EasyRegister 報名系統
 			<%end%>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
@@ -16,7 +16,7 @@
 				<%if user_signed_in?%>
 				<li <%= active( controller: '/items', action: 'progress' )%> >
 				<%=link_to '/items/progress', {} do%>
-					已報名課程			
+					我的報名課程			
 				<%end%>							
 				</li>
 				<%if current_user.module_user_lists.size!=0 %>

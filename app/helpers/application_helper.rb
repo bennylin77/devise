@@ -63,6 +63,10 @@ module ApplicationHelper
     ['forth', 4]]
   end    
   
+  def semesterOptions
+    [["上學期", 1], ["寒假", -1], ["下學期", 2], ["暑假", -2]]
+  end  
+  
   def stageColor(stage)
     case stage
       when 1 # 待審核

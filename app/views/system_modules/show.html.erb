@@ -13,10 +13,15 @@
 <%= link_to '編輯', edit_system_module_path(@system_module), class: 'btn btn-info'%> 
 <%= link_to '刪除', @system_module, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 
+
+<table class="table table-border">
+<tr>
+	<td>姓名</td>
+</tr>
 <% @system_module.module_user_lists.each do |mu|%>
-
-<%= mu.user.name %>
-
+<tr>
+	<td><%= mu.user.name %></td>
+</tr>	
 <%end%>
 
 

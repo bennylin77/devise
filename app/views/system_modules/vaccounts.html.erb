@@ -5,7 +5,7 @@
 	<td>所屬報名</td>
 	<td>所有人</td>
 	<td>內涵金額</td>
-	<td>銷帳</td>
+	<!--<td>銷帳</td>-->
 </tr>
 <% @vaccounts.each do |vacc| %>
 <tr>
@@ -13,7 +13,7 @@
 	<td><%= vacc.progress.item.school_year %></td>
 	<td><%= vacc.progress.user.name %></td>
 	<td><%= (vacc.status) ? vacc.status["Amount"] : 0.0 %></td>
-	<td>No</td>
+	<!--<td>No</td>-->
 </tr>
 <% end %>
 

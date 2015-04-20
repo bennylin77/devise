@@ -1,33 +1,38 @@
 <div class="item_box"  id="item_<%=item_block.id%>" >
-	<div class="panel panel-default">
-	  <div class="panel-heading">
+	<div class="panel panel-info">
+	  <div class="panel-heading">  	
 	    <%=link_to item_block, class: 'fancybox openitemAjax' do%> 	
-	    <h3 class="panel-title"><%= item_block.group.title %></h3>
+		    <%if item_block.school_year%><%=item_block.school_year%>學年<%end%>	    
+		    <%if item_block.semester%><%=Hash[semesterOptions].rassoc(item_block.semester).first%><%end%><br>		    
+		    <h2 class="panel-title"><%= item_block.group.title %> <%if item_block.term%>(第<%=item_block.term%>期)<%end%></h2>	    	    
 	    <%end%>	 
 	  </div>
-	  <div class="panel-body">
-	    <%=link_to item_block, class: 'fancybox openitemAjax' do%>  	
+	  <div class="panel-body" style="min-height: 150px;">
 		    <p><%= item_block.group.description%></p>
-		    <div id="clock_<%=item_block.id%>"></div>
-	  	<%end%> 
-	   	<div class="container" style="width: 250px;">
-		  	<div class="row">
-		        <div class="pull-left">by <%=item_block.user.name%></div>
-		        <div class="pull-right"><%=item_block.created_at.strftime "%Y-%m-%d"%></div> 		
-		  	</div>	
-	  	</div>	 
+			<strong><div id="clock_<%=item_block.id%>"></div></strong>	  			    	 
 	  </div>
-	
+	 <div class="panel-footer">	   	
+	 	<div class="container" style="width: 250px;">
+		  	<div class="row">
+		        <div class="pull-left">承辦人：<br></div>   	
+		    </div>	 		
+		  	<div class="row">
+		        <div class="pull-left"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%=item_block.user.name%></div>    	
+		    </div>	   
+		    <div class="row"> 
+		        <div class="pull-left"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=item_block.user.email%></div>		
+		  	</div>			  	
+	  	</div>
+	  </div>
 	</div>		
 </div>
 
 <script type="text/javascript">
   $('#clock_<%=item_block.id%>').countdown('<%= item_block.end_at.strftime('%Y/%m/%d %H:%M:%S')%>', function(event) {
     $(this).html(event.strftime(''+
-		'<span>%-w</span> 週 '+ 
-		'<span>%-d</span> 天 '+ 
+		'<span>%-D</span> 天 '+ 
 		'<span>%H</span> 時 '+
 		'<span>%M</span> 分 '+ 
-		'<span>%S</span> 秒 截止'));
+		'<span>%S</span> 秒 報名截止'));
   });
 </script>    

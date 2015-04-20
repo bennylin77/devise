@@ -8,11 +8,11 @@
 			<%= i.select :school_year, options_for_select([[Time.now.year-1912, Time.now.year-1912], 
 														   [Time.now.year-1911, Time.now.year-1911],			
 														   [Time.now.year-1910, Time.now.year-1910],	
-														   [Time.now.year-1909, Time.now.year-1909]], @item.school_year), {prompt: '學年'}, class: "form-control" %>		
+														   [Time.now.year-1909, Time.now.year-1909]], @item.school_year), {include_blank: true}, class: "form-control" %>		
 		</div>
 		<label class="col-sm-1 control-label">學期</label>
 		<div class="col-sm-2">
-			<%= i.select :semester, options_for_select([["上", 1], ["寒假", -1], ["下", 2], ["暑假", -2]], @item.semester), {prompt: '學期'}, class: "form-control" %>		
+			<%= i.select :semester, options_for_select([["上", 1], ["寒假", -1], ["下", 2], ["暑假", -2]], @item.semester), {include_blank: true}, class: "form-control" %>		
 		</div>
 	</div>
 	<div class="form-group">

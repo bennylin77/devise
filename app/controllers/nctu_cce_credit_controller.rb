@@ -136,6 +136,7 @@ class NctuCceCreditController < ApplicationController
       @progress.verified=false
       @progress.stage= 1
       @progress.reason = params[:reason]
+      @progress.registered_sub_items.destroy_all
       if @progress.vaccount
         @progress.vaccount.active = false 
         @progress.vaccount.save!
@@ -151,8 +152,13 @@ class NctuCceCreditController < ApplicationController
       	item.payment = params[:sub_item_payments][idx].to_f
       	item.save!
       end
-      @progress.create_vaccount if @progress.payment > 0
-      @progress.stage= (@progress.payment > 0) ? 3 : 4  
+      if @progress.vaccount #可能之前被退回時就創過
+      	@progress.vaccount.active = true
+      	@progress.vaccount.save!
+      elsif @progress.payment > 0 #若免錢就不給帳號
+      	 @progress.create_vaccount
+      end	 
+      @progress.stage= (@progress.payment > 0) ? 3 : 4 #免錢直接過 stage==4  
       @progress.save!    
       flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
       System.sendVerified(user: @progress.user, progress: @progress).deliver         

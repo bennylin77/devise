@@ -86,6 +86,7 @@
        <%=label_tag "學費：（總和為0元會直接幫使用者完成報名）"%> 
        <%= form_tag "/nctu_cce_credit/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag :id, params[:id]%>	
+       	<%=@progress.registered_sub_items.count.to_s%>
        	<% @progress.registered_sub_items.each do |sub_item|%>
        		<%=hidden_field_tag "sub_item_ids[]", sub_item.id%>
        		<%=label_tag sub_item.sub_item.title%>
