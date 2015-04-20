@@ -36,4 +36,17 @@ class System < ActionMailer::Base
     subject = "課程報名系統 #{@progress.item.group.title} 審核通過"
 		mail( to: @user.email, subject: subject)
 	end	 
+	
+	def sendGetMoney(hash={})
+    @progress=hash[:progress] 
+    subject = "課程報名系統 #{@progress.item.group.title} 匯款成功"
+		mail( to: @progress.user.email, subject: subject)
+	end
+	
+	def sendGetMoneyToManager(hash={})
+		@user = hash[:user]
+		@progress=hash[:progress] 
+		subject = "課程報名系統 #{@progress.user.name} 已匯款"
+		mail( to: @user.email, subject: subject)
+	end
 end

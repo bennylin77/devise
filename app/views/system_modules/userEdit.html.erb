@@ -19,7 +19,11 @@
 	</div>   
 <% end %>
 </div>
-<br>
+
+<%= link_to '查詢虛擬帳號', "/system_modules/check_account", class: 'btn btn-info' %>
+<%= link_to '虛擬帳號列表', "/system_modules/vaccounts?id="+params[:id], class: 'btn btn-info' %>
+</br>
+</br>
 <table class="table">
   <tr>
     <th>姓名</th>

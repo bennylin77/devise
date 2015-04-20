@@ -4,7 +4,7 @@
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="">
-		<%if @progress.stage >= 2%>	
+		<%if @progress.stage >= 2 and @progress.stage != 4 %>	
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#agree-confirm">
 		  	審核通過
 			</button>	
@@ -12,7 +12,9 @@
 		  	審核不通過/取消資格
 			</button>			
 		<%end%>		
+		<% if @progress.stage != 4 %>
 			<%=link_to '刪除報名', {controller: 'nctu_cce', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>
+		<% end %>
 		</div>
 	</div><br>
 <table class="table">
@@ -42,6 +44,33 @@
     <th>聯絡地址</th>
     <td><%=@progress.user.postal%><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></td>
   </tr> 
+  <tr>
+    <th>服務單位名稱</th>
+    <td><%=@progress.user.work_name%></td>
+    <th>職稱</th>
+    <td><%=@progress.user.work_title%></td>    
+  </tr>  
+  <tr>
+    <th>服務單位聯絡電話</th>
+    <td><%=@progress.user.work_phone_no%></td>
+    <th>傳真</th>
+    <td><%=@progress.user.work_fax_no%></td>      
+  </tr>     
+  <tr>
+    <th>服務單位聯絡地址</th>
+    <td><%=@progress.user.work_postal%><%=@progress.user.work_county%><%=@progress.user.work_district%><%=@progress.user.work_address%></td>
+  </tr>  
+  
+  <tr>
+    <th>服務單位聯絡人姓名</th>
+    <td><%=@progress.user.work_contact_name%></td>
+  </tr>  
+  <tr>
+    <th>服務單位聯絡人電話</th>
+    <td><%=@progress.user.work_contact_phone_no%></td>
+    <th>服務單位聯絡人Email</th>
+    <td><%=@progress.user.work_contact_email%></td>      
+  </tr>    
 </table> 	
 </div>
 

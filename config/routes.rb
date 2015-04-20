@@ -47,9 +47,7 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/destroyProgress'
         
   get  'main/index'
-	get  'main/check_account'
-	post 'main/check_account'
-  get  'main/vaccounts'
+  
  
   get  'items/createCompletion' 
   get  'items/showManagement'
@@ -66,6 +64,10 @@ Rails.application.routes.draw do
   post 'system_modules/userRole'    
   post 'system_modules/userAdd'  
   get  'system_modules/userDestroy'    
+  
+  get  'system_modules/check_account'
+  post 'system_modules/check_account'
+  get  'system_modules/vaccounts'
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :items  

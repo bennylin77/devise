@@ -23,6 +23,8 @@
     <th>姓名</th>
     <th>聯絡電話</th>
     <th>email</th>
+    <th>虛擬帳號</th>
+    <th>內涵金額/須繳金額</th>     
     <th>報名進度</th>   
     <th>候補狀態</th>         
   </tr>	
@@ -31,6 +33,8 @@
     <td><%=p.user.name%></td>
     <td><%=p.user.phone_no%></td>
     <td><%=p.user.email%></td>
+	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
+	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %>/<%=p.payment.to_s%><%end%></td>      
     <td><%=stageText p.stage%></td>
     <%if p.waiting%>
     <td>候補 <%=p.waiting_no%></td>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
+<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 130px; border: 2px solid #198EB9;color: #198EB9;	">
+	<div style="margin-left: 12%; 
+				width: 80%; 
+				line-height: 13px; 
+				letter-spacing: 7px; 
+				font-size: 10px; 
+				text-align: center;	">課程報名系統</div>	
+</div>	
+<div style="letter-spacing: 1.5px;
+		    padding-bottom: 30px; 
+		    padding-top: 10px; 	
+		    padding-left: 5px; 		    	    
+		    border-bottom: 1px solid #198EB9; 
+		    border-top: 1px solid #198EB9; 
+		    margin-bottom: 30px;">		
+<div class="masonry" style="-moz-column-count: 4;
+						    -webkit-column-count: 4;
+						    column-count: 4;
+						    -moz-column-gap: 1em;
+						    -webkit-column-gap: 1em;
+						    column-gap: 1em;">
+<%=@user.name %> 您好!  
+<br> 
+已收來自(<%=@progress.user.name%>)的匯款(<%=@progress.vaccount.vacc%>) <%=@progress.vaccount.status["Amount"]%> NT.</br>
+
+<br>
+   
+</div>
+</div>
+</div>
+</body>
+</html>

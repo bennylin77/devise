@@ -57,11 +57,25 @@
   <tr>
     <th>服務單位聯絡電話</th>
     <td><%=@progress.user.work_phone_no%></td>
+    <th>傳真</th>
+    <td><%=@progress.user.work_fax_no%></td>      
   </tr>     
   <tr>
     <th>服務單位聯絡地址</th>
     <td><%=@progress.user.work_postal%><%=@progress.user.work_county%><%=@progress.user.work_district%><%=@progress.user.work_address%></td>
   </tr>  
+  
+  <tr>
+    <th>服務單位聯絡人姓名</th>
+    <td><%=@progress.user.work_contact_name%></td>
+  </tr>  
+  <tr>
+    <th>服務單位聯絡人電話</th>
+    <td><%=@progress.user.work_contact_phone_no%></td>
+    <th>服務單位聯絡人Email</th>
+    <td><%=@progress.user.work_contact_email%></td>      
+  </tr>  
+  
 </table> 	
 </div>
 

@@ -63,11 +63,15 @@ class User
   
   field :work_name, type: String
   field :work_title, type: String
-  field :work_phone_no, type: String   
+  field :work_phone_no, type: String  
+  field :work_fax_no, type: String    
   field :work_postal, type: String
   field :work_county, type: String
   field :work_district, type: String
   field :work_address, type: String   
+  field :work_contact_name, type: String
+  field :work_contact_phone_no, type: String
+  field :work_contact_email, type: String
   
   
   validates :name, presence: {}  

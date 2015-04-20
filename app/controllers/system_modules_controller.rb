@@ -3,7 +3,7 @@ class SystemModulesController < ApplicationController
   before_filter :authenticate_user!   
   before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy]
   before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
-  before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy] { |c| c.ModuleCheckAdmin()}  
+  before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy, :check_account, :vaccounts] { |c| c.ModuleCheckAdmin()}  
 
   respond_to :html
 
@@ -106,7 +106,26 @@ class SystemModulesController < ApplicationController
     
     redirect_to controller: 'system_modules', action: 'userEdit', id: @system_module.id    
   end
+
+## vaccount
+  def check_account
+  	if request.post?
+  		vacc = params[:vacc]
+  		vc = Vaccount.new
+  		vc.check_account(vacc)
+  		vc.vacc = vacc
+  		vc.update_status
+  		@row = "<tr><td>#{vacc}</td>"
+  		@row += "<td>#{vc.status["res"]["desc"]}</td>"
+  		@row += "<td>#{vc.status["Amount"]}</td>"
+  		@row += "<td>#{vc.status["PayChnl"]}</td></tr>"
+  	end
+  end
   
+  def vaccounts
+	@sys_module = SystemModule.find(params[:id])
+	@vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+  end
    
   def ModuleCheckAdmin
     if current_user.email != 'bennylin77@gmail.com'      
@@ -114,6 +133,8 @@ class SystemModulesController < ApplicationController
       redirect_to root_url          
     end      
   end  
+  
+  
   
   private
     def set_system_module

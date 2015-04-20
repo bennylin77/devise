@@ -26,13 +26,17 @@
     <th>姓名</th>
     <th>聯絡電話</th>
     <th>email</th>
+    <th>虛擬帳號</th>
+    <th>內涵金額/須繳金額</th>        
     <th>報名進度</th>        
   </tr>	
 <%@progresses.each do |p|%>
 <tr id='link1' onclick="document.location='<%=host%>nctu_cce_credit/showProgress?id=<%=p.id%>';">
     <td><%=p.user.name%></td>
     <td><%=p.user.phone_no%></td>
-    <td><%=p.user.email%></td>
+    <td><%=p.user.email%></td> 
+	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
+	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %>/<%=p.payment.to_s%><%end%></td>      
     <td><%=stageText p.stage%></td> 
 </tr>
 <%end%>

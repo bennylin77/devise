@@ -26,6 +26,7 @@ class Vaccount
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
 		xml_doc = parse_xml(http.body_str)
 		return -1 if xml_doc == -1 #parse error, case by service maintaining 
+		#p xml_doc
 		self.status = {
 			"res"=>{
 						"code"=>xml_doc.xpath('//ResCode')[0].try(:content),
