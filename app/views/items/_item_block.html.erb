@@ -26,7 +26,7 @@
 	  </div>
 	</div>		
 </div>
-
+<%if item_block.start_at < Time.now%>
 <script type="text/javascript">
   $('#clock_<%=item_block.id%>').countdown('<%= item_block.end_at.strftime('%Y/%m/%d %H:%M:%S')%>', function(event) {
     $(this).html(event.strftime(''+
@@ -35,4 +35,5 @@
 		'<span>%M</span> 分 '+ 
 		'<span>%S</span> 秒 報名截止'));
   });
-</script>    
+</script>  
+<%end%>  

@@ -50,6 +50,7 @@ class User
   
   field :birthday, type: DateTime
   field :gender, type: Boolean  
+  field :mobile_phone_no, type: String    
   field :phone_no, type: String    
   
   field :postal, type: String

@@ -4,18 +4,18 @@
 		<div class="col-sm-2">
 			<%=link_to '刪除學分班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此學分班？' } %>		
 		</div>		
-		<ul class="nav nav-pills col-sm-offset-5  col-md-5">
+		<ul class="nav nav-pills col-sm-offset-6  col-md-4">
 		  <li role="presentation">
 		  	<%=link_to '群組寄信', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @item.id}%>
 		  </li>			
 		  <li role="presentation">
-		  	<%=link_to '名稱簡介設定', {controller: 'nctu_cce_credit', action: 'editGroup', id: @item.group.id} %>
+		  	<%=link_to '名稱簡介', {controller: 'nctu_cce_credit', action: 'editGroup', id: @item.group.id} %>
 		  </li>
 		  <li role="presentation">
-			<%=link_to '基本資料設定', {controller: 'nctu_cce_credit', action: 'editItem', id: @item.id} %>		  	
+			<%=link_to '基本資料', {controller: 'nctu_cce_credit', action: 'editItem', id: @item.id} %>		  	
 		  </li>
 		  <li role="presentation">
-			<%=link_to '課程設定', {controller: 'nctu_cce_credit', action: 'editCourses', id: @item.id} %>		  	
+			<%=link_to '課程資料', {controller: 'nctu_cce_credit', action: 'editCourses', id: @item.id} %>		  	
 		  </li>		  
 		</ul>		
 	</div>

@@ -5,11 +5,11 @@ class ItemsController < ApplicationController
   before_action :set_progress, only: [:progressStatus]
   
   def index
-    @items = Item.all.paginate(per_page: 30, page: params[:page])
+    @items = Item.all.order('id desc').paginate(per_page: 30, page: params[:page])
   end
   
   def indexManagement
-    @items = current_user.items
+    @items = current_user.items.order('id desc')
   end
 
   def show

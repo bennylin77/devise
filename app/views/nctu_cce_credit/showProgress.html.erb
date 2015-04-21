@@ -37,9 +37,11 @@
     <td><%=@progress.user.id_no_TW%></td>
   </tr>   
   <tr>
-    <th>聯絡電話</th>
-    <td><%=@progress.user.phone_no%></td>
-  </tr>   
+    <th>聯絡電話(行動)</th>
+    <td><%=@progress.user.mobile_phone_no%></td>
+    <th>聯絡電話(一般)</th>
+    <td><%=@progress.user.phone_no%></td>    
+  </tr>    
   <tr>
     <th>聯絡地址</th>
     <td><%=@progress.user.postal%><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></td>
@@ -62,16 +64,31 @@
   </tr>  
   
   <tr>
-    <th>服務單位聯絡人姓名</th>
+    <th>教育訓練聯絡人姓名</th>
     <td><%=@progress.user.work_contact_name%></td>
   </tr>  
   <tr>
-    <th>服務單位聯絡人電話</th>
+    <th>教育訓練聯絡人電話</th>
     <td><%=@progress.user.work_contact_phone_no%></td>
-    <th>服務單位聯絡人Email</th>
+    <th>教育訓練聯絡人Email</th>
     <td><%=@progress.user.work_contact_email%></td>      
   </tr>    
 </table> 	
+
+<table class="table table-striped">
+  <tr>
+    <th>課程名稱</th>
+    <th>應繳金額</th>
+  </tr>
+  <%@progress.registered_sub_items.each do |s|%>
+  <tr>
+    <td><%=s.sub_item.title%></td>
+    <td><%=s.payment%></td>
+  </tr>   
+  <%end%>
+  	
+</table>
+
 </div>
 
 
@@ -86,7 +103,7 @@
        <%=label_tag "學費：（總和為0元會直接幫使用者完成報名）"%> 
        <%= form_tag "/nctu_cce_credit/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag :id, params[:id]%>	
-       	<%=@progress.registered_sub_items.count.to_s%>
+       	<!--<%= @progress.registered_sub_items.count.to_s%>-->
        	<% @progress.registered_sub_items.each do |sub_item|%>
        		<%=hidden_field_tag "sub_item_ids[]", sub_item.id%>
        		<%=label_tag sub_item.sub_item.title%>

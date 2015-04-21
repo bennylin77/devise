@@ -166,15 +166,16 @@ class NctuCceController < ApplicationController
       @step = 1       
       @progress = @item.progresses.where(user_id: current_user.id).first            
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
-                                      {type: 'presence', title: '英文姓名', data: user_params[:name_en]},
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
                                       {type: 'presence', title: '性別', data: user_params[:gender]},
                                       {type: 'presence', title: '身分證字號', data: user_params[:id_no_TW]},                                      
-                                      {type: 'presence', title: '聯絡電話',data: user_params[:phone_no]},
+                                      {type: 'presence', title: '聯絡電話(行動)',data: user_params[:mobile_phone_no]},
                                       {type: 'presence', title: '郵遞區號', data: user_params[:postal]},
                                       {type: 'presence', title: '聯絡地址-縣市', data: user_params[:county]},                                      
                                       {type: 'presence', title: '聯絡地址-鄉鎮市區', data: user_params[:district]},        
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]},
+                                      {type: 'presence', title: '最高(畢/肄/就讀)學校', data: user_params[:hightest_education_school]},
+                                      {type: 'presence', title: '最高(科/系/所)', data: user_params[:hightest_education_department]},                               
                                       {type: 'id_no_TW', title: '身分證字號', data: user_params[:id_no_TW]}])
       checkValidations(validations: validations_result, render: 'first' )                
       user.save  
@@ -218,7 +219,7 @@ class NctuCceController < ApplicationController
   end
     
   def user_params
-    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :phone_no, :address, 
+    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :mobile_phone_no, :phone_no, :address, 
                                  :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
                                  :work_name, :work_title, :work_phone_no, :work_fax_no, :work_county, :work_district, :work_postal, :work_address,
                                  :work_contact_name, :work_contact_phone_no, :work_contact_email)      

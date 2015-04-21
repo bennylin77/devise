@@ -9,8 +9,6 @@
 		font-size: 21px;
 	}
 </style>
-
-
 <div class="jumbotron">
 <h1><%=@item.group.title%></h1>
 <p class="lead"><%=@item.group.description%></p>
@@ -22,6 +20,30 @@
 									 action: Hash[stageOptions].rassoc(@item.progresses.where(user_id: current_user.id).first.stage).first, 
 								     id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
 		<%else%>
+			<%if @item.start_at < Time.now and @item.end_at > Time.now%>
+				<%if waitingFunction(@item.group.system_module.serial_code) %>
+					<%if ( @item.progresses.count < @item.no_of_user ) or @item.waiting_available%>	
+						<%if @item.waiting_start%>
+							<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>				
+						<%else%>
+							<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>				
+						<%end%>		
+					<%else%>
+						<%=link_to '報名已額滿', "", {class: "btn btn-lg btn-default", role: "button"} %>					
+					<%end%>	
+				<%else%>
+					<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
+				<%end%>	
+			<%else%>
+				<%if @item.start_at > Time.now%>
+					<%=link_to '報名尚未開始', "", {class: "btn btn-lg btn-default", role: "button"} %>											
+				<%else%>
+					<%=link_to '報名時間已結束', "", {class: "btn btn-lg btn-default", role: "button"} %>							
+				<%end%>
+			<%end%>			
+		<%end%>
+	<%else%>
+		<%if @item.start_at < Time.now and @item.end_at > Time.now%>
 			<%if waitingFunction(@item.group.system_module.serial_code) %>
 				<%if ( @item.progresses.count < @item.no_of_user ) or @item.waiting_available%>	
 					<%if @item.waiting_start%>
@@ -34,22 +56,14 @@
 				<%end%>	
 			<%else%>
 				<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
-			<%end%>				
-		<%end%>
-	<%else%>	
-		<%if waitingFunction(@item.group.system_module.serial_code) %>
-			<%if ( @item.progresses.count < @item.no_of_user ) or @item.waiting_available%>	
-				<%if @item.waiting_start%>
-					<%=link_to '報名後補', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>				
-				<%else%>
-					<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>				
-				<%end%>		
-			<%else%>
-				<%=link_to '報名已額滿', "", {class: "btn btn-lg btn-default", role: "button"} %>					
 			<%end%>	
 		<%else%>
-			<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@item.group.system_module.serial_code).first, action: 'first', id: @item.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
-		<%end%>	
+			<%if @item.start_at > Time.now%>
+				<%=link_to '報名尚未開始', "", {class: "btn btn-lg btn-default", role: "button"} %>											
+			<%else%>
+				<%=link_to '報名時間已結束', "", {class: "btn btn-lg btn-default", role: "button"} %>							
+			<%end%>						
+		<%end%>				
 	<%end%>	
 </p>
 </div> 

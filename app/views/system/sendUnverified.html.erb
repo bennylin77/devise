@@ -5,13 +5,13 @@
 </head>
 <body>
 <div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
-<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 130px; border: 2px solid #198EB9;color: #198EB9;	">
+<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 165px; border: 2px solid #198EB9;color: #198EB9;	">
 	<div style="margin-left: 12%; 
 				width: 80%; 
 				line-height: 13px; 
 				letter-spacing: 7px; 
 				font-size: 10px; 
-				text-align: center;	">課程報名系統</div>	
+				text-align: center;	">EasyRegister 報名系統</div>	
 </div>	
 <div style="letter-spacing: 1.5px;
 		    padding-bottom: 30px; 
@@ -29,7 +29,11 @@
 <%=@progress.user.name%> 您好!
 <br>   
 <b><%=@progress.item.group.title%></b>
-審核不通過/取消資格 原因: <%=@progress.reason%></br>
+審核不通過/取消資格 原因: <%=@progress.reason%><br>
+需要您重新送出報名申請，請點擊以下連結進行動作。
+<br>
+<%= host+Hash[controllerOptions].rassoc(@progress.item.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.item.id%>    
+</div>
 </div>
 </div>
 </div>
