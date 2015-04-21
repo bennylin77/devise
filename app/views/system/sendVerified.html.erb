@@ -5,7 +5,7 @@
 </head>
 <body>
 <div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
-<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 165px; border: 2px solid #198EB9;color: #198EB9;	">
+<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 170px; border: 2px solid #198EB9;color: #198EB9;	">
 	<div style="margin-left: 12%; 
 				width: 80%; 
 				line-height: 13px; 
@@ -27,29 +27,35 @@
 						    -webkit-column-gap: 1em;
 						    column-gap: 1em;">
 <%=@progress.user.name%> 您好!
-<br>   
+<br> 
+歡迎您報名
 <b><%=@progress.item.group.title%></b>
-已審核成功</br>
+目前已審核成功<br>
 <% if @progress.vaccount %>
-匯款資訊如下</br>
+匯款資訊如下<br><br>
 			 <table border="1">
 				<tr>
 					<td>銀行</td>
+					<td>戶名</td>					
 					<td>帳號</td>
 					<td>金額</td>
 					<td>匯款開始日</td>
 					<td>匯款結束日</td>
 				</tr>
 				<tr>
-					<td>玉山銀行</td>
+					<td>玉山銀行(808) 新竹分行代碼:0060</td>
+					<td>國立交通大學</td>					
 					<td><%=@progress.vaccount.vacc%></td>
 					<td><%=@progress.payment.to_s%> NT</td>
 					<td><%=@progress.item.payment_start_at.strftime("%D %R")%></td>
 					<td><%=@progress.item.payment_end_at.strftime("%D %R")%></td>
 				</tr>
 			 </table>
-請於時限內匯款，匯款成功後會來信通知您
+請於時限內匯款，匯款成功後會來信通知您！<br>
+*繳費之收執聯請保留以利日後備查
 <% end %>
+<br>
+如有任何問題，請洽:<%=@progress.item.user.name%> <%=@progress.item.user.email%> <%=@progress.item.user.phone_no%>
 </div>
 </div>
 </div>
