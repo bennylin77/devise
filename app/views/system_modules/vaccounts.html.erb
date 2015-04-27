@@ -1,10 +1,11 @@
-<h4><%=@sys_module.title%> - 總匯款明細</h4>
-<table class="table table-border">
+<h3 class="text-center"><%=@sys_module.title%> - 總匯款明細</h3>
+<br>
+<table class="table table-striped">
 <tr>
-	<td>虛擬帳號</td>
-	<td>所屬報名</td>
-	<td>所有人</td>
-	<td>內涵金額</td>
+	<th>虛擬帳號</th>
+	<th>所屬報名</th>
+	<th>所有人</th>
+	<th>內涵金額</th>
 	<!--<td>銷帳</td>-->
 </tr>
 <% @vaccounts.each do |vacc| %>

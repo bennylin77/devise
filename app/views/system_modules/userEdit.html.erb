@@ -1,4 +1,4 @@
-<h3 class="text-center">編輯模組</h3>
+<h3 class="text-center"><%= @system_module.title  %></h3>
 <br>
 <div class="container" >
 <%= form_tag  '/system_modules/userAdd', method: 'post', class: "form-horizontal", role: "form" do %>
@@ -11,20 +11,18 @@
 		<div class="col-sm-2">	
 			<%= select_tag  :role, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ]), class: "form-control" %>	
 		</div>
-	</div>	    
- 	<div class="form-group">
-		<div class="col-sm-offset-3 col-sm-6">
+		<div class="col-sm-2">
 			<%= submit_tag '加入',  class: "btn btn-primary"  %>
-		</div>
-	</div>   
+		</div>				
+	</div>	    
 <% end %>
 </div>
 
 <%= link_to '查詢虛擬帳號', "/system_modules/check_account", class: 'btn btn-default' %>
-<%= link_to '虛擬帳號列表', "/system_modules/vaccounts?id="+params[:id], class: 'btn btn-default' %>
+<%= link_to '總匯款明細', "/system_modules/vaccounts?id="+params[:id], class: 'btn btn-default' %>
 </br>
 </br>
-<table class="table">
+<table class="table table-striped ">
   <tr>
     <th>姓名</th>
     <th>Email</th>    
@@ -33,10 +31,10 @@
   </tr>		
 <%@system_module.module_user_lists.order('id desc').each do |mu| %>
   <tr>
-    <th><%= mu.user.name%></th>
-    <th><%= mu.user.email%></th>    
-    <th><%= select_tag 'role_'+mu.id, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ], mu.role ), onchange: 'selectAjaxHandler("'+mu.id+'")' %></th>
-    <th><%=link_to '刪除', {controller: 'system_modules', action: 'userDestroy', module_user_id: mu.id, id: @system_module.id }, class: 'btn btn-danger' , data: { confirm: '您確定要刪除？' } %></th>        
+    <td><%= mu.user.name%></td>
+    <td><%= mu.user.email%></td>    
+    <td><%= select_tag 'role_'+mu.id, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ], mu.role ), onchange: 'selectAjaxHandler("'+mu.id+'")' %></td>
+    <td><%=link_to '刪除', {controller: 'system_modules', action: 'userDestroy', module_user_id: mu.id, id: @system_module.id }, class: 'btn btn-danger' , data: { confirm: '您確定要刪除？' } %></td>        
   </tr>	
 <%end%>
 </table>

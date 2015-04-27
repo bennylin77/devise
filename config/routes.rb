@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'nctu_cce/updateItem'     
   get  'nctu_cce/editGroup'  
   post 'nctu_cce/updateGroup'      
+  get  'nctu_cce/editScore'  
+  post 'nctu_cce/updateScore'   
   get  'nctu_cce/sendMessage'
   post 'nctu_cce/sendMessage'
   post 'nctu_cce/verified'

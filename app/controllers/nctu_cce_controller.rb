@@ -5,7 +5,7 @@ class NctuCceController < ApplicationController
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}  
 
-  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :destroy, :first, :second, :third, :forth]
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :updateScore, :sendMessage, :destroy, :first, :second, :third, :forth]
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
      
@@ -79,6 +79,9 @@ class NctuCceController < ApplicationController
     flash[:success]="成功更新名稱簡介"
     redirect_to controller: :nctu_cce, action: :indexManagement, id: @group.items.first.id     
   end  
+
+  def editScore
+  end
 
   def sendMessage
     if request.post?        
