@@ -10,33 +10,56 @@
 <%@item.progresses.each do |p|%>
 <tr>
     <td><%=p.user.name%></td>
-    <td><%= text_field_tag 'score_'+p.id, p.score, class: "", placeholder: "" %></td>
-    <td><%=p.attendance%></td>
-    <td><%=p.certificate_no%></td>    
+    <td><%= text_field_tag 'score_'+p.id, p.score, class: "", onchange: 'scoreAjaxHandler("'+p.id+'")', placeholder: "" %>分</td>
+    <td><%= text_field_tag 'attendance_'+p.id, p.attendance, class: "", onchange: 'attendanceAjaxHandler("'+p.id+'")', placeholder: "" %>%</td>
+    <td><%= text_field_tag 'certificate_'+p.id, p.certificate_no, class: "", onchange: 'certificateAjaxHandler("'+p.id+'")', placeholder: "" %></td>    
 </tr>
 <%end%>
 </table>
 
 
 <script>
-function selectAjaxHandler(id)
+function scoreAjaxHandler(id)
 {
 	var request = $.ajax({
 	url: "/nctu_cce/updateScore",
 	type: "POST",
-	data: { id: id, val: $( "#role_"+id ).val() },
+	data: { id: id, val: $( "#score_"+id ).val(), type: 'score' },
 	dataType: "json"
 	});
 	request.done(function( message ) {
 		addAlert('success', message.message)
 	});
 	request.fail(function( jqXHR, textStatus ) {
-		 $.gritter.add({
-						title: '無法更改查核狀態',
-						text:  '請先連上網路, 並重新整理頁面'
-						});
 	});	
 }	
-	
+function attendanceAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce/updateScore",
+	type: "POST",
+	data: { id: id, val: $( "#attendance_"+id ).val(), type: 'attendance' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		addAlert('success', message.message)
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}
+function certificateAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce/updateScore",
+	type: "POST",
+	data: { id: id, val: $( "#certificate_"+id ).val(), type: 'certificate' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		addAlert('success', message.message)
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}	
 </script>	
 	

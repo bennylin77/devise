@@ -3,11 +3,11 @@ class NctuCceController < ApplicationController
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :destroy] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
-  before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}  
+  before_action only: [:destroyProgress, :verified, :updateScore] { |c| c.ProgressCheckItemUser(params[:id])}  
 
-  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :updateScore, :sendMessage, :destroy, :first, :second, :third, :forth]
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :sendMessage, :destroy, :first, :second, :third, :forth]
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :updateScore] 
      
   def new
     @group = Group.new()
@@ -49,6 +49,23 @@ class NctuCceController < ApplicationController
   
   def editItem  
   end 
+  
+  def updateScore
+    case params[:type]
+    when 'score'
+      @progress.score = params[:val]
+      @progress.save!
+      render json: {success: true, message: '成功更改分數'}                 
+    when 'attendance'  
+      @progress.attendance = params[:val]
+      @progress.save!
+      render json: {success: true, message: '成功更改出席率'}                        
+    when 'certificate'  
+      @progress.certificate_no = params[:val]
+      @progress.save!  
+      render json: {success: true, message: '成功更改證書字號'}                     
+    end
+  end
   
   def updateItem
     @item.assign_attributes(item_params)
