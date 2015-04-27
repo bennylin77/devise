@@ -8,5 +8,7 @@ class RegisteredSubItem
   #has_one :vaccount,  :dependent=> :destroy
     
   field :payment, type: Float, default: 0.0
- 
+  field :score, type: Integer, default: 0.0
+  field :attendance, type: Integer, default: 0.0
+   
 end

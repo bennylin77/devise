@@ -26,11 +26,15 @@ class SystemModulesController < ApplicationController
 
   def addAdmin
     if request.post?
-      mu = ModuleUserList.new(role: GLOBAL_VAR['ROLE_ADMIN'])
       unless User.where(email: params[:email]).first.blank?  
-        mu.user = User.where(email: params[:email]).first           
-        mu.system_module = @system_module
-        mu.save!
+        if User.where(email: params[:email]).first.module_user_lists.where(system_module: @system_module).count == 0
+          mu = ModuleUserList.new(role: GLOBAL_VAR['ROLE_ADMIN'])        
+          mu.user = User.where(email: params[:email]).first           
+          mu.system_module = @system_module
+          mu.save!
+        else
+          flash[:error] = '此會員已是管理者'            
+        end    
       else
         flash[:error] = '無此會員信箱'  
       end    
@@ -55,7 +59,7 @@ class SystemModulesController < ApplicationController
   end
 #====== user ======#
   def userIndex
-    @module_user_lists = current_user.module_user_lists
+    @module_user_lists = current_user.module_user_lists.where(role: GLOBAL_VAR['ROLE_ADMIN'])
   end
   
   def userEdit

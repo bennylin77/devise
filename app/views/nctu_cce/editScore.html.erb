@@ -1,0 +1,42 @@
+<%= render partial: "layouts/managementHeader", locals: {item: @item} %>
+<h3 class="text-center">成績管理</h3><br>
+<table class="table table-striped ">
+  <tr>
+    <th>姓名</th>
+    <th>分數</th>     
+    <th>出席率(%)</th>   
+    <th>證書字號</th>     
+  </tr>	
+<%@item.progresses.each do |p|%>
+<tr>
+    <td><%=p.user.name%></td>
+    <td><%= text_field_tag 'score_'+p.id, p.score, class: "", placeholder: "" %></td>
+    <td><%=p.attendance%></td>
+    <td><%=p.certificate_no%></td>    
+</tr>
+<%end%>
+</table>
+
+
+<script>
+function selectAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce/updateScore",
+	type: "POST",
+	data: { id: id, val: $( "#role_"+id ).val() },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		addAlert('success', message.message)
+	});
+	request.fail(function( jqXHR, textStatus ) {
+		 $.gritter.add({
+						title: '無法更改查核狀態',
+						text:  '請先連上網路, 並重新整理頁面'
+						});
+	});	
+}	
+	
+</script>	
+	
