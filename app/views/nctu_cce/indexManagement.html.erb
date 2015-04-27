@@ -1,10 +1,16 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
 <div class="container-fluid">
 	<div class="row">	
-		<div class="col-sm-2">
+		<div class="col-sm-4">
 			<%=link_to '刪除培訓班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此培訓班？' } %>		
 		</div>
-		<ul class="nav nav-pills col-sm-offset-6 col-sm-4">
+		<ul class="nav nav-pills col-sm-offset-4 col-sm-4">
+		  <li role="presentation">
+		  	<%=link_to '問卷管理', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
+		  </li>				
+		  <li role="presentation">
+		  	<%=link_to '成績管理', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
+		  </li>					
 		  <li role="presentation">
 		  	<%=link_to '群組寄信', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
 		  </li>			

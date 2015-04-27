@@ -33,11 +33,11 @@
   </div> 
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-6">
-      <%=submit_tag "寄出", class: "btn btn-default"%>	
+      <%=submit_tag "寄出", class: "btn btn-primary"%>	
     </div>
   </div>
 <%end%>
 </div>
 <script>
-$("#input-att").fileinput({'showUpload':false, 'previewFileType':'any', 'showCaption': false});
+$("#input-att").fileinput({showUpload:false, browseClass: "btn btn-default", browseLabel: " 選取檔案（可多選）", 'previewFileType':'any', 'showCaption': false});
 </script>
