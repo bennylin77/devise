@@ -1,13 +1,13 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user! 
   before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :destroy] { |c| c.ItemCheckUser(params[:id])}  
-  before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
+  before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified, :updateScore] { |c| c.ProgressCheckItemUser(params[:id])}  
 
   before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :sendMessage, :destroy, :first, :second, :third, :forth]
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :updateScore] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :updateScore, :feedback] 
      
   def new
     @group = Group.new()
@@ -219,6 +219,20 @@ class NctuCceController < ApplicationController
     @progress = @item.progresses.where(user_id: current_user.id).first         
   end   
 
+  def feedback
+    @step = 4          
+    validations_result=validations([{type: 'presence', title: '我對教師的教學態度', data: params[:progress][:nctu_cce_feedback_1_1]},
+                                    {type: 'presence', title: '我對教師的授課方法', data: params[:progress][:nctu_cce_feedback_1_2]} 
+                                   ])
+    checkValidations(validations: validations_result, render: 'forth' )      
+    @progress.nctu_cce_feedback_1_1 =  params[:progress][:nctu_cce_feedback_1_1]
+    @progress.nctu_cce_feedback_1_2 =  params[:progress][:nctu_cce_feedback_1_2]    
+    @progress.save!
+    
+    flash.now[:success] = '成功填寫問卷'
+    render 'forth' 
+  end
+  
   private
     
   def set_item

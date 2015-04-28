@@ -1,2 +1,12 @@
-恭喜你已完成報名所有手續</br>
-近期主辦者會與您連絡謝謝
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
+<div class="container">
+	<div class="row">
+    	<div class="col-sm-12">
+		恭喜你已完成報名所有手續</br>
+		近期承辦人員會與您連絡, 謝謝！
+		</div>
+	</div>
+</div>
+<br>
+<%= render partial: "feedback", locals: {progress: @progress} %>
+

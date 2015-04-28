@@ -1,8 +1,11 @@
 <%= render partial: "step", locals: {progress: @progress, step: @step} %>
+<div class="container">
   <div class="row">
     <div class="col-sm-12">
     	主辦者已審核通過您的資格, 請匯款至以下玉山銀行帳號, 如有疑問請洽 <%= @progress.item.user.email%>
     </div>
+  </div>  
+  <div class="row">
     <div class="col-sm-12">
 		<table class="table table-bordered">
 			<tr class="active">
@@ -22,4 +25,4 @@
 		</table>
     </div>
   </div>
-
+</div>

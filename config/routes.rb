@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get  'nctu_cce/third'
   get  'nctu_cce/forth'  
   get  'nctu_cce/cancel'
+  post 'nctu_cce/feedback'   
   get  'nctu_cce/new'
   post 'nctu_cce/create'
   get  'nctu_cce/destroy'
