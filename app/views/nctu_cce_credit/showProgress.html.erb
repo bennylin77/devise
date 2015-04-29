@@ -1,22 +1,24 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
 <h3 class="text-center">報名資料 (<%=stageText @progress.stage%>)</h3><br>
-
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="">
-		<%if @progress.stage >= 2 and @progress.stage != 4 %>	
+		<%if @progress.stage == 2%>	
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agree-confirm">
 		  	審核通過
 			</button>	
+		<%end%>	
+		<%if @progress.stage >= 2 and @progress.stage < 4 %>							
 			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cancel-confirm">
 		  	審核不通過/取消資格
 			</button>			
 		<%end%>		
-		<% if @progress.stage != 4 %>
+		<% if @progress.stage >= 4 %>
 			<%=link_to '刪除報名', {controller: 'nctu_cce', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>
-		<% end %>
+		<%end%>
 		</div>
 	</div><br>
+<div class="table-responsive">		
 <table class="table">
   <tr>
     <th>姓名</th>
@@ -88,7 +90,7 @@
   <%end%>
   	
 </table>
-
+</div>	
 </div>
 
 

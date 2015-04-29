@@ -1,5 +1,6 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
 <h3 class="text-center">成績管理</h3><br>
+<div class="table-responsive">
 <table class="table table-striped ">
   <tr>
     <th>姓名</th>
@@ -16,7 +17,7 @@
 </tr>
 <%end%>
 </table>
-
+</div>
 
 <script>
 function scoreAjaxHandler(id)
