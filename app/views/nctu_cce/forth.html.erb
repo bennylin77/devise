@@ -8,5 +8,6 @@
 	</div>
 </div>
 <br>
+<%unless @progress.feedback_done %>
 <%= render partial: "feedback", locals: {progress: @progress} %>
-
+<%end%>

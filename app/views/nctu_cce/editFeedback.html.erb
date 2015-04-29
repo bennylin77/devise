@@ -1,0 +1,5 @@
+修課人數: <%= @item.progresses.where(stage: 4).count%>
+答卷人數: <%= @item.progresses.where(feedback_done: true).count %>
+答卷率:  <%= (@item.progresses.where(feedback_done: true).count/@item.progresses.where(stage: 4).count)*100  %>%
+
+<%= feedbackStatistics(@item)%>

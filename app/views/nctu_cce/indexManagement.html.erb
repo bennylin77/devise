@@ -6,7 +6,7 @@
 		</div>
 		<ul class="nav nav-pills col-sm-offset-4 col-sm-4">
 		  <li role="presentation">
-		  	<%=link_to '問卷管理', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
+		  	<%=link_to '問卷管理', {controller: 'nctu_cce', action: 'editFeedback', id: @item.id} %>
 		  </li>				
 		  <li role="presentation">
 		  	<%=link_to '成績管理', {controller: 'nctu_cce', action: 'editScore', id: @item.id} %>

@@ -5,7 +5,7 @@ class NctuCceController < ApplicationController
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified, :updateScore] { |c| c.ProgressCheckItemUser(params[:id])}  
 
-  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :sendMessage, :destroy, :first, :second, :third, :forth]
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :editFeedback, :sendMessage, :destroy, :first, :second, :third, :forth]
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :updateScore, :feedback] 
      
@@ -98,6 +98,9 @@ class NctuCceController < ApplicationController
   end  
 
   def editScore
+  end
+
+  def editFeedback
   end
 
   def sendMessage
@@ -234,6 +237,7 @@ class NctuCceController < ApplicationController
     @progress.nctu_cce_feedback_2_11 =  params[:progress][:nctu_cce_feedback_2_11];     
     @progress.nctu_cce_feedback_3_1 =  params[:progress][:nctu_cce_feedback_3_1];  
     @progress.nctu_cce_feedback_4_1 =  params[:progress][:nctu_cce_feedback_4_1]; @progress.nctu_cce_feedback_4_2 =  params[:progress][:nctu_cce_feedback_4_2]; @progress.nctu_cce_feedback_4_3 =  params[:progress][:nctu_cce_feedback_4_3]; @progress.nctu_cce_feedback_4_4 =  params[:progress][:nctu_cce_feedback_4_4]; @progress.nctu_cce_feedback_4_5 =  params[:progress][:nctu_cce_feedback_4_5];               
+    @progress.feedback_done = true    
     @progress.save!
     
     flash.now[:success] = '成功填寫問卷'

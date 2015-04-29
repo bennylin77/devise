@@ -20,6 +20,7 @@ class Progress
   field :attendance, type: Integer, default: 0.0
   field :certificate_no, type: String
 	
+	field :feedback_done, type: Boolean, default: false
 	field :nctu_cce_feedback_1_1, type: Integer
   field :nctu_cce_feedback_1_2, type: Integer
   field :nctu_cce_feedback_1_3, type: Integer
