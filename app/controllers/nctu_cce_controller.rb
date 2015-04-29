@@ -221,12 +221,19 @@ class NctuCceController < ApplicationController
 
   def feedback
     @step = 4          
-    validations_result=validations([{type: 'presence', title: '我對教師的教學態度', data: params[:progress][:nctu_cce_feedback_1_1]},
-                                    {type: 'presence', title: '我對教師的授課方法', data: params[:progress][:nctu_cce_feedback_1_2]} 
+    validations_result=validations([{type: 'presence', title: '我對教師的教學態度', data: params[:progress][:nctu_cce_feedback_1_1]}, {type: 'presence', title: '我對教師的授課方法', data: params[:progress][:nctu_cce_feedback_1_2]}, {type: 'presence', title: '我對本課程的內容與結構', data: params[:progress][:nctu_cce_feedback_1_3]}, {type: 'presence', title: '我對本課程的作業、報告、考試與評分方式', data: params[:progress][:nctu_cce_feedback_1_4]},
+                                    {type: 'presence', title: '我對本課程的整體印象', data: params[:progress][:nctu_cce_feedback_1_5]}, 
+                                    {type: 'presence', title: '我覺得教師課前準備得很充足', data: params[:progress][:nctu_cce_feedback_2_1]}, {type: 'presence', title: '教師上課熱忱、認真、負責', data: params[:progress][:nctu_cce_feedback_2_2]}, {type: 'presence', title: '教師的教學方法適切', data: params[:progress][:nctu_cce_feedback_2_3]}, {type: 'presence', title: '教師授課的表達與說明清楚', data: params[:progress][:nctu_cce_feedback_2_4]},
+                                    {type: 'presence', title: '教師的課堂時間分配恰當', data: params[:progress][:nctu_cce_feedback_2_5]}, {type: 'presence', title: '本課程所教內容前後有組織、有條理', data: params[:progress][:nctu_cce_feedback_2_6]}, {type: 'presence', title: '使用之教科書、教材或講義對學習很有幫助', data: params[:progress][:nctu_cce_feedback_2_7]}, {type: 'presence', title: '教師教授的教材內容充實豐富', data: params[:progress][:nctu_cce_feedback_2_8]},
+                                    {type: 'presence', title: '考試、作業的內容對學習很有幫助', data: params[:progress][:nctu_cce_feedback_2_9]}, {type: 'presence', title: '考核與評分的方式公平合理', data: params[:progress][:nctu_cce_feedback_2_10]}, {type: 'presence', title: '我可以很容易在教師的office hours或是利用其他方式與教師聯絡', data: params[:progress][:nctu_cce_feedback_2_11]},  
                                    ])
     checkValidations(validations: validations_result, render: 'forth' )      
-    @progress.nctu_cce_feedback_1_1 =  params[:progress][:nctu_cce_feedback_1_1]
-    @progress.nctu_cce_feedback_1_2 =  params[:progress][:nctu_cce_feedback_1_2]    
+    @progress.nctu_cce_feedback_1_1 =  params[:progress][:nctu_cce_feedback_1_1]; @progress.nctu_cce_feedback_1_2 =  params[:progress][:nctu_cce_feedback_1_2]; @progress.nctu_cce_feedback_1_3 =  params[:progress][:nctu_cce_feedback_1_3]; @progress.nctu_cce_feedback_1_4 =  params[:progress][:nctu_cce_feedback_1_4]; @progress.nctu_cce_feedback_1_5 =  params[:progress][:nctu_cce_feedback_1_5]        
+    @progress.nctu_cce_feedback_2_1 =  params[:progress][:nctu_cce_feedback_2_1]; @progress.nctu_cce_feedback_2_2 =  params[:progress][:nctu_cce_feedback_2_2]; @progress.nctu_cce_feedback_2_3 =  params[:progress][:nctu_cce_feedback_2_3]; @progress.nctu_cce_feedback_2_4 =  params[:progress][:nctu_cce_feedback_2_4]; @progress.nctu_cce_feedback_2_5 =  params[:progress][:nctu_cce_feedback_2_5] 
+    @progress.nctu_cce_feedback_2_6 =  params[:progress][:nctu_cce_feedback_2_6]; @progress.nctu_cce_feedback_2_7 =  params[:progress][:nctu_cce_feedback_2_7]; @progress.nctu_cce_feedback_2_8 =  params[:progress][:nctu_cce_feedback_2_8]; @progress.nctu_cce_feedback_2_9 =  params[:progress][:nctu_cce_feedback_2_9]; @progress.nctu_cce_feedback_2_10 =  params[:progress][:nctu_cce_feedback_2_10];                               
+    @progress.nctu_cce_feedback_2_11 =  params[:progress][:nctu_cce_feedback_2_11];     
+    @progress.nctu_cce_feedback_3_1 =  params[:progress][:nctu_cce_feedback_3_1];  
+    @progress.nctu_cce_feedback_4_1 =  params[:progress][:nctu_cce_feedback_4_1]; @progress.nctu_cce_feedback_4_2 =  params[:progress][:nctu_cce_feedback_4_2]; @progress.nctu_cce_feedback_4_3 =  params[:progress][:nctu_cce_feedback_4_3]; @progress.nctu_cce_feedback_4_4 =  params[:progress][:nctu_cce_feedback_4_4]; @progress.nctu_cce_feedback_4_5 =  params[:progress][:nctu_cce_feedback_4_5];               
     @progress.save!
     
     flash.now[:success] = '成功填寫問卷'

@@ -363,7 +363,7 @@
     	1. 我對這門課的態度 
 		</div>
 		<div class="col-sm-6">
-		<%=p.select :nctu_cce_feedback_4_1, options_for_select([["認真", 0 ], ["一般", 1 ], ["不認真", 2 ]]), {}, class: 'form-control' %>
+		<%=p.select :nctu_cce_feedback_4_1, options_for_select([["認真", 0 ], ["一般", 1 ], ["不認真", 2 ]], progress.nctu_cce_feedback_4_1), {}, class: 'form-control' %>
 		</div>		    											
 	</div>
 	<div class="row">
@@ -371,7 +371,7 @@
     	2. 我的缺席狀況 
 		</div>
     	<div class="col-sm-6">
-			<%=p.select :nctu_cce_feedback_4_2, options_for_select([["從不缺課", 0 ], ["極少(三次以下)", 1 ], ["偶爾", 2 ], ["常常缺課(超過三分之一)", 3 ]]), {}, class: 'form-control' %>  		
+			<%=p.select :nctu_cce_feedback_4_2, options_for_select([["從不缺課", 0 ], ["極少(三次以下)", 1 ], ["偶爾", 2 ], ["常常缺課(超過三分之一)", 3 ]], progress.nctu_cce_feedback_4_2), {}, class: 'form-control' %>  		
 		</div>			   											
 	</div>
 	<div class="row">
@@ -379,7 +379,7 @@
     	3. 我每週平均自習本課程的時數約為 
 		</div>
     	<div class="col-sm-6">
-			<%=p.select :nctu_cce_feedback_4_3, options_for_select([["0~2小時", 0 ], ["3~5小時", 1 ], ["6小時以上", 2 ]]), {}, class: 'form-control' %>  		
+			<%=p.select :nctu_cce_feedback_4_3, options_for_select([["0~2小時", 0 ], ["3~5小時", 1 ], ["6小時以上", 2 ]], progress.nctu_cce_feedback_4_3), {}, class: 'form-control' %>  		
 		</div>		    											
 	</div>
 	<div class="row">
@@ -387,7 +387,7 @@
     	4. 預期學期結束時，我在本課程的成績 
 		</div>
     	<div class="col-sm-6">
-			<%=p.select :nctu_cce_feedback_4_4, options_for_select([["前三分之一", 0 ], ["中三分之一", 1 ], ["後三分之一", 2 ]]), {}, class: 'form-control' %>  		
+			<%=p.select :nctu_cce_feedback_4_4, options_for_select([["前三分之一", 0 ], ["中三分之一", 1 ], ["後三分之一", 2 ]], progress.nctu_cce_feedback_4_4), {}, class: 'form-control' %>  		
 		</div>		    											
 	</div>
 	<div class="row">
@@ -395,7 +395,7 @@
     	5. 本課程之難易度如何 
 		</div>
     	<div class="col-sm-6">
-			<%=p.select :nctu_cce_feedback_4_5, options_for_select([["艱深", 0 ], ["適中", 1 ], ["過淺", 2 ], ["無法判斷", 3 ]]), {}, class: 'form-control' %>  		
+			<%=p.select :nctu_cce_feedback_4_5, options_for_select([["艱深", 0 ], ["適中", 1 ], ["過淺", 2 ], ["無法判斷", 3 ]], progress.nctu_cce_feedback_4_5), {}, class: 'form-control' %>  		
 		</div>			    											
 	</div>			
 			
