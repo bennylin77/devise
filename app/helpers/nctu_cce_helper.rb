@@ -15,8 +15,8 @@ module NctuCceHelper
   end
   
   def feedbackStatistics(item)
-    result = Array.new(12, 0)
-    temp_data = Array.new(6, 0) 
+    result = Array.new(12, 0.0)
+    temp_data = Array.new(6, 0.0) 
     
     item.progresses.where(stage: 4, feedback_done: true).each do |p| 
       result[0] =result[0] + p.nctu_cce_feedback_1_1 
@@ -57,11 +57,18 @@ module NctuCceHelper
         result[11] = result[11] + p.nctu_cce_feedback_1_1                    
       end      
     end     
+    
     for i in 0..5
       if temp_data[i] != 0
         result[i+6] = result[i+6]/temp_data[i] 
       end
     end  
+    
+    result[0] = result[0] / item.progresses.where(feedback_done: true).count.to_f 
+    for i in 1..5
+        result[i] = (result[i] / item.progresses.where(feedback_done: true).count.to_f) * 100 
+    end
+    
     result   
   end
   

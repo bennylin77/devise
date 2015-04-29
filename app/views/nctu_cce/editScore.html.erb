@@ -7,7 +7,7 @@
     <th>出席率(%)</th>   
     <th>證書字號</th>     
   </tr>	
-<%@item.progresses.each do |p|%>
+<%@item.progresses.where(stage: 4).each do |p|%>
 <tr>
     <td><%=p.user.name%></td>
     <td><%= text_field_tag 'score_'+p.id, p.score, class: "", onchange: 'scoreAjaxHandler("'+p.id+'")', placeholder: "" %>分</td>
