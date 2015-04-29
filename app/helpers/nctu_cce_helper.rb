@@ -9,6 +9,8 @@ module NctuCceHelper
   			"待繳費"
   		when 4
   			"完成報名"
+      when 5
+        "評價" 			
   		when -1
   			"已取消報名"
   	end

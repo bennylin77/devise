@@ -37,6 +37,13 @@ class System < ActionMailer::Base
 		mail( to: @user.email, subject: subject)
 	end	 
 	
+	def sendFeedbackAsking(hash={})
+    @user = hash[:user]
+    @progress=hash[:progress] 
+    subject = "EasyRegister #{@progress.item.group.title} 教學反映問卷邀請"
+    mail( to: @user.email, subject: subject)	  
+	end
+	
 	def sendGetMoney(hash={})
     @progress=hash[:progress] 
     subject = "EasyRegister #{@progress.item.group.title} 匯款成功"

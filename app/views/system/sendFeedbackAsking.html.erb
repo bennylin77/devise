@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
+<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 170px; border: 2px solid #198EB9;color: #198EB9;	">
+	<div style="margin-left: 12%; 
+				width: 80%; 
+				line-height: 13px; 
+				letter-spacing: 7px; 
+				font-size: 10px; 
+				text-align: center;	">EasyRegister 報名系統</div>	
+</div>	
+<div style="letter-spacing: 1.5px;
+		    padding-bottom: 30px; 
+		    padding-top: 10px; 	
+		    padding-left: 5px; 		    	    
+		    border-bottom: 1px solid #198EB9; 
+		    border-top: 1px solid #198EB9; 
+		    margin-bottom: 30px;">		
+<div class="masonry" style="-moz-column-count: 4;
+						    -webkit-column-count: 4;
+						    column-count: 4;
+						    -moz-column-gap: 1em;
+						    -webkit-column-gap: 1em;
+						    column-gap: 1em;">
+<%=@progress.user.name%> 您好!
+<br>   
+<b><%=@progress.item.group.title%></b>,
+邀請您填寫教學反映問卷(如已填寫請忽略此信)，請點擊以下連結進行動作。
+<br>
+<%= host+Hash[controllerOptions].rassoc(@progress.item.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.item.id%>    
+</div>
+</div>
+</div>
+</div>
+		
+</body>
+</html>

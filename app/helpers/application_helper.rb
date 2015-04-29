@@ -60,7 +60,8 @@ module ApplicationHelper
     [['first', 1],
     ['second', 2],
     ['third', 3],
-    ['forth', 4]]
+    ['forth', 4],
+    ['fifth', 5]]
   end    
   
   def semesterOptions
@@ -77,6 +78,8 @@ module ApplicationHelper
         "warning"
       when 4 # 報名完成
         "success"
+      when 5 # 評價
+        "success"        
       when -1 # 被取消
         "danger"  
     end  

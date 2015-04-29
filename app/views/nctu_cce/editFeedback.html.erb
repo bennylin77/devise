@@ -1,5 +1,14 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
 <h3 class="text-center">問卷管理</h3><br>
+<div class="container" style="margin-bottom: 20px;">
+	<div class="row">	
+		<div class="col-sm-1">	
+			<%=link_to '寄送教學反映問卷邀請', {controller: 'nctu_cce', action: 'askFeedback', id: @item.id}, class: 'btn btn-primary', data: { confirm: '您確定要寄送教學反映問卷邀請？ note: 此動作會寄送反映問卷邀請連結至每一位報名學員的信箱, 請確保, 報名"已結束" !' } %>
+		</div>
+	</div>
+</div>	
+<br>
+
 <%unless @item.progresses.where(stage: 4).count == 0%>
 修課人數: <%= @item.progresses.where(stage: 4).count%>
 答卷人數: <%= @item.progresses.where(feedback_done: true).count %>
