@@ -1,12 +1,12 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editItem , :updateItem, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:editItem , :updateItem, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredSubItemCheckItemUser(params[:id])}
   
-  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth]  
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
       
@@ -138,7 +138,20 @@ class NctuCceCreditController < ApplicationController
       render json: {success: true, message: '成功更改出席率'}                                           
     end    
   end
+
+  def editFeedback
+  end
   
+  def askFeedback
+    @item.progresses.gte(stage: 4).each do |p|    
+      p.stage = 5
+      p.save!
+      System.sendFeedbackAsking(user: p.user, progress: p).deliver      
+    end
+    
+    flash[:success]="成功寄送教學反映問卷邀請"
+    redirect_to controller: :nctu_cce, action: :editFeedback, id: @item.id       
+  end  
     
   def sendMessage 
     if request.post?       
@@ -270,6 +283,11 @@ class NctuCceCreditController < ApplicationController
     @step = 4       
     @progress = @item.progresses.where(user_id: current_user.id).first    
   end
+
+  def fifth
+    @step = 5       
+    @progress = @item.progresses.where(user_id: current_user.id).first         
+  end 
   
   private
 
