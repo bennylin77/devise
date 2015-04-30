@@ -1,10 +1,60 @@
 <%=link_to '退出報名', {controller: 'nctu_cce_credit', action: 'cancel', id: progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要退出報名？' } %>
-<ol class="progtrckr" data-progtrckr-steps="4">
+<ol class="progtrckr" data-progtrckr-steps="5">
     <li class="progtrckr-<%=stepProgress step: 1, step_now: step%>">填表</li><!--
  --><li class="progtrckr-<%=stepProgress step: 2, step_now: step%>">審核</li><!--
  --><li class="progtrckr-<%=stepProgress step: 3, step_now: step%>">繳費</li><!-- 	 	
- --><li class="progtrckr-<%=stepProgress step: 4, step_now: step%>">完成</li>
+ --><li class="progtrckr-<%=stepProgress step: 4, step_now: step%>">完成</li><!--
+ --><li class="progtrckr-<%=stepProgress step: 5, step_now: step%>">評價</li>
 </ol>
+<div class="page-header">
+	<h3 class="text-center">
+		<small>	
+		<%if progress.item.school_year%><%=progress.item.school_year%>學年<%end%>	    
+		<%if progress.item.semester%><%=Hash[semesterOptions].rassoc(progress.item.semester).first%><%end%>
+		</small>
+		<%= progress.item.group.title%>
+		<br><br>
+		<small>				
+		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+		承辦人
+		</button>
+		<%if progress.vaccount %>
+		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
+		繳款資訊
+		</button>
+		<%end%>	
+		<%if progress.registered_sub_items.size!=0 %>		
+		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
+		課程資訊
+		</button>		
+		<%end%>
+ 		</small>		  	
+	</h3>		
+	<div class="collapse" id="collapse1">
+		<dl class="dl-horizontal">
+		  <dt><span class="glyphicon glyphicon-user" aria-hidden="true"></span></dt><dd><%=progress.item.user.name%></dd>
+		  <dt><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></dt><dd><%=progress.item.user.email%></dd>
+		  <dt><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span></dt><dd><%=showBlank progress.item.user.phone_no%></dd>	  
+		</dl>
+	</div>
+	<%if progress.vaccount %>
+	<div class="collapse" id="collapse2">
+		<dl class="dl-horizontal">
+		  <dt>繳款帳號</dt><dd><%=progress.vaccount.vacc %></dd>
+		  <dt>已繳/應繳</dt><dd><%=(progress.vaccount.status) ? progress.vaccount.status["Amount"] : 0.0 %> / <%=progress.payment.to_s%></dd>  
+		</dl>	  	
+	</div>
+	<%end%>	
+	<%if progress.registered_sub_items.size!=0 %>	
+	<div class="collapse" id="collapse3">
+		<dl class="dl-horizontal">
+		  <% progress.registered_sub_items.each do |s|%>
+		  <dt><%=s.sub_item.title%></dt><dd>學費: <%=s.payment%></dd>
+		  <%end%>
+		</dl>	  	
+	</div>		
+	<%end%>	
+</div>
 <%if !progress.reason.blank?%>
 <h3 class="text-center" style="color: #dd5e59">取消原因: <%= progress.reason%></h3>
 <%end%>

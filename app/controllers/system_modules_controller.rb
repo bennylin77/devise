@@ -130,9 +130,21 @@ class SystemModulesController < ApplicationController
 	@sys_module = SystemModule.find(params[:id])
 	@vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
   end
+  
+  def vacc_export
+  	@sys_module = SystemModule.find(params[:id])
+  	@vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+  
+  	respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"export.xls\" "	
+			 }
+	end
+  end
    
   def ModuleCheckAdmin
-    if current_user.email != 'bennylin77@gmail.com'      
+    if current_user.email != 'bennylin77@gmail.com'       
       flash["error"]="您沒有權限"
       redirect_to root_url          
     end      

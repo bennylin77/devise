@@ -4,8 +4,9 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}    
+  before_action only: [:updateScore] {|c| c.RegisteredSubItemCheckItemUser(params[:id])}
   
-  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth]  
+  before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
       
@@ -120,6 +121,24 @@ class NctuCceCreditController < ApplicationController
     flash[:success]="成功更新課程"
     redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id        
   end
+
+  def editScore
+  end
+    
+  def updateScore
+    rsi = RegisteredSubItem.find(params[:id])
+    case params[:type]
+    when 'score'
+      rsi.score = params[:val]
+      rsi.save!
+      render json: {success: true, message: '成功更改分數'}                 
+    when 'attendance'  
+      rsi.attendance = params[:val]
+      rsi.save!
+      render json: {success: true, message: '成功更改出席率'}                                           
+    end    
+  end
+  
     
   def sendMessage 
     if request.post?       
@@ -247,7 +266,7 @@ class NctuCceCreditController < ApplicationController
     @progress = @item.progresses.where(user_id: current_user.id).first  
   end
   
-  def fourth
+  def forth
     @step = 4       
     @progress = @item.progresses.where(user_id: current_user.id).first    
   end

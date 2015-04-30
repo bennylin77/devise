@@ -1,5 +1,5 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
-<h3 class="text-center">報名資料 (<%=stageText @progress.stage%>)</h3><br>
+<h3 class="text-center">報名資料 (<%=CCEStageText @progress.stage%>)</h3><br>
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="">
@@ -19,7 +19,7 @@
 		</div>
 	</div><br>
 <div class="table-responsive">	
- <table class="table">
+<table class="table">
   <tr>
     <th>姓名</th>
     <td><%=@progress.user.name%></td>

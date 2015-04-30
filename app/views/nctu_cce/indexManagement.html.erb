@@ -42,7 +42,7 @@
     <td><%=p.user.email%></td>
 	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
 	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %>/<%=p.payment.to_s%><%end%></td>      
-    <td><%=stageText p.stage%></td>
+    <td><%=CCEStageText p.stage%></td>
     <%if p.waiting%>
     <td>候補 <%=p.waiting_no%></td>
     <%else%>

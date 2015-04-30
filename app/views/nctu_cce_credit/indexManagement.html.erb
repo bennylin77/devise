@@ -4,7 +4,13 @@
 		<div class="col-sm-2">
 			<%=link_to '刪除學分班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此學分班？' } %>		
 		</div>		
-		<ul class="nav nav-pills col-sm-offset-6  col-md-4">
+		<ul class="nav nav-pills col-sm-offset-5  col-sm-5">
+		  <li role="presentation">
+		  	<%=link_to '問卷管理', {controller: 'nctu_cce_credit', action: 'editFeedback', id: @item.id} %>
+		  </li>				
+		  <li role="presentation">
+		  	<%=link_to '成績管理', {controller: 'nctu_cce_credit', action: 'editScore', id: @item.id} %>
+		  </li>				
 		  <li role="presentation">
 		  	<%=link_to '群組寄信', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @item.id}%>
 		  </li>			
@@ -38,7 +44,7 @@
     <td><%=p.user.email%></td> 
 	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
 	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %>/<%=p.payment.to_s%><%end%></td>      
-    <td><%=stageText p.stage%></td> 
+    <td><%=CCEStageText p.stage%></td> 
 </tr>
 <%end%>
 </table>

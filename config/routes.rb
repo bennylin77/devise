@@ -31,8 +31,10 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/second'    
   post 'nctu_cce_credit/second' 
   get  'nctu_cce_credit/third'
-  get  'nctu_cce_credit/forth'   
-  get  'nctu_cce_credit/cancel'    
+  get  'nctu_cce_credit/forth'  
+  get  'nctu_cce_credit/fifth'    
+  get  'nctu_cce_credit/cancel'
+  post 'nctu_cce_credit/feedback'       
   get  'nctu_cce_credit/new' 
   get  'nctu_cce_credit/newCourses'  
   post 'nctu_cce_credit/newCourses'
@@ -45,10 +47,13 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/editGroup'   
   post 'nctu_cce_credit/updateGroup'  
   get  'nctu_cce_credit/editCourses'
-  post 'nctu_cce_credit/updateCourses'    
+  post 'nctu_cce_credit/updateCourses'   
+  get  'nctu_cce_credit/editScore'  
+  post 'nctu_cce_credit/updateScore' 
+  get  'nctu_cce_credit/editFeedback'  
+  get  'nctu_cce_credit/askFeedback'    
   get  'nctu_cce_credit/sendMessage'
   post 'nctu_cce_credit/sendMessage'  
-  post 'nctu_cce_credit/updateCourses'  
   post 'nctu_cce_credit/verified' 	
   get  'nctu_cce_credit/destroyProgress'
         
@@ -74,6 +79,7 @@ Rails.application.routes.draw do
   get  'system_modules/check_account'
   post 'system_modules/check_account'
   get  'system_modules/vaccounts'
+  get  'system_modules/vacc_export'
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :items  

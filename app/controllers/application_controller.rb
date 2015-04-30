@@ -75,6 +75,18 @@ class ApplicationController < ActionController::Base
       redirect_to root_url        
     end 
   end
+  
+  def RegisteredSubItemCheckItemUser(id)
+    unless RegisteredSubItem.where(id: id).first == nil      
+      if RegisteredSubItem.find(id).progress.item.user != current_user      
+        flash["error"]="您沒有權限"
+        redirect_to root_url          
+      end  
+    else
+      flash["error"]="項目不存在"
+      redirect_to root_url        
+    end 
+  end  
     
   [:Item, :Progress].each do |model|
     class_eval %Q{

@@ -1,5 +1,5 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
-<h3 class="text-center">報名資料 (<%=stageText @progress.stage%>)</h3><br>
+<h3 class="text-center">報名資料 (<%=CCEStageText @progress.stage%>)</h3><br>
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="">
@@ -37,6 +37,12 @@
   <tr>
     <th>身分證字號</th>
     <td><%=@progress.user.id_no_TW%></td>
+  </tr>   
+  <tr>
+    <th>最高(畢/肄/就讀)學校</th>
+    <td><%=@progress.user.hightest_education_school%></td>
+    <th>最高(科/系/所)</th>
+    <td><%=@progress.user.hightest_education_department%></td>    
   </tr>   
   <tr>
     <th>聯絡電話(行動)</th>

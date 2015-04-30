@@ -1,5 +1,5 @@
 module NctuCceHelper  
-  def stageText(stage)
+  def CCEStageText(stage)
   	case stage 		
       when 1
         "填表中"  	  
@@ -9,7 +9,7 @@ module NctuCceHelper
   			"待繳費"
   		when 4
   			"完成報名"
-      when 5
+  		when 5
         "評價" 			
   		when -1
   			"已取消報名"

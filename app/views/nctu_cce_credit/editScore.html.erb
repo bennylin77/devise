@@ -1,0 +1,58 @@
+<%= render partial: "layouts/managementHeader", locals: {item: @item} %>
+<h3 class="text-center">成績管理</h3><br>
+
+
+<%@item.sub_items.each do |s|%>	
+<%= s.title%>
+<div class="table-responsive">
+<table class="table table-striped ">
+  <tr>
+    <th>姓名</th>      	
+    <th>分數</th>     
+    <th>出席率(%)</th>      
+  </tr>	
+	<%s.registered_sub_items.each do |r| %>
+		<%if r.progress.stage >= 4 %>
+		<tr>
+			<td><%= r.progress.user.name%></td>
+		    <td><%= text_field_tag 'score_'+r.id, r.score, class: "", onchange: 'scoreAjaxHandler("'+r.id+'")', placeholder: "" %>分</td>
+		    <td><%= text_field_tag 'attendance_'+r.id, r.attendance, class: "", onchange: 'attendanceAjaxHandler("'+r.id+'")', placeholder: "" %>%</td>
+		</tr>
+		<%end%>
+	<%end%>
+</table>	
+</div>
+<%end%>
+
+
+<script>
+function scoreAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce_credit/updateScore",
+	type: "POST",
+	data: { id: id, val: $( "#score_"+id ).val(), type: 'score' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		addAlert('success', message.message)
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}	
+function attendanceAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce_credit/updateScore",
+	type: "POST",
+	data: { id: id, val: $( "#attendance_"+id ).val(), type: 'attendance' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		addAlert('success', message.message)
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}
+	
+</script>

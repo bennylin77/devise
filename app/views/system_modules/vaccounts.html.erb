@@ -1,5 +1,5 @@
 <h3 class="text-center"><%=@sys_module.title%> - 總匯款明細</h3>
-<br>
+<%=link_to "Export Excel", "/system_modules/vacc_export.xls?id=#{params[:id]}"%><br>
 <table class="table table-striped">
 <tr>
 	<th>虛擬帳號</th>
