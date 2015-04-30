@@ -47,7 +47,7 @@
 	<%end%>	
 	<%if progress.registered_sub_items.size!=0 %>	
 	<div class="collapse" id="collapse3">
-		<dl class="dl-horizontal">
+		<dl class="">
 		  <% progress.registered_sub_items.each do |s|%>
 		  <dt><%=s.sub_item.title%></dt><dd>學費: <%=s.payment%></dd>
 		  <%end%>

@@ -38,7 +38,7 @@ class ItemsController < ApplicationController
   end  
   
   def progress
-    @progresses = current_user.progresses.order('stage DESC')
+    @progresses = current_user.progresses.order('stage aes')
   end   
 
   private
