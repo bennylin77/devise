@@ -8,6 +8,9 @@ class Progress
 	has_one  :vaccount, dependent: :destroy
   has_many :registered_sub_items, dependent: :destroy   
 
+  accepts_nested_attributes_for :registered_sub_items
+
+
   field :stage, type: Integer
   field :waiting, type: Boolean, default: false
   field :waiting_no, type: Integer, default: 0    

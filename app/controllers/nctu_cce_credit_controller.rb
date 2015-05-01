@@ -1,14 +1,14 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
   before_action only: [:editItem , :updateItem, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
-  before_action only: [:cancel] { |c| c.ProgressCheckUser(params[:id])}   
+  before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredSubItemCheckItemUser(params[:id])}
   
   before_action :set_item, only: [:indexManagement, :editItem, :updateItem, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback] 
       
   def new
     @group = Group.new()
@@ -289,6 +289,23 @@ class NctuCceCreditController < ApplicationController
     @progress = @item.progresses.where(user_id: current_user.id).first         
   end 
   
+  def feedback
+    @step = 5    
+    @progress.assign_attributes(progress_params)   
+    params[:progress][:registered_sub_items_attributes].each do |key, r|     
+      validations_result=validations([{type: 'presence', title: '我對教師的教學態度', data: r[:nctu_cce_feedback_1_1]}, {type: 'presence', title: '我對教師的授課方法', data: r[:nctu_cce_feedback_1_2]}, {type: 'presence', title: '我對本課程的內容與結構', data: r[:nctu_cce_feedback_1_3]}, {type: 'presence', title: '我對本課程的作業、報告、考試與評分方式', data: r[:nctu_cce_feedback_1_4]},
+                                      {type: 'presence', title: '我對本課程的整體印象', data: r[:nctu_cce_feedback_1_5]}, 
+                                      {type: 'presence', title: '我覺得教師課前準備得很充足', data: r[:nctu_cce_feedback_2_1]}, {type: 'presence', title: '教師上課熱忱、認真、負責', data: r[:nctu_cce_feedback_2_2]}, {type: 'presence', title: '教師的教學方法適切', data: r[:nctu_cce_feedback_2_3]}, {type: 'presence', title: '教師授課的表達與說明清楚', data: r[:nctu_cce_feedback_2_4]},
+                                      {type: 'presence', title: '教師的課堂時間分配恰當', data: r[:nctu_cce_feedback_2_5]}, {type: 'presence', title: '本課程所教內容前後有組織、有條理', data: r[:nctu_cce_feedback_2_6]}, {type: 'presence', title: '使用之教科書、教材或講義對學習很有幫助', data: r[:nctu_cce_feedback_2_7]}, {type: 'presence', title: '教師教授的教材內容充實豐富', data: r[:nctu_cce_feedback_2_8]},
+                                      {type: 'presence', title: '考試、作業的內容對學習很有幫助', data: r[:nctu_cce_feedback_2_9]}, {type: 'presence', title: '考核與評分的方式公平合理', data: r[:nctu_cce_feedback_2_10]}, {type: 'presence', title: '我可以很容易在教師的office hours或是利用其他方式與教師聯絡', data: r[:nctu_cce_feedback_2_11]},  
+                                     ])
+      checkValidations(validations: validations_result, render: 'fifth' )      
+    end  
+    @progress.feedback_done = true    
+    @progress.save!
+    flash.now[:success] = '成功完成評價'
+    render 'fifth' 
+  end  
   private
 
   def set_item
@@ -317,5 +334,15 @@ class NctuCceCreditController < ApplicationController
   def group_params
     params.require(:group).permit(:title, :description, items_attributes: [:verification_code, :no_of_user, :price,
                                   :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
-  end      
+  end     
+  
+  def progress_params
+    params.require(:progress).permit( registered_sub_items_attributes: [:id,
+          :nctu_cce_feedback_1_1, :nctu_cce_feedback_1_2, :nctu_cce_feedback_1_3, :nctu_cce_feedback_1_4, :nctu_cce_feedback_1_5, 
+          :nctu_cce_feedback_2_1, :nctu_cce_feedback_2_2, :nctu_cce_feedback_2_3,  :nctu_cce_feedback_2_4, :nctu_cce_feedback_2_5,  
+          :nctu_cce_feedback_2_6,  :nctu_cce_feedback_2_7,  :nctu_cce_feedback_2_8, :nctu_cce_feedback_2_9,   :nctu_cce_feedback_2_10,  :nctu_cce_feedback_2_11,    
+          :nctu_cce_feedback_3_1,  :nctu_cce_feedback_4_1,  :nctu_cce_feedback_4_2, :nctu_cce_feedback_4_3, :nctu_cce_feedback_4_4, :nctu_cce_feedback_4_5      
+    ]) 
+  end
+   
 end

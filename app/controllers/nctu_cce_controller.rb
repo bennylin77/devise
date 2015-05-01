@@ -255,7 +255,6 @@ class NctuCceController < ApplicationController
     @progress.nctu_cce_feedback_4_1 =  params[:progress][:nctu_cce_feedback_4_1]; @progress.nctu_cce_feedback_4_2 =  params[:progress][:nctu_cce_feedback_4_2]; @progress.nctu_cce_feedback_4_3 =  params[:progress][:nctu_cce_feedback_4_3]; @progress.nctu_cce_feedback_4_4 =  params[:progress][:nctu_cce_feedback_4_4]; @progress.nctu_cce_feedback_4_5 =  params[:progress][:nctu_cce_feedback_4_5];               
     @progress.feedback_done = true    
     @progress.save!
-    
     flash.now[:success] = '成功完成評價'
     render 'fifth' 
   end

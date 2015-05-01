@@ -8,7 +8,7 @@
 	    <%end%>	 
 	  </div>	  
 	  <div class="panel-body" style="min-height: 150px;">
-		    <p><%= progress_block.item.group.description%></p>
+		    <p><%= truncate(progress_block.item.group.description, length: 60)%></p>
 			<strong><div id="clock_<%=progress_block.id%>"></div></strong>	  			    	 
 	  </div>  
 	  <div class="panel-footer">	   	

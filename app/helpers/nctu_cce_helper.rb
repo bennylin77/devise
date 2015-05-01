@@ -14,22 +14,6 @@ module NctuCceHelper
   		when -1
   			"已取消報名"
   	end
-  end
-  
-  [:Item, :Progress].each do |model|
-    class_eval %Q{
-      def #{model}CheckUser(id)
-       unless #{model}.where(id: id).first == nil
-         if #{model}.find(id).user != current_user
-            flash["error"]="您沒有權限"
-            redirect_to root_url          
-         end  
-       else
-        flash["error"]="項目不存在"
-        redirect_to root_url        
-       end    
-      end
-    }
   end  
   
   [:nctu_cce_feedback_1_1, :nctu_cce_feedback_1_2, :nctu_cce_feedback_1_3, :nctu_cce_feedback_1_4, :nctu_cce_feedback_1_5, 

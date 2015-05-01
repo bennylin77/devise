@@ -8,7 +8,7 @@
 	    <%end%>	 
 	  </div>
 	  <div class="panel-body" style="min-height: 150px;">
-		    <p><%= item_block.group.description%></p>
+		    <p><%= truncate(item_block.group.description, length: 60)%></p>
 			<strong><div id="clock_<%=item_block.id%>"></div></strong>	  			    	 
 	  </div>
 	 <div class="panel-footer">	   	
