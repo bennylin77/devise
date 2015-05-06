@@ -3,23 +3,21 @@
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="col-sm-1">	
-			<%=link_to '寄送教學反映問卷邀請', {controller: 'nctu_cce', action: 'askFeedback', id: @item.id}, class: 'btn btn-primary', data: { confirm: '您確定要寄送教學反映問卷邀請？ note: 此動作會寄送反映問卷邀請連結至每一位報名學員的信箱, 請確保, 報名"已結束" !' } %>
+			<%=link_to '寄送教學反映問卷邀請', {controller: 'nctu_cce_credit', action: 'askFeedback', id: @item.id}, class: 'btn btn-primary', onclick: '$(this).html("寄送中..."); $(this).attr("disabled","disabled");'%>
 		</div>
 	</div>
 </div>	
 <br>
 
-
-
 <%@item.sub_items.each do |si| %>
 <h2><%=si.title %></h2>
 
 修課人數:
- 
+<%=si.registered_sub_items.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count%> 
 答卷人數: 
-
+<%=@item.progresses.where(stage: 5, feedback_done: true).count%>
 答卷率:  
-
+<%= (@item.progresses.where(feedback_done: true).count.to_f / @item.progresses.gte(stage: 4).count)*100.round(2)  %>%
 
 <div class="table-responsive">
 <table class="table table-condensed table-bordered">

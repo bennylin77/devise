@@ -135,7 +135,11 @@ class NctuCceCreditController < ApplicationController
     when 'attendance'  
       rsi.attendance = params[:val]
       rsi.save!
-      render json: {success: true, message: '成功更改出席率'}                                           
+      render json: {success: true, message: '成功更改出席率'}   
+    when 'certificate'  
+      rsi.certificate = params[:val]
+      rsi.save!  
+      render json: {success: true, message: '成功更改資格'}                                                     
     end    
   end
 
@@ -150,7 +154,7 @@ class NctuCceCreditController < ApplicationController
     end
     
     flash[:success]="成功寄送教學反映問卷邀請"
-    redirect_to controller: :nctu_cce, action: :editFeedback, id: @item.id       
+    redirect_to controller: :nctu_cce_credit, action: :editFeedback, id: @item.id       
   end  
     
   def sendMessage 

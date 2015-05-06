@@ -11,6 +11,7 @@ class RegisteredSubItem
   
   field :score, type: Integer, default: 0.0
   field :attendance, type: Integer, default: 0.0
+  field :certificate, type: Boolean, default: false    
 
   field :nctu_cce_feedback_1_1, type: Integer
   field :nctu_cce_feedback_1_2, type: Integer

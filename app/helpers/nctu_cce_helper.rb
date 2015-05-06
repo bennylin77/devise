@@ -10,12 +10,12 @@ module NctuCceHelper
   		when 4
   			"完成報名"
   		when 5
-        "評價" 			
+        "問卷評價" 			
   		when -1
   			"已取消報名"
   	end
   end  
-  
+ 
   [:nctu_cce_feedback_1_1, :nctu_cce_feedback_1_2, :nctu_cce_feedback_1_3, :nctu_cce_feedback_1_4, :nctu_cce_feedback_1_5, 
    :nctu_cce_feedback_2_1, :nctu_cce_feedback_2_2, :nctu_cce_feedback_2_3, :nctu_cce_feedback_2_4, :nctu_cce_feedback_2_5,
    :nctu_cce_feedback_2_6, :nctu_cce_feedback_2_7, :nctu_cce_feedback_2_8, :nctu_cce_feedback_2_9, :nctu_cce_feedback_2_10,
@@ -24,7 +24,7 @@ module NctuCceHelper
     def #{f}FeedbackStatistics(item)
       result = Array.new(12, 0.0)
       temp_data = Array.new(6, 0.0) 
-      item.progresses.where(stage: 4, feedback_done: true).each do |p| 
+      item.progresses.where(stage: 5, feedback_done: true).each do |p| 
         result[0] =result[0] + p.#{f}
         case p.#{f}
         when 5
@@ -82,7 +82,7 @@ module NctuCceHelper
     class_eval %Q{  
     def #{f}FeedbackStatistics(item)
       result = Array.new(4, 0)   
-      item.progresses.where(stage: 4, feedback_done: true).each do |p|           
+      item.progresses.where(stage: 5, feedback_done: true).each do |p|           
         case p.#{f}
         when 0
           result[0] = result[0] + 1
@@ -101,5 +101,5 @@ module NctuCceHelper
     end
     }
   end    
-  
+ 
 end

@@ -21,6 +21,7 @@ class Progress
   
   field :score, type: Integer, default: 0.0
   field :attendance, type: Integer, default: 0.0
+  field :certificate, type: Boolean, default: false  
   field :certificate_no, type: String
 	
 	field :feedback_done, type: Boolean, default: false

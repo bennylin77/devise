@@ -6,6 +6,7 @@
     <th>姓名</th>
     <th>分數</th>     
     <th>出席率(%)</th>   
+    <th>資格</th>     
     <th>證書字號</th>     
   </tr>	
 <%@item.progresses.gte(stage: 4).each do |p|%>
@@ -13,7 +14,11 @@
     <td><%=p.user.name%></td>
     <td><%= text_field_tag 'score_'+p.id, p.score, class: "", onchange: 'scoreAjaxHandler("'+p.id+'")', placeholder: "" %>分</td>
     <td><%= text_field_tag 'attendance_'+p.id, p.attendance, class: "", onchange: 'attendanceAjaxHandler("'+p.id+'")', placeholder: "" %>%</td>
-    <td><%= text_field_tag 'certificate_'+p.id, p.certificate_no, class: "", onchange: 'certificateAjaxHandler("'+p.id+'")', placeholder: "" %></td>    
+    <td>     
+    <%= radio_button_tag 'certificate_'+p.id, false, !!(!p.certificate), class: "", onchange: 'certificateAjaxHandler("'+p.id+'")'%>不及格
+    <%= radio_button_tag 'certificate_'+p.id, true, !!(p.certificate), class: "", onchange: 'certificateAjaxHandler("'+p.id+'")'%>及格
+    </td>
+    <td><%= text_field_tag 'certificate_no_'+p.id, p.certificate_no, class: "", onchange: 'certificateNoAjaxHandler("'+p.id+'")', placeholder: "" %></td>    
 </tr>
 <%end%>
 </table>
@@ -49,11 +54,25 @@ function attendanceAjaxHandler(id)
 	});	
 }
 function certificateAjaxHandler(id)
+{	
+	var request = $.ajax({
+	url: "/nctu_cce/updateScore",
+	type: "POST",
+	data: { id: id, val: $( 'input[name="certificate_'+id+'"]:checked' ).val(), type: 'certificate' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		addAlert('success', message.message)
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}	
+function certificateNoAjaxHandler(id)
 {
 	var request = $.ajax({
 	url: "/nctu_cce/updateScore",
 	type: "POST",
-	data: { id: id, val: $( "#certificate_"+id ).val(), type: 'certificate' },
+	data: { id: id, val: $( "#certificate_no_"+id ).val(), type: 'certificate_no' },
 	dataType: "json"
 	});
 	request.done(function( message ) {
