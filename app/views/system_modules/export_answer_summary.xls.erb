@@ -1,0 +1,64 @@
+<style>
+td {
+  text-align: center;
+}
+</style>
+<table>
+<tr>
+  <td>班別名稱</td>
+  <td>課程名稱</td>
+  <td>各該課程</td>
+  <td>修課人數</td>
+  <td>答卷人數</td>
+  <td>回收率</td>
+</tr>
+<% @sys_module.groups.each do |group| %>
+  <tr>
+    <td colspan="2"><%=group.title%></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <% group.items.where(:school_year=>params[:year]).each do |item| %>
+    <% progresses = item.progresses %>
+    
+    <% if item.sub_items.presence %>      
+      <% item.sub_items.each do |sub| %>
+        <% reg_items = progresses.map{ |p| p.registered_sub_items}.flatten %>
+        <% matchs = reg_items.select{|i| i.progress.stage==4 and i.sub_item==sub} %>
+        <% all_take = matchs.count %>
+        <% all_feedback = matchs.select{|p| p.feedback_done }.count %>
+        <% percent = (all_take==0) ? 0 : ((all_feedback*1.0/all_take)*100).round(1) %>
+        <% ary = reg_items.try('map{|p| p.nctu_cce_feedback_1_5||0 }') || [] %>
+        <% ary_avg = (ary.count==0) ?  0 : (ary.inject(:+)*1.0/ary.count).round(1)%>
+        <tr>
+          <td></td>
+          <td><%=sub.title%></td>
+          <td><%=ary_avg.to_s %></td>
+          <td><%=all_take.to_s %></td>
+          <td><%=all_feedback.to_s %></td>
+          <td><%=percent.to_s%>%</td>
+        </tr>
+      <% end %>
+    <% else %>
+      <% all_take = progresses.select{|p| p.stage==4}.count %>
+      <% all_feedback = progresses.select{|p| p.feedback_done||0 }.count %>
+      <% percent = (all_take==0) ? 0 : ((all_feedback*1.0/all_take)*100).round(1) %>
+      <% ary = item.progresses.map{|p| p.nctu_cce_feedback_1_5 } %>
+      <% ary_avg = (ary.count==0) ?  0 : (ary.inject(:+)*1.0/ary.count).round(1)%>
+      <tr>
+        <td></td>
+        <td><%=item.title%></td>
+        <td><%=ary.to_s %></td>
+        <td><%=all_take.to_s %></td>
+        <td><%=all_feedback.to_s %></td>
+        <td><%=percent.to_s %> %</td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td colspan="6"> </td>
+  </tr>
+<% end %>
+</table>

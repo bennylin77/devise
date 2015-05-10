@@ -1,6 +1,6 @@
 <%= render partial: "step", locals: {progress: @progress, step: @step} %>
 <div class="container" >
-<%= form_for current_user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form"} do |u| %>	
+<%= form_for current_user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form", id: "first-form"} do |u| %>	
 	<%unless @item.blank?%>
 		<%= hidden_field_tag 'id', @item.id %>
 	<%end%>
@@ -138,10 +138,27 @@
 	<%end%>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<%= u.submit '送出',  class: "btn btn-default"  %>
+			<%= u.submit '送出',  class: "btn btn-default", "data-toggle"=>"modal", "data-target"=>"#confirm-rule", :onclick=>"return false ;"  %>
 		</div>
 	</div>
 <% end %>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
+  aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="confirm-rule">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      ※依個人資料保護法應告知事項：</br>
+國立交通大學依教育部專科以上推廣教育實施辦法辦理推廣教 育與訓練行政所蒐集您的個人資料，
+僅在前述目的內利用您的資料並與您聯繫。您得依法向本校行使個人資料保護法有關當事人權利，請洽訓練班承辦 人員。
+特此切結。
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" onclick="$('#first-form').submit();">同意並送出</button>
+    </div>
+  </div>
+</div>
+
 
 <script>
 $('#twzipcode').twzipcode({

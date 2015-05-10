@@ -20,6 +20,8 @@
 
 <%= link_to '查詢虛擬帳號', "/system_modules/check_account", class: 'btn btn-default' %>
 <%= link_to '總匯款明細', "/system_modules/vaccounts?id="+params[:id], class: 'btn btn-default' %>
+<%= link_to '匯出答卷人數總覽', "/system_modules/export_summary.xls?id=#{params[:id]}&type=answer&year=103", class: 'btn btn-default' %>
+<%= link_to '匯出及格人數總覽', "/system_modules/export_summary.xls?id=#{params[:id]}&type=score&year=103", class: 'btn btn-default' %>
 </br>
 </br>
 <table class="table table-striped ">

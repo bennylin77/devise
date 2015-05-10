@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/sendMessage'
   post 'nctu_cce_credit/sendMessage'  
   post 'nctu_cce_credit/verified' 	
-  get  'nctu_cce_credit/destroyProgress'
+  get  'nctu_cce_credit/destroyProgress'      
         
   get  'main/index'
   
@@ -65,6 +65,8 @@ Rails.application.routes.draw do
   get  'items/indexManagement'
   get  'items/progress'
   get  'items/progressStatus'  
+  get  'items/export_vaccounts'
+  
   
   get  'system_modules/addAdmin'
   post 'system_modules/addAdmin'
@@ -79,7 +81,7 @@ Rails.application.routes.draw do
   get  'system_modules/check_account'
   post 'system_modules/check_account'
   get  'system_modules/vaccounts'
-  get  'system_modules/vacc_export'
+  get  'system_modules/export_summary'
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :items  

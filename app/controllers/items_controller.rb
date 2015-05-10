@@ -41,6 +41,25 @@ class ItemsController < ApplicationController
     @progresses = current_user.progresses.order('stage aes')
   end   
 
+  def export_vaccounts
+    @item = Item.find(params[:id])
+    @gorup = @item.group
+  	if @item.user != current_user 
+  	  redirect_to :root
+  	end
+  	
+  	@progresses = @item.progresses
+  
+    #@sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+  	respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"export.xls\" "	
+			 }
+		end	 
+  
+  end
+
   private
   
     def set_item

@@ -1,6 +1,6 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editItem , :updateItem, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses] { |c| c.ItemCheckUser(params[:id])}  
+  before_action only: [:editItem , :updateItem, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export] { |c| c.ItemCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckItemUser(params[:id])}    
@@ -310,6 +310,11 @@ class NctuCceCreditController < ApplicationController
     flash.now[:success] = '成功完成評價'
     render 'fifth' 
   end  
+  
+  def vacc_export
+  	
+	end
+  
   private
 
   def set_item
@@ -348,5 +353,7 @@ class NctuCceCreditController < ApplicationController
           :nctu_cce_feedback_3_1,  :nctu_cce_feedback_4_1,  :nctu_cce_feedback_4_2, :nctu_cce_feedback_4_3, :nctu_cce_feedback_4_4, :nctu_cce_feedback_4_5      
     ]) 
   end
+  
+ 
    
 end

@@ -127,20 +127,21 @@ class SystemModulesController < ApplicationController
   end
   
   def vaccounts
-	@sys_module = SystemModule.find(params[:id])
-	@vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+	  @sys_module = SystemModule.find(params[:id])
+	  @vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
   end
   
-  def vacc_export
-  	@sys_module = SystemModule.find(params[:id])
-  	@vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
-  
-  	respond_to do |format|
+  def export_summary
+    @sys_module = SystemModule.find(params[:id])
+    year = params[:year]
+    
+    respond_to do |format|
 			 format.xls{
+			  render "export_#{params[:type]}_summary"
 			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
-			 	response.headers['Content-Disposition'] = " attachment; filename=\"export.xls\" "	
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"export_#{params[:type]}_#{year}.xls\" "	
 			 }
-	end
+		end	 
   end
    
   def ModuleCheckAdmin
@@ -161,3 +162,4 @@ class SystemModulesController < ApplicationController
       params.require(:system_module).permit(:title, :serial_code)
     end
 end
+

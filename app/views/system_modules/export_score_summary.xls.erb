@@ -1,0 +1,56 @@
+<style>
+td {
+  text-align: center;
+}
+</style>
+<table>
+<tr>
+  <td>班別名稱</td>
+  <td>課程名稱</td>
+  <td>修課人數</td>
+  <td>取得證書人數</td>
+  <td>合計</td>
+</tr>
+<% @sys_module.groups.each do |group| %>
+  <tr>
+    <td colspan="2"><%=group.title%></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <% group.items.where(:school_year=>params[:year]).each do |item| %>
+    <% progresses = item.progresses %>
+    
+    <% if item.sub_items.presence %>      
+      <% item.sub_items.each do |sub| %>
+        <% reg_items = progresses.map{ |p| p.registered_sub_items}.flatten %>
+        <% matchs = reg_items.select{|i| i.progress.stage==4 and i.sub_item==sub} %>
+        <% all_take = matchs.count %>
+        <% all_pass = matchs.select{|p| p.certificate }.count %>
+        <% sum = (all_take==0) ? 0 : ((all_pass*1.0/all_take)*100).round(2) %>
+        <tr>
+          <td></td>
+          <td><%=sub.title%></td>
+          <td><%=all_take.to_s %></td>
+          <td><%=all_pass.to_s %></td>
+          <td><%=sum.to_s %> %</td>
+        </tr>
+      <% end %>
+    <% else %>
+      <% all_take = progresses.select{|p| p.stage==4}.count %>
+      <% all_pass = progresses.select{|p| p.certificate }.count %>
+      <% sum = (all_take==0) ? 0 : ((all_pass*1.0/all_take)*100).round(2) %>
+      <tr>
+        <td></td>
+        <td><%=item.title%></td>
+        <td><%=all_take.to_s %></td>
+        <td><%=all_pass.to_s %></td>
+        <td><%=sum.to_s %> %</td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td colspan="5"> </td>
+  </tr>
+<% end %>
+</table>

@@ -2,7 +2,8 @@
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-sm-4">
-			<%=link_to '刪除培訓班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此培訓班？' } %>		
+			<%=link_to '刪除培訓班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此培訓班？' } %>	
+			 <%=link_to '匯出帳單表', "/items/export_vaccounts.xls?id=#{@item.id}", class: 'btn btn-info' %>		
 		</div>
 		<ul class="nav nav-pills col-sm-offset-4 col-sm-4">
 		  <li role="presentation">

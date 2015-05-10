@@ -33,5 +33,6 @@ class Item
   #validates :price, presence: {message: "金額 不能是空白"}    
   #validates :payment_strat_at, presence: {message: "繳費開始時間 不能是空白"}
   #validates :payment_end_at, presence: {message: "繳費結束時間 不能是空白"}    
+  
     
 end

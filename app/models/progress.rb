@@ -48,6 +48,7 @@ class Progress
   field :nctu_cce_feedback_4_4, type: Integer 
   field :nctu_cce_feedback_4_5, type: Integer        
 
+
 	def create_vaccount 
 		vacc = Vaccount.new
 		vacc.create_account(self.id)

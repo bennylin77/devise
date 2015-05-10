@@ -14,10 +14,28 @@
 <div class="main">
 	<%= yield %>
 </div>
+
 <script>  	
 <% flash.each do |type, message| %>
 	addAlert('<%=type%>', '<%=message.html_safe%>')
 <% end %>
+
+
+// self extend
+jQuery.fn.extend({
+    disable: function(state) {
+        return this.each(function() {
+            this.disabled = state;
+        });
+    }
+});
+
+$('button[data-loading-text]').click(function () {
+   // console.log($(this));
+    var str = $(this).attr('data-loading-text');
+    $(this).html(str).disable(true);
+});
+
  </script>
 </body>
 </html>
