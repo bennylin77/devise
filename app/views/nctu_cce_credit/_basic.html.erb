@@ -1,0 +1,15 @@
+<div class="container-fluid">
+	<div class="row">	
+		<ul class="nav nav-tabs col-sm-offset-4 col-sm-4">		
+		  <li role="presentation" <%= active(controller: 'nctu_cce_credit', action: 'editGroup')%>>
+		  	<%=link_to '名稱簡介設定', {controller: 'nctu_cce_credit', action: 'editGroup', id: item.group.id} %>
+		  </li>
+		  <li role="presentation" <%= active(controller: 'nctu_cce_credit', action: 'editItem')%>>
+			<%=link_to '基本資料設定', {controller: 'nctu_cce_credit', action: 'editItem', id: item.id} %>		  	
+		  </li>
+		  <li role="presentation" <%= active(controller: 'nctu_cce_credit', action: 'editCourses')%>>
+			<%=link_to '課程設定', {controller: 'nctu_cce_credit', action: 'editCourses', id: item.id} %>		  	
+		  </li>		  
+		</ul>	
+	</div>
+</div>

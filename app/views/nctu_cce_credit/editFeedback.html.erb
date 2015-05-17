@@ -1,5 +1,6 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
-<h3 class="text-center">問卷管理</h3><br>
+<%= render partial: "user", locals: {item: @item} %>
+<br><br>
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="col-sm-1">	
@@ -7,18 +8,16 @@
 		</div>
 	</div>
 </div>	
-<br>
-
 <%@item.sub_items.each do |si| %>
-<h2><%=si.title %></h2>
-
-修課人數:
+<br>
+<h3><%=si.title %></h3>
+<h4>修課人數:
 <%=si.registered_sub_items.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count%> 
 答卷人數: 
 <%=@item.progresses.where(stage: 5, feedback_done: true).count%>
 答卷率:  
-<%= (@item.progresses.where(feedback_done: true).count.to_f / @item.progresses.gte(stage: 4).count)*100.round(2)  %>%
-
+<%= (@item.progresses.where(feedback_done: true).count.to_f / si.registered_sub_items.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count).round(3)*100  %>%
+</h4>
 <div class="table-responsive">
 <table class="table table-condensed table-bordered">
 <tr>

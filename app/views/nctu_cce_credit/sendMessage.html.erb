@@ -1,5 +1,6 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
-<h3 class="text-center">群組寄信</h3><br>
+<%= render partial: "user", locals: {item: @item} %>
+<br><br>
 <div class="container" >
 <%= form_tag('/nctu_cce_credit/sendMessage', multipart: true, class: "form-horizontal") do%>
   <%=hidden_field_tag 'id', @item.id%>
@@ -12,13 +13,6 @@
   <div class="form-group">  
     <label for="inputEmail3" class="col-sm-offset-1 col-sm-2 control-label">收件人</label>  	
     <div class="col-sm-6"  style="height: 200px; overflow-y: scroll;"> 
-    	<!--
-    	<% @item.progresses.each do |p|%>
-		<label class="checkbox-inline">
-			<%= check_box_tag 'recipients[]', p.user.id%><%=p.user.name %>
-		</label>    	
-    	<%end%>  
-    	-->
     	<%@item.sub_items.each do |s_i| %>
 			<%=s_i.title%><br>   
 			<label class="checkbox-inline">
@@ -49,12 +43,36 @@
   </div> 
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-6">
-      <%=submit_tag "寄出", class: "btn btn-primary", "data-loading-text"=>"寄送中..."%>	
+      <%=submit_tag "寄出", class: "btn btn-primary submitButton", "data-loading-text"=>"寄送中...", autocomplete: "off"%>	
     </div>
   </div>
 <%end%>
 <script>
 $("#input-att").fileinput({'showUpload':false, browseClass: "btn btn-default", browseLabel: " 選取檔案（可多選）", 'previewFileType':'any', 'showCaption': false});
+
+$('form').submit(function(event){
+	var recipients_error = true
+	$('input[name^="recipients"]').each(function() {
+	    if( this.checked )
+	    	recipients_error = false
+	});
+	if($('#subject').val() == '')
+	{
+		addAlert('error', '您沒填標題')		
+		$(".submitButton").button('reset')					
+		event.preventDefault();
+		return false		
+	}	
+	if(recipients_error)
+	{
+		addAlert('error', '您沒選擇收件人')	
+		$(".submitButton").button('reset')			
+		event.preventDefault();
+		return false
+	}
+	$(".submitButton").button('loading')
+})
+
 
 <%@item.sub_items.each do |s_i| %>
 $('#sub_item_<%=s_i.id %>').change(function() {

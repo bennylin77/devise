@@ -1,9 +1,8 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @item} %>
-<h3 class="text-center">成績管理</h3><br>
-
-
+<%= render partial: "user", locals: {item: @item} %>
+<br><br>
 <%@item.sub_items.each do |s|%>	
-<%= s.title%>
+<h3><%= s.title%></h3>
 <div class="table-responsive">
 <table class="table table-striped ">
   <tr>

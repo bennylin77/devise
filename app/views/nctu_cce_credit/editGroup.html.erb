@@ -1,5 +1,6 @@
 <%= render partial: "layouts/managementHeader", locals: {item: @group.items.first} %>
-<h3 class="text-center">名稱簡介設定</h3><br>
+<%= render partial: "basic", locals: {item: @group.items.first} %>
+<br><br>
 <div class="container" >
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "updateGroup", id: @group.id }, method: 'post', html: {class: "form-horizontal", role: "form"} do |g| %> 	
 <div class="form-group">

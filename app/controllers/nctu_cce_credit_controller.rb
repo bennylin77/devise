@@ -89,7 +89,7 @@ class NctuCceCreditController < ApplicationController
     checkValidations(validations: validations_result, render: 'editItem' )   
     @item.save  
     flash[:success]="成功更新基本資料"
-    redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id     
+    redirect_to controller: :nctu_cce_credit, action: :editItem, id: @item.id     
   end  
   
   def editGroup  
@@ -102,7 +102,7 @@ class NctuCceCreditController < ApplicationController
     checkValidations(validations: validations_result, render: 'editGroup' )   
     @group.save  
     flash[:success]="成功更新名稱簡介"
-    redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @group.items.first.id     
+    redirect_to controller: :nctu_cce_credit, action: :editGroup, id: @group.id     
   end    
   
   def editCourses     
@@ -119,7 +119,7 @@ class NctuCceCreditController < ApplicationController
     end    
     @item.save  
     flash[:success]="成功更新課程"
-    redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id        
+    redirect_to controller: :nctu_cce_credit, action: :editCourses, id: @item.id        
   end
 
   def editScore
@@ -163,7 +163,7 @@ class NctuCceCreditController < ApplicationController
         System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user).deliver
       end 
       flash[:success]="成功寄出信件"                
-      redirect_to controller: :nctu_cce_credit, action: :indexManagement, id: @item.id     
+      redirect_to controller: :nctu_cce_credit, action: :sendMessage, id: @item.id     
     end
   end  
   
