@@ -56,9 +56,6 @@ Rails.application.routes.draw do
   post 'nctu_cce_credit/sendMessage'  
   post 'nctu_cce_credit/verified' 	
   get  'nctu_cce_credit/destroyProgress'      
-        
-  get  'main/index'
-  
  
   get  'items/createCompletion' 
   get  'items/showManagement'
@@ -70,14 +67,12 @@ Rails.application.routes.draw do
   
   get  'system_modules/addAdmin'
   post 'system_modules/addAdmin'
-  
   get  'system_modules/userIndex'
   get  'system_modules/userEdit'    
   get  'system_modules/userInfo'    
   post 'system_modules/userRole'    
   post 'system_modules/userAdd'  
   get  'system_modules/userDestroy'    
-  
   get  'system_modules/check_account'
   post 'system_modules/check_account'
   get  'system_modules/vaccounts'

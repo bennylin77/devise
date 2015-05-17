@@ -3,8 +3,7 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "form-horizontal" }) do |f| %>
   <%= devise_error_messages! %>
   <div class="form-group">
-    <label for="inputName" class="col-sm-offset-1 col-sm-2 control-label">Email</label>
-    <div class="col-sm-6">
+    <div class="col-sm-offset-3 col-sm-6">
   		<%= f.email_field :email, class: "form-control", placeholder: "Email"  %>  	
     </div>
   </div>  

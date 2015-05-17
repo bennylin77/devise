@@ -20,10 +20,17 @@
 		<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
 		  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 		<% end -%>
-		
+		</div>
+	</div>		
+	<div class="row">
+		<div class="col-sm-offset-3 col-sm-6">
+			<hr/>
+		<center><h4>或是</h4></center>
 		<%- if devise_mapping.omniauthable? %>
 		  <%- resource_class.omniauth_providers.each do |provider| %>
-		    <%= link_to "使用#{provider.to_s.titleize}登入", omniauth_authorize_path(resource_name, provider) %><br />
+		    <%= link_to omniauth_authorize_path(resource_name, provider), class: 'btn btn-primary btn-block' do%>
+		    <%= "使用#{provider.to_s.titleize}登入"%>
+		    <%end%>
 		  <% end -%>
 		<% end -%>
 		</div>
