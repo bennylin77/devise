@@ -24,6 +24,7 @@ class Progress
   field :certificate, type: Boolean, default: false  
   field :certificate_no, type: String
 	
+# this is 培訓班's feedback info	
 	field :feedback_done, type: Boolean, default: false
 	field :nctu_cce_feedback_1_1, type: Integer
   field :nctu_cce_feedback_1_2, type: Integer

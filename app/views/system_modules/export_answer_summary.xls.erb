@@ -7,7 +7,7 @@ td {
 <tr>
   <td>班別名稱</td>
   <td>課程名稱</td>
-  <td>各該課程</td>
+  <td>我對本課程的整體印象</td>
   <td>修課人數</td>
   <td>答卷人數</td>
   <td>回收率</td>
@@ -24,13 +24,13 @@ td {
     <% progresses = item.progresses %>
     
     <% if item.sub_items.presence %>      
+      <% all_take = progresses.select{|p| p.stage==4}.count %>
+      <% all_feedback = progresses.select{|p| p.feedback_done and p.stage==4}.count %>
+      <% percent = (all_take==0) ? 0 : ((all_feedback*1.0/all_take)*100).round(1) %>
+      
       <% item.sub_items.each do |sub| %>
         <% reg_items = progresses.map{ |p| p.registered_sub_items}.flatten %>
-        <% matchs = reg_items.select{|i| i.progress.stage==4 and i.sub_item==sub} %>
-        <% all_take = matchs.count %>
-        <% all_feedback = matchs.select{|p| p.feedback_done }.count %>
-        <% percent = (all_take==0) ? 0 : ((all_feedback*1.0/all_take)*100).round(1) %>
-        <% ary = reg_items.try('map{|p| p.nctu_cce_feedback_1_5||0 }') || [] %>
+        <% ary = reg_items.try('map{|p| p.nctu_cce_feedback_1_5||0 }') || [] %>      
         <% ary_avg = (ary.count==0) ?  0 : (ary.inject(:+)*1.0/ary.count).round(1)%>
         <tr>
           <td></td>
@@ -41,16 +41,13 @@ td {
           <td><%=percent.to_s%>%</td>
         </tr>
       <% end %>
-    <% else %>
-      <% all_take = progresses.select{|p| p.stage==4}.count %>
-      <% all_feedback = progresses.select{|p| p.feedback_done||0 }.count %>
-      <% percent = (all_take==0) ? 0 : ((all_feedback*1.0/all_take)*100).round(1) %>
-      <% ary = item.progresses.map{|p| p.nctu_cce_feedback_1_5 } %>
+    <% else %>    
+      <% ary = item.progresses.map{|p| p.nctu_cce_feedback_1_5 || 0 } || [] %>
       <% ary_avg = (ary.count==0) ?  0 : (ary.inject(:+)*1.0/ary.count).round(1)%>
       <tr>
         <td></td>
-        <td><%=item.title%></td>
-        <td><%=ary.to_s %></td>
+        <td><%=item.group.title%></td>
+        <td><%=ary_avg.to_s %></td>
         <td><%=all_take.to_s %></td>
         <td><%=all_feedback.to_s %></td>
         <td><%=percent.to_s %> %</td>

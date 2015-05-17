@@ -42,7 +42,7 @@ td {
       <% sum = (all_take==0) ? 0 : ((all_pass*1.0/all_take)*100).round(2) %>
       <tr>
         <td></td>
-        <td><%=item.title%></td>
+        <td><%=item.group.title%></td>
         <td><%=all_take.to_s %></td>
         <td><%=all_pass.to_s %></td>
         <td><%=sum.to_s %> %</td>
