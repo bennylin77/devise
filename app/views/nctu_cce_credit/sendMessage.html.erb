@@ -11,12 +11,28 @@
   </div>
   <div class="form-group">  
     <label for="inputEmail3" class="col-sm-offset-1 col-sm-2 control-label">收件人</label>  	
-    <div class="col-sm-6"> 
+    <div class="col-sm-6"  style="height: 200px; overflow-y: scroll;"> 
+    	<!--
     	<% @item.progresses.each do |p|%>
 		<label class="checkbox-inline">
 			<%= check_box_tag 'recipients[]', p.user.id%><%=p.user.name %>
 		</label>    	
     	<%end%>  
+    	-->
+    	<%@item.sub_items.each do |s_i| %>
+			<%=s_i.title%><br>   
+			<label class="checkbox-inline">
+				<%= check_box_tag 'sub_item_'+s_i.id%>全選			
+			</label>   			 	
+    		<%s_i.registered_sub_items.each do |rsi| %>
+    			<%if rsi.progress.stage>= 4%>
+					<label class="checkbox-inline">
+						<%= check_box_tag 'recipients[]', rsi.progress.user.id, false, class: 'rsi_of_sub_item_'+s_i.id%><%=rsi.progress.user.name %>
+					</label>    			
+    			<%end%>	
+    		<%end%>
+    	<hr>
+    	<%end%>
     </div>	
   </div>  
   <div class="form-group">
@@ -33,10 +49,20 @@
   </div> 
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-6">
-      <%=submit_tag "寄出", class: "btn btn-default", "data-loading-text"=>"寄送中..."%>	
+      <%=submit_tag "寄出", class: "btn btn-primary", "data-loading-text"=>"寄送中..."%>	
     </div>
   </div>
 <%end%>
 <script>
 $("#input-att").fileinput({'showUpload':false, browseClass: "btn btn-default", browseLabel: " 選取檔案（可多選）", 'previewFileType':'any', 'showCaption': false});
+
+<%@item.sub_items.each do |s_i| %>
+$('#sub_item_<%=s_i.id %>').change(function() {
+   if ( this.checked )
+   	$('.rsi_of_sub_item_<%=s_i.id%>').prop('checked', true);
+   else
+   	$('.rsi_of_sub_item_<%=s_i.id%>').prop('checked', false);
+});
+<%end%>
+
 </script>
