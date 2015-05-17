@@ -25,9 +25,14 @@
 		<%end%>	
 		<%if progress.registered_sub_items.size!=0 %>		
 		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
-		課程資訊
+		學費
 		</button>		
 		<%end%>
+		<%if progress.stage >= 4 %>		
+		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapseExample">
+		成績
+		</button>		
+		<%end%>		
  		</small>		  	
 	</h3>		
 	<div class="collapse" id="collapse1">
@@ -54,6 +59,16 @@
 		</dl>	  	
 	</div>		
 	<%end%>	
+	<%if progress.registered_sub_items.size!=0 %>	
+	<div class="collapse" id="collapse4">
+		<dl class="dl-horizontal">
+		  <% progress.registered_sub_items.each do |s|%>
+		  <dt><%=s.sub_item.title%></dt><dd>分數: <%=s.score%>分<br> 出席率: <%=s.attendance%>%<br> 及格: <%if s.certificate%>是<%else%>否<%end%></dd>
+		  <hr>
+		  <%end%>
+		</dl>	  	
+	</div>		
+	<%end%>		
 </div>
 <%if !progress.reason.blank?%>
 <h3 class="text-center" style="color: #dd5e59">取消原因: <%= progress.reason%></h3>
