@@ -1,8 +1,9 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @item} %>
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
+<%= render partial: "user", locals: {period: @period} %>
 <h3 class="text-center">群組寄信</h3><br>
 <div class="container" >
 <%= form_tag('/nctu_cce/sendMessage', multipart: true, class: "form-horizontal") do%>
-  <%=hidden_field_tag 'id', @item.id%>
+  <%=hidden_field_tag 'id', @period.id%>
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label">標題</label>
     <div class="col-sm-6">
@@ -12,11 +13,20 @@
   <div class="form-group">  
     <label for="inputEmail3" class="col-sm-offset-1 col-sm-2 control-label">收件人</label>  	
     <div class="col-sm-6"> 
-    	<% @item.progresses.each do |p|%>
-		<label class="checkbox-inline">
-			<%= check_box_tag 'recipients[]', p.user.id%><%=p.user.name %>
-		</label>    	
-    	<%end%>  
+    	<%@period.courses.each do |c| %>
+			<%=c.title%><br>   
+			<label class="checkbox-inline">
+				<%= check_box_tag 'course_'+c.id%>全選			
+			</label>   			 	
+    		<%c.registered_courses.each do |r_c| %>
+    			<%if r_c.progress.stage >= 4%>
+					<label class="checkbox-inline">
+						<%= check_box_tag 'recipients[]', r_c.progress.user.id, false, class: 'r_c_of_course_'+c.id%><%=r_c.progress.user.name %>
+					</label>    			
+    			<%end%>	
+    		<%end%>
+    	<hr>
+    	<%end%>
     </div>	
   </div>  
   <div class="form-group">

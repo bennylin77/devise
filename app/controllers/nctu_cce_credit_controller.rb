@@ -88,7 +88,7 @@ class NctuCceCreditController < ApplicationController
                                     ])                                   
     checkValidations(validations: validations_result, render: 'editPeriod' )   
     @period.save  
-    flash[:success]="成功更新基本資料"
+    flash[:success]="成功更新班級資料"
     redirect_to controller: :nctu_cce_credit, action: :editPeriod, id: @period.id     
   end  
   
@@ -358,6 +358,4 @@ class NctuCceCreditController < ApplicationController
     ]) 
   end
   
- 
-   
 end

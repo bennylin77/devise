@@ -1,26 +1,17 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @item} %>
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
 <div class="container-fluid">
 	<div class="row">	
-		<div class="col-sm-4">
-			<%=link_to '刪除培訓班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此培訓班？' } %>	
-			 <%=link_to '匯出帳單表', "/items/export_vaccounts.xls?id=#{@item.id}", class: 'btn btn-info' %>		
+		<div class="col-sm-2">
+			<%=link_to '刪除培訓班', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此培訓班？' } %>	
+			<%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>		
 		</div>
-		<ul class="nav nav-pills col-sm-offset-4 col-sm-4">
+		<ul class="nav nav-pills col-sm-offset-8 col-sm-2">
 		  <li role="presentation">
-		  	<%=link_to '問卷管理', {controller: 'nctu_cce', action: 'editFeedback', id: @item.id} %>
-		  </li>				
+		  	<%=link_to '管理學員', {controller: 'nctu_cce', action: 'sendMessage', id: @period.id} %>
+		  </li>						
 		  <li role="presentation">
-		  	<%=link_to '成績管理', {controller: 'nctu_cce', action: 'editScore', id: @item.id} %>
-		  </li>					
-		  <li role="presentation">
-		  	<%=link_to '群組寄信', {controller: 'nctu_cce', action: 'sendMessage', id: @item.id} %>
-		  </li>			
-		  <li role="presentation">
-		  	<%=link_to '名稱簡介', {controller: 'nctu_cce', action: 'editGroup', id: @item.group.id} %>
-		  </li>
-		  <li role="presentation">
-			<%=link_to '基本資料', {controller: 'nctu_cce', action: 'editItem', id: @item.id} %>		  	
-		  </li>  
+		  	<%=link_to '設定', {controller: 'nctu_cce', action: 'editGroup', id: @period.group.id} %>
+		  </li>	  
 		</ul>	
 	</div>
 </div>
@@ -33,8 +24,7 @@
     <th>email</th>
     <th>虛擬帳號</th>
     <th>內涵金額/須繳金額</th>     
-    <th>報名進度</th>   
-    <th>候補狀態</th>         
+    <th>報名進度</th>           
   </tr>	
 <%@progresses.each do |p|%>
 <tr id='link1' onclick="document.location='<%=host%>nctu_cce/showProgress?id=<%=p.id%>';">
@@ -42,13 +32,8 @@
     <td><%=p.user.phone_no%></td>
     <td><%=p.user.email%></td>
 	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
-	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %>/<%=p.payment.to_s%><%end%></td>      
-    <td><%=CCEStageText p.stage%></td>
-    <%if p.waiting%>
-    <td>候補 <%=p.waiting_no%></td>
-    <%else%>
-    <td>非候補</td>
-    <%end%>    
+	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %> NT/<%=p.payment.to_s%> NT<%end%></td>      
+    <td><%=CCEStageText p.stage%></td> 
 </tr>
 <%end%>
 </table>

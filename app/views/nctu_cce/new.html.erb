@@ -1,7 +1,6 @@
 <%= render partial: "newStep", locals: {step: @step} %>
 <div class="container" >
 <%= form_for @group, url: { controller: 'nctu_cce', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
-<%= hidden_field_tag :step, @step %>
 <div class="form-group">
 	<label class="col-sm-offset-1 col-sm-2 control-label">課程名稱*</label>
 	<div class="col-sm-6">
@@ -14,54 +13,44 @@
 		<%= g.text_area :description, class: "form-control", placeholder: "課程簡介" %>
 	</div>
 </div>
-  <%= g.fields_for :items do |i| %>
-	<%= i.hidden_field :verification_code %>  
+  <%= g.fields_for :periods do |p| %>
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">學年</label>
 		<div class="col-sm-3">
-			<%= i.select :school_year, options_for_select([[Time.now.year-1912, Time.now.year-1912], 
+			<%= p.select :school_year, options_for_select([[Time.now.year-1912, Time.now.year-1912], 
 														   [Time.now.year-1911, Time.now.year-1911],			
 														   [Time.now.year-1910, Time.now.year-1910],	
 														   [Time.now.year-1909, Time.now.year-1909]]), {prompt: '學年'}, class: "form-control" %>		
 		</div>
 		<label class="col-sm-1 control-label">學期</label>
 		<div class="col-sm-2">
-			<%= i.select :semester, options_for_select(semesterOptions), {prompt: '學期'}, class: "form-control" %>		
+			<%= p.select :semester, options_for_select(semesterOptions), {prompt: '學期'}, class: "form-control" %>		
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">期數</label>
 		<div class="col-sm-6">
-			<%= i.text_field :term, class: "form-control", placeholder: "期數" %>
+			<%= p.text_field :term, class: "form-control", placeholder: "期數" %>
 		</div>
 	</div>		
-	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">招生人數*</label>
-		<div class="col-sm-6">
-			<%= i.text_field :no_of_user, class: "form-control", placeholder: "招生人數" %>
+	<%= p.fields_for :courses do |c| %>
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">招生人數*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :no_of_users, class: "form-control", placeholder: "招生人數" %>
+			</div>
 		</div>
-	</div>
-	<div class="form-group">	
-		<label class="col-sm-offset-1 col-sm-2 control-label">接受備取*</label>	
-		<div class="col-sm-6">
-		<label class="radio-inline ">
-			<%=i.radio_button :waiting_available, "true", checked: true %>是
-		</label>
-		<label class="radio-inline ">
-			<%=i.radio_button :waiting_available, "false" %>否
-		</label>
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">學費*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :price, class: "form-control", placeholder: "學費" %>
+			</div>
 		</div>
-	</div>	
-	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">學費*</label>
-		<div class="col-sm-6">
-			<%= i.text_field :price, class: "form-control", placeholder: "學費" %>
-		</div>
-	</div>
+	<%end%>
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名開放時間" %>	
+			<%= p.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名開放時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
@@ -73,7 +62,7 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">報名結束時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名結束時間" %>	
+			<%= p.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名結束時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
@@ -85,7 +74,7 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">繳費開放時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費開放時間" %>	
+			<%= p.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費開放時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
@@ -97,7 +86,7 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">繳費結束時間*</label>
 		<div class="col-sm-6">
-			<%= i.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費結束時間" %>	
+			<%= p.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費結束時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
