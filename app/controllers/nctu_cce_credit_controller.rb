@@ -4,7 +4,7 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
-  before_action only: [:updateScore] {|c| c.RegisteredSubPeriodCheckPeriodUser(params[:id])}
+  before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
   
   before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
@@ -126,20 +126,24 @@ class NctuCceCreditController < ApplicationController
   end
     
   def updateScore
-    rsi = RegisteredSubPeriod.find(params[:id])
+    r_c = RegisteredCourse.find(params[:id])
     case params[:type]
     when 'score'
-      rsi.score = params[:val]
-      rsi.save!
+      r_c.score = params[:val]
+      r_c.save!
       render json: {success: true, message: '成功更改分數'}                 
     when 'attendance'  
-      rsi.attendance = params[:val]
-      rsi.save!
+      r_c.attendance = params[:val]
+      r_c.save!
       render json: {success: true, message: '成功更改出席率'}   
     when 'certificate'  
-      rsi.certificate = params[:val]
-      rsi.save!  
-      render json: {success: true, message: '成功更改資格'}                                                     
+      r_c.certificate = params[:val]
+      r_c.save!  
+      render json: {success: true, message: '成功更改資格'}    
+    when 'certificate_no'  
+      r_c.certificate_no = params[:val]
+      r_c.save!  
+      render json: {success: true, message: '成功更改證書字號'}                                                                          
     end    
   end
 
