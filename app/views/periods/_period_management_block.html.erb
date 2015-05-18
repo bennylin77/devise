@@ -2,6 +2,14 @@
 	<div class="panel panel-default">
 	  <div class="panel-heading">  	
 	    <%=link_to "/"+Hash[controllerOptions].rassoc(period_management_block.group.system_module.serial_code).first+"/indexManagement?id="+period_management_block.id, {} do%> 	
+		  	<%if period_management_block.progresses.where(stage: 2).count!= 0%>
+			<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="待審核人數" style="display: block; position: absolute; top: -9px; right: -9px;
+		  							    width:33px; height: 33px; border-radius: 30px;  background-color: #d43f3a;">	  	
+		  	<span class="badge" style="background-color: #d43f3a;">
+		  	<%= period_management_block.progresses.where(stage: 2).count %>	    
+		  	</span>
+		  	</button>
+		  	<%end%>		    
 		    <%if period_management_block.school_year%><%=period_management_block.school_year%>學年<%end%>	    
 		    <%if period_management_block.semester%><%=Hash[semesterOptions].rassoc(period_management_block.semester).first%><%end%><br>		    
 		    <h2 class="panel-title"><%= period_management_block.group.title %> <%if period_management_block.term%>(第<%=period_management_block.term%>期)<%end%></h2>	    	    
@@ -30,4 +38,7 @@
 		'<span>%M</span> 分 '+ 
 		'<span>%S</span> 秒 報名截止'));
   });
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})  
 </script>    
