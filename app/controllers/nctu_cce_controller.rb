@@ -136,6 +136,8 @@ class NctuCceController < ApplicationController
       @progress.verified = false
       @progress.stage = 1
       @progress.reason = params[:reason]
+      @progress.payment = 0
+      @progress.registered_courses.destroy_all      
       if @progress.vaccount
         @progress.vaccount.active = false 
         @progress.vaccount.save!
@@ -144,11 +146,21 @@ class NctuCceController < ApplicationController
       flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
       System.sendUnverified(user: @progress.user, progress: @progress).deliver   
     else
-      @progress.verified=true 
-      @progress.payment = params[:payment].to_f
-      @progress.create_vaccount if @progress.payment > 0
-      @progress.stage= (@progress.payment > 0) ? 3 : 4  
-      @progress.save!    
+      @progress.verified = true 
+      @progress.payment = params[:registered_course_payments].map(&:to_i).reduce(0, :+)
+      params[:registered_course_ids].each_with_index do |id, idx|
+        registered_course = @progress.registered_courses.find(id)
+        registered_course.payment = params[:registered_course_payments][idx].to_f
+        registered_course.save!
+      end
+      if @progress.vaccount #可能之前被退回時就創過
+        @progress.vaccount.active = true
+        @progress.vaccount.save!
+      elsif @progress.payment > 0 #若免錢就不給帳號
+        @progress.create_vaccount
+      end  
+      @progress.stage= (@progress.payment > 0) ? 3 : 4 #免錢直接過 stage==4  
+      @progress.save!      
       flash[:success]="已審核通過 "+@progress.user.name+" 的報名"
       System.sendVerified(user: @progress.user, progress: @progress).deliver   
     end
@@ -173,31 +185,18 @@ class NctuCceController < ApplicationController
   end
    
   def first
-    @user = current_user     
+    @user=current_user 
     progress = @period.progresses.where(user_id: current_user.id).first
     if progress.blank?
-      if ( @period.progresses.count < @period.no_of_user ) or @period.waiting_available
-        @progress=Progress.new
-        @progress.stage=1
-        @progress.user = current_user           
-        @progress.period = @period     
-        @progress.save                 
-        #waiting
-        if ( !@period.waiting_start and @period.progresses.count == @period.no_of_user ) or @period.waiting_start 
-          @period.waiting_start = true 
-          if @period.progresses.count > @period.no_of_user 
-            @period.no_of_waiting_user+= 1        
-            @progress.waiting_no = @period.no_of_waiting_user
-            @progress.waiting = true   
-          end                     
-        end  
-        @period.save           
-        @progress.save   
-      end               
+      @progress=Progress.new
+      @progress.stage=1
+      @progress.user = current_user           
+      @progress.period = @period                  
+      @progress.save           
     else
       @progress = progress        
-    end  
-    @step = 1  
+    end    
+    @step = 1 
   end
   
   def second    
@@ -223,6 +222,11 @@ class NctuCceController < ApplicationController
       @progress.stage = 2
       @progress.reason = ''
       @progress.save  
+      registered_course = RegisteredCourse.new  
+      @progress.registered_courses << registered_course
+      @period.courses.first.registered_courses << registered_course 
+      registered_course.save 
+      @period.save               
       System.sendVerifyNotification(user: @progress.period.user, progress: @progress).deliver        
     else
       @progress = @period.progresses.where(user_id: current_user.id).first          

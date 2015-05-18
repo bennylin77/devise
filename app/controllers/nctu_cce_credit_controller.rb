@@ -173,8 +173,8 @@ class NctuCceCreditController < ApplicationController
   
   def verified
     if params[:verify] == 'false'
-      @progress.verified=false
-      @progress.stage= 1
+      @progress.verified = false
+      @progress.stage = 1
       @progress.reason = params[:reason]
       @progress.payment = 0
       @progress.registered_courses.destroy_all

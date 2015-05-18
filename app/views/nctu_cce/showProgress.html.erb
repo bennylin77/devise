@@ -1,4 +1,4 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
+<%= render partial: "layouts/managementHeader", locals: {period: @progress.period} %>
 <h3 class="text-center">報名資料 (<%=CCEStageText @progress.stage%>)</h3><br>
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
@@ -81,7 +81,6 @@
     <th>教育訓練聯絡人Email</th>
     <td><%=@progress.user.work_contact_email%></td>      
   </tr>  
-  
 </table> 
 </div>	
 </div>
@@ -96,13 +95,17 @@
       </div>
       <div class="modal-body">
        <%=label_tag "學費：（填0元會跳過繳費步驟，直接完成報名）"%> 
-       <%= form_tag "/nctu_cce/verified?verify=true", :class=>"agree-form" do%>
-       	<%=hidden_field_tag "id", @progress.id%>
-       	<%=number_field_tag "payment", @progress.item.price, :class=>"form-control"%>
+       <%= form_tag "/nctu_cce/verified?verify=true", :id=>"agree-form" do%>
+       	<%=hidden_field_tag "id", @progress.id%>       
+       	<% @progress.registered_courses.each do |registered_course|%>
+       		<%=hidden_field_tag "registered_course_ids[]", registered_course.id%>
+       		<%=label_tag registered_course.course.title%>
+       		<%=number_field_tag "registered_course_payments[]", registered_course.course.price, :class=>"form-control"%>
+       	<% end %>
        <% end %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-loading-text="Loading..." onclick="$('.agree-form').submit();">送出</button>
+        <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">送出</button>      	
       </div>
     </div>
   </div>
@@ -118,13 +121,13 @@
       </div>
       <div class="modal-body">
        <%=label_tag "請填寫原因："%> 
-       <%= form_tag "/nctu_cce/verified?verify=false", :class=>"cancel-form" do%>
+       <%= form_tag "/nctu_cce/verified?verify=false", :id=>"cancel-form" do%>
        	<%=hidden_field_tag "id", @progress.id%>
        	<%=text_area_tag "reason","",:class=>"form-control"%>
        <% end %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary"  data-loading-text="Loading.." onclick="$('.cancel-form').submit();">送出</button>
+        <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading.." onclick="$('#cancel-form').submit();">送出</button>
       </div>
     </div>
   </div>

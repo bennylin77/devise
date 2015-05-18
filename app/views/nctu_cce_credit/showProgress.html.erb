@@ -108,10 +108,9 @@
         <h4 class="modal-title" id="myModalLabel">審核通過</h4>
       </div>
       <div class="modal-body">
-       <%=label_tag "學費：（總和為0元會直接幫使用者完成報名）"%> 
+       <%=label_tag "學費：（總和為0元會跳過繳費步驟，直接完成報名）"%> 
        <%= form_tag "/nctu_cce_credit/verified?verify=true", :id=>"agree-form" do%>
-       	<%=hidden_field_tag :id, params[:id]%>	
-       	<!--<%= @progress.registered_courses.count.to_s%>-->
+       	<%=hidden_field_tag "id", @progress.id%>       
        	<% @progress.registered_courses.each do |registered_course|%>
        		<%=hidden_field_tag "registered_course_ids[]", registered_course.id%>
        		<%=label_tag registered_course.course.title%>
