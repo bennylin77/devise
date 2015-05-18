@@ -1,28 +1,34 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @item} %>
-<h3 class="text-center">成績管理</h3><br>
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
+<%= render partial: "user", locals: {period: @period} %>
+<br><br>
+<%@period.courses.each do |s|%>	
 <div class="table-responsive">
 <table class="table table-striped ">
   <tr>
-    <th>姓名</th>
+    <th>姓名</th>      	
     <th>分數</th>     
-    <th>出席率(%)</th>   
-    <th>資格</th>     
-    <th>證書字號</th>     
+    <th>出席率(%)</th>     
+    <th>資格</th> 
+    <th>證書字號</th>            
   </tr>	
-<%@item.progresses.gte(stage: 4).each do |p|%>
-<tr>
-    <td><%=p.user.name%></td>
-    <td><%= text_field_tag 'score_'+p.id, p.score, class: "", onchange: 'scoreAjaxHandler("'+p.id+'")', placeholder: "" %>分</td>
-    <td><%= text_field_tag 'attendance_'+p.id, p.attendance, class: "", onchange: 'attendanceAjaxHandler("'+p.id+'")', placeholder: "" %>%</td>
-    <td>     
-    <%= radio_button_tag 'certificate_'+p.id, false, !!(!p.certificate), class: "", onchange: 'certificateAjaxHandler("'+p.id+'")'%>不及格
-    <%= radio_button_tag 'certificate_'+p.id, true, !!(p.certificate), class: "", onchange: 'certificateAjaxHandler("'+p.id+'")'%>及格
-    </td>
-    <td><%= text_field_tag 'certificate_no_'+p.id, p.certificate_no, class: "", onchange: 'certificateNoAjaxHandler("'+p.id+'")', placeholder: "" %></td>    
-</tr>
-<%end%>
-</table>
+	<%s.registered_courses.each do |r| %>
+		<%if r.progress.stage >= 4 %>
+		<tr>
+			<td><%= r.progress.user.name%></td>
+		    <td><%= text_field_tag 'score_'+r.id, r.score, class: "", onchange: 'scoreAjaxHandler("'+r.id+'")', placeholder: "" %>分</td>
+		    <td><%= text_field_tag 'attendance_'+r.id, r.attendance, class: "", onchange: 'attendanceAjaxHandler("'+r.id+'")', placeholder: "" %>%</td>
+		    <td>     
+		    <%= radio_button_tag 'certificate_'+r.id, false, !!(!r.certificate), class: "", onchange: 'certificateAjaxHandler("'+r.id+'")'%>不及格
+		    <%= radio_button_tag 'certificate_'+r.id, true, !!(r.certificate), class: "", onchange: 'certificateAjaxHandler("'+r.id+'")'%>及格
+		    </td>	
+		    <td><%= text_field_tag 'certificate_no_'+r.id, r.certificate_no, class: "", onchange: 'certificateNoAjaxHandler("'+r.id+'")', placeholder: "" %></td>    		    	
+		</tr>
+		<%end%>
+	<%end%>
+</table>	
 </div>
+<%end%>
+
 
 <script>
 function scoreAjaxHandler(id)
@@ -80,6 +86,5 @@ function certificateNoAjaxHandler(id)
 	});
 	request.fail(function( jqXHR, textStatus ) {
 	});	
-}	
-</script>	
-	
+}
+</script>

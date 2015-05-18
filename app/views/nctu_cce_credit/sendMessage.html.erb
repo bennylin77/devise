@@ -12,7 +12,7 @@
   </div>
   <div class="form-group">  
     <label for="inputEmail3" class="col-sm-offset-1 col-sm-2 control-label">收件人</label>  	
-    <div class="col-sm-6"  style="height: 200px; overflow-y: scroll;"> 
+    <div class="col-sm-6" style="height: 200px; overflow-y: scroll;"> 
     	<%@period.courses.each do |c| %>
 			<%=c.title%><br>   
 			<label class="checkbox-inline">
@@ -49,7 +49,6 @@
 <%end%>
 <script>
 $("#input-att").fileinput({'showUpload':false, browseClass: "btn btn-default", browseLabel: " 選取檔案（可多選）", 'previewFileType':'any', 'showCaption': false});
-
 $('form').submit(function(event){
 	var recipients_error = true
 	$('input[name^="recipients"]').each(function() {
@@ -82,5 +81,4 @@ $('#course_<%=c.id %>').change(function() {
    	$('.r_c_of_course_<%=c.id%>').prop('checked', false);
 });
 <%end%>
-
 </script>

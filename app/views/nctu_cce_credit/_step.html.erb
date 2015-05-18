@@ -53,7 +53,7 @@
 	<div class="collapse" id="collapse3">
 		<dl class="dl-horizontal">
 		  <% progress.registered_courses.each do |s|%>
-		  <dt><%=s.course.title%></dt><dd>分數: <%=s.score%>分<br> 出席率: <%=s.attendance%>%<br> 及格: <%if s.certificate%>是<%else%>否<%end%><br> 證書字號: <%=s.certificate_no%></dd>
+		  <dt><%=s.course.title%></dt><dd>分數: <%=s.score%>分<br> 出席率: <%=s.attendance%>%<br> 及格: <%if s.certificate%>是<%else%>否<%end%><br> 證書字號: <%=showBlank s.certificate_no%></dd>
 		  <hr>
 		  <%end%>
 		</dl>	  	

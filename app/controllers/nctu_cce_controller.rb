@@ -78,7 +78,12 @@ class NctuCceController < ApplicationController
     validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
                                     {type: 'presence', title: '課程簡介', data: @group.description}])                                   
     checkValidations(validations: validations_result, render: 'editGroup' )   
-    @group.save  
+    @group.periods.each do |p|
+      c = p.courses.first    
+      c.title = @group.title
+      c.save!    
+    end    
+    @group.save      
     flash[:success]="成功更新名稱簡介"
     redirect_to controller: :nctu_cce, action: :editGroup, id: @group.id     
   end  
@@ -87,24 +92,25 @@ class NctuCceController < ApplicationController
   end
 
   def updateScore
+    r_c = RegisteredCourse.find(params[:id])
     case params[:type]
     when 'score'
-      @progress.score = params[:val]
-      @progress.save!
+      r_c.score = params[:val]
+      r_c.save!
       render json: {success: true, message: '成功更改分數'}                 
     when 'attendance'  
-      @progress.attendance = params[:val]
-      @progress.save!
-      render json: {success: true, message: '成功更改出席率'}  
+      r_c.attendance = params[:val]
+      r_c.save!
+      render json: {success: true, message: '成功更改出席率'}   
     when 'certificate'  
-      @progress.certificate = params[:val]
-      @progress.save!  
-      render json: {success: true, message: '成功更改資格'}                              
+      r_c.certificate = params[:val]
+      r_c.save!  
+      render json: {success: true, message: '成功更改資格'}    
     when 'certificate_no'  
-      @progress.certificate_no = params[:val]
-      @progress.save!  
-      render json: {success: true, message: '成功更改證書字號'}                     
-    end
+      r_c.certificate_no = params[:val]
+      r_c.save!  
+      render json: {success: true, message: '成功更改證書字號'}                                                                          
+    end 
   end
 
   def editFeedback
@@ -252,13 +258,15 @@ class NctuCceController < ApplicationController
   def feedback
     @step = 5       
     @progress.assign_attributes(progress_params)          
-    validations_result=validations([{type: 'presence', title: '我對教師的教學態度', data: params[:progress][:nctu_cce_feedback_1_1]}, {type: 'presence', title: '我對教師的授課方法', data: params[:progress][:nctu_cce_feedback_1_2]}, {type: 'presence', title: '我對本課程的內容與結構', data: params[:progress][:nctu_cce_feedback_1_3]}, {type: 'presence', title: '我對本課程的作業、報告、考試與評分方式', data: params[:progress][:nctu_cce_feedback_1_4]},
-                                    {type: 'presence', title: '我對本課程的整體印象', data: params[:progress][:nctu_cce_feedback_1_5]}, 
-                                    {type: 'presence', title: '我覺得教師課前準備得很充足', data: params[:progress][:nctu_cce_feedback_2_1]}, {type: 'presence', title: '教師上課熱忱、認真、負責', data: params[:progress][:nctu_cce_feedback_2_2]}, {type: 'presence', title: '教師的教學方法適切', data: params[:progress][:nctu_cce_feedback_2_3]}, {type: 'presence', title: '教師授課的表達與說明清楚', data: params[:progress][:nctu_cce_feedback_2_4]},
-                                    {type: 'presence', title: '教師的課堂時間分配恰當', data: params[:progress][:nctu_cce_feedback_2_5]}, {type: 'presence', title: '本課程所教內容前後有組織、有條理', data: params[:progress][:nctu_cce_feedback_2_6]}, {type: 'presence', title: '使用之教科書、教材或講義對學習很有幫助', data: params[:progress][:nctu_cce_feedback_2_7]}, {type: 'presence', title: '教師教授的教材內容充實豐富', data: params[:progress][:nctu_cce_feedback_2_8]},
-                                    {type: 'presence', title: '考試、作業的內容對學習很有幫助', data: params[:progress][:nctu_cce_feedback_2_9]}, {type: 'presence', title: '考核與評分的方式公平合理', data: params[:progress][:nctu_cce_feedback_2_10]}, {type: 'presence', title: '我可以很容易在教師的office hours或是利用其他方式與教師聯絡', data: params[:progress][:nctu_cce_feedback_2_11]},  
-                                   ])
-    checkValidations(validations: validations_result, render: 'fifth' )      
+    params[:progress][:registered_courses_attributes].each do |key, r|     
+      validations_result=validations([{type: 'presence', title: '我對教師的教學態度', data: r[:nctu_cce_feedback_1_1]}, {type: 'presence', title: '我對教師的授課方法', data: r[:nctu_cce_feedback_1_2]}, {type: 'presence', title: '我對本課程的內容與結構', data: r[:nctu_cce_feedback_1_3]}, {type: 'presence', title: '我對本課程的作業、報告、考試與評分方式', data: r[:nctu_cce_feedback_1_4]},
+                                      {type: 'presence', title: '我對本課程的整體印象', data: r[:nctu_cce_feedback_1_5]}, 
+                                      {type: 'presence', title: '我覺得教師課前準備得很充足', data: r[:nctu_cce_feedback_2_1]}, {type: 'presence', title: '教師上課熱忱、認真、負責', data: r[:nctu_cce_feedback_2_2]}, {type: 'presence', title: '教師的教學方法適切', data: r[:nctu_cce_feedback_2_3]}, {type: 'presence', title: '教師授課的表達與說明清楚', data: r[:nctu_cce_feedback_2_4]},
+                                      {type: 'presence', title: '教師的課堂時間分配恰當', data: r[:nctu_cce_feedback_2_5]}, {type: 'presence', title: '本課程所教內容前後有組織、有條理', data: r[:nctu_cce_feedback_2_6]}, {type: 'presence', title: '使用之教科書、教材或講義對學習很有幫助', data: r[:nctu_cce_feedback_2_7]}, {type: 'presence', title: '教師教授的教材內容充實豐富', data: r[:nctu_cce_feedback_2_8]},
+                                      {type: 'presence', title: '考試、作業的內容對學習很有幫助', data: r[:nctu_cce_feedback_2_9]}, {type: 'presence', title: '考核與評分的方式公平合理', data: r[:nctu_cce_feedback_2_10]}, {type: 'presence', title: '我可以很容易在教師的office hours或是利用其他方式與教師聯絡', data: r[:nctu_cce_feedback_2_11]},  
+                                     ])
+      checkValidations(validations: validations_result, render: 'fifth' )      
+    end    
     @progress.feedback_done = true    
     @progress.save!
     flash.now[:success] = '成功完成評價'
