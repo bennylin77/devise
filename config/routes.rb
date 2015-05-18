@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get  'nctu_cce/destroy'
   get  'nctu_cce/indexManagement'  
   get  'nctu_cce/showProgress'  
-  get  'nctu_cce/editItem'  
-  post 'nctu_cce/updateItem'     
+  get  'nctu_cce/editPeriod'  
+  post 'nctu_cce/updatePeriod'     
   get  'nctu_cce/editGroup'  
   post 'nctu_cce/updateGroup'      
   get  'nctu_cce/editScore'  
@@ -42,8 +42,8 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/destroy'  
   get  'nctu_cce_credit/indexManagement'  
   get  'nctu_cce_credit/showProgress'  
-  get  'nctu_cce_credit/editItem'  
-  post 'nctu_cce_credit/updateItem'    
+  get  'nctu_cce_credit/editPeriod'  
+  post 'nctu_cce_credit/updatePeriod'    
   get  'nctu_cce_credit/editGroup'   
   post 'nctu_cce_credit/updateGroup'  
   get  'nctu_cce_credit/editCourses'
@@ -57,12 +57,12 @@ Rails.application.routes.draw do
   post 'nctu_cce_credit/verified' 	
   get  'nctu_cce_credit/destroyProgress'      
  
-  get  'items/createCompletion' 
-  get  'items/showManagement'
-  get  'items/indexManagement'
-  get  'items/progress'
-  get  'items/progressStatus'  
-  get  'items/export_vaccounts'
+  get  'periods/createCompletion' 
+  get  'periods/showManagement'
+  get  'periods/indexManagement'
+  get  'periods/progress'
+  get  'periods/progressStatus'  
+  get  'periods/export_vaccounts'
   
   
   get  'system_modules/addAdmin'
@@ -79,9 +79,9 @@ Rails.application.routes.draw do
   get  'system_modules/export_summary'
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
-  resources :items  
+  resources :periods  
   resources :users
   resources :system_modules  
-  root to: "items#index"
+  root to: "periods#index"
 
 end

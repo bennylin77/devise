@@ -43,12 +43,6 @@ module ApplicationHelper
       false  
     end
   end
-
-  def moduleOptions
-    [['交大推廣教育中心培訓班', GLOBAL_VAR['NCTU_CCE']],
-     ['交大推廣教育中心學分班', GLOBAL_VAR['NCTU_CCE_credit']],    
-     ['交大推廣教育中心營隊', GLOBAL_VAR['NCTU_CCE_camp']]]
-  end  
   
   def controllerOptions
     [['nctu_cce', GLOBAL_VAR['NCTU_CCE']],

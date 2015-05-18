@@ -7,21 +7,21 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<%=link_to items_path, class: 'navbar-brand' do%>
+			<%=link_to periods_path, class: 'navbar-brand' do%>
 			EasyRegister 報名系統
 			<%end%>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<%if user_signed_in?%>
-				<li <%= active( controller: '/items', action: 'progress' )%> >
-				<%=link_to '/items/progress', {} do%>
+				<li <%= active( controller: '/periods', action: 'progress' )%> >
+				<%=link_to '/periods/progress', {} do%>
 					我的報名課程			
 				<%end%>							
 				</li>
 				<%if current_user.module_user_lists.size!=0 %>
-					<li <%= active( controller: '/items', action: 'indexManagement') %> >
-					<%=link_to '/items/indexManagement', {} do%>
+					<li <%= active( controller: '/periods', action: 'indexManagement') %> >
+					<%=link_to '/periods/indexManagement', {} do%>
 						主辦者
 					<%end%>							
 					</li>

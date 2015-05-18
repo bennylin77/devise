@@ -1,0 +1,16 @@
+<%=render "newStep" %>
+<div class="container">
+<%= form_tag '/periods', class: "form-horizontal", role: "form" do |f| %>		
+<div class="form-group">
+	<label class="col-sm-offset-1 col-sm-2 control-label">模組</label>
+	<div class="col-sm-6">
+		<%= select_tag :module, options_from_collection_for_select( current_user.module_user_lists, 'module_id', 'module_title'), prompt: '請選擇模組', class: "form-control" %>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-6">
+		<%= submit_tag '下一步',  class: "btn btn-default"  %>
+	</div>
+</div>
+<% end %>
+</div>

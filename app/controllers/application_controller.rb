@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
   
   def GroupCheckUser(id)
     unless Group.where(id: id).first == nil      
-      if Group.find(id).items.where(user_id: current_user.id).first == nil      
+      if Group.find(id).periods.where(user_id: current_user.id).first == nil      
         flash["error"]="您沒有權限"
         redirect_to root_url          
       end  
@@ -64,9 +64,9 @@ class ApplicationController < ActionController::Base
     end 
   end
 
-  def ProgressCheckItemUser(id)
+  def ProgressCheckPeriodUser(id)
     unless Progress.where(id: id).first == nil      
-      if Progress.find(id).item.user != current_user      
+      if Progress.find(id).period.user != current_user      
         flash["error"]="您沒有權限"
         redirect_to root_url          
       end  
@@ -76,9 +76,9 @@ class ApplicationController < ActionController::Base
     end 
   end
   
-  def RegisteredSubItemCheckItemUser(id)
-    unless RegisteredSubItem.where(id: id).first == nil      
-      if RegisteredSubItem.find(id).progress.item.user != current_user      
+  def RegisteredCourseCheckPeriodUser(id)
+    unless RegisteredCourse.where(id: id).first == nil      
+      if RegisteredCourse.find(id).progress.period.user != current_user      
         flash["error"]="您沒有權限"
         redirect_to root_url          
       end  
@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
     end 
   end  
     
-  [:Item, :Progress].each do |model|
+  [:Period, :Progress].each do |model|
     class_eval %Q{
       def #{model}CheckUser(id)
        unless #{model}.where(id: id).first == nil

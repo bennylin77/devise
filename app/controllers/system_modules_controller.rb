@@ -128,7 +128,7 @@ class SystemModulesController < ApplicationController
   
   def vaccounts
 	  @sys_module = SystemModule.find(params[:id])
-	  @vaccounts = @sys_module.groups.map{|g| g.items.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+	  @vaccounts = @sys_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
   end
   
   def export_summary

@@ -1,0 +1,19 @@
+<div id="masonry-container" class="transitions-enabled clearfix">	
+<%= render( partial: "progress_block", collection: @progresses) %>
+</div>	
+
+<%= javascript_tag do %>
+	$(function() 
+	{
+		//initial masonry
+		var $container = $('#masonry-container');
+		$container.imagesLoaded(function(){
+			$container.masonry({
+			      itemSelector: '.progress_box',
+			      columnWidth: 27,
+			      gutter: 15,
+			      isFitWidth: true
+			});			
+		});			
+	});	
+<% end %>

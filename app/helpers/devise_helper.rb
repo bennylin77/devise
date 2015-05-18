@@ -7,13 +7,10 @@ module DeviseHelper
                       :count => resource.errors.count,
                       :resource => resource.class.model_name.human.downcase)
 =end
-
     html=''
-    
     resource.errors.full_messages.each do |message|
       html = html + "<script>addAlert('error', '#{message}')</script>"
     end
-
     html.html_safe
   end
 

@@ -2,7 +2,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps  
   
-  has_many :items  
+  has_many :periods  
   has_many :progresses
   has_many :module_user_lists  
   

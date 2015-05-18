@@ -7,6 +7,5 @@ class SystemModule
   field :title, type: String
   field :serial_code, type: Integer
   
-  
-  
+
 end

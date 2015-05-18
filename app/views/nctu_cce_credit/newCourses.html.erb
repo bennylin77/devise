@@ -40,11 +40,11 @@ var index = 0;
 	addCourse();
 <%else%>
 	<% @title.each_with_index do |t, i|%>
-		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_user[i]%>');	
+		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>');	
 	<%end%>	
 <%end%>
 
-function addCourse(title, price, no_of_user) {
+function addCourse(title, price, no_of_users) {
 	var $div_course = $("<div>", {id: "course_"+index, class: "form-group"});
 	
 	var $col = $("<div>", {class: "col-sm-3 col-sm-offset-2"});					
@@ -56,8 +56,8 @@ function addCourse(title, price, no_of_user) {
 	$col.append($input_price)
 	$div_course.append($col);
 	$col = $("<div>", {class: "col-sm-2"});		
-	var $input_no_of_user = $("<input>", {id: "course_no_of_user_"+index, class: "form-control", type:"text", name: "no_of_user[]", value: no_of_user, placeholder: "招生人數" });
-	$col.append($input_no_of_user)
+	var $input_no_of_users = $("<input>", {id: "course_no_of_users_"+index, class: "form-control", type:"text", name: "no_of_users[]", value: no_of_users, placeholder: "招生人數" });
+	$col.append($input_no_of_users)
 	$div_course.append($col);
 	$col = $("<div>", {class: "col-sm-1"});		
 	var $del_botton = $("<span>", {id: "del_botton_"+index, class: "btn btn-danger glyphicon glyphicon-trash", onclick: "delCourse("+index+")" });
