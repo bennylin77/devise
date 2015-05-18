@@ -18,7 +18,7 @@
 		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
 		承辦人
 		</button>
-		<%if progress.verified %>		
+		<%if progress.vaccount &&  progress.stage >= 3 %>		
 		<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
 		繳款資訊
 		</button>		
@@ -37,7 +37,7 @@
 		  <dt><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span></dt><dd><%=showBlank progress.period.user.phone_no%></dd>	  
 		</dl>
 	</div>
-	<%if progress.registered_courses.size!=0 %>	
+	<%if progress.vaccount &&  progress.stage >= 3 %>		
 	<div class="collapse" id="collapse2">
 		<dl class="dl-horizontal">
 		  <dt>繳款帳號</dt><dd><%=progress.vaccount.vacc %></dd>
@@ -48,6 +48,8 @@
 		  <%end%>		  
 		</dl>	  	
 	</div>	
+	<%end%>
+	<%if progress.stage >= 4 %>		
 	<div class="collapse" id="collapse3">
 		<dl class="dl-horizontal">
 		  <% progress.registered_courses.each do |s|%>

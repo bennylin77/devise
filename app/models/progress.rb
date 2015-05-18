@@ -16,6 +16,7 @@ class Progress
   field :stage, type: Integer    
   field :verified, type: Boolean, default: false 
   field :finished, type: Boolean, default: false
+  field :feedback_done, type: Boolean, default: false  
   field :payment, type: Float, default: 0.0
   field :reason, type: String, default: ''	
 
