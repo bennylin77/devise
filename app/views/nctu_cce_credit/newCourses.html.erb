@@ -3,8 +3,7 @@
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
 	<%= g.hidden_field :title%>
 	<%= g.hidden_field :description%>
-	<%= g.fields_for :items do |i| %>
-		<%= i.hidden_field :verification_code %>  
+	<%= g.fields_for :periods do |i| %>
 		<%= i.hidden_field :school_year %> 
 		<%= i.hidden_field :semester %> 
 		<%= i.hidden_field :start_at %> 

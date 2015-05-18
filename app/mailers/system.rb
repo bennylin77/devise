@@ -19,34 +19,34 @@ class System < ActionMailer::Base
   def sendVerifyNotification(hash={}) 
     @user = hash[:user]
     @progress=hash[:progress]
-    subject = "EasyRegister #{@progress.item.group.title} 報名審核"    
+    subject = "EasyRegister #{@progress.period.group.title} 報名審核"    
     mail( to: @user.email, subject: subject)    
   end   
 
   def sendUnverified(hash={})
     @user = hash[:user]
     @progress=hash[:progress]    
-    subject = "EasyRegister #{@progress.item.group.title} 審核不通過/取消資格"
+    subject = "EasyRegister #{@progress.period.group.title} 審核不通過/取消資格"
     mail( to: @user.email, subject: subject)
   end  
   
 	def sendVerified(hash={})
     @user = hash[:user]
     @progress=hash[:progress] 
-    subject = "EasyRegister #{@progress.item.group.title} 審核通過"
+    subject = "EasyRegister #{@progress.period.group.title} 審核通過"
 		mail( to: @user.email, subject: subject)
 	end	 
 	
 	def sendFeedbackAsking(hash={})
     @user = hash[:user]
     @progress=hash[:progress] 
-    subject = "EasyRegister #{@progress.item.group.title} 教學反映問卷邀請"
+    subject = "EasyRegister #{@progress.period.group.title} 教學反映問卷邀請"
     mail( to: @user.email, subject: subject)	  
 	end
 	
 	def sendGetMoney(hash={})
     @progress=hash[:progress] 
-    subject = "EasyRegister #{@progress.item.group.title} 匯款成功"
+    subject = "EasyRegister #{@progress.period.group.title} 匯款成功"
 		mail( to: @progress.user.email, subject: subject)
 	end
 	

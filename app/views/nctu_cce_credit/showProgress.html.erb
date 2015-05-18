@@ -1,4 +1,4 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @progress.item} %>
+<%= render partial: "layouts/managementHeader", locals: {period: @progress.period} %>
 <h3 class="text-center">報名資料 (<%=CCEStageText @progress.stage%>)</h3><br>
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
@@ -88,9 +88,9 @@
     <th>課程名稱</th>
     <th>應繳金額</th>
   </tr>
-  <%@progress.registered_sub_items.each do |s|%>
+  <%@progress.registered_courses.each do |s|%>
   <tr>
-    <td><%=s.sub_item.title%></td>
+    <td><%=s.course.title%></td>
     <td><%=s.payment%></td>
   </tr>   
   <%end%>
@@ -111,16 +111,16 @@
        <%=label_tag "學費：（總和為0元會直接幫使用者完成報名）"%> 
        <%= form_tag "/nctu_cce_credit/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag :id, params[:id]%>	
-       	<!--<%= @progress.registered_sub_items.count.to_s%>-->
-       	<% @progress.registered_sub_items.each do |sub_item|%>
-       		<%=hidden_field_tag "sub_item_ids[]", sub_item.id%>
-       		<%=label_tag sub_item.sub_item.title%>
-       		<%=number_field_tag "sub_item_payments[]", sub_item.sub_item.price, :class=>"form-control"%>
+       	<!--<%= @progress.registered_courses.count.to_s%>-->
+       	<% @progress.registered_courses.each do |registered_course|%>
+       		<%=hidden_field_tag "registered_course_ids[]", registered_course.id%>
+       		<%=label_tag registered_course.course.title%>
+       		<%=number_field_tag "registered_course_payments[]", registered_course.course.price, :class=>"form-control"%>
        	<% end %>	
        <% end %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">送出</button>
+        <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">送出</button>
       </div>
     </div>
   </div>
@@ -142,7 +142,7 @@
        <% end %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-loading-text="Loading.." onclick="$('#cancel-form').submit();">送出</button>
+        <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading.." onclick="$('#cancel-form').submit();">送出</button>
       </div>
     </div>
   </div>

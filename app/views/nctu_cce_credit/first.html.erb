@@ -1,8 +1,8 @@
 <%= render partial: "step", locals: {progress: @progress, step: @step} %>
 <div class="container" >
 <%= form_for current_user, url: { controller: 'nctu_cce_credit', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form", id: "first-form"} do |u| %>	
-	<%unless @item.blank?%>
-		<%= hidden_field_tag 'id', @item.id %>
+	<%unless @period.blank?%>
+		<%= hidden_field_tag 'id', @period.id %>
 	<%end%>
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">姓名*</label>
@@ -76,6 +76,7 @@
 			<%= u.text_field :hightest_education_department, class: "form-control", placeholder: '最高(科/系/所)' %>
 		</div>			
 	</div>	
+	<hr>
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">服務單位名稱</label>
 		<div class="col-sm-3">			
@@ -118,7 +119,8 @@
 		<div class="col-sm-2">
 			<%= u.text_field :work_contact_email, class: "form-control", placeholder: '聯絡人Email' %>
 		</div>			
-	</div>		
+	</div>	
+	<hr>	
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">選擇課程*</label>		
 	</div>	
@@ -128,12 +130,12 @@
 		<label class="col-sm-2">學費</label>
 		<label class="col-sm-2">報名人數 / 招生人數</label>	
 	</div> 
-	<% @item.sub_items.each do |ii|%>
+	<% @period.courses.each do |ii|%>
 	<div class="form-group">
 		<div class="col-sm-2 col-sm-offset-2"><input type="checkbox" value="<%= ii.id%>" name="courses[]"></div>
 		<div class="col-sm-2"><%= ii.title%></div>
 		<div class="col-sm-2"><%= ii.price%></div>
-		<div class="col-sm-2"><%= @item.progresses.size-1%> / <%= ii.no_of_user%></div>
+		<div class="col-sm-2"><%= @period.progresses.size-1%> / <%= ii.no_of_users%></div>
 	</div>			
 	<%end%>
 	<div class="form-group">
@@ -147,14 +149,14 @@
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
   aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="confirm-rule">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      ※依個人資料保護法應告知事項：</br>
-國立交通大學依教育部專科以上推廣教育實施辦法辦理推廣教 育與訓練行政所蒐集您的個人資料，
-僅在前述目的內利用您的資料並與您聯繫。您得依法向本校行使個人資料保護法有關當事人權利，請洽訓練班承辦 人員。
-特此切結。
+    <div class="modal-content" style="padding: 50px 50px;">
+      <h4>※依個人資料保護法應告知事項※</h4>
+	  國立交通大學依教育部專科以上推廣教育實施辦法辦理推廣教育與訓練行政所蒐集您的個人資料，
+	  僅在前述目的內利用您的資料並與您聯繫。您得依法向本校行使個人資料保護法有關當事人權利，請洽開班承辦人員。<br>
+	  <p class="text-right">特此切結。</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" onclick="$('#first-form').submit();">同意並送出</button>
+      <button type="button" class="btn btn-primary" onclick="$('#first-form').submit();">同意並送出</button>
     </div>
   </div>
 </div>

@@ -28,11 +28,11 @@
 						    column-gap: 1em;">
 <%=@progress.user.name%> 您好!
 <br>   
-<b><%=@progress.item.group.title%></b>
+<b><%=@progress.period.group.title%></b>
 審核不通過/取消資格 原因: <%=@progress.reason%><br>
 需要您重新送出報名申請，請點擊以下連結進行動作。
 <br>
-<%= host+Hash[controllerOptions].rassoc(@progress.item.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.item.id%>    
+<%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
 </div>
 </div>
 </div>

@@ -172,7 +172,8 @@ class NctuCceCreditController < ApplicationController
       @progress.verified=false
       @progress.stage= 1
       @progress.reason = params[:reason]
-      @progress.registered_sub_periods.destroy_all
+      @progress.payment = 0
+      @progress.registered_courses.destroy_all
       if @progress.vaccount
         @progress.vaccount.active = false 
         @progress.vaccount.save!
@@ -181,18 +182,18 @@ class NctuCceCreditController < ApplicationController
       flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
       System.sendUnverified(user: @progress.user, progress: @progress).deliver         
     else
-      @progress.verified=true 
-      @progress.payment = params[:course_payments].map(&:to_i).reduce(0, :+)
-      params[:course_ids].each_with_index do |id, idx|
-      	period = @progress.registered_courses.find(id)
-      	period.payment = params[:course_payments][idx].to_f
-      	period.save!
+      @progress.verified = true 
+      @progress.payment = params[:registered_course_payments].map(&:to_i).reduce(0, :+)
+      params[:registered_course_ids].each_with_index do |id, idx|
+      	registered_course = @progress.registered_courses.find(id)
+      	registered_course.payment = params[:registered_course_payments][idx].to_f
+      	registered_course.save!
       end
       if @progress.vaccount #可能之前被退回時就創過
       	@progress.vaccount.active = true
       	@progress.vaccount.save!
       elsif @progress.payment > 0 #若免錢就不給帳號
-      	 @progress.create_vaccount
+      	@progress.create_vaccount
       end	 
       @progress.stage= (@progress.payment > 0) ? 3 : 4 #免錢直接過 stage==4  
       @progress.save!    
@@ -341,8 +342,7 @@ class NctuCceCreditController < ApplicationController
   end
   
   def group_params
-    params.require(:group).permit(:title, :description, periods_attributes: [:verification_code, :no_of_users, :price,
-                                  :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :waiting_available])
+    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester])
   end     
   
   def progress_params

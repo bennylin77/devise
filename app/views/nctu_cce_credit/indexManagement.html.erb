@@ -1,16 +1,16 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @item} %>
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-sm-2">
-		  <%=link_to '刪除學分班', {controller: 'nctu_cce', action: 'destroy', id: @item.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此學分班？' } %>		
-		  <%=link_to '匯出帳單表', "/items/export_vaccounts.xls?id=#{@item.id}", class: 'btn btn-info' %>	
+		  <%=link_to '刪除學分班', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此學分班？' } %>		
+		  <%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>	
 		</div>		
 		<ul class="nav nav-pills col-sm-offset-8  col-sm-2">
 		  <li role="presentation">
-		  	<%=link_to '管理學員', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @item.id} %>
+		  	<%=link_to '管理學員', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @period.id} %>
 		  </li>						
 		  <li role="presentation">
-		  	<%=link_to '設定', {controller: 'nctu_cce_credit', action: 'editGroup', id: @item.group.id} %>
+		  	<%=link_to '設定', {controller: 'nctu_cce_credit', action: 'editGroup', id: @period.group.id} %>
 		  </li>	  
 		</ul>		
 	</div>

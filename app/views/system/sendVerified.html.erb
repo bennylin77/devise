@@ -29,7 +29,7 @@
 <%=@progress.user.name%> 您好!
 <br> 
 歡迎您報名
-<b><%=@progress.item.group.title%></b>
+<b><%=@progress.period.group.title%></b>
 目前已審核成功<br>
 <% if @progress.vaccount %>
 匯款資訊如下<br><br>
@@ -43,19 +43,19 @@
 					<td>匯款結束日</td>
 				</tr>
 				<tr>
-					<td>玉山銀行(808) 新竹分行代碼:0060</td>
+					<td>玉山銀行(808)<br>新竹分行代碼:0060</td>
 					<td>國立交通大學</td>					
 					<td><%=@progress.vaccount.vacc%></td>
 					<td><%=@progress.payment.to_s%> NT</td>
-					<td><%=@progress.item.payment_start_at.strftime("%D %R")%></td>
-					<td><%=@progress.item.payment_end_at.strftime("%D %R")%></td>
+					<td><%=@progress.period.payment_start_at.strftime("%Y/%m/%d %H:%M")%></td>
+					<td><%=@progress.period.payment_end_at.strftime("%Y/%m/%d %H:%M")%></td>
 				</tr>
 			 </table>
 請於時限內匯款，匯款成功後會來信通知您！<br>
 *繳費之收執聯請保留以利日後備查
 <% end %>
 <br>
-如有任何問題，請洽:<%=@progress.item.user.name%> <%=@progress.item.user.email%> <%=@progress.item.user.phone_no%>
+如有任何問題，請洽:<%=@progress.period.user.name%> <%=@progress.period.user.email%> <%=@progress.period.user.phone_no%>
 </div>
 </div>
 </div>

@@ -28,10 +28,10 @@
 						    column-gap: 1em;">
 <%=@progress.user.name%> 您好!
 <br>   
-<b><%=@progress.item.group.title%></b>,
+<b><%=@progress.period.group.title%></b>,
 邀請您填寫教學反映問卷(如已填寫請忽略此信)，請點擊以下連結進行動作。
 <br>
-<%= host+Hash[controllerOptions].rassoc(@progress.item.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.item.id%>    
+<%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
 </div>
 </div>
 </div>

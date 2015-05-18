@@ -1,5 +1,5 @@
-<%= render partial: "layouts/managementHeader", locals: {item: @group.items.first} %>
-<%= render partial: "basic", locals: {item: @group.items.first} %>
+<%= render partial: "layouts/managementHeader", locals: {period: @group.periods.first} %>
+<%= render partial: "basic", locals: {period: @group.periods.first} %>
 <br><br>
 <div class="container" >
 <%= form_for @group, url: { controller: 'nctu_cce_credit', action: "updateGroup", id: @group.id }, method: 'post', html: {class: "form-horizontal", role: "form"} do |g| %> 	

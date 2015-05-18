@@ -28,8 +28,10 @@
 						    column-gap: 1em;">
 <%=@progress.user.name %> 您好!  
 <br> 
-已收到您的匯款(<%=@progress.vaccount.vacc%>) <%=@progress.vaccount.status["Amount"]%> NT.</br>
-請確認帳號與金額是否正確。
+收到您的匯款(<%=@progress.vaccount.vacc%>) <%=@progress.vaccount.status["Amount"]%> NT，請確認帳號與金額是否正確。<br>
+已成功完成報名，系統會通知承辦人，確認您的匯款和報名訊息。<br>
+您可透過以下連結，得知報名進度及消息<br>
+<%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>  
 <br>
    
 </div>
