@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  
+  include ApplicationHelper
+    
   before_action :configure_devise_permitted_parameters, if: :devise_controller?  
   rescue_from Validations::Failed, with: :validationsHandler
   rescue_from Validations::FailedRemote, with: :validationsRemoteHandler  
@@ -39,6 +40,18 @@ class ApplicationController < ActionController::Base
       end   
     end
   end   
+  
+  def checkStage(id)
+    if request.get?
+      @period = Period.find(id)
+      progress = @period.progresses.where(user_id: current_user.id).first
+      unless progress.blank?
+        if Hash[stageOptions].rassoc(progress.stage).first != params[:action]
+          redirect_to controller: params[:controller], action: Hash[stageOptions].rassoc(progress.stage).first, id: @period.id
+        end            
+      end
+    end
+  end
   
   def ModuleCheckUser(id, role)
     unless SystemModule.where(id: id).first == nil      

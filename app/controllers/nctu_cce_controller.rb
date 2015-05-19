@@ -5,7 +5,7 @@ class NctuCceController < ApplicationController
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
-  
+  before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
   before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback] 
@@ -206,11 +206,11 @@ class NctuCceController < ApplicationController
   end
   
   def second    
-    if request.post?
+    @progress = @period.progresses.where(user_id: current_user.id).first                
+    if @progress.stage == 1
       user = current_user  
       user.assign_attributes(user_params)  
       @step = 1       
-      @progress = @period.progresses.where(user_id: current_user.id).first            
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
                                       {type: 'presence', title: '性別', data: user_params[:gender]},
@@ -233,9 +233,7 @@ class NctuCceController < ApplicationController
       @period.courses.first.registered_courses << registered_course 
       registered_course.save 
       @period.save               
-      System.sendVerifyNotification(user: @progress.period.user, progress: @progress).deliver        
-    else
-      @progress = @period.progresses.where(user_id: current_user.id).first          
+      System.sendVerifyNotification(user: @progress.period.user, progress: @progress).deliver                  
     end     
     @step = 2      
   end

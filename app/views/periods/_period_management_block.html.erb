@@ -4,7 +4,7 @@
 	    <%=link_to "/"+Hash[controllerOptions].rassoc(period_management_block.group.system_module.serial_code).first+"/indexManagement?id="+period_management_block.id, {} do%> 	
 		  	<%if period_management_block.progresses.where(stage: 2).count!= 0%>
 			<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="待審核人數" style="display: block; position: absolute; top: -9px; right: -9px;
-		  							    width:33px; height: 33px; border-radius: 30px;  background-color: #d43f3a;">	  	
+		  							    width:33px; height: 33px; border-radius: 30px;  background-color: #d43f3a; border: none;">	  	
 		  	<span class="badge" style="background-color: #d43f3a;">
 		  	<%= period_management_block.progresses.where(stage: 2).count %>	    
 		  	</span>
