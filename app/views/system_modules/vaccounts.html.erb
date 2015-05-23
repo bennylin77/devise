@@ -1,21 +1,3 @@
 <h3 class="text-center"><%=@sys_module.title%> - 總匯款明細</h3>
-<%=link_to "Export Excel", "/system_modules/vacc_export.xls?id=#{params[:id]}"%><br>
-<table class="table table-striped">
-<tr>
-	<th>虛擬帳號</th>
-	<th>所屬報名</th>
-	<th>所有人</th>
-	<th>內涵金額</th>
-	<!--<td>銷帳</td>-->
-</tr>
-<% @vaccounts.each do |vacc| %>
-<tr>
-	<td><%= vacc.vacc %></td>
-	<td><%= vacc.progress.item.school_year %></td>
-	<td><%= vacc.progress.user.name %></td>
-	<td><%= (vacc.status) ? vacc.status["Amount"] : 0.0 %></td>
-	<!--<td>No</td>-->
-</tr>
-<% end %>
-
-</table>
+<%=link_to "Export Excel", "/system_modules/vaccounts.xls?id=#{params[:id]}"%><br>
+<%=render "vaccount_list"%>

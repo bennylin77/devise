@@ -4,9 +4,9 @@ class Vaccount
 	
 	belongs_to :progress
 	
-	field :vacc, type: String
-  field :status, type: Hash
-  field :active, type: Boolean, default: true 
+	field :vacc, type: String #虛擬帳號
+  field :status, type: Hash #更新時回傳的資訊
+  field :active, type: Boolean, default: true  # 帳號是否啟動，用來決定是否要被sched_update_status
 
 	# Create new virtual account. 
 	# Note that it will cover the older

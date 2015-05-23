@@ -271,6 +271,18 @@ class NctuCceController < ApplicationController
     render 'fifth' 
   end
   
+  def export_users
+    period = Period.find(params[:id])
+    @progresses = period.progresses.gte(:stage=>4)
+    time_str = Time.now.strftime("%Y%m%d%H%M")
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}學員資料.xls\" "	
+			 }
+		end	 
+  end
+  
   private
     
   def set_period
@@ -293,7 +305,7 @@ class NctuCceController < ApplicationController
     params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :mobile_phone_no, :phone_no, :address, 
                                  :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
                                  :work_name, :work_title, :work_phone_no, :work_fax_no, :work_county, :work_district, :work_postal, :work_address,
-                                 :work_contact_name, :work_contact_phone_no, :work_contact_email)      
+                                 :work_contact_name, :work_contact_phone_no, :work_contact_email, :head_pic, :qualification_proof)      
   end
 
   def group_params

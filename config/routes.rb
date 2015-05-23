@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   post 'nctu_cce/sendMessage'
   post 'nctu_cce/verified'
   get  'nctu_cce/destroyProgress'
+  get  'nctu_cce/export_users'
+
 
   get  'nctu_cce_credit/first' 
   get  'nctu_cce_credit/second'    
@@ -56,6 +58,8 @@ Rails.application.routes.draw do
   post 'nctu_cce_credit/sendMessage'  
   post 'nctu_cce_credit/verified' 	
   get  'nctu_cce_credit/destroyProgress'      
+  get  'nctu_cce_credit/export_users'
+ 
  
   get  'periods/createCompletion' 
   get  'periods/showManagement'

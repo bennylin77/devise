@@ -18,39 +18,25 @@ td {
     <td></td>
     <td></td>
   </tr>
-  <% group.items.where(:school_year=>params[:year]).each do |item| %>
-    <% progresses = item.progresses %>
-    
-    <% if item.sub_items.presence %>      
-      <% item.sub_items.each do |sub| %>
-        <% reg_items = progresses.map{ |p| p.registered_sub_items}.flatten %>
-        <% matchs = reg_items.select{|i| i.progress.stage==4 and i.sub_item==sub} %>
-        <% all_take = matchs.count %>
-        <% all_pass = matchs.select{|p| p.certificate }.count %>
-        <% sum = (all_take==0) ? 0 : ((all_pass*1.0/all_take)*100).round(2) %>
-        <tr>
-          <td></td>
-          <td><%=sub.title%></td>
-          <td><%=all_take.to_s %></td>
-          <td><%=all_pass.to_s %></td>
-          <td><%=sum.to_s %> %</td>
-        </tr>
-      <% end %>
-    <% else %>
-      <% all_take = progresses.select{|p| p.stage==4}.count %>
-      <% all_pass = progresses.select{|p| p.certificate }.count %>
-      <% sum = (all_take==0) ? 0 : ((all_pass*1.0/all_take)*100).round(2) %>
+  <% group.periods.where(:school_year=>params[:year]).each do |period| %>
+    <% progresses = period.progresses %>  
+    <% period.courses.each do |course| %>
+      <% reg_courses = progresses.map{ |p| p.reg_courses }.flatten %>
+      <% matchs = reg_courses.select{|i| i.progress.stage==4 and i.course==course} %>
+      <% take_cnt = matchs.count %>
+      <% pass_cnt = matchs.select{|p| p.certificate }.count %>
+      <% sum = (take_cnt==0) ? 0 : ((pass_cnt*1.0/take_cnt)*100).round(2) %>
       <tr>
         <td></td>
-        <td><%=item.group.title%></td>
-        <td><%=all_take.to_s %></td>
-        <td><%=all_pass.to_s %></td>
+        <td><%=course.title%></td>
+        <td><%=take_cnt.to_s %></td>
+        <td><%=pass_cnt.to_s %></td>
         <td><%=sum.to_s %> %</td>
       </tr>
-    <% end %>
+    <% end %> 
   <% end %>
   <tr>
-    <td colspan="5"> </td>
+    <td colspan="5"></td>
   </tr>
 <% end %>
 </table>

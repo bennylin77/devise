@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>姓名</th>
+    <th>身分證字號</th>
+    <th>最高(畢/肄/就讀)學校</th>
+    <th>最高(科/系/所)</th>
+    <th>聯絡電話(一般)</th> 
+    <th>聯絡電話(行動)</th>    
+    <th>聯絡地址</th>
+  </tr>
+  <% @progresses.each do |progress|%>
+    <% user = progress.user%>
+    <tr>
+      <th><%=user.name%></th>
+      <th><%=user.id_no_TW%></th>
+      <th><%=user.hightest_education_school%></th>
+      <th><%=user.hightest_education_department%></th>
+      <th><%=user.phone_no%></th> 
+      <th><%=user.mobile_phone_no%></th>    
+      <th><%=user.address%></th>
+    </tr>
+  <% end %>
+</table>

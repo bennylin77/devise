@@ -42,12 +42,12 @@ class PeriodsController < ApplicationController
   end   
 
   def export_vaccounts
-    @period = Period.find(params[:id])
-    @gorup = @period.group
+    @period = Period.find(params[:id])   
   	if @period.user != current_user 
   	  redirect_to :root
   	end
   	
+  	@group = @period.group
   	@progresses = @period.progresses
   
     #@sys_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact

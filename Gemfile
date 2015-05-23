@@ -24,6 +24,9 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+gem "mongoid-paperclip", :require => "mongoid_paperclip"
+gem 'aws-sdk', '~> 1.3.4'
+
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.1.3'
 gem "will_paginate_mongoid"

@@ -2,8 +2,8 @@ class SystemModulesController < ApplicationController
   
   before_filter :authenticate_user!   
   before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy]
-  before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
-  before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy, :check_account, :vaccounts] { |c| c.ModuleCheckAdmin()}  
+  before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy, :check_account, :vaccounts] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
+  before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy] { |c| c.ModuleCheckAdmin()}  
 
   respond_to :html
 
@@ -129,17 +129,28 @@ class SystemModulesController < ApplicationController
   def vaccounts
 	  @sys_module = SystemModule.find(params[:id])
 	  @vaccounts = @sys_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+	  respond_to do |format|
+	     format.html {}
+			 format.xls{
+			  render "export_vaccount.html.erb", :layout=>false
+			  time_str = Time.now.strftime("%Y%m%d%H%M")
+			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}總匯款明細.xls\" "	
+			 }
+		end	 
   end
   
   def export_summary
     @sys_module = SystemModule.find(params[:id])
     year = params[:year]
-    
+    time_str = Time.now.strftime("%Y%m%d%H%M")
+    filename =  params[:type]=="score" ? "及格人數統計" : "問卷統計"
+
     respond_to do |format|
 			 format.xls{
 			  render "export_#{params[:type]}_summary"
 			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
-			 	response.headers['Content-Disposition'] = " attachment; filename=\"export_#{params[:type]}_#{year}.xls\" "	
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}#{filename}.xls\" "	
 			 }
 		end	 
   end
