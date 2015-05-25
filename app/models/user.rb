@@ -78,6 +78,10 @@ class User
   field :id_no_TW, type: String
   field :hightest_education_school, type: String
   field :hightest_education_department, type: String  
+  field :hightest_education_grade, type: String  
+
+  field :receipt_title, type: String  
+  field :vegetarian, type: Boolean, default: false
   
   field :work_name, type: String
   field :work_title, type: String

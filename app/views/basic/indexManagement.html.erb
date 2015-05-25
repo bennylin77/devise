@@ -3,7 +3,7 @@
 	<div class="row">	
 		<div class="col-sm-4">
 			<%=link_to '刪除報名', {controller: 'basic', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此報名？' } %>	
-			<%=link_to '匯出學員資料', "/nctu_cce/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
+			<%=link_to '匯出學員資料', "/basic/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
 		</div>
 		<ul class="nav nav-pills col-sm-offset-6 col-sm-2">
 		  <li role="presentation">
@@ -25,7 +25,7 @@
     <th>報名進度</th>           
   </tr>	
 <%@progresses.each do |p|%>
-<tr id='link1' onclick="document.location='<%=host%>nctu_cce/showProgress?id=<%=p.id%>';">
+<tr id='link1' onclick="document.location='<%=host%>basic/showProgress?id=<%=p.id%>';">
     <td><%=p.user.name%></td>
     <td><%=p.user.phone_no%></td>
     <td><%=p.user.email%></td>

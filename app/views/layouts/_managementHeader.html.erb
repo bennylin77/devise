@@ -2,7 +2,7 @@
   <div class="row">
 		<div class="page-header">
 		<%=link_to "/"+Hash[controllerOptions].rassoc(period.group.system_module.serial_code).first+"/indexManagement?id="+period.id, {} do%> 	
-			<h1 class="text-center"><%= period.group.title%></h1>
+			<h2 class="text-center"><%= period.group.title%></h2>
 		<%end%>	
  		<p class="text-center">
 		報名網址:<mark><%=host%>periods/<%=period.id%></mark>

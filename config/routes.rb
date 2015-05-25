@@ -1,18 +1,25 @@
 Rails.application.routes.draw do
 
+  get  'basic/first'
+  get  'basic/second'  
+  post 'basic/second'   
+  get  'basic/third'
+  get  'basic/cancel'  
   get  'basic/new'
   post 'basic/create'
   
   get  'basic/destroy'
     
   get  'basic/indexManagement'
+  get  'basic/showProgress'    
   get  'basic/editPeriod'  
   post 'basic/updatePeriod'      
   get  'basic/editGroup'  
   post 'basic/updateGroup'    
   get  'basic/sendMessage'
   post 'basic/sendMessage'  
-
+  post 'basic/verified'
+  get  'basic/destroyProgress'
 
   get  'nctu_cce/first'
   get  'nctu_cce/second'  

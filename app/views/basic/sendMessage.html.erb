@@ -18,7 +18,7 @@
 				<%= check_box_tag 'course_'+c.id%>全選			
 			</label>   			 	
     		<%c.registered_courses.each do |r_c| %>
-    			<%if r_c.progress.stage >= 4%>
+    			<%if r_c.progress.stage >= 3%>
 					<label class="checkbox-inline">
 						<%= check_box_tag 'recipients[]', r_c.progress.user.id, false, class: 'r_c_of_course_'+c.id%><%=r_c.progress.user.name %>
 					</label>    			

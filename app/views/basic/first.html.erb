@@ -1,0 +1,135 @@
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
+<div class="container" >
+<%= form_for current_user, url: { controller: 'basic', action: "second"}, method: :post , html: {class: "form-horizontal", role: "form", id: "first-form"} do |u| %>	
+	<%unless @period.blank?%>
+		<%= hidden_field_tag 'id', @period.id %>
+	<%end%>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">姓名*</label>
+		<div class="col-sm-6">
+			<%= u.text_field :name, placeholder: '姓名', class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">出生年月日*</label>
+		<div class="col-sm-6">
+			<%if current_user.birthday.blank?%>
+			<%= u.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日" %>	
+			<%else%>
+			<%= u.text_field :birthday, value: current_user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日" %>				
+			<%end%>
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_birthday').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">性別*</label>
+		<div class="col-sm-6">
+		<label class="radio-inline">
+	  		<%=u.radio_button :gender, "true"%>男			
+		</label>
+		<label class="radio-inline">
+	 	 	<%=u.radio_button :gender, "false"%>女		
+		</label>			
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">身分證字號*</label>
+		<div class="col-sm-6">
+			<%= u.text_field :id_no_TW, placeholder: '身分證字號(大寫)', class: "form-control" %>
+		</div>
+	</div>				
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話(行動)*</label>
+		<div class="col-sm-2">
+			<%= u.text_field :mobile_phone_no, class: "form-control", placeholder: '聯絡電話(行動)' %>
+		</div>
+		<label class="col-sm-2 control-label">聯絡電話(一般)</label>
+		<div class="col-sm-2">
+			<%= u.text_field :phone_no, class: "form-control", placeholder: '聯絡電話(一般)' %>
+		</div>			
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡地址*</label>
+		<div class="form-inline col-sm-6">
+			<span id="twzipcode"></span>
+			<%= u.text_field :address, class: "form-control" %>
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">最高(畢/肄/就讀)學校*</label>
+		<div class="col-sm-2">
+			<%= u.text_field :hightest_education_school, class: "form-control", placeholder: '最高(畢/肄/就讀)學校' %>
+		</div>
+		<label class="col-sm-2 control-label">最高(科/系/所)*</label>
+		<div class="col-sm-2">
+			<%= u.text_field :hightest_education_department, class: "form-control", placeholder: '最高(科/系/所)' %>
+		</div>		
+		<label class="col-sm-1 control-label">年級(升)*</label>
+		<div class="col-sm-2">
+			<%= u.select :hightest_education_grade, options_for_select([['ㄧ', 'ㄧ'], 
+														   ['二', '二'],			
+														   ['三', '三'],	
+														   ['四', '四']]), {prompt: '學年(升)'}, class: "form-control" %>				
+		</div>				
+	</div>	
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">發票抬頭</label>
+		<div class="col-sm-6">
+			<%= u.text_field :receipt_title, placeholder: '未註明者，即以學校名稱為抬頭', class: "form-control" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">素食</label>
+		<div class="col-sm-6">
+		<label class="radio-inline">
+	  		<%=u.radio_button :vegetarian, "true"%>是			
+		</label>
+		<label class="radio-inline">
+	 	 	<%=u.radio_button :vegetarian, "false"%>否		
+		</label>			
+		</div>
+	</div>
+
+
+	<hr>	
+		
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-6">
+			<%= u.submit '送出',  :class=> "btn btn-default", "data-toggle"=>"modal", "data-target"=>"#confirm-rule", :onclick=>"return false ;"   %>
+		</div>
+	</div>
+<% end %>
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
+  aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="confirm-rule">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="padding: 35px 25px;">
+      <h4>※依個人資料保護法應告知事項※</h4>
+	  國立交通大學依教育部專科以上推廣教育實施辦法辦理推廣教育與訓練行政所蒐集您的個人資料，
+	  僅在前述目的內利用您的資料並與您聯繫。您得依法向本校行使個人資料保護法有關當事人權利，請洽開班承辦人員。<br>
+	  <p class="text-right">特此切結。</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" onclick="$('#first-form').submit();">同意並送出</button>
+    </div>
+  </div>
+</div>
+<script>
+$('#twzipcode').twzipcode({
+	zipcodeName: 'user[postal]',
+    countyName: 'user[county]',
+    districtName: 'user[district]',
+    zipcodeIntoDistrict: true,
+    css: ['form-control', 'form-control'], 
+    <%unless current_user.county.blank?%>
+	countySel: '<%=current_user.county%>',
+	districtSel: '<%=current_user.district%>'
+	<%end%>    
+});
+</script>
