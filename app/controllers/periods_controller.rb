@@ -21,6 +21,8 @@ class PeriodsController < ApplicationController
   def create
     # check identified code and redirect to right module
     case params[:module]
+    when GLOBAL_VAR['BASIC'].to_s
+      redirect_to controller: :basic, action: :new, module: params[:module]      
     when GLOBAL_VAR['NCTU_CCE'].to_s
       redirect_to controller: :nctu_cce, action: :new, module: params[:module]
     when GLOBAL_VAR['NCTU_CCE_credit'].to_s

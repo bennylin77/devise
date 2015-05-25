@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -8,7 +8,8 @@
 				<span class="icon-bar"></span>
 			</button>
 			<%=link_to periods_path, class: 'navbar-brand' do%>
-			EasyRegister 報名系統
+			<%=image_tag 'logo&text.png', class: 'img-responsive hidden-xs', style: "max-height: 80px; margin-top: -10px;" %>
+			<%=image_tag 'logo.png', class: 'img-responsive visible-xs-block', style: "max-height: 60px; margin-top: -10px;" %>			
 			<%end%>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">

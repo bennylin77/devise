@@ -45,7 +45,8 @@ module ApplicationHelper
   end
   
   def controllerOptions
-    [['nctu_cce', GLOBAL_VAR['NCTU_CCE']],
+    [['basic', GLOBAL_VAR['BASIC']],
+     ['nctu_cce', GLOBAL_VAR['NCTU_CCE']],
      ['nctu_cce_credit', GLOBAL_VAR['NCTU_CCE_credit']],    
      ['nctu_cce_camp', GLOBAL_VAR['NCTU_CCE_camp']]]
   end  

@@ -1,0 +1,39 @@
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
+<div class="container-fluid">
+	<div class="row">	
+		<div class="col-sm-4">
+			<%=link_to '刪除報名', {controller: 'basic', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此報名？' } %>	
+			<%=link_to '匯出學員資料', "/nctu_cce/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
+		</div>
+		<ul class="nav nav-pills col-sm-offset-6 col-sm-2">
+		  <li role="presentation">
+		  	<%=link_to '管理學員', {controller: 'basic', action: 'sendMessage', id: @period.id} %>
+		  </li>						
+		  <li role="presentation">
+		  	<%=link_to '設定', {controller: 'basic', action: 'editGroup', id: @period.group.id} %>
+		  </li>	  
+		</ul>	
+	</div>
+</div>
+<br>
+<div class="table-responsive">
+<table class="table table-striped table-hover ">
+  <tr>
+    <th>姓名</th>
+    <th>聯絡電話</th>
+    <th>email</th>
+    <th>報名進度</th>           
+  </tr>	
+<%@progresses.each do |p|%>
+<tr id='link1' onclick="document.location='<%=host%>nctu_cce/showProgress?id=<%=p.id%>';">
+    <td><%=p.user.name%></td>
+    <td><%=p.user.phone_no%></td>
+    <td><%=p.user.email%></td>
+    <td><%=basicStageText p.stage%></td> 
+</tr>
+<%end%>
+</table>
+</div>
+<div class="pagination">
+  <%= will_paginate @progresses, renderer: BootstrapPagination::Rails %>
+</div>

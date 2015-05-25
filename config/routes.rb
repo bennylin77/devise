@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
 
+  get  'basic/new'
+  post 'basic/create'
+  
+  get  'basic/destroy'
+    
+  get  'basic/indexManagement'
+  get  'basic/editPeriod'  
+  post 'basic/updatePeriod'      
+  get  'basic/editGroup'  
+  post 'basic/updateGroup'    
+  get  'basic/sendMessage'
+  post 'basic/sendMessage'  
+
 
   get  'nctu_cce/first'
   get  'nctu_cce/second'  

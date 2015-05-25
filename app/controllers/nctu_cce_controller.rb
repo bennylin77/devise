@@ -1,12 +1,12 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
+  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
-  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth]  
+  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback] 
         
@@ -75,8 +75,8 @@ class NctuCceController < ApplicationController
   
   def updateGroup
     @group.assign_attributes(group_params)
-    validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
-                                    {type: 'presence', title: '課程簡介', data: @group.description}])                                   
+    validations_result=validations([{type: 'presence', title: '名稱', data: @group.title},
+                                    {type: 'presence', title: '簡介', data: @group.description}])                                   
     checkValidations(validations: validations_result, render: 'editGroup' )   
     @group.periods.each do |p|
       c = p.courses.first    
@@ -309,7 +309,7 @@ class NctuCceController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, courses_attributes: [:title, :no_of_users, :price, :id]])
+    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, courses_attributes: [:title, :no_of_users, :price, :id]])
   end   
   
   def progress_params

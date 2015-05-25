@@ -97,8 +97,8 @@ class NctuCceCreditController < ApplicationController
   
   def updateGroup
     @group.assign_attributes(group_params)
-    validations_result=validations([{type: 'presence', title: '課程名稱', data: @group.title},
-                                    {type: 'presence', title: '課程簡介', data: @group.description}])                                   
+    validations_result=validations([{type: 'presence', title: '名稱', data: @group.title},
+                                    {type: 'presence', title: '簡介', data: @group.description}])                                   
     checkValidations(validations: validations_result, render: 'editGroup' )   
     @group.save  
     flash[:success]="成功更新名稱簡介"

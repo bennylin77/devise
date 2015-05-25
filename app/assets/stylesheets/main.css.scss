@@ -20,7 +20,7 @@ body {
 * Main content
 */
 .main {
-  padding: 20px;
+  padding: 60px;
 }
 @media (min-width: 768px) {
   .main {
@@ -38,6 +38,19 @@ body {
 .ui-autocomplete{
   list-style: none;
 }
+
+.navbar-nav > li > a{
+    padding-top: 27px !important; 
+    padding-bottom:0 !important;
+    height: 72px;
+    font-size: 16px;    
+}
+.navbar {min-height: 72px !important;}
+
+.navbar-toggle{
+  margin-top: 20px;
+}
+
 /*==================================step menu==========================================*/
 ol.progtrckr {
   margin: 0;
