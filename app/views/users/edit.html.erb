@@ -1,8 +1,2 @@
 <h3 class="text-center">編輯個人資料</h3>
 <%= render 'form' %>
-
-<h4>你der大頭貼</h4>
-<%=image_tag @user.head_pic.url(:small) %>
-</br>
-<h4>你der學歷證明</h4>
-<%=link_to "file", @user.qualification_proof.url || "#" %>

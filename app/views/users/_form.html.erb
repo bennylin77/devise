@@ -59,8 +59,8 @@ $('#twzipcode').twzipcode({
 <% @user.errors.full_messages.each do |message| %>
 	addAlert('error', '<%=message%>')
 <% end %>
-	
-	$("#head_pic").fileinput({showCaption: false,
+
+	$("#user_head_pic").fileinput({showCaption: false,
    showRemove: false,
    allowedFileTypes: ["image"],
    previewFileType: "image",
@@ -75,6 +75,24 @@ $('#twzipcode').twzipcode({
    uploadIcon: '<i class="glyphicon glyphicon-upload"></i>',
      initialPreview: [
         '<%= image_tag current_user.head_pic.url,class: 'file-preview-image' %>'
+     ],
+     overwriteInitial: true							 
+    });	
+  $("#user_qualification_proof").fileinput({showCaption: false,
+   showRemove: false,
+   allowedFileTypes: ["image"],
+   previewFileType: "image",
+   browseClass: "btn btn-success",
+   browseLabel: " 選取圖片",
+   browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+   removeClass: "btn btn-danger",
+   removeLabel: "刪除",
+   removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+   uploadClass: "btn btn-info",
+   uploadLabel: "上傳",
+   uploadIcon: '<i class="glyphicon glyphicon-upload"></i>',
+     initialPreview: [
+        '<%= image_tag current_user.qualification_proof.url,class: 'file-preview-image' %>'
      ],
      overwriteInitial: true							 
     });	
