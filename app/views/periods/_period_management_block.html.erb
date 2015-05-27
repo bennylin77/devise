@@ -17,7 +17,7 @@
 	  </div>	  
 	  <div class="panel-body">
 	    <%=link_to "/"+Hash[controllerOptions].rassoc(period_management_block.group.system_module.serial_code).first+"/indexManagement?id="+period_management_block.id, {} do%>  	
-		    <p><%= period_management_block.group.description%></p>
+		    <p><%= truncate( period_management_block.group.description, length: 60)%></p>
 		    <div id="clock_<%=period_management_block.id%>"></div>
 	  	<%end%> 
 	   	<div class="container" style="width: 250px;">

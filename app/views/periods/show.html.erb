@@ -16,14 +16,20 @@
 </h3>
 <h1><%=@period.group.title%></h1>
 <p><strong><%=@period.group.description%></strong></p>
-<p class="text-info">報名對象: <%=@period.eligibility %></p>
+<%unless @period.eligibility.blank?%><p class="">報名對象: <%=@period.eligibility %></p><%end%>
+<br>
 <%@period.courses.each do |c|%>
-<dl class="text-muted" style="font-size: 16px;">	
-  <dt>招生人數</dt><dd><%=c.no_of_users %>人</dd>
-  <dt>費用</dt><dd><%=c.price %> NT</dd>  
-  <dt>地點</dt><dd><%=c.location %></dd>  
-  <dt>課程時間</dt><dd><%=c.start_at %>~<%=c.end_at %></dd>  
-</dl>
+<ul class="list-group">
+<li class="list-group-item list-group-item-warning">	
+	<h4 class="list-group-item-heading"><%= c.title%></h4>
+	<dl class="text-muted list-group-item-text" style="font-size: 16px;">	
+	  <%unless c.no_of_users.blank?%><dt>招生人數</dt><dd><%=c.no_of_users %>人</dd><%end%>
+	  <%unless c.price.blank?%><dt>費用</dt><dd><%=c.price %> NT</dd><%end%>  
+	  <%unless c.location.blank?%><dt>地點</dt><dd><%=c.location %></dd><%end%>  
+	  <%unless c.start_at.blank?%><dt>課程時間</dt><dd><%=c.start_at %>~<%=c.end_at %></dd><%end%>  
+	</dl>
+</li>	
+</ul>
 <%end%>
 <br>
 <p>

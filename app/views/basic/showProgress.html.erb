@@ -64,9 +64,11 @@
   </tr>  
   <tr>
     <th>報名消息來源</th>
-    <td>
-		<%= Hash[sourceOptions].rassoc(@progress.source).first%>    	
-	</td>    	
+    <td><%if @progress.source%>
+		<%= Hash[sourceOptions].rassoc(@progress.source).first%>    
+		<%else%>
+		--
+	</td><%end%>	  	
   </tr>  
 </table> 
 </div>	
