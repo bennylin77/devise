@@ -21,7 +21,7 @@ td {
   <% group.periods.where(:school_year=>params[:year]).each do |period| %>
     <% progresses = period.progresses %>  
     <% period.courses.each do |course| %>
-      <% reg_courses = progresses.map{ |p| p.reg_courses }.flatten %>
+      <% reg_courses = progresses.map{ |p| p.registered_courses }.flatten %>
       <% matchs = reg_courses.select{|i| i.progress.stage==4 and i.course==course} %>
       <% take_cnt = matchs.count %>
       <% pass_cnt = matchs.select{|p| p.certificate }.count %>

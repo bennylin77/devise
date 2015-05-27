@@ -21,7 +21,7 @@
 <li class="list-group-item">	
 	<dl class="" style="font-size: 17px;">	
 	<%unless @period.eligibility.blank?%><dt>報名對象</dt><dd><%=@period.eligibility %></dd><%end%>
-	<%unless @period.precautions.blank?%><dt class="text-danger">注意事項</dt><dd class="text-danger"><%=simple_format @period.precautions, {}, wrapper_tag: "div" %></dd><%end%>
+	<%unless @period.precautions.blank?%><dt class="text-danger">注意事項 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></dt><dd class="text-danger"><%=simple_format @period.precautions, {}, wrapper_tag: "div" %></dd><%end%>
 	</dl>		
 </li>	
 <%end%>
@@ -29,10 +29,10 @@
 <li class="list-group-item list-group-item-warning">	
 	<h4 class="list-group-item-heading"><%= c.title%></h4>
 	<dl class="text-muted list-group-item-text" style="font-size: 14px;">	
-	  <%unless c.no_of_users.blank?%><dt>招生人數</dt><dd><%=c.no_of_users %>人</dd><%end%>
-	  <%unless c.price.blank?%><dt>費用</dt><dd><%=c.price %> NT</dd><%end%>  
-	  <%unless c.location.blank?%><dt>地點</dt><dd><%=c.location %></dd><%end%>  
-	  <%unless c.start_at.blank?%><dt>課程時間</dt><dd><%=c.start_at %>~<%=c.end_at %></dd><%end%>  
+	  <%unless c.no_of_users.blank?%><dt>招生人數 <span class="glyphicon glyphicon-user" aria-hidden="true"></span></dt><dd><%=c.no_of_users %>人</dd><%end%>
+	  <%unless c.price.blank?%><dt>費用 <span class="glyphicon glyphicon-usd" aria-hidden="true"></span></dt><dd><%=c.price %> NT</dd><%end%>  
+	  <%unless c.location.blank?%><dt>地點 <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></dt><dd><%=c.location %></dd><%end%>  
+	  <%unless c.start_at.blank?%><dt>課程時間 <span class="glyphicon glyphicon-time" aria-hidden="true"></span></dt><dd><%=c.start_at %>~<%=c.end_at %></dd><%end%>  
 	</dl>
 </li>	
 <%end%>

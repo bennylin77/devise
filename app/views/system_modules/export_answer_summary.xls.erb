@@ -24,7 +24,7 @@ td {
     <% progresses = period.progresses %>
        
     <% period.courses.each do |course| %>
-      <% reg_courses = progresses.map{ |p| p.reg_courses }.flatten %>
+      <% reg_courses = progresses.map{ |p| p.registered_courses }.flatten %>
       <% matchs = reg_courses.select{|i| i.progress.stage==4 and i.course==course} %>
       <% fb_done_matchs = matchs.select{|rg| rg.progress.feedback_done} %>
       <% fb15_score_ary = fb_done_matchs.map{|p| p.nctu_cce_feedback_1_5||0 } || [] %>   
