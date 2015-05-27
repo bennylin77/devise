@@ -8,6 +8,11 @@ class Course
   field :title, type: String
   field :price, type: Float  
   field :no_of_users, type: Integer  
+  
+=begin  
+  field :waiting, type: Boolean, default: false
+  field :waiting_no, type: Integer, default: 0 
+=end   
 
   field :start_at, type: DateTime  
   field :end_at, type: DateTime  

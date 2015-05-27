@@ -211,6 +211,12 @@ class BasicController < ApplicationController
     @progress = @period.progresses.where(user_id: current_user.id).first     
   end 
   
+  def export_users
+  
+  
+  end
+  
+  
   private    
   
   def set_period

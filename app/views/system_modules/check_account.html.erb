@@ -14,7 +14,7 @@
 </div>
 
 <h4>查詢結果</h4>
-<table class="table table-striped">
+<table class="table table-striped" id="result-table">
 	<tr>
 		<th>帳號</th>
 		<th>狀態</th>	
@@ -28,7 +28,6 @@
 	$('.check-submit').click(function(){
 		vacc = $('#vacc').val();
 		if(vacc.indexOf("95306") > -1){
-	//		$(this).attr('disabled','disabled');
 			return true;
 		}else{
 			alert("invalid vaccount");

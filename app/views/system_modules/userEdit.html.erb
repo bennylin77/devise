@@ -76,13 +76,10 @@ function selectAjaxHandler(id)
 	dataType: "json"
 	});
 	request.done(function( message ) {
-		addAlert('success', message.message)
+		toastr['success'](message.message)				
 	});
 	request.fail(function( jqXHR, textStatus ) {
-		 $.gritter.add({
-						title: '無法更改查核狀態',
-						text:  '請先連上網路, 並重新整理頁面'
-						});
+		toastr['error']('請先連上網路, 並重新整理頁面')				
 	});	
 }	
 	

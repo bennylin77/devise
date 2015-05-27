@@ -37,7 +37,7 @@ class Vaccount
 			"PayChnl"=>xml_doc.xpath('//PayChnl')[0].try(:content), 
 			"PayState" => xml_doc.xpath('//PayState')[0].try(:content)
 		}
-		
+		return 0
 	end
 	
 	# check account for 95306

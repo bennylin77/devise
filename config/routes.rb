@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post 'basic/sendMessage'  
   post 'basic/verified'
   get  'basic/destroyProgress'
+  get  'basic/export_users'
 
   get  'nctu_cce/first'
   get  'nctu_cce/second'  

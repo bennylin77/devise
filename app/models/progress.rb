@@ -8,11 +8,6 @@ class Progress
   has_many :registered_courses, dependent: :destroy   
   accepts_nested_attributes_for :registered_courses
 
-
-=begin  
-  field :waiting, type: Boolean, default: false
-  field :waiting_no, type: Integer, default: 0 
-=end 
   field :source, type: Integer
   field :receipt_title, type: String  
 

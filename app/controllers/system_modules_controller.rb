@@ -118,9 +118,14 @@ class SystemModulesController < ApplicationController
   		vc = Vaccount.new
   		vc.check_account(vacc)
   		vc.vacc = vacc
-  		vc.update_status
+  		if vc.update_status == -1 
+  		 @result = "fail" 
+  		else
+  		 @result = vc.status 
+  		end
+  		
   		@row = "<tr><td>#{vacc}</td>"
-  		@row += "<td>#{vc.status["res"]["desc"]}</td>"
+  		@row += "<td>#{vc.status["res"]["code"]}</td>"
   		@row += "<td>#{vc.status["Amount"]}</td>"
   		@row += "<td>#{vc.status["PayChnl"]}</td></tr>"
   	end
