@@ -226,7 +226,7 @@ class BasicController < ApplicationController
   end 
   
   def period_params
-    params.require(:period).permit( :start_at, :end_at, :term, :note, :eligibility, courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location])      
+    params.require(:period).permit( :start_at, :end_at, :term, :precautions, :eligibility, courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location])      
   end
 
   def user_params
@@ -236,7 +236,7 @@ class BasicController < ApplicationController
   end
       
   def group_params
-    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :term, :note, :eligibility, :id, 
+    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :term, :precautions, :eligibility, :id, 
                                                         courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location]])
   end    
 end
