@@ -71,21 +71,13 @@ module ApplicationHelper
     ['其他', GLOBAL_VAR['SOURCE_OTHERS']]]
   end   
   
-  def stageColor(stage)
-    case stage
-      when 1 # 待審核
-        "default"       
-      when 2 # 待審核
-        "default"
-      when 3 # 待繳費
-        "warning"
-      when 4 # 報名完成
-        "success"
-      when 5 # 評價
-        "success"        
-      when -1 # 被取消
-        "danger"  
-    end  
+  def stageColor(progress)
+    
+    if progress.verified
+      "success"
+    else
+      "default"       
+    end   
   end
   
 end

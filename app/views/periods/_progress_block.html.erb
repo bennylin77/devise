@@ -1,5 +1,5 @@
 <div class="progress_box"  id="progress_box_<%=progress_block.id%>" >
-	<div class="panel panel-<%=stageColor progress_block.stage%>">  
+	<div class="panel panel-<%=stageColor progress_block%>">  
 	  <div class="panel-heading">  	
 		<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.period.group.system_module.serial_code).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?id="+progress_block.period.id, {} do%>
 		    <%if progress_block.period.school_year%><%=progress_block.period.school_year%>學年<%end%>	    
