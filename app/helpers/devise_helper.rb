@@ -9,7 +9,7 @@ module DeviseHelper
 =end
     html=''
     resource.errors.full_messages.each do |message|
-      html = html + "<script>addAlert('error', '#{message}')</script>"
+      html = html + "<script> toastr['error']('#{message}') </script>"
     end
     html.html_safe
   end

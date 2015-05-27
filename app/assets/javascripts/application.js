@@ -25,5 +25,7 @@
 //= require jquery.twzipcode.min.js
 //= require fileinput.min.js 
 //= require alert.js 
+//= require toastr.min.js
+//= require toastr_options.js
 //= require_tree .
 
