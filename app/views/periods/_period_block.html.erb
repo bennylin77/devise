@@ -3,7 +3,7 @@
 	  <div class="panel-heading">  	
 	    <%=link_to period_block, class: 'fancybox' do%> 	
 		    <%if period_block.school_year%><%=period_block.school_year%>學年<%end%>	    
-		    <%if period_block.semester%><%=Hash[semesterOptions].rassoc(period_block.semester).first%><%end%><br>		    
+		    <%if period_block.semester%><%=Hash[semesterOptions].rassoc(period_block.semester).first%><%end%>	    
 		    <h2 class="panel-title"><%= period_block.group.title %> <%if period_block.term%>(第<%=period_block.term%>期)<%end%></h2>	    	    
 	    <%end%>	 
 	  </div>

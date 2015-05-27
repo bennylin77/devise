@@ -16,6 +16,15 @@
 </h3>
 <h1><%=@period.group.title%></h1>
 <p><strong><%=@period.group.description%></strong></p>
+<p class="text-info">報名對象: <%=@period.eligibility %></p>
+<%@period.courses.each do |c|%>
+<dl class="text-muted" style="font-size: 16px;">	
+  <dt>招生人數</dt><dd><%=c.no_of_users %>人</dd>
+  <dt>費用</dt><dd><%=c.price %> NT</dd>  
+  <dt>地點</dt><dd><%=c.location %></dd>  
+  <dt>課程時間</dt><dd><%=c.start_at %>~<%=c.end_at %></dd>  
+</dl>
+<%end%>
 <br>
 <p>
 	<% if user_signed_in? %>	

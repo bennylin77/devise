@@ -3,7 +3,7 @@
 	  <div class="panel-heading">  	
 		<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.period.group.system_module.serial_code).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?id="+progress_block.period.id, {} do%>
 		    <%if progress_block.period.school_year%><%=progress_block.period.school_year%>學年<%end%>	    
-		    <%if progress_block.period.semester%><%=Hash[semesterOptions].rassoc(progress_block.period.semester).first%><%end%><br>		    
+		    <%if progress_block.period.semester%><%=Hash[semesterOptions].rassoc(progress_block.period.semester).first%><%end%>	    
 		    <h2 class="panel-title"><%= progress_block.period.group.title %> <%if progress_block.period.term%>(第<%=progress_block.period.term%>期)<%end%></h2>	    	    
 	    <%end%>	 
 	  </div>	  

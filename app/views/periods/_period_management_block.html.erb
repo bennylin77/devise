@@ -11,7 +11,7 @@
 		  	</button>
 		  	<%end%>		    
 		    <%if period_management_block.school_year%><%=period_management_block.school_year%>學年<%end%>	    
-		    <%if period_management_block.semester%><%=Hash[semesterOptions].rassoc(period_management_block.semester).first%><%end%><br>		    
+		    <%if period_management_block.semester%><%=Hash[semesterOptions].rassoc(period_management_block.semester).first%><%end%>		    
 		    <h2 class="panel-title"><%= period_management_block.group.title %> <%if period_management_block.term%>(第<%=period_management_block.term%>期)<%end%></h2>	    	    
 	    <%end%>	 
 	  </div>	  
