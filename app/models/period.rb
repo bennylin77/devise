@@ -10,12 +10,6 @@ class Period
   belongs_to :group
   accepts_nested_attributes_for :courses 
 
-=begin  
-  field :no_of_users, type: Integer
-  field :no_of_waiting_users, type: Integer, default: 0  
-  field :waiting_start, type: Boolean, default: false  
-  field :waiting_available, type: Boolean, default: false     # accept waiting?    
-=end  
   field :school_year, type: Integer
   field :semester, type: Integer
   field :term, type: Integer 

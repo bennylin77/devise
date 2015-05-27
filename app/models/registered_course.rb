@@ -12,6 +12,8 @@ class RegisteredCourse
   field :certificate, type: Boolean, default: false    
   field :certificate_no, type: String
 
+  field :waiting, type: Boolean, default: false
+  field :waiting_no, type: Integer, default: 0  
 
   field :nctu_cce_feedback_1_1, type: Integer
   field :nctu_cce_feedback_1_2, type: Integer

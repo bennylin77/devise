@@ -71,7 +71,7 @@ class NctuCceCreditController < ApplicationController
   end
 
   def indexManagement
-    @progresses = @period.progresses.paginate(page: params[:page], per_page: 30)
+    @progresses = @period.progresses.order('stage desc').paginate(page: params[:page], per_page: 30)
   end  
 
   def editPeriod  

@@ -47,7 +47,20 @@
 								     id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>	
 		<%else%>
 			<%if @period.start_at < Time.now and @period.end_at > Time.now%>
-				<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
+							
+				<%if @period.courses.size == 1%>
+					<%course = @period.courses.first%>
+					<%if course.waiting_start and course.waiting_available%>
+						<%=link_to '報名候補', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
+					<%elsif @period.courses.first.registered_courses.size == @period.courses.first.no_of_user and%>
+						<%=link_to '報名已滿', '', {class: "btn btn-lg btn-default", role: "button"} %>												
+					<%else%>
+						<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>																		
+					<%end%>
+				<%else%>
+					<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>											
+				<%end%>
+								
 			<%else%>
 				<%if @period.start_at > Time.now%>
 					<%=link_to '報名尚未開始', "", {class: "btn btn-lg btn-default", role: "button"} %>											
@@ -58,7 +71,20 @@
 		<%end%>
 	<%else%>
 		<%if @period.start_at < Time.now and @period.end_at > Time.now%>
-			<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
+
+				<%if @period.courses.size == 1%>
+					<%course = @period.courses.first%>
+					<%if course.waiting_start and course.waiting_available%>
+						<%=link_to '報名候補', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
+					<%elsif @period.courses.first.registered_courses.size == @period.courses.first.no_of_user and%>
+						<%=link_to '報名已滿', '', {class: "btn btn-lg btn-default", role: "button"} %>												
+					<%else%>
+						<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>																		
+					<%end%>
+				<%else%>
+					<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>											
+				<%end%>
+				
 		<%else%>
 			<%if @period.start_at > Time.now%>
 				<%=link_to '報名尚未開始', "", {class: "btn btn-lg btn-default", role: "button"} %>											

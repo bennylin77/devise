@@ -49,7 +49,7 @@ class BasicController < ApplicationController
   end
   
   def indexManagement
-    @progresses = @period.progresses.paginate(page: params[:page], per_page: 30)
+    @progresses = @period.progresses.order('stage desc').paginate(page: params[:page], per_page: 30)
   end
 
   def editPeriod  
@@ -175,7 +175,6 @@ class BasicController < ApplicationController
     if @progress.stage == 1
       user = current_user  
       user.assign_attributes(user_params)  
-      logger.info user_params
       @step = 1       
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
@@ -198,7 +197,17 @@ class BasicController < ApplicationController
       @progress.save  
       registered_course = RegisteredCourse.new  
       @progress.registered_courses << registered_course
-      @period.courses.first.registered_courses << registered_course 
+      @period.courses.first.registered_courses << registered_course
+      course = @period.courses.first      
+      #waiting
+      if course.waiting_available and course.waiting_start
+        course.no_of_waiting_users = course.no_of_waiting_users + 1     
+        registered_course.waiting = true
+        registered_course.waiting_no = course.no_of_waiting_users        
+      elsif course.waiting_available and course.registered_courses.size >= course.no_of_users and !course.waiting_start
+        course.waiting_start = true  
+      end 
+      course.save
       registered_course.save 
       @period.save               
       System.sendVerifyNotification(user: @progress.period.user, progress: @progress).deliver                  
@@ -232,7 +241,7 @@ class BasicController < ApplicationController
   end 
   
   def period_params
-    params.require(:period).permit( :start_at, :end_at, :term, :precautions, :eligibility, courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location])      
+    params.require(:period).permit( :start_at, :end_at, :term, :precautions, :eligibility, courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location, :waiting_available])      
   end
 
   def user_params
@@ -243,6 +252,6 @@ class BasicController < ApplicationController
       
   def group_params
     params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :term, :precautions, :eligibility, :id, 
-                                                        courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location]])
+                                                        courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location, :waiting_available]])
   end    
 end

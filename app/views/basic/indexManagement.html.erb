@@ -22,7 +22,8 @@
     <th>姓名</th>
     <th>聯絡電話(行動)</th>
     <th>email</th>
-    <th>報名進度</th>           
+    <th>報名進度</th>  
+    <th>候補狀態</th>             
   </tr>	
 <%@progresses.each do |p|%>
 <tr id='link1' onclick="document.location='<%=host%>basic/showProgress?id=<%=p.id%>';">
@@ -30,6 +31,17 @@
     <td><%=p.user.mobile_phone_no%></td>
     <td><%=p.user.email%></td>
     <td><%=basicStageText p.stage%></td> 
+    <td>
+    	<%if p.registered_courses.first %>
+	    	<%if p.registered_courses.first.waiting  and p.stage >1 %>
+	    		候補<%=p.registered_courses.first.waiting_no %>號
+	    	<%else%>
+	    		非候補
+	    	<%end%>
+	    <%else%>
+	    	--
+	    <%end%>	
+    </td>      
 </tr>
 <%end%>
 </table>

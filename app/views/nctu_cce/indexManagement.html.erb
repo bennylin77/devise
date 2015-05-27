@@ -25,7 +25,8 @@
     <th>email</th>
     <th>虛擬帳號</th>
     <th>內涵金額/須繳金額</th>     
-    <th>報名進度</th>           
+    <th>報名進度</th>    
+    <th>候補狀態</th>            
   </tr>	
 <%@progresses.each do |p|%>
 <tr id='link1' onclick="document.location='<%=host%>nctu_cce/showProgress?id=<%=p.id%>';">
@@ -34,7 +35,18 @@
     <td><%=p.user.email%></td>
 	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
 	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %> NT/<%=p.payment.to_s%> NT<%end%></td>      
-    <td><%=CCEStageText p.stage%></td> 
+    <td><%=CCEStageText p.stage%></td>
+    <td>
+    	<%if p.registered_courses.first %>
+	    	<%if p.registered_courses.first.waiting  and p.stage >1 %>
+	    		候補<%=p.registered_courses.first.waiting_no %>號
+	    	<%else%>
+	    		非候補
+	    	<%end%>
+	    <%else%>
+	    	--
+	    <%end%>	
+    </td>      
 </tr>
 <%end%>
 </table>

@@ -46,7 +46,7 @@ class NctuCceController < ApplicationController
   end
   
   def indexManagement
-    @progresses = @period.progresses.paginate(page: params[:page], per_page: 30)
+    @progresses = @period.progresses.order('stage desc').paginate(page: params[:page], per_page: 30)
   end    
   
   
@@ -231,7 +231,17 @@ class NctuCceController < ApplicationController
       registered_course = RegisteredCourse.new  
       @progress.registered_courses << registered_course
       @period.courses.first.registered_courses << registered_course 
-      registered_course.save 
+      course = @period.courses.first      
+      #waiting
+      if course.waiting_available and course.waiting_start
+        course.no_of_waiting_users = course.no_of_waiting_users + 1     
+        registered_course.waiting = true
+        registered_course.waiting_no = course.no_of_waiting_users        
+      elsif course.waiting_available and course.registered_courses.size >= course.no_of_users and !course.waiting_start
+        course.waiting_start = true  
+      end 
+      course.save
+      registered_course.save       
       @period.save               
       System.sendVerifyNotification(user: @progress.period.user, progress: @progress).deliver                  
     end     
