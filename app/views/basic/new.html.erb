@@ -33,7 +33,43 @@
 				<%= c.text_field :price, class: "form-control", placeholder: "費用" %>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">地點*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :location, class: "form-control", placeholder: "地點" %>
+			</div>
+		</div>		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">課程開始時間*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :start_at, class: "form-control", id: 'datetimepicker1_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "課程開始時間" %>	
+			</div>
+		    <script type="text/javascript">
+		            $(function () {
+		                $('#datetimepicker1_start_at').datetimepicker({
+		                });
+		            });
+		    </script>	
+		</div>
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">課程結束時間*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :end_at, class: "form-control", id: 'datetimepicker2_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "課程結束時間" %>	
+			</div>
+		    <script type="text/javascript">
+		            $(function () {
+		                $('#datetimepicker2_end_at').datetimepicker({
+		                });
+		            });
+		    </script>	
+		</div>		
 	<%end%>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">報名對象*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :eligibility, class: "form-control", placeholder: "報名對象" %>	
+		</div>
+	</div>		
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
@@ -58,6 +94,12 @@
 	            });
 	    </script>	
 	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">備註</label>
+		<div class="col-sm-6">
+			<%= p.text_area :note, class: "form-control", placeholder: "備註" %>	
+		</div>
+	</div>	
   <% end %>
 <div class="form-group">
 	<div class="col-sm-offset-3 col-sm-9">

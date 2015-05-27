@@ -13,6 +13,9 @@ class Progress
   field :waiting, type: Boolean, default: false
   field :waiting_no, type: Integer, default: 0 
 =end 
+  field :source, type: Integer
+  field :receipt_title, type: String  
+
   field :stage, type: Integer    
   field :verified, type: Boolean, default: false 
   field :finished, type: Boolean, default: false

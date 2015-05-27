@@ -24,10 +24,15 @@ class BasicController < ApplicationController
     validations_result=validations([{type: 'presence', title: '名稱', data: @group.title},
                                     {type: 'presence', title: '簡介', data: @group.description},
                                     {type: 'presence', title: '招生人數', data: @group.periods.first.courses.first.no_of_users},
-                                    {type: 'presence', title: '學費', data: @group.periods.first.courses.first.price},
+                                    {type: 'presence', title: '費用', data: @group.periods.first.courses.first.price},                                
+                                    {type: 'presence', title: '地點', data: @group.periods.first.courses.first.location},                                      
+                                    {type: 'presence', title: '報名對象', data: @group.periods.first.eligibility},                                                                        
                                     {type: 'presence', title: '報名開放時間', data: @group.periods.first.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @group.periods.first.end_at},        
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @group.periods.first.start_at, second: @group.periods.first.end_at }},
+                                    {type: 'presence', title: '課程開放時間', data: @group.periods.first.courses.first.start_at},                                      
+                                    {type: 'presence', title: '課程結束時間', data: @group.periods.first.courses.first.end_at},        
+                                    {type: 'latter_than', title: { first: '課程開放時間', second: '課程結束時間' }, data: { first: @group.periods.first.courses.first.start_at, second: @group.periods.first.courses.first.end_at }}                      
                                     ])                                   
     checkValidations(validations: validations_result, render: 'new' )   
     @group.periods.first.user = current_user 
@@ -53,10 +58,15 @@ class BasicController < ApplicationController
   def updatePeriod
     @period.assign_attributes(period_params)
     validations_result=validations([{type: 'presence', title: '招生人數', data: @period.courses.first.no_of_users},
-                                    {type: 'presence', title: '學費', data: @period.courses.first.price},
+                                    {type: 'presence', title: '費用', data: @period.courses.first.price},
+                                    {type: 'presence', title: '地點', data: @period.courses.first.location},                                      
+                                    {type: 'presence', title: '報名對象', data: @period.eligibility},                                       
                                     {type: 'presence', title: '報名開放時間', data: @period.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @period.end_at},        
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @period.start_at, second: @period.end_at }},
+                                    {type: 'presence', title: '課程開放時間', data: @period.courses.first.start_at},                                      
+                                    {type: 'presence', title: '課程結束時間', data: @period.courses.first.end_at},        
+                                    {type: 'latter_than', title: { first: '課程開放時間', second: '課程結束時間' }, data: { first: @period.courses.first.start_at, second: @period.courses.first.end_at }}                                      
                                     ])                                   
     checkValidations(validations: validations_result, render: 'editPeriod' )   
     @period.save  
@@ -165,6 +175,7 @@ class BasicController < ApplicationController
     if @progress.stage == 1
       user = current_user  
       user.assign_attributes(user_params)  
+      logger.info user_params
       @step = 1       
       validations_result=validations([{type: 'presence', title: '姓名', data: user_params[:name]}, 
                                       {type: 'presence', title: '出生年月日', data: user_params[:birthday]},
@@ -177,7 +188,8 @@ class BasicController < ApplicationController
                                       {type: 'presence', title: '聯絡地址-詳細', data: user_params[:address]},
                                       {type: 'presence', title: '最高(畢/肄/就讀)學校', data: user_params[:hightest_education_school]},
                                       {type: 'presence', title: '最高(科/系/所)', data: user_params[:hightest_education_department]},                               
-                                      {type: 'presence', title: '年級', data: user_params[:hightest_education_grade]},                                                                    
+                                      {type: 'presence', title: '年級', data: user_params[:hightest_education_grade]},
+                                      {type: 'presence', title: '報名消息來源', data: user_params[:progresses_attributes]["0"][:source]},                                                                      
                                       {type: 'id_no_TW', title: '身分證字號', data: user_params[:id_no_TW]}])
       checkValidations(validations: validations_result, render: 'first' )                
       user.save  
@@ -214,16 +226,17 @@ class BasicController < ApplicationController
   end 
   
   def period_params
-    params.require(:period).permit( :start_at, :end_at, :term, courses_attributes: [:title, :no_of_users, :price, :id])      
+    params.require(:period).permit( :start_at, :end_at, :term, :note, :eligibility, courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location])      
   end
 
   def user_params
     params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :mobile_phone_no, :phone_no, :address, 
                                  :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
-                                 :hightest_education_grade, :receipt_title, :vegetarian)      
+                                 :hightest_education_grade, :receipt_title, :vegetarian, progresses_attributes: [:id, :receipt_title, :source] )      
   end
       
   def group_params
-    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :term, courses_attributes: [:title, :no_of_users, :price, :id]])
+    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :term, :note, :eligibility, :id, 
+                                                        courses_attributes: [:start_at, :end_at, :title, :no_of_users, :price, :id, :location]])
   end    
 end

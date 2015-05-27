@@ -62,6 +62,14 @@ module ApplicationHelper
   def semesterOptions
     [["上學期", 1], ["寒假", -1], ["下學期", 2], ["暑假", -2]]
   end  
+
+  def sourceOptions
+    [['網路', GLOBAL_VAR['SOURCE_WEBSITE']],
+    ['海報簡章', GLOBAL_VAR['SOURCE_POSTER']],
+    ['EMAIL', GLOBAL_VAR['SOURCE_EMAIL']],
+    ['教授', GLOBAL_VAR['SOURCE_PROFESSOR']],
+    ['其他', GLOBAL_VAR['SOURCE_OTHERS']]]
+  end   
   
   def stageColor(stage)
     case stage

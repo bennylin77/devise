@@ -24,5 +24,7 @@ class Period
   field :end_at, type: DateTime 
   field :payment_start_at, type: DateTime   
   field :payment_end_at, type: DateTime    
+  field :note, type: String
+  field :eligibility, type: String
    
 end

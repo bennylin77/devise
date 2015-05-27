@@ -8,5 +8,9 @@ class Course
   field :title, type: String
   field :price, type: Float  
   field :no_of_users, type: Integer  
-  
+
+  field :start_at, type: DateTime  
+  field :end_at, type: DateTime  
+  field :location, type: String
+   
 end

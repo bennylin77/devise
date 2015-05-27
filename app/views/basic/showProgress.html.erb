@@ -55,13 +55,19 @@
     <td><%=@progress.user.postal%><%=@progress.user.county%><%=@progress.user.district%><%=@progress.user.address%></td>
   </tr>
   <tr>
-    <th>發票抬頭</th>
-    <td><%=@progress.user.receipt_title%></td>
-  </tr>  
-  <tr>
     <th>素食</th>
     <td><%if @progress.user.vegetarian%>是<%else%>否<%end%></td>
   </tr>    
+  <tr>
+    <th>發票抬頭</th>
+    <td><%=@progress.receipt_title%></td>
+  </tr>  
+  <tr>
+    <th>報名消息來源</th>
+    <td>
+		<%= Hash[sourceOptions].rassoc(@progress.source).first%>    	
+	</td>    	
+  </tr>  
 </table> 
 </div>	
 </div>

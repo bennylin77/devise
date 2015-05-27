@@ -78,12 +78,6 @@
 		</div>				
 	</div>	
 	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">發票抬頭</label>
-		<div class="col-sm-6">
-			<%= u.text_field :receipt_title, placeholder: '未註明者，即以學校名稱為抬頭', class: "form-control" %>
-		</div>
-	</div>
-	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">素食</label>
 		<div class="col-sm-6">
 		<label class="radio-inline">
@@ -93,11 +87,25 @@
 	 	 	<%=u.radio_button :vegetarian, "false"%>否		
 		</label>			
 		</div>
-	</div>
-
-
-	<hr>	
-		
+	</div>	
+	<% current_user.progresses.each do |progress| %>
+		<% if progress.id == @progress.id %>
+			<%= u.fields_for :progresses, progress do |p| %>
+				<div class="form-group">
+					<label class="col-sm-offset-1 col-sm-2 control-label">發票抬頭</label>
+					<div class="col-sm-6">
+						<%= p.text_field :receipt_title, placeholder: '未註明者，即以學校名稱為抬頭', class: "form-control" %>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-offset-1 col-sm-2 control-label">報名消息來源</label>
+					<div class="col-sm-6">
+						<%= p.select :source, sourceOptions, {prompt: '選擇消息來源'}, class: "form-control" %>	
+					</div>
+				</div>
+			<%end%>
+		<%end%>
+	<%end%>					
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">
 			<%= u.submit '送出',  :class=> "btn btn-default", "data-toggle"=>"modal", "data-target"=>"#confirm-rule", :onclick=>"return false ;"   %>
@@ -111,8 +119,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content" style="padding: 35px 25px;">
       <h4>※依個人資料保護法應告知事項※</h4>
-	  國立交通大學依教育部專科以上推廣教育實施辦法辦理推廣教育與訓練行政所蒐集您的個人資料，
-	  僅在前述目的內利用您的資料並與您聯繫。您得依法向本校行使個人資料保護法有關當事人權利，請洽開班承辦人員。<br>
+	  <%=@period.group.title %> 所蒐集您的個人資料，
+	  僅在此報名內利用您的資料並與您聯繫。您得依法向承辦人員行使個人資料保護法有關當事人權利，請洽開班承辦人員。<br>
 	  <p class="text-right">特此切結。</p>
     </div>
     <div class="modal-footer">

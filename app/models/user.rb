@@ -22,6 +22,7 @@ class User
   has_many :periods  
   has_many :progresses
   has_many :module_user_lists  
+  accepts_nested_attributes_for :progresses   
   
   #validates_presence_of :uid, :provider
   #validates_uniqueness_of :uid, :scope => :provider    
@@ -80,7 +81,6 @@ class User
   field :hightest_education_department, type: String  
   field :hightest_education_grade, type: String  
 
-  field :receipt_title, type: String  
   field :vegetarian, type: Boolean, default: false
   
   field :work_name, type: String
