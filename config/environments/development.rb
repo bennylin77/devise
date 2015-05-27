@@ -31,11 +31,13 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.action_mailer.default_url_options = { host: 'http://register.ac-experts.com.tw/', port: 80 }
+  config.action_mailer.default_url_options = { host: 'http://register.ac-experts.com.tw', port: 80 }
+  config.action_controller.asset_host = 'register.ac-experts.com.tw'
   # General Settings
   config.app_domain = 'register.ac-experts.com.tw'
 
   # Email
+  config.action_mailer.asset_host = 'http://register.ac-experts.com.tw'    
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: config.app_domain }
@@ -46,6 +48,6 @@ Rails.application.configure do
     user_name: 'bennylin77',
     password: 'nctu9712030',
     authentication: :plain,
-    domain: 'instant.tw'
+    domain: 'register.ac-experts.com.tw'
   }
 end

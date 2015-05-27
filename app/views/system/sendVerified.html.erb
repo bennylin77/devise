@@ -5,20 +5,15 @@
 </head>
 <body>
 <div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
-<div style="font-weight: bold; margin-top: 5px; margin-bottom: 10px; width: 170px; border: 2px solid #198EB9;color: #198EB9;	">
-	<div style="margin-left: 12%; 
-				width: 80%; 
-				line-height: 13px; 
-				letter-spacing: 7px; 
-				font-size: 10px; 
-				text-align: center;	">EasyRegister 報名系統</div>	
+<div style="margin-top: 5px; margin-bottom: 10px;">
+<%=image_tag 'logo&text.png'%>
 </div>	
 <div style="letter-spacing: 1.5px;
 		    padding-bottom: 30px; 
-		    padding-top: 10px; 	
+		    padding-top: 30px; 	
 		    padding-left: 5px; 		    	    
-		    border-bottom: 1px solid #198EB9; 
-		    border-top: 1px solid #198EB9; 
+		    border-bottom: 1px solid; 
+		    border-top: 1px solid; 
 		    margin-bottom: 30px;">		
 <div class="masonry" style="-moz-column-count: 4;
 						    -webkit-column-count: 4;
@@ -58,7 +53,7 @@
 點擊以下可觀看注意事項和最新報名進度。
 <br>
 <%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
-<br>
+<br><br>
 如有任何問題，請洽:<%=@progress.period.user.name%> <%=@progress.period.user.email%> <%=@progress.period.user.phone_no%><br>
 </div>
 </div>
