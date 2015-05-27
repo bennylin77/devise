@@ -57,14 +57,14 @@ $('form').submit(function(event){
 	});
 	if($('#subject').val() == '')
 	{
-		addAlert('error', '您沒填標題')		
+		toastr['error']('您沒填標題')		
 		$(".submitButton").button('reset')					
 		event.preventDefault();
 		return false		
 	}	
 	if(recipients_error)
 	{
-		addAlert('error', '您沒選擇收件人')	
+		toastr['error']('您沒選擇收件人')			
 		$(".submitButton").button('reset')			
 		event.preventDefault();
 		return false

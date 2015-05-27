@@ -41,7 +41,7 @@ function scoreAjaxHandler(id)
 	dataType: "json"
 	});
 	request.done(function( message ) {
-		addAlert('success', message.message)
+		toastr['success'](message.message)					
 	});
 	request.fail(function( jqXHR, textStatus ) {
 	});	
@@ -55,7 +55,7 @@ function attendanceAjaxHandler(id)
 	dataType: "json"
 	});
 	request.done(function( message ) {
-		addAlert('success', message.message)
+		toastr['success'](message.message)					
 	});
 	request.fail(function( jqXHR, textStatus ) {
 	});	
@@ -69,7 +69,7 @@ function certificateAjaxHandler(id)
 	dataType: "json"
 	});
 	request.done(function( message ) {
-		addAlert('success', message.message)
+		toastr['success'](message.message)					
 	});
 	request.fail(function( jqXHR, textStatus ) {
 	});	
@@ -83,7 +83,7 @@ function certificateNoAjaxHandler(id)
 	dataType: "json"
 	});
 	request.done(function( message ) {
-		addAlert('success', message.message)
+		toastr['success'](message.message)					
 	});
 	request.fail(function( jqXHR, textStatus ) {
 	});	
