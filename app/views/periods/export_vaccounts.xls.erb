@@ -23,7 +23,7 @@
       <td><%=progress.user.name%></td>
       <td><%=reg_course.score.to_s%></td>
       <td><%=reg_course.attendance.to_s%></td>
-      <td>[證書字號]</td>
+      <td><%=reg_course.certificate_no%></td>
       <td><%=progress.try(:vaccount).try(:vacc) || "N/A"%></td>
       <td><%=reg_course.payment.to_s%></td>
       <td><%=progress.try(:vaccount).try('status["Amount"]')  || "N/A" %></td>

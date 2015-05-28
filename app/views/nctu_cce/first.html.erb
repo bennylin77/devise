@@ -195,23 +195,5 @@ $("#user_head_pic").fileinput({showCaption: false,
      ],
      overwriteInitial: true							 
     });	
- $("#user_qualification_proof").fileinput({showCaption: false,
-   showRemove: false,
-	 showUpload: false,
-   allowedFileTypes: ["image"],
-   previewFileType: "image",
-   browseClass: "btn btn-success",
-   browseLabel: " 選取圖片",
-   browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
-   removeClass: "btn btn-danger",
-   removeLabel: "刪除",
-   removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
-     initialPreview: [
-			<% if !current_user.qualification_proof.url["missing"] %>
-        '<%= image_tag current_user.qualification_proof.url,class: 'file-preview-image' %>'
-			<% end %>		
-		],
-     overwriteInitial: true							 
-    });	
    
 </script>

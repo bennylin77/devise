@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/:id.:format
   def update
     # authorize! :update, @user
+    Rails.logger.debug "!!!!!!!!!!!"
     respond_to do |format|
       if @user.update(user_params)
         sign_in(@user == current_user ? @user : current_user, :bypass => true)
@@ -28,6 +29,16 @@ class UsersController < ApplicationController
       end
     end
   end  
+  
+  def uploadFile
+    current_user.head_pic = params[:user][:head_pic]
+    current_user.save!
+    render :text=> {
+      initialPreview: [
+        "<img src='#{current_user.head_pic.url}' class='file-preview-image' alt='Desert' title='Desert'>",
+      ]}.to_json, :layout=>false
+  end
+  
   private  
   def set_user
     @user = User.find(params[:id])

@@ -51,12 +51,12 @@ class PeriodsController < ApplicationController
   	
   	@group = @period.group
   	@progresses = @period.progresses
-  
+    time_str = Time.now.strftime("%Y%m%d%H%M")
     #@sys_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
   	respond_to do |format|
 			 format.xls{
 			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
-			 	response.headers['Content-Disposition'] = " attachment; filename=\"export.xls\" "	
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}帳單表.xls\" "	
 			 }
 		end	 
   
