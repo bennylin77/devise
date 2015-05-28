@@ -52,7 +52,7 @@
 					<%course = @period.courses.first%>
 					<%if course.waiting_start and course.waiting_available%>
 						<%=link_to '報名候補', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
-					<%elsif @period.courses.first.registered_courses.size == @period.courses.first.no_of_user and%>
+					<%elsif @period.courses.first.registered_courses.size == @period.courses.first.no_of_users and%>
 						<%=link_to '報名已滿', '', {class: "btn btn-lg btn-default", role: "button"} %>												
 					<%else%>
 						<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>																		
@@ -76,7 +76,7 @@
 					<%course = @period.courses.first%>
 					<%if course.waiting_start and course.waiting_available%>
 						<%=link_to '報名候補', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>							
-					<%elsif @period.courses.first.registered_courses.size == @period.courses.first.no_of_user and%>
+					<%elsif @period.courses.first.registered_courses.size == @period.courses.first.no_of_users and%>
 						<%=link_to '報名已滿', '', {class: "btn btn-lg btn-default", role: "button"} %>												
 					<%else%>
 						<%=link_to '我要報名', {controller: Hash[controllerOptions].rassoc(@period.group.system_module.serial_code).first, action: 'first', id: @period.id}, {class: "btn btn-lg btn-success", role: "button"} %>																		
