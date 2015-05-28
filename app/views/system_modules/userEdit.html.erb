@@ -1,0 +1,86 @@
+<h3 class="text-center"><%= @system_module.title  %></h3>
+<br>
+<div class="container" >
+<%= form_tag  '/system_modules/userAdd', method: 'post', class: "form-horizontal", role: "form" do %>
+    <%= hidden_field_tag  :id,  @system_module.id  %>	
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">新增成員</label>
+		<div class="col-sm-5">
+			<%= text_field_tag :email, '', placeholder: '會員信箱', class: "form-control " %>
+		</div>
+		<div class="col-sm-2">	
+			<%= select_tag  :role, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ]), class: "form-control" %>	
+		</div>
+		<div class="col-sm-2">
+			<%= submit_tag '加入',  class: "btn btn-primary"  %>
+		</div>				
+	</div>	    
+<% end %>
+</div>
+
+<%= link_to '查詢虛擬帳號', "/system_modules/check_account", class: 'btn btn-default' %>
+<%= link_to '總匯款明細', "/system_modules/vaccounts?id="+params[:id], class: 'btn btn-default' %>
+<%= link_to '匯出問卷統計', "/system_modules/export_summary.xls?id=#{params[:id]}&type=answer&year=103", class: 'btn btn-default' %>
+<%= link_to '匯出及格人數統計', "/system_modules/export_summary.xls?id=#{params[:id]}&type=score&year=103", class: 'btn btn-default' %>
+</br>
+</br>
+<table class="table table-striped ">
+  <tr>
+    <th>姓名</th>
+    <th>Email</th>    
+    <th>權限</th>
+    <th></th>        
+  </tr>		
+<%@system_module.module_user_lists.order('id desc').each do |mu| %>
+  <tr>
+    <td><%= mu.user.name%></td>
+    <td><%= mu.user.email%></td>    
+    <td><%= select_tag 'role_'+mu.id, options_for_select( [ ['成員', GLOBAL_VAR['ROLE_MEMBER'] ], ['管理員', GLOBAL_VAR['ROLE_ADMIN']] ], mu.role ), onchange: 'selectAjaxHandler("'+mu.id+'")' %></td>
+    <td><%=link_to '刪除', {controller: 'system_modules', action: 'userDestroy', module_user_id: mu.id, id: @system_module.id }, class: 'btn btn-danger' , data: { confirm: '您確定要刪除？' } %></td>        
+  </tr>	
+<%end%>
+</table>
+
+
+<script>
+$(function(){ 
+	$( "#email" ).autocomplete({
+		source: function (request, response) {
+			$.ajax({
+        		url: "/system_modules/userInfo",
+        		data: {email: request.term, id: '<%= @system_module.id%>' },
+        		dataType: "json",
+        		success: function( data ) {
+            		response( $.map( data, function( item ) {
+	                	return {
+		                    label: item.label,
+		                    value: item.value
+	                	}
+            		}));
+        		}
+			});
+		},	
+		select: function(event, ui) {
+			$("#user_email").val(ui.item.value)
+        },
+		minLength: 2		
+	});		
+});
+
+function selectAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/system_modules/userRole",
+	type: "POST",
+	data: { module_user_id: id, val: $( "#role_"+id ).val(), id: '<%= @system_module.id%>'  },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		toastr['success'](message.message)				
+	});
+	request.fail(function( jqXHR, textStatus ) {
+		toastr['error']('請先連上網路, 並重新整理頁面')				
+	});	
+}	
+	
+</script>

@@ -1,0 +1,219 @@
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
+<%= render partial: "user", locals: {period: @period} %>
+<br><br>
+<div class="container" style="margin-bottom: 20px;">
+	<div class="row">	
+		<div class="col-sm-1">	
+			<%=link_to '寄送教學反映問卷邀請', {controller: 'nctu_cce', action: 'askFeedback', id: @period.id}, class: 'btn btn-primary', onclick: '$(this).html("寄送中..."); $(this).attr("disabled","disabled");' %>
+		</div>
+	</div>
+</div>	
+<%@period.courses.each do |c| %>
+<h4>修課人數:
+<%=c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count%> 
+		答卷人數: 
+		<%=@period.progresses.where(stage: 5, feedback_done: true).count%>
+	<%unless @period.progresses.where(stage: 5, feedback_done: true).count == 0%>		
+		答卷率:  
+		<%= (@period.progresses.where(feedback_done: true).count.to_f / c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count).round(3)*100  %>%
+		</h4>
+		<div class="table-responsive">
+		<table class="table table-condensed table-bordered">
+		<tr>
+			<th rowspan="2">評量題目</th>	
+			<th rowspan="2">平均分數</th>		
+			<th>非常滿意</th>	
+			<th>滿意</th>
+			<th>沒意見</th>
+			<th>不滿意</th>
+			<th>非常不滿意</th>		
+			<th colspan="3">依'我對這門課的態度'</th>		
+			<th colspan="3">依'預期學期結束時，我在本課程的成績'</th>					
+		</tr>	
+		<tr>
+			<th colspan="5">填答人數百分比</th>	
+			<th>認真</th>
+			<th>一般</th>
+			<th>不認真</th>
+			<th>前1/3</th>
+			<th>中1/3</th>
+			<th>後1/3</th>					
+		</tr>	
+		<tr>
+			<th colspan="13">綜合評估</th>				
+		</tr>
+		<% r1 = nctu_cce_feedback_1_1SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>1. 我對教師的教學態度</td>	
+			<% r1.each do |r| %>
+			<td><%=r %></td>
+			<%end%>				
+		</tr>
+		<% r2 = nctu_cce_feedback_1_2SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>2. 我對教師的授課方法</td>	
+			<% r2.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r3 = nctu_cce_feedback_1_3SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>3. 我對本課程的內容與結構</td>	
+			<% r3.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r4 = nctu_cce_feedback_1_4SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>4. 我對本課程的作業、報告、考試與評分方式</td>	
+			<% r4.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r5 = nctu_cce_feedback_1_5SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>5. 我對本課程的整體印象</td>	
+			<% r5.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<tr>
+			<th colspan="13">細項評估</th>				
+		</tr>
+		<% r21 = nctu_cce_feedback_2_1SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>1. 我覺得教師課前準備得很充足</td>	
+			<% r21.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r22 = nctu_cce_feedback_2_2SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>2. 教師上課熱忱、認真、負責</td>	
+			<% r22.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r23 = nctu_cce_feedback_2_3SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>3. 教師的教學方法適切</td>	
+			<% r23.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r24 = nctu_cce_feedback_2_4SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>4. 教師授課的表達與說明清楚</td>	
+			<% r24.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r25 = nctu_cce_feedback_2_5SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>5. 教師的課堂時間分配恰當</td>	
+			<% r25.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r26 = nctu_cce_feedback_2_6SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>6. 本課程所教內容前後有組織、有條理</td>	
+			<% r26.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r27 = nctu_cce_feedback_2_7SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>7. 使用之教科書、教材或講義對學習很有幫助</td>	
+			<% r27.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r28 = nctu_cce_feedback_2_8SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>8. 教師教授的教材內容充實豐富</td>	
+			<% r28.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r29 = nctu_cce_feedback_2_9SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>9. 考試、作業的內容對學習很有幫助</td>	
+			<% r29.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r210 = nctu_cce_feedback_2_10SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>10. 考核與評分的方式公平合理</td>	
+			<% r210.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<% r211 = nctu_cce_feedback_2_11SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td>11. 我可以很容易在教師的office hours或是利用其他方式與教師聯絡</td>	
+			<% r211.each do |r| %>
+			<td><%=r %></td>
+			<%end%>					
+		</tr>
+		<tr>
+			<th colspan="13">請寫出您對本課程或授課教師的建議</th>		
+		</tr>
+		<tr>
+			<td colspan="13">	
+			
+			</td>
+		</tr>	
+		<tr>
+			<th colspan="13">學習評估</th>		
+		</tr>
+		<% r41 = nctu_cce_feedback_4_1SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td rowspan="2">1. 我對這門課的態度</td><td colspan="2">認真</td><td colspan="2">一般</td><td colspan="2">不認真</td>				
+		</tr>
+		<tr>
+			<%for i in 0..2  %>
+			<td colspan="2"><%=r41[i] %></td>	
+			<%end%>
+		</tr>
+		<% r42 = nctu_cce_feedback_4_2SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td rowspan="2">2. 我的缺席狀況</td><td colspan="2">從不</td><td colspan="2">極少(3次以下)</td><td colspan="2">偶爾</td><td colspan="2">常常(超過1/3)</td>				
+		</tr>
+		<tr>
+			<%for i in 0..3  %>
+			<td colspan="2"><%=r42[i] %></td>	
+			<%end%>
+		</tr>
+		<% r43 = nctu_cce_feedback_4_3SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td rowspan="2">3. 我每週平均自習本課程的時數約為</td><td colspan="2">0~2小時</td><td colspan="2">3~5小時</td><td colspan="2">6小時以上</td>				
+		</tr>
+		<tr>
+			<%for i in 0..2  %>
+			<td colspan="2"><%=r43[i] %></td>	
+			<%end%>
+		</tr>
+		<% r44 = nctu_cce_feedback_4_4SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td rowspan="2">4. 預期學期結束時，我在本課程的成績</td><td colspan="2">前1/3</td><td colspan="2">中1/3</td><td colspan="2">後1/3</td>				
+		</tr>
+		<tr>
+			<%for i in 0..2  %>
+			<td colspan="2"><%=r44[i] %></td>	
+			<%end%>
+		</tr>
+		<% r45 = nctu_cce_feedback_4_5SubFeedbackStatistics(@period, c.id)%>
+		<tr>
+			<td rowspan="2">5. 本課程之難易度如何</td><td colspan="2">艱深</td><td colspan="2">適中</td><td colspan="2">過淺</td><td colspan="2">無法判斷</td>					
+		</tr>
+		<tr>
+			<%for i in 0..3  %>
+			<td colspan="2"><%=r45[i] %></td>	
+			<%end%>
+		</tr>
+		</table>	
+		</div>
+	<%end%>		
+<%end%>

@@ -1,0 +1,35 @@
+<table>
+<tr>
+  <th>開課名稱</th>
+  <th>課程名稱</th>
+	<th>學員編號</th>
+	<th>身分證字號</th>
+	<th>中文姓名</th>
+	<th>分數</th>
+	<th>出席率</th>
+	<th>證書字號</th>
+	<th>ATMno</th>
+	<th>收費金額</th>
+	<th>ATM金額</th>
+	<th>英文姓名</th>
+</tr>
+<% @progresses.each do |progress| %>
+  <tr>
+    <td><%=@group.title%></td>
+    <% progress.registered_courses.each do |reg_course|%>
+      <td><%=reg_course.course.title%></td>
+      <td>[學員編號]</td>
+      <td><%=progress.user.id_no_TW%></td>
+      <td><%=progress.user.name%></td>
+      <td><%=reg_course.score.to_s%></td>
+      <td><%=reg_course.attendance.to_s%></td>
+      <td>[證書字號]</td>
+      <td><%=progress.try(:vaccount).try(:vacc) || "N/A"%></td>
+      <td><%=reg_course.payment.to_s%></td>
+      <td><%=progress.try(:vaccount).try('status["Amount"]')  || "N/A" %></td>
+      <td><%=progress.user.name_en%></td>
+    <% end %>
+  </tr>
+<% end %>
+
+</table>

@@ -1,0 +1,130 @@
+body {
+  padding-top: 50px;
+  font-family: Microsoft JhengHei, Arial, sans-serif;  
+}
+/*
+* Global add-ons
+*/
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+/*
+* Top navigation
+* Hide default border to remove 1px line.
+*/
+.navbar-fixed-top {
+  border: 0;
+}
+/*
+* Main content
+*/
+.main {
+  padding: 50px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+.table-hover tbody tr:hover > td {
+  cursor: pointer
+}
+
+.ui-autocomplete{
+  list-style: none;
+}
+
+.navbar-nav > li > a{
+    padding-top: 27px !important; 
+    padding-bottom:0 !important;
+    height: 72px;
+    font-size: 16px;    
+}
+.navbar {min-height: 72px !important;}
+
+.navbar-toggle{
+  margin-top: 20px;
+}
+
+/*==================================step menu==========================================*/
+ol.progtrckr {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-bottom: 60px;  
+}
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3em;
+}
+ol.progtrckr[data-progtrckr-steps="2"] li { width: 49%; }
+ol.progtrckr[data-progtrckr-steps="3"] li { width: 33%; }
+ol.progtrckr[data-progtrckr-steps="4"] li { width: 24%; }
+ol.progtrckr[data-progtrckr-steps="5"] li { width: 19%; }
+ol.progtrckr[data-progtrckr-steps="6"] li { width: 16%; }
+ol.progtrckr[data-progtrckr-steps="7"] li { width: 14%; }
+ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
+ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
+ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.progtrckr-todo {
+    color: silver; 
+    border-bottom: 4px solid silver;
+}
+ol.progtrckr li.progtrckr-under{
+    color: black;
+    border-bottom: 4px solid #E6E65C;
+}
+
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 1.2em;
+    width: 1.2em;
+    line-height: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+}
+ol.progtrckr li.progtrckr-todo:before {
+    content: "\039F";
+    color: silver;
+    background-color: white;
+    font-size: 1.5em;
+    bottom: -1.6em;
+}
+ol.progtrckr li.progtrckr-under:before {
+    content: "\039F";
+    color: #E6E65C;
+    background-color: white;
+    font-size: 1.5em;
+    bottom: -1.6em;
+}
+.period_management_box{
+  width: 280px;
+}
+.period_box{
+  width: 280px;
+}
+.progress_box{
+  width: 280px;
+}

@@ -1,0 +1,15 @@
+<div class="container-fluid">
+	<div class="row">
+		<ul class="nav nav-tabs col-sm-offset-4  col-sm-4">
+		  <li role="presentation" <%= active(controller: 'nctu_cce_credit', action: 'sendMessage')%>>
+		  	<%=link_to '群組寄信', {controller: '/nctu_cce_credit', action: 'sendMessage', id: @period.id}%>
+		  </li>			
+		  <li role="presentation" <%= active(controller: 'nctu_cce_credit', action: 'editFeedback')%>>
+		  	<%=link_to '問卷管理', {controller: '/nctu_cce_credit', action: 'editFeedback', id: @period.id} %>
+		  </li>				
+		  <li role="presentation" <%= active(controller: 'nctu_cce_credit', action: 'editScore')%>>
+		  	<%=link_to '成績管理', {controller: '/nctu_cce_credit', action: 'editScore', id: @period.id} %>
+		  </li>								  
+		</ul>	
+	</div>
+</div>	

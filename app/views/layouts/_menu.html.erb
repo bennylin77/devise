@@ -1,0 +1,59 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<%=link_to periods_path, class: 'navbar-brand' do%>
+			<%=image_tag 'logo&text.png', class: 'img-responsive hidden-xs', style: "max-height: 80px; margin-top: -10px;" %>
+			<%=image_tag 'logo.png', class: 'img-responsive visible-xs-block', style: "max-height: 60px; margin-top: -10px;" %>			
+			<%end%>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<%if user_signed_in?%>
+				<li <%= active( controller: '/periods', action: 'progress' )%> >
+				<%=link_to '/periods/progress', {} do%>
+					我的報名課程			
+				<%end%>							
+				</li>
+				<%if current_user.module_user_lists.size!=0 %>
+					<li <%= active( controller: '/periods', action: 'indexManagement') %> >
+					<%=link_to '/periods/indexManagement', {} do%>
+						主辦者
+					<%end%>							
+					</li>
+					<%if current_user.module_user_lists.where(role: GLOBAL_VAR['ROLE_ADMIN']).count!=0 %>
+					<li <%= active( controller: '/system_modules', action: 'userIndex' )%> >
+					<%=link_to '/system_modules/userIndex', {} do%>
+						模組管理
+					<%end%>							
+					</li>		
+					<%end%>		
+				<%end%>		
+				<li>
+				  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">					
+					<%= current_user.name%><span class="caret"></span>
+				    <span class="sr-only">Toggle Dropdown</span>
+				  	</a>
+					<ul class="dropdown-menu" role="menu">
+					    <li><%= link_to "更改個人資料", edit_user_path(current_user) %></li>
+					    <li><%= link_to "更改密碼", edit_user_registration_path %></li>
+					    <li class="divider"></li>
+					    <li><%= link_to '登出', destroy_user_session_path, :method => :delete %></li>
+					</ul>			
+				</li>	
+				<%else%>
+				<li>
+				<%=link_to new_user_session_path, {} do%>
+					登入/註冊			
+				<%end%>							
+				</li>								
+				<%end%>
+			</ul>
+		</div>
+	</div>
+</nav>

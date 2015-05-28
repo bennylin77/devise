@@ -1,0 +1,13 @@
+<%= render partial: "step", locals: {progress: @progress, step: @step} %>
+
+<h4 class="text-center">
+完成填表, 請等待承辦人員審核報名資格, 如審核通過, 系統將會寄送通知訊息至您的信箱
+<%=current_user.email%>
+</h4>
+<%if @progress.registered_courses.first.waiting%>
+<h2 class="text-center text-danger">
+	您的候補號碼為 <%= @progress.registered_courses.first.waiting_no %>號
+</h2>
+<%end%>
+
+ 

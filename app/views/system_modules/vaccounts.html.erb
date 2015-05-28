@@ -1,0 +1,3 @@
+<h3 class="text-center"><%=@sys_module.title%> - 總匯款明細</h3>
+<%=link_to "匯出總匯款明細", "/system_modules/vaccounts.xls?id=#{params[:id]}", class: 'btn btn-default'%><br><br>
+<%=render "vaccount_list"%>

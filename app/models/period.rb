@@ -1,0 +1,24 @@
+class Period
+  include Mongoid::Document
+  include Mongoid::Timestamps   
+
+#  embeds_many :evaluations
+#  embeds_many :comments
+  has_many :progresses, dependent: :destroy  
+  has_many :courses, dependent: :destroy   
+  belongs_to :user  
+  belongs_to :group
+  accepts_nested_attributes_for :courses 
+
+  field :school_year, type: Integer
+  field :semester, type: Integer
+  field :term, type: Integer 
+   
+  field :start_at, type: DateTime  
+  field :end_at, type: DateTime 
+  field :payment_start_at, type: DateTime   
+  field :payment_end_at, type: DateTime    
+  field :precautions, type: String
+  field :eligibility, type: String
+   
+end

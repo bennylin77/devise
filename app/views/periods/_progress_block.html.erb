@@ -1,0 +1,44 @@
+<div class="progress_box"  id="progress_box_<%=progress_block.id%>" >
+	<div class="panel panel-<%=stageColor progress_block%>">  
+	  <div class="panel-heading">  	
+		<%=link_to "/"+Hash[controllerOptions].rassoc(progress_block.period.group.system_module.serial_code).first+"/"+Hash[stageOptions].rassoc(progress_block.stage).first+"?id="+progress_block.period.id, {} do%>
+		    <%if progress_block.period.school_year%><%=progress_block.period.school_year%>學年<%end%>	    
+		    <%if progress_block.period.semester%><%=Hash[semesterOptions].rassoc(progress_block.period.semester).first%><%end%>	    
+		    <h2 class="panel-title"><%= progress_block.period.group.title %> <%if progress_block.period.term%>(第<%=progress_block.period.term%>期)<%end%></h2>	    	    
+	    <%end%>	 
+	  </div>	  
+	  <div class="panel-body" style="min-height: 150px;">
+		    <p><%= truncate(progress_block.period.group.description, length: 60)%></p>
+			<strong><div id="clock_<%=progress_block.id%>"></div></strong>	  			    	 
+	  </div>  
+	  <div class="panel-footer">	   	
+	 	<div class="container" style="width: 250px;">
+		  	<div class="row">
+		        <div class="pull-left">承辦人：<br></div>   	
+		    </div>	 		
+		  	<div class="row">
+		        <div class="pull-left"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%=progress_block.period.user.name%></div>    	
+		    </div>	   
+		    <div class="row"> 
+		        <div class="pull-left"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=progress_block.period.user.email%></div>		
+		  	</div>	
+		    <div class="row"> 
+		        <div class="pull-left"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> <%=showBlank progress_block.period.user.phone_no%></div>		
+		  	</div>		  			  	
+	  	</div>
+	  </div>	  
+
+	
+	</div>		
+</div>
+<%if progress_block.period.start_at < Time.now%>
+<script type="text/javascript">
+  $('#clock_<%=progress_block.id%>').countdown('<%= progress_block.period.end_at.strftime('%Y/%m/%d %H:%M:%S')%>', function(event) {
+    $(this).html(event.strftime(''+
+		'<span>%-D</span> 天 '+ 
+		'<span>%H</span> 時 '+
+		'<span>%M</span> 分 '+ 
+		'<span>%S</span> 秒 報名截止'));
+  });
+</script> 
+<%end%>

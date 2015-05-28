@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<div style="font-family: Microsoft JhengHei, 'Lato', Calibri, Arial, sans-serif; padding: 5px 20px;	">	
+<div style="margin-top: 5px; margin-bottom: 10px;">
+<%=image_tag 'logo&text.png'%>
+</div>	
+<div style="letter-spacing: 1.5px;
+		    padding-bottom: 30px; 
+		    padding-top: 30px;  	
+		    padding-left: 5px; 		    	    
+		    border-bottom: 1px solid; 
+		    border-top: 1px solid; 
+		    margin-bottom: 30px;">		
+<div class="masonry" style="-moz-column-count: 4;
+						    -webkit-column-count: 4;
+						    column-count: 4;
+						    -moz-column-gap: 1em;
+						    -webkit-column-gap: 1em;
+						    column-gap: 1em;">
+<%=@progress.user.name%> 您好!
+<br>   
+<b><%=@progress.period.group.title%></b>
+審核不通過/取消資格 原因: <%=@progress.reason%><br>
+需要您重新送出報名申請，請點擊以下連結進行動作。
+<br>
+<%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
+</div>
+</div>
+</div>
+</div>
+		
+</body>
+</html>

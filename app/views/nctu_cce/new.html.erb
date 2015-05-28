@@ -1,0 +1,105 @@
+<%= render partial: "newStep", locals: {step: @step} %>
+<div class="container" >
+<%= form_for @group, url: { controller: 'nctu_cce', action: "create" }, html: {class: "form-horizontal", role: "form"} do |g| %>
+<div class="form-group">
+	<label class="col-sm-offset-1 col-sm-2 control-label">班級名稱*</label>
+	<div class="col-sm-6">
+		<%= g.text_field :title, class: "form-control", placeholder: "班級名稱" %>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-offset-1 col-sm-2 control-label">班級簡介*</label>
+	<div class="col-sm-6">
+		<%= g.text_area :description, class: "form-control", placeholder: "班級簡介" %>
+	</div>
+</div>
+  <%= g.fields_for :periods do |p| %>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">學年</label>
+		<div class="col-sm-3">
+			<%= p.select :school_year, options_for_select([[Time.now.year-1912, Time.now.year-1912], 
+														   [Time.now.year-1911, Time.now.year-1911],			
+														   [Time.now.year-1910, Time.now.year-1910],	
+														   [Time.now.year-1909, Time.now.year-1909]]), {prompt: '學年'}, class: "form-control" %>		
+		</div>
+		<label class="col-sm-1 control-label">學期</label>
+		<div class="col-sm-2">
+			<%= p.select :semester, options_for_select(semesterOptions), {prompt: '學期'}, class: "form-control" %>		
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">期數</label>
+		<div class="col-sm-6">
+			<%= p.text_field :term, class: "form-control", placeholder: "期數" %>
+		</div>
+	</div>		
+	<%= p.fields_for :courses do |c| %>
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">招生人數*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :no_of_users, class: "form-control", placeholder: "招生人數" %>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">學費*</label>
+			<div class="col-sm-6">
+				<%= c.text_field :price, class: "form-control", placeholder: "學費" %>
+			</div>
+		</div>
+	<%end%>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">報名開放時間*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名開放時間" %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_start_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">報名結束時間*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名結束時間" %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_end_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">繳費開放時間*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費開放時間" %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_payment_start_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">繳費結束時間*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費結束時間" %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_payment_end_at').datetimepicker({
+	                });
+	            });
+	    </script>	
+	</div>
+  <% end %>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<%= g.submit '完成送出',  class: "btn btn-primary"  %>
+	</div>
+</div>
+<% end %>
+</div>

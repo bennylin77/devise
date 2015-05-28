@@ -1,0 +1,42 @@
+<style>
+td {
+  text-align: center;
+}
+</style>
+<table>
+<tr>
+  <td>班別名稱</td>
+  <td>課程名稱</td>
+  <td>修課人數</td>
+  <td>取得證書人數</td>
+  <td>合計</td>
+</tr>
+<% @sys_module.groups.each do |group| %>
+  <tr>
+    <td colspan="2"><%=group.title%></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <% group.periods.where(:school_year=>params[:year]).each do |period| %>
+    <% progresses = period.progresses %>  
+    <% period.courses.each do |course| %>
+      <% reg_courses = progresses.map{ |p| p.registered_courses }.flatten %>
+      <% matchs = reg_courses.select{|i| i.progress.stage==4 and i.course==course} %>
+      <% take_cnt = matchs.count %>
+      <% pass_cnt = matchs.select{|p| p.certificate }.count %>
+      <% sum = (take_cnt==0) ? 0 : ((pass_cnt*1.0/take_cnt)*100).round(2) %>
+      <tr>
+        <td></td>
+        <td><%=course.title%></td>
+        <td><%=take_cnt.to_s %></td>
+        <td><%=pass_cnt.to_s %></td>
+        <td><%=sum.to_s %> %</td>
+      </tr>
+    <% end %> 
+  <% end %>
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+<% end %>
+</table>

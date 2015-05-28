@@ -1,0 +1,100 @@
+<div class="container" >
+<%= form_for(@user, html: {class: "form-horizontal", role: "form"}) do |f| %>
+ 	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">Email</label>
+		<div class="col-sm-6"><%= @user.email %></div>
+	</div>	
+ 	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">姓名</label>
+		<div class="col-sm-6">
+			<%= f.text_field :name, class: "form-control", placeholder: '姓名' %>			
+		</div>
+	</div>		 
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話</label>
+		<div class="col-sm-6">
+			<%= f.text_field :phone_no, class: "form-control", placeholder: "聯絡電話" %>
+		</div>
+	</div>						
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡地址</label>
+		<div class="form-inline col-sm-6">
+			<span id="twzipcode"></span>
+			<%= f.text_field :address, class: "form-control" %>
+		</div>
+	</div>	
+	<div class="form-group">
+	  <label class="col-sm-offset-1 col-sm-2 control-label">個人照片</label>
+		<div class="col-sm-6">
+			<%=f.file_field :head_pic,  accept: "image/*"%>
+		</div> 
+	</div>
+	<div class="form-group">
+	  <label class="col-sm-offset-1 col-sm-2 control-label">學歷證明</label>
+		<div class="col-sm-6">
+			<%=f.file_field :qualification_proof%>
+		</div> 
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-6">
+			<%= f.submit '送出',  class: "btn btn-default"  %>
+		</div>
+	</div>
+<% end %>
+</div>
+<%=current_user.head_pic.url%>
+<script>
+$('#twzipcode').twzipcode({
+	zipcodeName: 'user[postal]',
+    countyName: 'user[county]',
+    districtName: 'user[district]',
+    zipcodeIntoDistrict: true,
+    css: ['form-control', 'form-control'], 
+    <%unless @user.county.blank?%>
+	countySel: '<%=@user.county%>',
+	districtSel: '<%=@user.district%>'
+	<%end%>    
+});
+<% @user.errors.full_messages.each do |message| %>
+	toastr['error']('<%=message%>')		
+<% end %>
+
+	$("#user_head_pic").fileinput({showCaption: false,
+   showRemove: false,
+	 showUpload: false,
+   allowedFileTypes: ["image"],
+   previewFileType: "image",
+   browseClass: "btn btn-success",
+   browseLabel: " 選取圖片",
+   browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+   removeClass: "btn btn-danger",
+   removeLabel: "刪除",
+   removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+     initialPreview: [
+				<% if !current_user.head_pic.url["missing"] %>
+        '<%= image_tag current_user.head_pic.url,class: 'file-preview-image' %>'
+				<% end %>	
+     ],
+     overwriteInitial: true							 
+    });	
+  $("#user_qualification_proof").fileinput({showCaption: false,
+   showRemove: false,
+	 showUpload: false,
+   allowedFileTypes: ["image"],
+   previewFileType: "image",
+   browseClass: "btn btn-success",
+   browseLabel: " 選取圖片",
+   browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+   removeClass: "btn btn-danger",
+   removeLabel: "刪除",
+   removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+     initialPreview: [
+			<% if !current_user.qualification_proof.url["missing"] %>
+        '<%= image_tag current_user.qualification_proof.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ],
+     overwriteInitial: true							 
+    });	
+
+</script>

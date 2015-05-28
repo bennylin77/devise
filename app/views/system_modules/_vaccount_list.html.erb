@@ -1,0 +1,19 @@
+<table class="table table-striped">
+<tr>
+	<th>虛擬帳號</th>
+	<th>所屬報名</th>
+	<th>所有人</th>
+	<th>內涵金額</th>
+	<!--<td>銷帳</td>-->
+</tr>
+<% @vaccounts.each do |vacc| %>
+<tr>
+	<td><%= vacc.vacc %></td>
+	<td><%= vacc.progress.period.school_year %></td>
+	<td><%= vacc.progress.user.name %></td>
+	<td><%= (vacc.status) ? vacc.status["Amount"] : 0.0 %></td>
+	<!--<td>No</td>-->
+</tr>
+<% end %>
+
+</table>
