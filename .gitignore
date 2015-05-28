@@ -19,4 +19,4 @@
 /config/environments
 /config/initializers/setup_mail.rb
 /config/initializers/vaccount_constants.rb
-/initializers/devise.rb
+/config/initializers/devise.rb

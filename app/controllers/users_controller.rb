@@ -31,11 +31,12 @@ class UsersController < ApplicationController
   end  
   
   def uploadFile
-    current_user.head_pic = params[:user][:head_pic]
+    target = prarms[:type]=="head" ? :head_pic : :qualification_proof
+    current_user.head_pic = params[:user][target]
     current_user.save!
     render :text=> {
       initialPreview: [
-        "<img src='#{current_user.head_pic.url}' class='file-preview-image' alt='Desert' title='Desert'>",
+        "<img src='#{current_user[target].url}' class='file-preview-image' alt='Desert' title='Desert'>",
       ]}.to_json, :layout=>false
   end
   
