@@ -1,7 +1,0 @@
-<%= render partial: "step", locals: {progress: @progress, step: @step} %>
-
-<%unless @progress.feedback_done %>
-<%= render partial: "feedback", locals: {progress: @progress} %>
-<%else%>
-<h1 class="text-center">你已完成教學反映問卷填寫，感謝！</h1>
-<%end%>
