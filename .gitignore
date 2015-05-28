@@ -15,5 +15,6 @@
 /log/*.log
 /tmp
 /public/user/*
+/public/assets
 /config/initializers/setup_mail.rb
 /config/initializers/vaccount_constants.rb
