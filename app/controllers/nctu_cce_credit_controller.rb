@@ -183,7 +183,7 @@ class NctuCceCreditController < ApplicationController
         @progress.vaccount.save!
       end
       @progress.save!
-      flash[:alert]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
+      flash[:error]="審核不通過/取消資格 "+@progress.user.name+" 的報名"
       System.sendUnverified(user: @progress.user, progress: @progress).deliver         
     else
       @progress.verified = true 
