@@ -32,7 +32,7 @@
 	<div class="form-group">
 	  <label class="col-sm-offset-1 col-sm-2 control-label">學歷證明</label>
 		<div class="col-sm-6">
-			<%=f.file_field :qualification_proof%>
+			<%=f.file_field :qualification_proof,  accept: "image/*"%>
 		</div> 
 	</div>
 	
@@ -63,29 +63,27 @@ $('#twzipcode').twzipcode({
 	  uploadUrl: "/users/uploadFile?type=head", // server upload action
     uploadAsync: true,
     maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
     initialPreview: [
 			<% if !current_user.head_pic.url["missing"] %>
         '<%= image_tag current_user.head_pic.url,class: 'file-preview-image' %>'
 			<% end %>	
      ]		 
     });	
-  $("#user_qualification_proof").fileinput({showCaption: false,
-   showRemove: false,
-	 showUpload: false,
-   allowedFileTypes: ["image"],
-   previewFileType: "image",
-   browseClass: "btn btn-success",
-   browseLabel: " 選取圖片",
-   browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
-   removeClass: "btn btn-danger",
-   removeLabel: "刪除",
-   removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
-     initialPreview: [
+  $("#user_qualification_proof").fileinput({
+    uploadUrl: "/users/uploadFile?type=qualification_proof", // server upload action
+    uploadAsync: true,
+    maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
+    initialPreview: [
 			<% if !current_user.qualification_proof.url["missing"] %>
         '<%= image_tag current_user.qualification_proof.url,class: 'file-preview-image' %>'
 			<% end %>	
-     ],
-     overwriteInitial: true							 
+     ]					 
     });	
 
 </script>

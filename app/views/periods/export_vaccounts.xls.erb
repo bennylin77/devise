@@ -14,9 +14,9 @@
 	<th>英文姓名</th>
 </tr>
 <% @progresses.each do |progress| %>
-  <tr>
-    <td><%=@group.title%></td>
-    <% progress.registered_courses.each do |reg_course|%>
+  <% progress.registered_courses.each_with_index do |reg_course, idx|%>
+    <tr>
+      <td><%=(idx==0) ? @group.title : "" %></td>  
       <td><%=reg_course.course.title%></td>
       <td>[學員編號]</td>
       <td><%=progress.user.id_no_TW%></td>
@@ -24,12 +24,12 @@
       <td><%=reg_course.score.to_s%></td>
       <td><%=reg_course.attendance.to_s%></td>
       <td><%=reg_course.certificate_no%></td>
-      <td><%=progress.try(:vaccount).try(:vacc) || "N/A"%></td>
+      <td><%= "'"+(progress.try(:vaccount).try(:vacc) || "N/A")%></td>
       <td><%=reg_course.payment.to_s%></td>
       <td><%=progress.try(:vaccount).try('status["Amount"]')  || "N/A" %></td>
       <td><%=progress.user.name_en%></td>
-    <% end %>
-  </tr>
+    </tr>
+  <% end %>  
 <% end %>
 
 </table>
