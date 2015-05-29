@@ -31,23 +31,24 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.action_mailer.default_url_options = { host: 'http://register.ac-experts.com.tw', port: 80 }
-  config.action_controller.asset_host = 'register.ac-experts.com.tw'
+  config.action_mailer.default_url_options = { host: 'http://easyregister.tw', port: 80 }
+  config.action_controller.asset_host = 'easyregister.tw'
   # General Settings
-  config.app_domain = 'register.ac-experts.com.tw'
+  config.app_domain = 'easyregister.tw'
 
   # Email
-  config.action_mailer.asset_host = 'http://register.ac-experts.com.tw'    
+  config.action_mailer.asset_host = 'http://easyregister.tw'    
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: config.app_domain }
+  # Defaults to:
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com', 
-    port: '587',
-    enable_starttls_auto: true,
-    user_name: 'bennylin77',
-    password: '4300377@nctu',
-    authentication: :plain,
-    domain: 'gmail.com'
+  	:address => "localhost",
+  	:port => 25,
+  	:domain => "easyregister.tw",
   }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true  
+  #config.action_mailer.default_url_options = { host: config.app_domain }
+
+
+
 end

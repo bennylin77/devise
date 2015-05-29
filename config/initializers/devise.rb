@@ -2,7 +2,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   
-  config.omniauth :facebook, "473597906075550", "d733c9d5d72b9125a82c0b1eb57cf5ae"
+  config.omniauth :facebook, "431562347024401", "1434df29dabaf58e7048cea4964cfadd"
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'system@easyregister.com'
   config.secret_key = '19c7245d6fc10fe88e7e82cffbebd02d1d33291aaee55a5cc7a8ffd4a36d18372949b974609674
 3de9cc38ba45007c219227e4f3ec0a8dbdb7d881484043ae0c'
   # Configure the class responsible to send e-mails.
