@@ -22,12 +22,31 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         sign_in(@user == current_user ? @user : current_user, :bypass => true)
         flash.now[:notice] ='成功更改個人資料'
-        format.html { render action: 'edit' }
+        format.html { redirect_to edit_user_path }
       else
         format.html { render action: 'edit' }
       end
     end
+    
   end  
+  
+  def uploadFile
+    data = ""
+    if params[:type]=="head"
+      current_user.head_pic = params[:user][:head_pic]
+      data = current_user.head_pic
+    else
+      current_user.qualification_proof = params[:user][:qualification_proof]
+      data = current_user.qualification_proof
+    end 
+    current_user.save!
+    
+    render :text=> {
+      initialPreview: [
+        "<img src='#{data.url}' class='file-preview-image' alt='Desert' title='Desert'>",
+      ]}.to_json, :layout=>false
+  end
+  
   private  
   def set_user
     @user = User.find(params[:id])

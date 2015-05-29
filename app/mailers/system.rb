@@ -1,6 +1,6 @@
 # encoding: utf-8
 class System < ActionMailer::Base
-  default from: "EasyRegister 報名系統 <bennylin77@gmail.com.tw>"
+  default from: "EasyRegister 報名系統 <system@easyregister.tw>"
   helper ApplicationHelper  
   
   def sendMessage(hash={}) 

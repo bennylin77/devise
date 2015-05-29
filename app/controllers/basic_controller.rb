@@ -221,7 +221,15 @@ class BasicController < ApplicationController
   end 
   
   def export_users
-  
+    period = Period.find(params[:id])
+    @progresses = period.progresses.gte(:stage=>4)
+    time_str = Time.now.strftime("%Y%m%d%H%M")
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}學員資料.xls\" "	
+			 }
+		end	 
   
   end
   
@@ -247,7 +255,7 @@ class BasicController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :mobile_phone_no, :phone_no, :address, 
                                  :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
-                                 :hightest_education_grade, :receipt_title, :vegetarian, progresses_attributes: [:id, :receipt_title, :source] )      
+                                 :hightest_education_grade, :receipt_title, :vegetarian, :head_pic, progresses_attributes: [:id, :receipt_title, :source] )      
   end
       
   def group_params

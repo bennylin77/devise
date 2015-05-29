@@ -38,6 +38,12 @@
 		</div>
 	</div>		
 	<div class="form-group">
+	  <label class="col-sm-offset-1 col-sm-2 control-label">個人照片</label>
+		<div class="col-sm-6">
+			<%=u.file_field :head_pic,  accept: "image/*"%>
+		</div> 
+	</div>
+	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">身分證字號*</label>
 		<div class="col-sm-6">
 			<%= u.text_field :id_no_TW, placeholder: '身分證字號(大寫)', class: "form-control" %>
@@ -140,4 +146,31 @@ $('#twzipcode').twzipcode({
 	districtSel: '<%=current_user.district%>'
 	<%end%>    
 });
+	$("#user_head_pic").fileinput({
+	  uploadUrl: "/users/uploadFile?type=head", // server upload action
+    uploadAsync: true,
+    maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
+    initialPreview: [
+			<% if !current_user.head_pic.url["missing"] %>
+        '<%= image_tag current_user.head_pic.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ]		 
+    });	
+  $("#user_qualification_proof").fileinput({
+    uploadUrl: "/users/uploadFile?type=qualification_proof", // server upload action
+    uploadAsync: true,
+    maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
+    initialPreview: [
+			<% if !current_user.qualification_proof.url["missing"] %>
+        '<%= image_tag current_user.qualification_proof.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ]					 
+    });	   
+   
 </script>

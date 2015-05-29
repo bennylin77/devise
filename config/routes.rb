@@ -103,6 +103,8 @@ Rails.application.routes.draw do
   get  'system_modules/vaccounts'
   get  'system_modules/export_summary'
   
+  post 'users/uploadFile'
+  
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :periods  
   resources :users
