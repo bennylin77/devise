@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         sign_in(@user == current_user ? @user : current_user, :bypass => true)
-        flash.now[:notice] ='成功更改個人資料'
+        flash[:notice] ='成功更改個人資料'
         format.html { redirect_to edit_user_path }
       else
         format.html { render action: 'edit' }
