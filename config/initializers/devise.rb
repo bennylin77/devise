@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'system@easyregister.com'
+  config.mailer_sender = 'EasyRegister 報名系統 <system@easyregister.tw>'
   config.secret_key = '19c7245d6fc10fe88e7e82cffbebd02d1d33291aaee55a5cc7a8ffd4a36d18372949b974609674
 3de9cc38ba45007c219227e4f3ec0a8dbdb7d881484043ae0c'
   # Configure the class responsible to send e-mails.
