@@ -24,9 +24,8 @@ class Vaccount
 	# 
 	def update_status		 
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
-		xml_doc = parse_xml(http.body_str)
+		xml_doc = Nokogiri::XML(http.body_str)
 		return -1 if xml_doc == -1 #parse error, case by service maintaining 
-		#p xml_doc
 		self.status = {
 			"res"=>{
 						"code"=>xml_doc.xpath('//ResCode')[0].try(:content),
@@ -37,6 +36,7 @@ class Vaccount
 			"PayChnl"=>xml_doc.xpath('//PayChnl')[0].try(:content), 
 			"PayState" => xml_doc.xpath('//PayState')[0].try(:content)
 		}
+		self.save!
 		return 0
 	end
 	
@@ -68,31 +68,5 @@ class Vaccount
 		end
 		return chs%10
 	end
-	
-private	
-	def parse_xml(result)
-		xml = ""
-		result.split( /\r?\n/ ).each do |line|
-			break if line.include? "<script>"
-			next if line.include? "<script"  or line.include? "?xml" 
-		 
-			line = line.tr("\t",'').tr("<br>",'')
-			if line.length > 0
-				if line.include? "span"
-					xml += line[19..-8]+"\n"
-				else   
-					xml += line+"\n"
-				end
-			end
-		end
-		begin
-			xml = HTMLEntities.new.decode(xml.force_encoding("utf-8")) # encode to utf8 and decode from html
-		rescue
-			return -1
-		end
-		#print xml+"\n ============ \n" 
-		return Nokogiri::XML(xml)
-	end
-	
 	
 end
