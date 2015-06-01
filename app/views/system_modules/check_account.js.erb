@@ -1,4 +1,4 @@
-alert('<%=j @result.to_s%>')
+
 $('#result-table tr:last').after('<%=j @row.html_safe%>');
 $('check-submit').attr('disabled','');
 $('#vacc').val('');

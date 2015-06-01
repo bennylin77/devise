@@ -17,6 +17,6 @@
 /public/user/*
 /public/assets
 /config/environments
-/config/initializers/setup_mail.rb
+
 /config/initializers/vaccount_constants.rb
 /config/initializers/devise.rb
