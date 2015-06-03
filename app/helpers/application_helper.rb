@@ -1,7 +1,7 @@
 module ApplicationHelper
   
   def host
-    "http://register.ac-experts.com.tw/"
+    "http://easyregister.tw/"
   end
     
   def alert_class_for(flash_type)
