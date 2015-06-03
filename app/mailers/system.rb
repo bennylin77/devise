@@ -13,6 +13,7 @@ class System < ActionMailer::Base
     @user = hash[:user]
     @content = hash[:content]
     @sender = hash[:sender]
+    @progress = hash[:progress]
     mail( to: @user.email, subject: hash[:subject])    
   end 
   

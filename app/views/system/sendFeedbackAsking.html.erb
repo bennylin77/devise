@@ -27,18 +27,15 @@
 邀請您填寫教學反映問卷(如已填寫請忽略此信)，請點擊以下連結進行動作。
 <br>
 <%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
-<br><br>
+<br><br>--<br>
 如有任何問題，請洽承辦人員:<%=@progress.period.user.name%> <%=@progress.period.user.email%> <%=@progress.period.user.phone_no%><br>
-<br>
 <span style='color:#dd5e59; font-size: 14.5px;'>此為系統信箱無收信功能，如需回覆請直接聯絡承辦人員信箱</span>
-<br>
+<br>--
 </div>
 </div>
-<p>
 EasyRegister 簡單又方便的報名系統<br> 
 <%= link_to 'EasyRegister.tw', 'http://easyregister.tw' %><br>
 Copyright 2014 从人設計坊. All Rights Reserved. 
-</p>
 </div>		
 </body>
 </html>

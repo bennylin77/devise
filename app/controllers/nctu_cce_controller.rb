@@ -130,7 +130,8 @@ class NctuCceController < ApplicationController
   def sendMessage
     if request.post?        
       params[:recipients].each do |r|
-        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user).deliver
+        progress = @period.progresses.where(user_id: r).first                
+        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user, progress: progress).deliver
       end    
       flash[:success]="成功寄出信件"          
       redirect_to controller: :nctu_cce, action: :sendMessage, id: @period.id     

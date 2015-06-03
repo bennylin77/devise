@@ -31,7 +31,7 @@
 	<%=s.course.title%> 金額: <%=s.payment.to_s%> NT<br>
 	<%end%>
 <%end%>
-<% if @progress.vaccount %>
+<% if @progress.payment != 0 %>
 匯款資訊如下<br><br>
 			 <table border="1">
 				<tr>
@@ -54,22 +54,19 @@
 請於時限內匯款，匯款成功後會來信通知您！<br>
 *繳費之收執聯請保留以利日後備查
 <% end %>
-<br>
+<br><br>--<br>
 您可透過以下連結，得知報名進度及消息
 <br>
 <%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
-<br><br>
+<br>
 如有任何問題，請洽承辦人員:<%=@progress.period.user.name%> <%=@progress.period.user.email%> <%=@progress.period.user.phone_no%><br>
-<br>
-<span style='color:#dd5e59; font-size: 14.5px;'>此為系統信箱無收信功能，如需回覆請直接聯絡承辦人員信箱</span>
-<br>
+<span style='color:#dd5e59; font-size: 13.5px;'>此為系統信箱無收信功能，如需回覆請直接聯絡承辦人員信箱</span>
+<br>--
 </div>
 </div>
-<p>
 EasyRegister 簡單又方便的報名系統<br> 
 <%= link_to 'EasyRegister.tw', 'http://easyregister.tw' %><br>
 Copyright 2014 从人設計坊. All Rights Reserved. 
-</p>
-</div>	
+</div>
 </body>
 </html>
