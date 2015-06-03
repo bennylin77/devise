@@ -319,7 +319,7 @@ class NctuCceCreditController < ApplicationController
     time_str = Time.now.strftime("%Y%m%d%H%M")
     respond_to do |format|
 			 format.xls{
-			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
 			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}學員資料.xls\" "	
 			 }
 		end	 
