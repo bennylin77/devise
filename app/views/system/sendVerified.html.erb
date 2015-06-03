@@ -24,8 +24,13 @@
 <%=@progress.user.name%> 您好!
 <br> 
 歡迎您報名
-<b><%=@progress.period.group.title%></b>
-目前已審核成功<br>
+<b><%=@progress.period.group.title%></b>目前已審核成功
+<br>
+<%if @progress.period.group.system_module.serial_code == GLOBAL_VAR['NCTU_CCE_credit']%>
+	<% @progress.registered_courses.each do |s|%>
+	<%=s.course.title%> 金額: <%=s.payment.to_s%> NT<br>
+	<%end%>
+<%end%>
 <% if @progress.vaccount %>
 匯款資訊如下<br><br>
 			 <table border="1">
@@ -56,7 +61,7 @@
 <br><br>
 如有任何問題，請洽承辦人員:<%=@progress.period.user.name%> <%=@progress.period.user.email%> <%=@progress.period.user.phone_no%><br>
 <br>
-<span style='color:#dd5e59; font-size: 15.5px;'>(此為系統信箱無收信功能，如需回覆請直接聯絡承辦人員信箱)</span>
+<span style='color:#dd5e59; font-size: 14.5px;'>此為系統信箱無收信功能，如需回覆請直接聯絡承辦人員信箱</span>
 <br>
 </div>
 </div>

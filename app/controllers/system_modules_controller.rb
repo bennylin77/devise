@@ -137,7 +137,7 @@ class SystemModulesController < ApplicationController
 	  respond_to do |format|
 	     format.html {}
 			 format.xls{
-			  render "export_vaccount.html.erb", :layout=>false
+			  render "vaccount.xls.erb", :layout=>false
 			  time_str = Time.now.strftime("%Y%m%d%H%M")
 			 	response.headers['Content-Type'] = "application/vnd.ms-excel"
 			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{time_str}總匯款明細.xls\" "	

@@ -24,51 +24,32 @@
 					<Cell><Data ss:Type="String"></Data></Cell>
 					<Cell><Data ss:Type="String"></Data></Cell>
 				</Row>
+				<% group.periods.where(:school_year=>params[:year]).each do |period| %>
+					<% progresses = period.progresses %>
+						 
+					<% period.courses.each do |course| %>
+						<% reg_courses = progresses.map{ |p| p.registered_courses }.flatten %>
+						<% matchs = reg_courses.select{|i| i.progress.stage==4 and i.course==course} %>
+						<% fb_done_matchs = matchs.select{|rg| rg.progress.feedback_done} %>
+						<% fb15_score_ary = fb_done_matchs.map{|p| p.nctu_cce_feedback_1_5||0 } || [] %>   
+						<% img_avg = (fb_done_matchs.count==0) ?  0 : (fb15_score_ary.inject(:+)*1.0/fb_done_matchs.count).round(1) %>
+						<% return_rate = (matchs.count==0) ? 0 : ((fb_done_matchs.count*100.0)/matchs.count).round(1) %>
+						<Row>
+							<Cell><Data ss:Type="String"></Data></Cell>
+							<Cell><Data ss:Type="String"><%=course.title%></Data></Cell>
+							<Cell><Data ss:Type="String"><%=img_avg.to_s %></Data></Cell>
+							<Cell><Data ss:Type="String"><%=matchs.count.to_s %></Data></Cell>
+							<Cell><Data ss:Type="String"><%=fb_done_matchs.count.to_s %></Data></Cell>
+							<Cell><Data ss:Type="String"><%=return_rate.to_s%>%</Data></Cell>
+						</Row>
+					<% end %>
+				 
+				<% end %>
+				<Row>
+				
+				</Row>
 			<% end %>
     </Table>
   </Worksheet>
 </Workbook>
 
-<table>
-<tr>
-  <td>班別名稱</td>
-  <td>課程名稱</td>
-  <td>我對本課程的整體印象</td>
-  <td>修課人數</td>
-  <td>答卷人數</td>
-  <td>回收率</td>
-</tr>
-<% @sys_module.groups.each do |group| %>
-  <tr>
-    <td colspan="2"><%=group.title%></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <% group.periods.where(:school_year=>params[:year]).each do |period| %>
-    <% progresses = period.progresses %>
-       
-    <% period.courses.each do |course| %>
-      <% reg_courses = progresses.map{ |p| p.registered_courses }.flatten %>
-      <% matchs = reg_courses.select{|i| i.progress.stage==4 and i.course==course} %>
-      <% fb_done_matchs = matchs.select{|rg| rg.progress.feedback_done} %>
-      <% fb15_score_ary = fb_done_matchs.map{|p| p.nctu_cce_feedback_1_5||0 } || [] %>   
-      <% img_avg = (fb_done_matchs.count==0) ?  0 : (fb15_score_ary.inject(:+)*1.0/fb_done_matchs.count).round(1) %>
-      <% return_rate = (matchs.count==0) ? 0 : ((fb_done_matchs.count*100.0)/matchs.count).round(1) %>
-      <tr>
-        <td></td>
-        <td><%=course.title%></td>
-        <td><%=img_avg.to_s %></td>
-        <td><%=matchs.count.to_s %></td>
-        <td><%=fb_done_matchs.count.to_s %></td>
-        <td><%=return_rate.to_s%>%</td>
-      </tr>
-    <% end %>
-   
-  <% end %>
-  <tr>
-    <td colspan="6"> </td>
-  </tr>
-<% end %>
-</table>

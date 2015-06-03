@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">虛擬帳號</Data></Cell>
+        <Cell><Data ss:Type="String">所屬報名</Data></Cell>
+        <Cell><Data ss:Type="String">所有人</Data></Cell>
+        <Cell><Data ss:Type="String">內涵金額</Data></Cell>			
+      </Row>
+			<% @vaccounts.each do |vacc| %>
+				<Row>
+					<Cell><Data ss:Type="String"><%= vacc.vacc %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= vacc.progress.period.school_year %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= vacc.progress.user.name %> </Data></Cell>
+					<Cell><Data ss:Type="String"><%= (vacc.status) ? vacc.status["Amount"] : 0.0 %> </Data></Cell>
+				</Row>
+			<% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
