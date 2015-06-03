@@ -26,15 +26,19 @@ class Vaccount
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
 		xml_doc = Nokogiri::XML(http.body_str)
 		return -1 if xml_doc == -1 #parse error, case by service maintaining 
+		
+		paychl = paychnl_desc(xml_doc.xpath('//PayChnl')[0].try(:content))
+		paystate = patstate_desc(xml_doc.xpath('//PayState')[0].try(:content))
+		
 		self.status = {
 			"res"=>{
-						"code"=>xml_doc.xpath('//ResCode')[0].try(:content),
+						"code"=> rescode,
 						"desc"=>xml_doc.xpath('//ResDesc')[0].try(:content)
 					},
 			"PjName"=>xml_doc.xpath('//PjName')[0].try(:content),
 			"Amount"=>xml_doc.xpath('//Amount')[0].try(:content), 
-			"PayChnl"=>xml_doc.xpath('//PayChnl')[0].try(:content), 
-			"PayState" => xml_doc.xpath('//PayState')[0].try(:content)
+			"PayChnl"=> paychl, 
+			"PayState" => paystate
 		}
 		self.save!
 		return 0
@@ -67,6 +71,76 @@ class Vaccount
 			end
 		end
 		return chs%10
+	end
+	
+private
+
+  def paychnl_desc(data)
+    return "N/A" if !data
+	  case data.to_i
+	    when 0
+	      "自收"
+	    when 1
+	      "臨櫃"
+	    when 2
+	      "匯款"  
+	    when 3
+	      "ATM"  
+	    when 4 
+	      "WebATM 即時付" 
+	    when 5  
+	      "語音/網路"
+	    when 6  
+	      "全國繳費稅"
+	    when 7  
+	      "SmartPay"
+	    when 11
+	      "玉山信用卡平台"
+	    when 12
+	      "中信信用卡平台"
+	    when 13
+	      "iBon"
+	    when 14
+	      "OK-GO"
+	    when 15
+	      "Life-ET"
+	    when 16
+	      "FamiPort"
+	    when 21
+	      "統一超商"          
+	    when 22
+	      "OK 便利商店"
+	    when 23
+	      "萊爾富便利商店"    
+	    when 24
+	      "全家便利商店"
+	    when 25
+	      "郵局"   
+	    when 26
+	      "E 政府信用卡平台"
+	    when 27
+	      "E 政府語音平台"
+	    when 28
+	      "本行代扣"
+	    when 29
+	      "ACH 代扣"
+	    when 30
+	      "就貸繳款"        
+	    else
+	      data.to_s  
+	  end
+	end
+	
+	def patstate_desc(data)
+	  return "N/A" if !data
+	  case data.to_i
+	    when 0
+	      "未繳款"
+	    when 1
+	      "已繳款"
+	    else
+	      data
+	  end
 	end
 	
 end

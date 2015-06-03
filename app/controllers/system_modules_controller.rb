@@ -125,7 +125,7 @@ class SystemModulesController < ApplicationController
   		end
   		
   		@row = "<tr><td>#{vacc}</td>"
-  		@row += "<td>#{vc.status["res"]["code"]}</td>"
+  		@row += "<td>#{vc.status["res"]["desc"]}</td>"
   		@row += "<td>#{vc.status["Amount"]}</td>"
   		@row += "<td>#{vc.status["PayChnl"]}</td></tr>"
   	end
