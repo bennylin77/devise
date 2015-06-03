@@ -1,23 +1,33 @@
-<table> 
-  <tr>
-    <th>姓名</th>
-    <th>身分證字號</th>
-    <th>最高(畢/肄/就讀)學校</th>
-    <th>最高(科/系/所)</th>
-    <th>聯絡電話(一般)</th> 
-    <th>聯絡電話(行動)</th>     
-    <th>聯絡地址</th>
-  </tr>
-  <% @progresses.each do |progress|%>
-    <% user = progress.user%>
-    <tr>
-      <th><%=user.name%></th>
-      <th><%=user.id_no_TW%></th>
-      <th><%=user.hightest_education_school%></th>
-      <th><%=user.hightest_education_department%></th>
-      <th><%=user.phone_no%></th> 
-      <th><%=user.mobile_phone_no%></th>    
-      <th><%=user.address%></th>
-    </tr>
-  <% end %>
-</table>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">姓名</Data></Cell>
+        <Cell><Data ss:Type="String">身分證字號</Data></Cell>
+        <Cell><Data ss:Type="String">最高(畢/肄/就讀)學校</Data></Cell>
+        <Cell><Data ss:Type="String">最高(科/系/所)</Data></Cell>
+				<Cell><Data ss:Type="String">聯絡電話(一般)</Data></Cell>
+				<Cell><Data ss:Type="String">聯絡電話(行動)</Data></Cell>
+				<Cell><Data ss:Type="String">聯絡地址</Data></Cell>
+      </Row>
+    <% @progresses.each do |progress|%>
+			<% user = progress.user%>
+      <Row>
+        <Cell><Data ss:Type="String"><%=user.name%></Data></Cell>
+        <Cell><Data ss:Type="String"><%=user.id_no_TW%></Data></Cell>
+        <Cell><Data ss:Type="String"><%=user.hightest_education_school%></Data></Cell>
+        <Cell><Data ss:Type="String"><%=user.hightest_education_department%></Data></Cell>
+				<Cell><Data ss:Type="String"><%=user.phone_no%></Data></Cell>
+				<Cell><Data ss:Type="String"><%=user.mobile_phone_no%></Data></Cell>
+				<Cell><Data ss:Type="String"><%=user.address%></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+

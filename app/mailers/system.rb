@@ -27,7 +27,7 @@ class System < ActionMailer::Base
     @user = hash[:user]
     @progress=hash[:progress]    
     subject = "EasyRegister #{@progress.period.group.title} 審核不通過/取消資格"
-    mail( to: @user.mail, subject: subject)
+    mail( to: @user.email, subject: subject)
   end  
   
 	def sendVerified(hash={})

@@ -1,35 +1,43 @@
-<table>
-<tr>
-  <th>開課名稱</th>
-  <th>課程名稱</th>
-	<th>學員編號</th>
-	<th>身分證字號</th>
-	<th>中文姓名</th>
-	<th>分數</th>
-	<th>出席率</th>
-	<th>證書字號</th>
-	<th>ATMno</th>
-	<th>收費金額</th>
-	<th>ATM金額</th>
-	<th>英文姓名</th>
-</tr>
-<% @progresses.each do |progress| %>
-  <% progress.registered_courses.each_with_index do |reg_course, idx|%>
-    <tr>
-      <td><%=(idx==0) ? @group.title : "" %></td>  
-      <td><%=reg_course.course.title%></td>
-      <td>[學員編號]</td>
-      <td><%=progress.user.id_no_TW%></td>
-      <td><%=progress.user.name%></td>
-      <td><%=reg_course.score.to_s%></td>
-      <td><%=reg_course.attendance.to_s%></td>
-      <td><%=reg_course.certificate_no%></td>
-      <td><%= "'"+(progress.try(:vaccount).try(:vacc) || "N/A")%></td>
-      <td><%=reg_course.payment.to_s%></td>
-      <td><%=progress.try(:vaccount).try('status["Amount"]')  || "N/A" %></td>
-      <td><%=progress.user.name_en%></td>
-    </tr>
-  <% end %>  
-<% end %>
-
-</table>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">開課名稱</Data></Cell>
+        <Cell><Data ss:Type="String">課程名稱</Data></Cell>
+        <Cell><Data ss:Type="String">學員編號</Data></Cell>
+        <Cell><Data ss:Type="String">身分證字號</Data></Cell>
+				<Cell><Data ss:Type="String">中文姓名</Data></Cell>
+				<Cell><Data ss:Type="String">分數</Data></Cell>
+				<Cell><Data ss:Type="String">出席率</Data></Cell>
+				<Cell><Data ss:Type="String">證書字號</Data></Cell>
+				<Cell><Data ss:Type="String">ATMno</Data></Cell>
+				<Cell><Data ss:Type="String">收費金額</Data></Cell>
+				<Cell><Data ss:Type="String">ATM金額</Data></Cell>
+				<Cell><Data ss:Type="String">英文姓名</Data></Cell>
+      </Row>
+			<% @progresses.each do |progress| %>
+				<% progress.registered_courses.each_with_index do |reg_course, idx|%>
+					<Row>
+						<Cell><Data ss:Type="String"><%=(idx==0) ? @group.title : "" %></Data></Cell>
+						<Cell><Data ss:Type="String"><%=reg_course.course.title%></Data></Cell>
+						<Cell><Data ss:Type="String">[學員編號]</Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.user.id_no_TW%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.user.name%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=reg_course.score.to_s%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=reg_course.attendance.to_s%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=reg_course.certificate_no%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).try(:vacc) || "N/A"%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=reg_course.payment.to_s%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).try('status["Amount"]')  || "N/A" %></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.user.name_en%></Data></Cell>
+					</Row>
+				<% end %>
+			<% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
