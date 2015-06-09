@@ -9,8 +9,8 @@ class Course
   field :price, type: Float  
   field :no_of_users, type: Integer    
 
-  field :start_at, type: DateTime  
-  field :end_at, type: DateTime  
+  field :start_at, type: Date  
+  field :end_at, type: Date  
   field :location, type: String
   
   field :no_of_waiting_users, type: Integer, default: 0  

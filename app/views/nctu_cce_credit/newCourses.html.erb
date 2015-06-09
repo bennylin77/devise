@@ -64,7 +64,6 @@ function addCourse(title, price, no_of_users, start_at, end_at) {
 	$col = $("<div>", {class: "col-sm-2"});		
 	var $input_start_at = $("<input>", {id: "course_start_at_"+index, class: "form-control", type:"text", name: "start_at[]", value: start_at, placeholder: "課程開始時間" });
 	$input_start_at.datetimepicker({
-		use24hours : true,
 		format : 'YYYY/MM/DD'			
 	});
 	$col.append($input_start_at)
@@ -73,7 +72,6 @@ function addCourse(title, price, no_of_users, start_at, end_at) {
 	$col = $("<div>", {class: "col-sm-2"});		
 	var $input_end_at = $("<input>", {id: "course_end_at_"+index, class: "form-control", type:"text", name: "end_at[]", value: end_at, placeholder: "課程結束時間" });
 	$input_end_at.datetimepicker({
-		use24hours : true,
 		format : 'YYYY/MM/DD'			
 	});	
 	$col.append($input_end_at)
