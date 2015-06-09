@@ -42,7 +42,7 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">課程開始時間*</label>
 		<div class="col-sm-6">
-			<%= c.text_field :start_at, class: "form-control", id: 'datetimepicker1_start_at', placeholder: "課程開始時間" %>	
+			<%= c.text_field :start_at, value: c.object.start_at.strftime("%Y/%m/%d"), class: "form-control", id: 'datetimepicker1_start_at', placeholder: "課程開始時間" %>	
 		</div>
 		<script type="text/javascript">
 			$(function () {
@@ -55,7 +55,7 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">課程結束時間*</label>
 		<div class="col-sm-6">
-			<%= c.text_field :end_at, class: "form-control", id: 'datetimepicker2_end_at', placeholder: "課程結束時間" %>	
+			<%= c.text_field :end_at, value: c.object.end_at.strftime("%Y/%m/%d"), class: "form-control", id: 'datetimepicker2_end_at', placeholder: "課程結束時間" %>	
 		</div>
 		<script type="text/javascript">
 			$(function () {
@@ -100,7 +100,6 @@
 <script type="text/javascript">
 	$(function () {
 		$('#datetimepicker_start_at, #datetimepicker_end_at, #datetimepicker_payment_start_at, #datetimepicker_payment_end_at').datetimepicker({
-			use24hours : true,
 			format : 'YYYY/MM/DD HH:mm'		
 	    });   	    
 	});
