@@ -30,9 +30,9 @@ class BasicController < ApplicationController
                                     {type: 'presence', title: '報名開放時間', data: @group.periods.first.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @group.periods.first.end_at},        
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @group.periods.first.start_at, second: @group.periods.first.end_at }},
-                                    {type: 'presence', title: '課程開放時間', data: @group.periods.first.courses.first.start_at},                                      
+                                    {type: 'presence', title: '課程開始時間', data: @group.periods.first.courses.first.start_at},                                      
                                     {type: 'presence', title: '課程結束時間', data: @group.periods.first.courses.first.end_at},        
-                                    {type: 'latter_than', title: { first: '課程開放時間', second: '課程結束時間' }, data: { first: @group.periods.first.courses.first.start_at, second: @group.periods.first.courses.first.end_at }}                      
+                                    {type: 'latter_than', title: { first: '課程開始時間', second: '課程結束時間' }, data: { first: @group.periods.first.courses.first.start_at, second: @group.periods.first.courses.first.end_at }}                      
                                     ])                                   
     checkValidations(validations: validations_result, render: 'new' )   
     @group.periods.first.user = current_user 
@@ -64,9 +64,9 @@ class BasicController < ApplicationController
                                     {type: 'presence', title: '報名開放時間', data: @period.start_at},                                      
                                     {type: 'presence', title: '報名結束時間', data: @period.end_at},        
                                     {type: 'latter_than', title: { first: '報名開放時間', second: '報名結束時間' }, data: { first: @period.start_at, second: @period.end_at }},
-                                    {type: 'presence', title: '課程開放時間', data: @period.courses.first.start_at},                                      
+                                    {type: 'presence', title: '課程開始時間', data: @period.courses.first.start_at},                                      
                                     {type: 'presence', title: '課程結束時間', data: @period.courses.first.end_at},        
-                                    {type: 'latter_than', title: { first: '課程開放時間', second: '課程結束時間' }, data: { first: @period.courses.first.start_at, second: @period.courses.first.end_at }}                                      
+                                    {type: 'latter_than', title: { first: '課程開始時間', second: '課程結束時間' }, data: { first: @period.courses.first.start_at, second: @period.courses.first.end_at }}                                      
                                     ])                                   
     checkValidations(validations: validations_result, render: 'editPeriod' )   
     @period.save  
