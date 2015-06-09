@@ -50,11 +50,13 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">報名開放時間*</label>
 		<div class="col-sm-6">
-			<%= p.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名開放時間" %>	
+			<%= p.text_field :start_at, class: "form-control", id: 'datetimepicker_start_at', placeholder: "報名開放時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
 	                $('#datetimepicker_start_at').datetimepicker({
+						use24hours : true,
+						format : 'YYYY/MM/DD HH:mm'		                	
 	                });
 	            });
 	    </script>	
@@ -62,11 +64,13 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">報名結束時間*</label>
 		<div class="col-sm-6">
-			<%= p.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "報名結束時間" %>	
+			<%= p.text_field :end_at, class: "form-control", id: 'datetimepicker_end_at', placeholder: "報名結束時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
 	                $('#datetimepicker_end_at').datetimepicker({
+						use24hours : true,
+						format : 'YYYY/MM/DD HH:mm'		                	
 	                });
 	            });
 	    </script>	
@@ -74,11 +78,13 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">繳費開放時間*</label>
 		<div class="col-sm-6">
-			<%= p.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費開放時間" %>	
+			<%= p.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', placeholder: "繳費開放時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
 	                $('#datetimepicker_payment_start_at').datetimepicker({
+						use24hours : true,
+						format : 'YYYY/MM/DD HH:mm'		                
 	                });
 	            });
 	    </script>	
@@ -86,11 +92,13 @@
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">繳費結束時間*</label>
 		<div class="col-sm-6">
-			<%= p.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', 'data-date-format'=> 'YYYY/MM/DD hh:mm:ss', placeholder: "繳費結束時間" %>	
+			<%= p.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', placeholder: "繳費結束時間" %>	
 		</div>
 	    <script type="text/javascript">
 	            $(function () {
 	                $('#datetimepicker_payment_end_at').datetimepicker({
+						use24hours : true,
+						format : 'YYYY/MM/DD HH:mm'		                	
 	                });
 	            });
 	    </script>	

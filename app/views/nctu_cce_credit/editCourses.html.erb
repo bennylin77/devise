@@ -4,22 +4,43 @@
 <div class="container" >
 <%= form_for @period, url: { controller: 'nctu_cce_credit', action: "updateCourses", id: @period.id }, html: {class: "form-horizontal", role: "form"}, method: :post do |i| %>
 	<div class="form-group">
-		<label class="col-sm-offset-2 col-sm-3">課程名稱*</label>
+		<label class="col-sm-offset-1 col-sm-3">課程名稱*</label>
 		<label class="col-sm-2">學費*</label>
-		<label class="col-sm-2">招生人數*</label>
-		<label class="col-sm-2">已報名人數</label>			
+		<label class="col-sm-1">招生人數*</label>
+		<label class="col-sm-2">課程開始時間</label>	
+		<label class="col-sm-2">課程結束時間</label>							
 	</div>  
 	<%= i.fields_for :courses do |ii| %>	
 	<div class="form-group">
-		<label class="col-sm-offset-2 col-sm-3"><%= ii.text_field :title, class: "form-control", placeholder: "課程名稱" %></label>
+		<label class="col-sm-offset-1 col-sm-3"><%= ii.text_field :title, class: "form-control", placeholder: "課程名稱" %></label>
 		<label class="col-sm-2"><%= ii.text_field :price, class: "form-control", placeholder: "學費" %></label>
-		<label class="col-sm-2"><%= ii.text_field :no_of_users, class: "form-control", placeholder: "招生人數" %></label>
-		<label class="col-sm-2"><%= @period.progresses.gte(stage: 2).size %></label>
-		
+		<label class="col-sm-1"><%= ii.text_field :no_of_users, class: "form-control", placeholder: "招生人數" %></label>
+		<label class="col-sm-2">
+		<%= ii.text_field :start_at, class: "form-control", id: 'datetimepicker_'+ii.object.id+'_start_at', placeholder: "課程開始時間" %>	
+		<script type="text/javascript">
+			$(function () {
+		    	$('#datetimepicker_<%=ii.object.id%>_start_at').datetimepicker({
+					use24hours : true,
+					format : 'YYYY/MM/DD'	
+		        });
+		    });
+		</script>				
+		</label>
+		<label class="col-sm-2">
+		<%= ii.text_field :end_at, class: "form-control", id: 'datetimepicker_'+ii.object.id+'_end_at', placeholder: "課程結束時間" %>	
+		<script type="text/javascript">
+			$(function () {
+		    	$('#datetimepicker_<%=ii.object.id%>_end_at').datetimepicker({
+					use24hours : true,
+					format : 'YYYY/MM/DD'		        
+		        });
+		    });
+		</script>
+		</label>		
 	</div> 
   	<% end %>	
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-9">
+		<div class="col-sm-offset-1 col-sm-9">
 			<%= i.submit '儲存',  class: "btn btn-primary" %>
 		</div>
 	</div>
