@@ -1,9 +1,5 @@
 module ApplicationHelper
-  
-  def host
-    "http://easyregister.tw/"
-  end
-    
+   
   def alert_class_for(flash_type)
     { :success => 'alert-success',
       :error => 'alert-danger',

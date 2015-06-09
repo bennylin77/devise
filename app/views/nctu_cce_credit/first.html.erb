@@ -142,13 +142,15 @@
 		<label class="col-sm-2">課程名稱</label>
 		<label class="col-sm-2">學費</label>
 		<label class="col-sm-2">報名人數 / 招生人數</label>	
+		<label class="col-sm-2">課程時間</label>			
 	</div> 
 	<% @period.courses.each do |ii|%>
 	<div class="form-group">
 		<div class="col-sm-2 col-sm-offset-2"><input type="checkbox" value="<%= ii.id%>" name="courses[]"></div>
 		<div class="col-sm-2"><%= ii.title%></div>
 		<div class="col-sm-2"><%= ii.price%></div>
-		<div class="col-sm-2"><%= @period.progresses.gte(stage: 2).size%> / <%= ii.no_of_users%></div>
+		<div class="col-sm-2"><%= ii.registered_courses.where(:progress_id.in => Progress.gte(stage: 2).pluck(:id)).count%> / <%= ii.no_of_users%></div>
+		<div class="col-sm-2"><%= ii.start_at.strftime "%Y/%m/%d" %> ~ <%= ii.end_at.strftime "%Y/%m/%d" %></div>	
 	</div>			
 	<%end%>
 	<div class="form-group">

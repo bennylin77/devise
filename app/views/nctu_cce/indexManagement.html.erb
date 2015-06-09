@@ -29,7 +29,7 @@
     <th>候補狀態</th>            
   </tr>	
 <%@progresses.each do |p|%>
-<tr id='link1' onclick="document.location='<%=host%>nctu_cce/showProgress?id=<%=p.id%>';">
+<tr id='link1' onclick="document.location='<%=Rails.configuration.easyregister_host%>nctu_cce/showProgress?id=<%=p.id%>';">
     <td><%=p.user.name%></td>
     <td><%=p.user.mobile_phone_no%></td>
     <td><%=p.user.email%></td>

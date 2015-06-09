@@ -13,20 +13,22 @@
   	<% end %>
   	
 	<div class="form-group">
-		<label class="col-sm-offset-2 col-sm-3">課程名稱*</label>
+		<label class="col-sm-offset-1 col-sm-2">課程名稱*</label>
 		<label class="col-sm-2">學費*</label>
 		<label class="col-sm-2">招生人數*</label>
+		<label class="col-sm-2">課程開始時間</label>
+		<label class="col-sm-2">課程結束時間</label>				
 	</div>  
 	<div class="course_container">
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-sm-offset-1 col-sm-10">
 			<span class="btn btn-default glyphicon glyphicon-plus" aria-hidden="true" onclick="addCourse()"></span>			
 		</div>
 	</div>  
 
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-sm-offset-1 col-sm-10">
 			<%= g.submit '完成送出',  class: "btn btn-primary" %>
 		</div>
 	</div>
@@ -39,14 +41,14 @@ var index = 0;
 	addCourse();
 <%else%>
 	<% @title.each_with_index do |t, i|%>
-		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>');	
+		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>', '<%=@start_at[i]%>', '<%=@end_at[i]%>');	
 	<%end%>	
 <%end%>
 
-function addCourse(title, price, no_of_users) {
+function addCourse(title, price, no_of_users, start_at, end_at) {
 	var $div_course = $("<div>", {id: "course_"+index, class: "form-group"});
 	
-	var $col = $("<div>", {class: "col-sm-3 col-sm-offset-2"});					
+	var $col = $("<div>", {class: "col-sm-2 col-sm-offset-1"});					
 	var $input_title = $("<input>", {id: "course_title_"+index, class: "form-control", type:"text", name: "title[]", value: title, placeholder: "課程名稱" });
 	$col.append($input_title)
 	$div_course.append($col);	
@@ -58,6 +60,25 @@ function addCourse(title, price, no_of_users) {
 	var $input_no_of_users = $("<input>", {id: "course_no_of_users_"+index, class: "form-control", type:"text", name: "no_of_users[]", value: no_of_users, placeholder: "招生人數" });
 	$col.append($input_no_of_users)
 	$div_course.append($col);
+	
+	$col = $("<div>", {class: "col-sm-2"});		
+	var $input_start_at = $("<input>", {id: "course_start_at_"+index, class: "form-control", type:"text", name: "start_at[]", value: start_at, placeholder: "課程開始時間" });
+	$input_start_at.datetimepicker({
+		use24hours : true,
+		format : 'YYYY/MM/DD'			
+	});
+	$col.append($input_start_at)
+	$div_course.append($col);	
+
+	$col = $("<div>", {class: "col-sm-2"});		
+	var $input_end_at = $("<input>", {id: "course_end_at_"+index, class: "form-control", type:"text", name: "end_at[]", value: end_at, placeholder: "課程結束時間" });
+	$input_end_at.datetimepicker({
+		use24hours : true,
+		format : 'YYYY/MM/DD'			
+	});	
+	$col.append($input_end_at)
+	$div_course.append($col);	
+	
 	$col = $("<div>", {class: "col-sm-1"});		
 	var $del_botton = $("<span>", {id: "del_botton_"+index, class: "btn btn-danger glyphicon glyphicon-trash", onclick: "delCourse("+index+")" });
 	$col.append($del_botton)

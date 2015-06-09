@@ -1,5 +1,5 @@
 defaults: &defaults
-  
+    
   BASIC: 0  
   NCTU_CCE: 1
   NCTU_CCE_credit: 2

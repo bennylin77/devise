@@ -25,7 +25,7 @@
 <br> 
 已收來自(<%=@progress.user.name%>)的匯款(<%=@progress.vaccount.vacc%>) <%=@progress.vaccount.status["Amount"]%> NT.</br>
 您可透過以下連結，管理報名資料<br>
-<%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/indexManagement?id='+@progress.period.id%>    
+<%= Rails.configuration.easyregister_host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/indexManagement?id='+@progress.period.id%>    
 <br>
 </div>
 </div>

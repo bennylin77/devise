@@ -27,7 +27,7 @@
 審核不通過/取消資格 原因: <%=@progress.reason%><br>
 需要您重新送出報名申請，請點擊以下連結進行動作。
 <br>
-<%= host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
+<%= Rails.configuration.easyregister_host+Hash[controllerOptions].rassoc(@progress.period.group.system_module.serial_code).first+'/'+Hash[stageOptions].rassoc(@progress.stage).first+'?id='+@progress.period.id%>    
 <br><br>--<br>
 如有任何問題，請洽承辦人員:<%=@progress.period.user.name%> <%=@progress.period.user.email%> <%=@progress.period.user.phone_no%><br>
 <span style='color:#dd5e59; font-size: 14.5px;'>此為系統信箱無收信功能，如需回覆請直接聯絡承辦人員信箱</span>
