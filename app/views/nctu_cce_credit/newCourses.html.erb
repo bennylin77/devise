@@ -13,9 +13,10 @@
   	<% end %>
   	
 	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2">課程名稱*</label>
+		<label class="col-sm-2">課程名稱*</label>
 		<label class="col-sm-2">學費*</label>
-		<label class="col-sm-2">招生人數*</label>
+		<label class="col-sm-1">招生人數*</label>
+		<label class="col-sm-2">地點</label>		
 		<label class="col-sm-2">課程開始時間</label>
 		<label class="col-sm-2">課程結束時間</label>				
 	</div>  
@@ -41,14 +42,14 @@ var index = 0;
 	addCourse();
 <%else%>
 	<% @title.each_with_index do |t, i|%>
-		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>', '<%=@start_at[i]%>', '<%=@end_at[i]%>');	
+		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>', '<%=@start_at[i]%>', '<%=@end_at[i]%>', '<%=@location[i]%>');	
 	<%end%>	
 <%end%>
 
-function addCourse(title, price, no_of_users, start_at, end_at) {
+function addCourse(title, price, no_of_users, start_at, end_at, location) {
 	var $div_course = $("<div>", {id: "course_"+index, class: "form-group"});
 	
-	var $col = $("<div>", {class: "col-sm-2 col-sm-offset-1"});					
+	var $col = $("<div>", {class: "col-sm-2"});					
 	var $input_title = $("<input>", {id: "course_title_"+index, class: "form-control", type:"text", name: "title[]", value: title, placeholder: "課程名稱" });
 	$col.append($input_title)
 	$div_course.append($col);	
@@ -56,9 +57,13 @@ function addCourse(title, price, no_of_users, start_at, end_at) {
 	var $input_price = $("<input>", {id: "course_price_"+index, class: "form-control", type:"text", name: "price[]", value: price, placeholder: "學費" });
 	$col.append($input_price)
 	$div_course.append($col);
-	$col = $("<div>", {class: "col-sm-2"});		
+	$col = $("<div>", {class: "col-sm-1"});		
 	var $input_no_of_users = $("<input>", {id: "course_no_of_users_"+index, class: "form-control", type:"text", name: "no_of_users[]", value: no_of_users, placeholder: "招生人數" });
 	$col.append($input_no_of_users)
+	$div_course.append($col);
+	$col = $("<div>", {class: "col-sm-2"});		
+	var $input_location = $("<input>", {id: "course_location_"+index, class: "form-control", type:"text", name: "location[]", value: location, placeholder: "地點" });
+	$col.append($input_location)
 	$div_course.append($col);
 	
 	$col = $("<div>", {class: "col-sm-2"});		
