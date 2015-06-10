@@ -153,6 +153,8 @@
 		<div class="col-sm-2">
 			<%unless ii.start_at.blank?%>
 			<%= ii.start_at.strftime "%Y/%m/%d" %> ~ <%= ii.end_at.strftime "%Y/%m/%d" %>
+			<%else%>
+			--
 			<%end%>
 		</div>	
 	</div>			
