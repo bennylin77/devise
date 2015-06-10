@@ -151,7 +151,7 @@
 		<div class="col-sm-2"><%= ii.price%></div>
 		<div class="col-sm-2"><%= ii.registered_courses.where(:progress_id.in => Progress.gte(stage: 2).pluck(:id)).count%> / <%= ii.no_of_users%></div>
 		<div class="col-sm-2">
-			<%unless c.start_at.blank?%>
+			<%unless ii.start_at.blank?%>
 			<%= ii.start_at.strftime "%Y/%m/%d" %> ~ <%= ii.end_at.strftime "%Y/%m/%d" %>
 			<%end%>
 		</div>	
