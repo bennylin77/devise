@@ -27,6 +27,10 @@
     <td><%=@progress.user.name_en%></td>    
   </tr>
   <tr>
+    <th>個人2吋半身照</th>
+    <td><%=image_tag @progress.user.head_pic.url(:original), alt: "--"%></td>  
+  </tr>   
+  <tr>
     <th>出生年月日</th>
     <td><%if !@progress.user.birthday.blank? %><%=@progress.user.birthday.strftime "%Y/%m/%d" %><%end%></td>
   </tr>
@@ -43,6 +47,16 @@
     <td><%=@progress.user.hightest_education_school%></td>
     <th>最高(科/系/所)</th>
     <td><%=@progress.user.hightest_education_department%></td>    
+  </tr>   
+  <tr>
+    <th>學歷證明</th>
+    <td>
+    	<%unless @progress.user.qualification_proof.blank?%>
+    	<%=link_to '下載',@progress.user.qualification_proof.url%>
+    	<%else%>
+    	--
+    	<%end%>
+    </td> 
   </tr>   
   <tr>
     <th>聯絡電話(行動)</th>
