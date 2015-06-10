@@ -28,7 +28,7 @@
   </tr>
   <tr>
     <th>個人2吋半身照</th>
-    <td><%=image_tag @progress.user.head_pic.url(:original)%></td>  
+    <td><%=image_tag @progress.user.head_pic.url(:original), alt: "無照片"%></td>  
   </tr>  
   <tr>
     <th>出生年月日</th>
@@ -50,7 +50,11 @@
   </tr>  
   <tr>
     <th>學歷證明</th>
-    <td><%=@progress.user.qualification_proof.url%></td> 
+    <td>
+    	<%if @progress.user.qualification_proof%>
+    	<%=link_to '下載',@progress.user.qualification_proof.url%>
+    	<%end%>
+    </td> 
   </tr>  
   <tr>
     <th>聯絡電話(行動)</th>
