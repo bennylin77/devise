@@ -309,7 +309,7 @@ class NctuCceController < ApplicationController
   end
     
   def period_params
-    params.require(:period).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, courses_attributes: [:title, :no_of_users, :price, :id])      
+    params.require(:period).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, courses_attributes: [:title, :no_of_users, :price, :id, :start_at, :end_at, :location])      
   end
     
   def user_params

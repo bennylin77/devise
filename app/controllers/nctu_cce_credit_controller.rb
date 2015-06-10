@@ -61,7 +61,7 @@ class NctuCceCreditController < ApplicationController
     @group.system_module = SystemModule.where(serial_code: GLOBAL_VAR['NCTU_CCE_credit']).first    
     @group.save      
     params[:title].each_with_index do |t, i|
-      @group.periods.first.courses.create(title: t, price: params[:price][i], no_of_users: params[:no_of_users][i], start_at: params[:start_at][i], end_at: params[:end_at][i] )    
+      @group.periods.first.courses.create(title: t, price: params[:price][i], no_of_users: params[:no_of_users][i], start_at: params[:start_at][i], end_at: params[:end_at][i], location: params[:location][i] )    
     end   
     redirect_to controller: :periods, action: :createCompletion, id: @group.periods.first.id  
   end  
@@ -343,7 +343,7 @@ class NctuCceCreditController < ApplicationController
   end
   
   def period_params
-    params.require(:period).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, courses_attributes: [:title, :no_of_users, :price, :id, :start_at, :end_at])      
+    params.require(:period).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, courses_attributes: [:title, :no_of_users, :price, :id, :start_at, :end_at, :location])      
   end
 
   def user_params
