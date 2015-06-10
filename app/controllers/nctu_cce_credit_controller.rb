@@ -38,7 +38,8 @@ class NctuCceCreditController < ApplicationController
     @price = params[:price]
     @no_of_users = params[:no_of_users]    
     @start_at = params[:start_at]   
-    @end_at = params[:end_at]           
+    @end_at = params[:end_at]     
+    @location = params[:location]            
     @step = 3    
     validations_result=validations([{type: 'presence', title: '班級名稱', data: @group.title},
                                     {type: 'presence', title: '班級簡介', data: @group.description},
