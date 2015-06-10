@@ -51,7 +51,7 @@
   <tr>
     <th>學歷證明</th>
     <td>
-    	<%if @progress.user.qualification_proof%>
+    	<%unless @progress.user.qualification_proof.blank?%>
     	<%=link_to '下載',@progress.user.qualification_proof.url%>
     	<%end%>
     </td> 
