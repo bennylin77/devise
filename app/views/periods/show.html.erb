@@ -41,7 +41,7 @@
 	  <td><%unless c.no_of_users.blank?%><%= c.registered_courses.where(:progress_id.in => Progress.gte(stage: 2).pluck(:id)).count%>人 / <%=c.no_of_users %>人<%else%>--<%end%></td>
 	  <td><%unless c.price.blank?%><%=c.price %> NT<%else%>--<%end%></td>
 	  <td><%unless c.location.blank?%><%=c.location %><%else%>--<%end%></td>
-	  <td><%unless c.start_at.blank?%><%=c.start_at.strftime "%Y/%m/%d" %> ~ <%=c.end_at.strftime "%Y/%m/%d" %><%else%>--<%end%></td>
+	  <td><%unless c.start_at.blank? or c.end_at.blank?%><%=c.start_at.strftime "%Y/%m/%d" %> ~ <%=c.end_at.strftime "%Y/%m/%d" %><%else%>--<%end%></td>
 	</tr>
 <%end%>	
 </table>
