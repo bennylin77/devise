@@ -9,7 +9,7 @@
     <th>名稱</th>   
   </tr>	
     <% @system_modules.each do |system_module| %>
-  <tr id='link1' onclick="document.location='<%=host%>system_modules/<%=system_module.id%>';">
+  <tr id='link1' onclick="document.location='<%=Rails.configuration.easyregister_host%>system_modules/<%=system_module.id%>';">
     <td><%= system_module.serial_code %></td>	
     <td><%= system_module.title %></td>
   </tr>

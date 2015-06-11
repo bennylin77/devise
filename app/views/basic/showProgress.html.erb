@@ -3,6 +3,7 @@
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="">
+		<%=link_to '刪除報名', {controller: 'basic', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>			
 		<%if @progress.stage == 2%>				
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agree-confirm">
 		  	審核通過
@@ -12,10 +13,7 @@
 			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cancel-confirm">
 		  	審核不通過/取消資格
 			</button>			
-		<%end%>		
-		<% if @progress.stage >= 3 %>		
-			<%=link_to '刪除報名', {controller: 'basic', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>
-		<%end%>	
+		<%end%>			
 		</div>
 	</div><br>
 <div class="table-responsive">	
