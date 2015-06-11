@@ -23,7 +23,7 @@
 				<%if current_user.module_user_lists.size!=0 %>
 					<li <%= active( controller: '/periods', action: 'indexManagement') %> >
 					<%=link_to '/periods/indexManagement', {} do%>
-						主辦者
+						承辦人
 					<%end%>							
 					</li>
 					<%if current_user.module_user_lists.where(role: GLOBAL_VAR['ROLE_ADMIN']).count!=0 %>

@@ -15,8 +15,8 @@
 <%if @period.school_year%><%=@period.school_year%>學年<%end%>	    
 <%if @period.semester%><%=Hash[semesterOptions].rassoc(@period.semester).first%><%end%>
 </h3>
-<h1><%=@period.group.title%></h1>
-<p><strong><%=simple_format @period.group.description%></strong></p>
+<p  style="font-size: 40px;"><%=@period.group.title%></p>
+<p><strong class="text-muted" ><%=simple_format @period.group.description%></strong></p>
 <ul class="list-group">
 <li class="list-group-item">	
 	<dl class="" style="font-size: 17px;">	
