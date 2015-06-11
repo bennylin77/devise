@@ -3,7 +3,7 @@
 <div class="container" style="margin-bottom: 20px;">
 	<div class="row">	
 		<div class="">
-		<%=link_to '刪除學員', {controller: 'nctu_cce_credit', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除報名？' } %>		
+		<%=link_to '刪除學員', {controller: 'nctu_cce_credit', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除學員？' } %>		
 		<%if @progress.stage == 2%>	
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agree-confirm">
 		  	審核通過
