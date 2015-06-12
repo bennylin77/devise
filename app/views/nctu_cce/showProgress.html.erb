@@ -114,15 +114,17 @@
        <%=label_tag "學費：（填0元會跳過繳費步驟，直接完成報名）"%> 
        <%= form_tag "/nctu_cce/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag "id", @progress.id%>       
-       	<% @progress.registered_courses.each do |registered_course|%>
+       	報名費<%=number_field_tag :default_payment, @progress.period.default_payment, :class=>"form-control"%>
+		<% @progress.registered_courses.each do |registered_course|%>
        		<%=hidden_field_tag "registered_course_ids[]", registered_course.id%>
        		<%=label_tag registered_course.course.title%>
-       		<%=number_field_tag "registered_course_payments[]", registered_course.course.price, :class=>"form-control"%>
+       		<%=number_field_tag "registered_course_payments[]", registered_course.course.price.to_i, :class=>"form-control courses"%>
        	<% end %>
-       <% end %>
+	   <% end %>
       </div>
       <div class="modal-footer">
-        <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">送出</button>      	
+		<div class="pull-left">總計: <span id="total-cost">0</span> </div>
+		<button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">送出</button>      	
       </div>
     </div>
   </div>
@@ -149,3 +151,18 @@
     </div>
   </div>
 </div>
+	
+<script>
+	function count_total(){
+		var total =parseInt( $('#default_payment').val() );
+		$('.courses').each(function( index ) {
+			total +=  parseInt($(this).val()) ;
+		});
+		return total ;
+	}
+	$('#total-cost').html(count_total());
+	$('.courses,#default_payment').on('input',function(e){
+		$('#total-cost').html(count_total());
+	});
+	
+</script>

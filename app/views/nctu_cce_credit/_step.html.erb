@@ -41,7 +41,7 @@
 	<div class="collapse" id="collapse2">
 		<dl class="dl-horizontal">
 		  <dt>繳款帳號</dt><dd><%=progress.vaccount.vacc %></dd>
-		  <dt>已繳/應繳</dt><dd><%=(progress.vaccount.status) ? progress.vaccount.status["Amount"] : 0.0 %> NT/ <%=progress.payment.to_s%> NT</dd>  
+		  <dt>已繳/應繳</dt><dd><%=(progress.vaccount.status) ? progress.vaccount.status["Amount"] : 0 %> NT/ <%=progress.payment.to_s%> NT</dd>  
 		  <hr>
 		  <% progress.registered_courses.each do |s|%>
 		  <dt><%=s.course.title%></dt><dd>學費: <%=s.payment%> NT</dd>

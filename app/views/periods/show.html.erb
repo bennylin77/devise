@@ -22,6 +22,7 @@
 	<dl class="" style="font-size: 17px;">	
 	<dt>報名時間</dt><dd><%=@period.start_at.strftime "%Y/%m/%d %H:%M" %> ~ <%=@period.end_at.strftime "%Y/%m/%d %H:%M" %></dd>	
 	<%unless @period.eligibility.blank?%><dt>報名對象</dt><dd><%=@period.eligibility %></dd><%end%>
+	<%unless @period.default_payment.blank?%><dt>報名費</dt><dd><%=@period.default_payment %> NT</dd><%end%>	
 	<%unless @period.precautions.blank?%><dt class="text-danger">注意事項 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></dt><dd class="text-danger"><%=simple_format @period.precautions, {}, wrapper_tag: "div" %></dd><%end%>
 	</dl>		
 </li>	

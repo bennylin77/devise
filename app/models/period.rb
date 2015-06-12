@@ -20,5 +20,6 @@ class Period
   field :payment_end_at, type: DateTime    
   field :precautions, type: String
   field :eligibility, type: String
+  field :default_payment, type: Integer, default: 0 
    
 end

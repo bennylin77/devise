@@ -6,7 +6,7 @@ class Course
   has_many   :registered_courses     
   
   field :title, type: String
-  field :price, type: Float  
+  field :price, type: Integer  
   field :no_of_users, type: Integer    
 
   field :start_at, type: Date  

@@ -1,23 +1,25 @@
 <%= render partial: "layouts/managementHeader", locals: {period: @progress.period} %>
-<h3 class="text-center">報名資料 (<%=CCEStageText @progress.stage%>)</h3><br>
+<h3 class="text-center ">報名資料 (<%=CCEStageText @progress.stage%>)</h3><br>
 <div class="container" style="margin-bottom: 20px;">
-	<div class="row">	
+	<div class="row ">	
 		<div class="">
-		<%=link_to '刪除學員', {controller: 'nctu_cce_credit', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除學員？' } %>		
-		<%if @progress.stage == 2%>	
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agree-confirm">
-		  	審核通過
-			</button>	
-		<%end%>	
-		<%if @progress.stage >= 2 and @progress.stage < 4 %>							
-			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cancel-confirm">
-		  	審核不通過/取消資格
-			</button>			
-		<%end%>		
+			<%=link_to '刪除學員', {controller: 'nctu_cce_credit', action: 'destroyProgress', id: @progress.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除學員？' } %>		
+			<%if @progress.stage == 2%>	
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agree-confirm">
+				審核通過
+				</button>	
+			<%end%>	
+			<%if @progress.stage >= 2 and @progress.stage < 4 %>							
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cancel-confirm">
+				審核不通過/取消資格
+				</button>			
+			<%end%>		
+			<%=link_to "列印", "/nctu_cce_credit/user_print?id="+params[:id], :class=>"btn btn-info" %>
 		</div>
-	</div><br>
+	</div>
+	<br>
 <div class="table-responsive">		
-<table class="table">
+<table class="table " id="user-info">
   <tr>
     <th>姓名</th>
     <td><%=@progress.user.name%></td>
@@ -101,7 +103,7 @@
   </tr>    
 </table> 	
 
-<table class="table table-striped">
+<table class="table table-striped ">
   <tr>
     <th>課程名稱</th>
     <th>應繳金額</th>
@@ -129,14 +131,17 @@
        <%=label_tag "學費：（總和為0元會跳過繳費步驟，直接完成報名）"%> 
        <%= form_tag "/nctu_cce_credit/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag "id", @progress.id%>       
+		報名費<%=number_field_tag :default_payment, @progress.period.default_payment, :class=>"form-control"%>
        	<% @progress.registered_courses.each do |registered_course|%>
        		<%=hidden_field_tag "registered_course_ids[]", registered_course.id%>
        		<%=label_tag registered_course.course.title%>
-       		<%=number_field_tag "registered_course_payments[]", registered_course.course.price, :class=>"form-control"%>
+       		<%=number_field_tag "registered_course_payments[]", registered_course.course.price, :class=>"form-control courses"%>
        	<% end %>	
-       <% end %>
+
+	   <% end %>
       </div>
       <div class="modal-footer">
+		<div class="pull-left">總計: <span id="total-cost">0</span> </div>
         <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">送出</button>
       </div>
     </div>
@@ -164,3 +169,19 @@
     </div>
   </div>
 </div>
+
+	
+<script>
+	function count_total(){
+		var total =parseInt( $('#default_payment').val() );
+		$('.courses').each(function( index ) {
+			total +=  parseInt($(this).val()) ;
+		});
+		return total ;
+	}
+	$('#total-cost').html(count_total());
+	$('.courses,#default_payment').on('input',function(e){
+		$('#total-cost').html(count_total());
+	});
+	
+</script>
