@@ -8,7 +8,7 @@ class NctuCceController < ApplicationController
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
   before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
         
   def new
     @group = Group.new()
@@ -154,7 +154,7 @@ class NctuCceController < ApplicationController
       System.sendUnverified(user: @progress.user, progress: @progress).deliver   
     else
       @progress.verified = true 
-      @progress.payment = params[:registered_course_payments].map(&:to_i).reduce(0, :+)
+      @progress.payment = params[:registered_course_payments].map(&:to_i).reduce(0, :+) + params[:default_payment].to_i
       params[:registered_course_ids].each_with_index do |id, idx|
         registered_course = @progress.registered_courses.find(id)
         registered_course.payment = params[:registered_course_payments][idx].to_f
@@ -294,6 +294,10 @@ class NctuCceController < ApplicationController
 		end	 
   end
   
+  def user_print
+	render :layout=> false
+  end
+  
   private
     
   def set_period
@@ -309,7 +313,7 @@ class NctuCceController < ApplicationController
   end
     
   def period_params
-    params.require(:period).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, courses_attributes: [:title, :no_of_users, :price, :id, :start_at, :end_at, :location])      
+    params.require(:period).permit( :start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :default_payment, courses_attributes: [:title, :no_of_users, :price, :id, :start_at, :end_at, :location])      
   end
     
   def user_params
@@ -320,7 +324,7 @@ class NctuCceController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, courses_attributes: [:title, :no_of_users, :price, :id]])
+    params.require(:group).permit(:title, :description, periods_attributes: [:start_at, :end_at, :payment_start_at, :payment_end_at, :school_year, :semester, :term, :default_payment, courses_attributes: [:title, :no_of_users, :price, :id]])
   end   
   
   def progress_params

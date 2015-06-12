@@ -75,6 +75,12 @@
 		                });
 		            });
 		    </script>	
+		</div>	
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-2 control-label">報名費*</label>
+			<div class="col-sm-6">
+				<%= p.text_field :default_payment, class: "form-control", placeholder: "報名費" %>
+			</div>
 		</div>		
 	<%end%>
 	<div class="form-group">
@@ -104,6 +110,32 @@
 	    <script type="text/javascript">
 	            $(function () {
 	                $('#datetimepicker_end_at').datetimepicker({
+						format : 'YYYY/MM/DD HH:mm'		                
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">繳費開放時間*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :payment_start_at, class: "form-control", id: 'datetimepicker_payment_start_at', placeholder: "繳費開放時間" %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_payment_start_at').datetimepicker({
+						format : 'YYYY/MM/DD HH:mm'		               
+	                });
+	            });
+	    </script>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">繳費結束時間*</label>
+		<div class="col-sm-6">
+			<%= p.text_field :payment_end_at, class: "form-control", id: 'datetimepicker_payment_end_at', placeholder: "繳費結束時間" %>	
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_payment_end_at').datetimepicker({
 						format : 'YYYY/MM/DD HH:mm'		                
 	                });
 	            });

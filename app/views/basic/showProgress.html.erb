@@ -92,13 +92,15 @@
       <div class="modal-body">
        <%= form_tag "/basic/verified?verify=true", :id=>"agree-form" do%>
        	<%=hidden_field_tag "id", @progress.id%>       
-       	<% @progress.registered_courses.each do |registered_course|%>
+       	報名費<%=number_field_tag :default_payment, @progress.period.default_payment, :class=>"form-control"%>
+		<% @progress.registered_courses.each do |registered_course|%>
        		<%=hidden_field_tag "registered_course_ids[]", registered_course.id%>
-       		<%=hidden_field_tag "registered_course_payments[]", 0, :class=>"form-control"%>
+       		費用<%=number_field_tag "registered_course_payments[]", registered_course.course.price.to_i, :class=>"form-control courses"%>
        	<% end %>
        <% end %>
       </div>
       <div class="modal-footer">
+		<div class="pull-left">總計: <span id="total-cost">0</span></div>
         <button type="button" autocomplete = "off" class="btn btn-primary" data-loading-text="Loading..." onclick="$('#agree-form').submit();">確定送出</button>      	
       </div>
     </div>
@@ -126,3 +128,18 @@
     </div>
   </div>
 </div>
+	
+<script>
+	function count_total(){
+		var total =parseInt( $('#default_payment').val() );
+		$('.courses').each(function( index ) {
+			total +=  parseInt($(this).val()) ;
+		});
+		return total ;
+	}
+	$('#total-cost').html(count_total());
+	$('.courses,#default_payment').on('input',function(e){
+		$('#total-cost').html(count_total());
+	});
+	
+</script>

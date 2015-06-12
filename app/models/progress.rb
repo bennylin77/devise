@@ -15,7 +15,7 @@ class Progress
   field :verified, type: Boolean, default: false 
   field :finished, type: Boolean, default: false
   field :feedback_done, type: Boolean, default: false  
-  field :payment, type: Float, default: 0.0
+  field :payment, type: Integer, default: 0
   field :reason, type: String, default: ''	
 
 	def create_vaccount 
