@@ -1,13 +1,7 @@
-<table class="table" border="1" id="user-info">
-  <tr>
-    <th>姓名</th>
-    <td><%=@progress.user.name%></td>
-    <th>英文姓名</th>
-    <td><%=@progress.user.name_en%></td>    
-  </tr>
-  <tr>
+<table class="table" border="1" id="user-info" style="text-align: center;">
+	<tr>
     <th>個人2吋半身照</th>
-    <td>
+    <td colspan="3">
     	<%unless @progress.user.head_pic.blank?%>
 		<%=image_tag @progress.user.head_pic.url(:original), :size=>"60x80"%>
 
@@ -17,16 +11,22 @@
     </td>  
   </tr>  
   <tr>
+    <th>姓名</th>
+    <td><%=@progress.user.name%></td>
+    <th>英文姓名</th>
+    <td><%=@progress.user.name_en%></td>    
+  </tr> 
+  <tr>
     <th>出生年月日</th>
-    <td><%if !@progress.user.birthday.blank? %><%=@progress.user.birthday.strftime "%Y/%m/%d" %><%end%></td>
+    <td colspan="3"><%if !@progress.user.birthday.blank? %><%=@progress.user.birthday.strftime "%Y/%m/%d" %><%end%></td>
   </tr>
   <tr>
     <th>性別</th>
-    <td><%if @progress.user.gender%>男<%else%>女<%end%></td>
+    <td colspan="3"><%if @progress.user.gender%>男<%else%>女<%end%></td>
   </tr>  
   <tr>
     <th>身分證字號</th>
-    <td><%=@progress.user.id_no_TW%></td>
+    <td  colspan="3"><%=@progress.user.id_no_TW%></td>
   </tr>     
   <tr>
     <th>最高(畢/肄/就讀)學校</th>
@@ -36,7 +36,7 @@
   </tr>  
   <tr>
     <th>學歷證明</th>
-    <td>
+    <td colspan="3">
     	<%unless @progress.user.qualification_proof.blank?%>
     	<%=link_to '下載',@progress.user.qualification_proof.url%>
     	<%else%>
@@ -74,12 +74,13 @@
   <tr>
     <th>教育訓練聯絡人姓名</th>
     <td><%=@progress.user.work_contact_name%></td>
+		<th>教育訓練聯絡人電話</th>
+    <td><%=@progress.user.work_contact_phone_no%></td>
   </tr>  
   <tr>
-    <th>教育訓練聯絡人電話</th>
-    <td><%=@progress.user.work_contact_phone_no%></td>
+    
     <th>教育訓練聯絡人Email</th>
-    <td><%=@progress.user.work_contact_email%></td>      
+    <td colspan="3"><%=@progress.user.work_contact_email%></td>      
   </tr>    
 </table> 	
 <script>
