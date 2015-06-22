@@ -151,9 +151,14 @@ class BasicController < ApplicationController
 
  # ------------ booking --------------# 
   def cancel  
-    @progress.destroy    
-    flash[:success]="成功退出報名"    
-    redirect_to controller: 'periods', action: 'progress'   
+    if @progress.stage > 2 
+      flash[:alert]="您已通過審核, 無法退出報名"    
+      redirect_to controller: 'periods', action: 'progress'              
+    else  
+      @progress.destroy    
+      flash[:success]="成功退出報名"    
+      redirect_to controller: 'periods', action: 'progress'       
+    end 
   end
    
   def first
