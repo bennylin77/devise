@@ -77,11 +77,18 @@
 		<th>教育訓練聯絡人電話</th>
     <td><%=@progress.user.work_contact_phone_no%></td>
   </tr>  
-  <tr>
-    
+  <tr>  
     <th>教育訓練聯絡人Email</th>
     <td colspan="3"><%=@progress.user.work_contact_email%></td>      
   </tr>    
+	<tr>
+		<th>報名課程</th>
+		<td colspan="3">
+			<% @progress.registered_courses.each do |rc| %>
+				<%=rc.course.title%> </br>
+			<% end %>
+		</td> 
+	</tr>
 </table> 	
 <script>
 	window.print();

@@ -14,6 +14,7 @@
 				<Cell><Data ss:Type="String">聯絡電話(一般)</Data></Cell>
 				<Cell><Data ss:Type="String">聯絡電話(行動)</Data></Cell>
 				<Cell><Data ss:Type="String">聯絡地址</Data></Cell>
+				<Cell><Data ss:Type="String">報名課程</Data></Cell>
       </Row>
     <% @progresses.each do |progress|%>
 			<% user = progress.user%>
@@ -25,6 +26,9 @@
 				<Cell><Data ss:Type="String"><%=user.phone_no%></Data></Cell>
 				<Cell><Data ss:Type="String"><%=user.mobile_phone_no%></Data></Cell>
 				<Cell><Data ss:Type="String"><%=user.address%></Data></Cell>
+				<Cell><Data ss:Type="String">
+					<% progress.registered_courses.map{|c| c.course.title}.join(", ")%>
+				</Data></Cell>
       </Row>
     <% end %>
     </Table>

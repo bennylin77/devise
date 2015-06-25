@@ -26,11 +26,19 @@
 歡迎您報名
 <b><%=@progress.period.group.title%></b>目前已審核成功
 <br>
+
 <%if @progress.period.group.system_module.serial_code == GLOBAL_VAR['NCTU_CCE_credit']%>
+	<% course_payment = 0 %>
 	<% @progress.registered_courses.each do |s|%>
 	<%=s.course.title%> 金額: <%=s.payment.to_s%> NT<br>
+	<% course_payment += s.payment%>
 	<%end%>
+<% else %>	
+	<% course_payment = @progress.registered_courses.last.payment %>
 <%end%>
+報名費 金額: <%=(@progress.payment - course_payment).to_s %> NT<br>
+合計共 <%=@progress.payment.to_s %> NT
+
 <% if @progress.payment != 0 %>
 匯款資訊如下<br><br>
 			 <table border="1">
