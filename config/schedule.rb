@@ -18,6 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 3.hours do
+every 1.hours do
   rake "vaccount:update_status"
 end
