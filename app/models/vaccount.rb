@@ -23,16 +23,19 @@ class Vaccount
 	
 	# 
 	def update_status		 
+
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
 		xml_doc = Nokogiri::XML(http.body_str)
-		return -1 if xml_doc == -1 #parse error, case by service maintaining 
-		
+		if xml_doc == -1 #parse error, case by service maintaining 
+		  self.touch
+		  return -1 
+		end
 		paychl = paychnl_desc(xml_doc.xpath('//PayChnl')[0].try(:content))
 		paystate = patstate_desc(xml_doc.xpath('//PayState')[0].try(:content))
 		
 		self.status = {
 			"res"=>{
-						"code"=> rescode,
+						"code"=> xml_doc.xpath('//ResCode')[0].try(:content),
 						"desc"=>xml_doc.xpath('//ResDesc')[0].try(:content)
 					},
 			"PjName"=>xml_doc.xpath('//PjName')[0].try(:content),
