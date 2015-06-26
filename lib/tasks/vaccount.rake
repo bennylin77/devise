@@ -11,7 +11,7 @@ namespace :vaccount do
 				return 
 			end
 
-     	if vacc.status["Amount"].to_f >= vacc.progress.payment.to_f
+     	if vacc.status["Amount"].to_f >= vacc.progress.payment.to_f and vacc.progress.stage < 4
 				p "!!"
 				vacc.progress.stage = 4 #vacc.progress.item.group.module
      		vacc.progress.save!
