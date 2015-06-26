@@ -3,6 +3,7 @@ namespace :vaccount do
   desc "update status"
   task :update_status => :environment do
      Vaccount.where(active: true).each do |vacc|
+			next if vacc.progress.blank?
      	p vacc.vacc
      	res = vacc.update_status
      	if res==-1 # 伺服器維修中
