@@ -24,8 +24,18 @@ class ApplicationController < ActionController::Base
          end   
       when 'id_no_TW'  
          unless idCheck(d[:data])
-          validation_result.push({type: 'presence', message: d[:title]+' 格式錯誤'})                 
+          validation_result.push({type: 'id_no_TW', message: d[:title]+' 格式錯誤'})                 
          end       
+      when 'nationality'
+         if d[:data][:first]== 'TW'
+           unless idCheck(d[:data][:second])
+            validation_result.push({type: 'nationality', message: d[:title][:first]+' 格式錯誤'})                 
+           end     
+         else  
+           if d[:data][:third].blank?
+              validation_result.push({type: 'nationality', message: '請填寫 '+d[:title][:second]})
+           end             
+         end
       end
     end      
     validation_result  

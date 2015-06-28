@@ -45,9 +45,20 @@
     <td><%if @progress.user.gender%>男<%else%>女<%end%></td>
   </tr>  
   <tr>
+    <th>國籍</th>
+    <td><%=ISO3166::Country[@progress.user.nationality] %></td>
+  </tr> 
+  <%if @progress.user.nationality=='TW'%>
+  <tr>
     <th>身分證字號</th>
     <td><%=@progress.user.id_no_TW%></td>
   </tr>     
+  <%else%>
+  <tr>
+    <th>居留證號碼</th>
+    <td><%=@progress.user.ARC_no_TW%></td>
+  </tr>    
+  <%end%>
   <tr>
     <th>最高(畢/肄/就讀)學校</th>
     <td><%=@progress.user.hightest_education_school%></td>

@@ -76,7 +76,10 @@ class User
   field :district, type: String
   field :address, type: String
 
+  field :nationality, type: String, default: 'TW'
   field :id_no_TW, type: String
+  field :ARC_no_TW, type: String
+    
   field :hightest_education_school, type: String
   field :hightest_education_department, type: String  
   field :hightest_education_grade, type: String  

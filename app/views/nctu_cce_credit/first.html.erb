@@ -50,11 +50,23 @@
 		</div>
 	</div>		
 	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">國籍*</label>
+		<div class="col-sm-6">
+			<%= u.country_select :nationality, {}, { selected: current_user.nationality, class: 'form-control'}%>
+		</div>
+	</div>	
+	<div class="form-group id_no_TW_container">
 		<label class="col-sm-offset-1 col-sm-2 control-label">身分證字號*</label>
 		<div class="col-sm-6">
 			<%= u.text_field :id_no_TW, placeholder: '身分證字號(大寫)', class: "form-control" %>
 		</div>
-	</div>			
+	</div>	
+	<div class="form-group ARC_no_TW_container">
+		<label class="col-sm-offset-1 col-sm-2 control-label">居留證號碼*</label>
+		<div class="col-sm-6">
+			<%= u.text_field :ARC_no_TW, placeholder: 'ARC no.', class: "form-control" %>
+		</div>
+	</div>		
 	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話(行動)*</label>
 		<div class="col-sm-2">
@@ -182,28 +194,28 @@
 </div>
 
 <script>
-$('#twzipcode').twzipcode({
-	zipcodeName: 'user[postal]',
-    countyName: 'user[county]',
-    districtName: 'user[district]',
-    zipcodeIntoDistrict: true,
-    css: ['form-control', 'form-control'], 
-    <%unless current_user.county.blank?%>
-	countySel: '<%=current_user.county%>',
-	districtSel: '<%=current_user.district%>'
-	<%end%>    
-});
-$('#twzipcode_1').twzipcode({
-	zipcodeName: 'user[work_postal]',
-    countyName: 'user[work_county]',
-    districtName: 'user[work_district]',
-    zipcodeIntoDistrict: true,
-    css: ['form-control', 'form-control'], 
-    <%unless current_user.county.blank?%>
-	countySel: '<%=current_user.county%>',
-	districtSel: '<%=current_user.district%>'
-	<%end%>    
-});
+	$('#twzipcode').twzipcode({
+		zipcodeName: 'user[postal]',
+	    countyName: 'user[county]',
+	    districtName: 'user[district]',
+	    zipcodeIntoDistrict: true,
+	    css: ['form-control', 'form-control'], 
+	    <%unless current_user.county.blank?%>
+		countySel: '<%=current_user.county%>',
+		districtSel: '<%=current_user.district%>'
+		<%end%>    
+	});
+	$('#twzipcode_1').twzipcode({
+		zipcodeName: 'user[work_postal]',
+	    countyName: 'user[work_county]',
+	    districtName: 'user[work_district]',
+	    zipcodeIntoDistrict: true,
+	    css: ['form-control', 'form-control'], 
+	    <%unless current_user.county.blank?%>
+		countySel: '<%=current_user.county%>',
+		districtSel: '<%=current_user.district%>'
+		<%end%>    
+	});
 	$("#user_head_pic").fileinput({
 	  uploadUrl: "/users/uploadFile?type=head", // server upload action
     uploadAsync: true,
@@ -229,5 +241,29 @@ $('#twzipcode_1').twzipcode({
         '<%= image_tag current_user.qualification_proof.url,class: 'file-preview-image' %>'
 			<% end %>	
      ]					 
-    });	   
+    });	 
+    
+    if($('#user_nationality').val()=='TW')
+    {
+    	$('.id_no_TW_container').show()
+    	$('.ARC_no_TW_container').hide()    	
+    }
+   	else
+    {
+    	$('.id_no_TW_container').hide()
+    	$('.ARC_no_TW_container').show()    	
+    }    	
+   
+    $('#user_nationality').change(function() {
+  		if( $(this).val()=='TW' )
+  		{
+		    $('.id_no_TW_container').show()
+		    $('.ARC_no_TW_container').hide()  			
+  		}
+  		else
+  		{
+		    $('.id_no_TW_container').hide()
+		    $('.ARC_no_TW_container').show()   			
+  		} 		
+	});
 </script>
