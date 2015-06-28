@@ -26,12 +26,6 @@ namespace :vaccount do
   
   desc "test"
   task :test => :environment do
-  		data = "95306511764823"
-    	vc = Vaccount.new
-  		vc.check_account(data)
-  		vc.vacc = data
-  		res = vc.update_status
-  		return if res == -1
-  		p vc.status
+  		
   end
 end

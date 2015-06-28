@@ -33,3 +33,5 @@ gem "will_paginate_mongoid"
 gem 'will_paginate-bootstrap'
 
 gem 'jquery-ui-sass-rails'
+gem 'country_select', '~> 2.0'
+gem 'countries', :require => 'iso3166'
