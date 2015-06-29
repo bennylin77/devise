@@ -14,10 +14,10 @@ class Period
   field :semester, type: Integer
   field :term, type: Integer 
    
-  field :start_at, type: DateTime  
-  field :end_at, type: DateTime 
-  field :payment_start_at, type: DateTime   
-  field :payment_end_at, type: DateTime    
+  field :start_at, type: Time 
+  field :end_at, type: Time 
+  field :payment_start_at, type: Time   
+  field :payment_end_at, type: Time    
   field :precautions, type: String
   field :eligibility, type: String
   field :default_payment, type: Integer, default: 0 
