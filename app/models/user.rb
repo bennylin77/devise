@@ -66,7 +66,7 @@ class User
   field :provider, type: String
   field :uid, type: String
   
-  field :birthday, type: DateTime
+  field :birthday, type: Time
   field :gender, type: Boolean  
   field :mobile_phone_no, type: String    
   field :phone_no, type: String    

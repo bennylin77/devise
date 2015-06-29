@@ -89,7 +89,7 @@ production:
     #  - Firefox
     scope_overwrite_exception: true
     raise_not_found_error: false
-    #use_activesupport_time_zone: false
+    use_activesupport_time_zone: true
     use_utc: true  
 test:
   sessions:
