@@ -90,7 +90,7 @@ production:
     scope_overwrite_exception: true
     raise_not_found_error: false
     use_activesupport_time_zone: true
-    use_utc: true  
+    use_utc: false  
 test:
   sessions:
     default:
