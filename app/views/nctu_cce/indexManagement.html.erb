@@ -6,14 +6,10 @@
 			<%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>		
 			<%=link_to '匯出學員資料', "/nctu_cce/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
 		</div>
-		<ul class="nav nav-pills col-sm-offset-6 col-sm-2">
-		  <li role="presentation">
-		  	<%=link_to '管理學員', {controller: 'nctu_cce', action: 'sendMessage', id: @period.id} %>
-		  </li>						
-		  <li role="presentation">
-		  	<%=link_to '設定', {controller: 'nctu_cce', action: 'editGroup', id: @period.group.id} %>
-		  </li>	  
-		</ul>	
+		<div class="col-sm-offset-6 col-sm-2">
+		  	<%=link_to '管理學員', {controller: 'nctu_cce', action: 'sendMessage', id: @period.id}, class: 'btn btn-default' %>
+		  	<%=link_to '設定/修改', {controller: 'nctu_cce', action: 'editGroup', id: @period.group.id}, class: 'btn btn-default' %>
+		</div>	
 	</div>
 </div>
 <br>
