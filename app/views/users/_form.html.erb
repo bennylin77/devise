@@ -2,7 +2,9 @@
 <%= form_for(@user, html: {class: "form-horizontal", role: "form"}) do |f| %>
  	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">Email</label>
-		<div class="col-sm-6"><%= @user.email %></div>
+		<div class="col-sm-6">
+			<%= f.email_field :email, class: "form-control", placeholder: 'Email' %>						
+		</div>
 	</div>	
  	<div class="form-group">
 		<label class="col-sm-offset-1 col-sm-2 control-label">姓名</label>
