@@ -18,6 +18,9 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+set :output, 'log/cron.log'
+
 every 1.hours do
   rake "vaccount:update_status"
 end

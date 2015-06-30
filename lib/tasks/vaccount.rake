@@ -4,7 +4,7 @@ namespace :vaccount do
   task :update_status => :environment do
      Vaccount.where(active: true).each do |vacc|
 			next if vacc.progress.blank?
-     	p vacc.vacc
+     #	p vacc.vacc
      	res = vacc.update_status
      	if res==-1 # 伺服器維修中
 				p "can't connect to esun server "
@@ -12,7 +12,7 @@ namespace :vaccount do
 			end
 
      	if vacc.status["Amount"].to_f >= vacc.progress.payment.to_f and vacc.progress.stage < 4
-				p "!!"
+				p "new pass #{vacc.vacc}"
 				vacc.progress.stage = 4 #vacc.progress.item.group.module
      		vacc.progress.save!
      		vacc.active = false# 已繳費設false避免再檢查
