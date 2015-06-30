@@ -28,14 +28,14 @@ class System < ActionMailer::Base
     @user = hash[:user]
     @progress=hash[:progress]    
     subject = "EasyRegister #{@progress.period.group.title} 審核不通過/取消資格"
-    mail( to: @user.email, subject: subject, cc: @progress.user.email)
+    mail( to: @user.email, subject: subject, cc: @progress.period.user.email)
   end  
   
 	def sendVerified(hash={})
     @user = hash[:user]
     @progress=hash[:progress] 
     subject = "EasyRegister #{@progress.period.group.title} 審核通過"
-		mail( to: @user.email, subject: subject, cc: @progress.user.email)
+		mail( to: @user.email, subject: subject, cc: @progress.period.user.email)
 	end	 
 	
 	def sendFeedbackAsking(hash={})
