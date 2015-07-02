@@ -12,13 +12,14 @@
         <Cell><Data ss:Type="String">學員編號</Data></Cell>
         <Cell><Data ss:Type="String">身分證字號</Data></Cell>
 				<Cell><Data ss:Type="String">中文姓名</Data></Cell>
+				<Cell><Data ss:Type="String">英文姓名</Data></Cell>
 				<Cell><Data ss:Type="String">分數</Data></Cell>
 				<Cell><Data ss:Type="String">出席率</Data></Cell>
 				<Cell><Data ss:Type="String">證書字號</Data></Cell>
 				<Cell><Data ss:Type="String">ATMno</Data></Cell>
 				<Cell><Data ss:Type="String">收費金額</Data></Cell>
 				<Cell><Data ss:Type="String">ATM金額</Data></Cell>
-				<Cell><Data ss:Type="String">英文姓名</Data></Cell>
+				
       </Row>
 			<% @progresses.each do |progress| %>
 				<% progress.registered_courses.each_with_index do |reg_course, idx|%>
@@ -28,13 +29,14 @@
 						<Cell><Data ss:Type="String">[學員編號]</Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.user.id_no_TW%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.user.name%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.user.name_en%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.score.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.attendance.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.certificate_no%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).try(:vacc) || "N/A"%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.payment.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).try('status["Amount"]')  || "N/A" %></Data></Cell>
-						<Cell><Data ss:Type="String"><%=progress.user.name_en%></Data></Cell>
+						
 					</Row>
 				<% end %>
 			<% end %>
