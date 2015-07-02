@@ -25,7 +25,7 @@ class Vaccount
 	def update_status		 
 
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
-		Rails.logger.debug http.body_str
+		#Rails.logger.debug http.body_str
 		xml_doc = Nokogiri::XML(http.body_str)
 		if xml_doc == -1 #parse error, case by service maintaining 
 		  self.touch
