@@ -17,6 +17,10 @@
     <td><%=@progress.user.name_en%></td>    
   </tr> 
   <tr>
+    <th>Email</th>
+    <td colspan="3"><%=@progress.user.email%></td>
+  </tr> 
+  <tr>
     <th>出生年月日</th>
     <td colspan="3"><%if !@progress.user.birthday.blank? %><%=@progress.user.birthday.strftime "%Y/%m/%d" %><%end%></td>
   </tr>
