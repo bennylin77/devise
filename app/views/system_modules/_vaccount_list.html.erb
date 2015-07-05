@@ -11,7 +11,7 @@
 	<td><%= vacc.vacc %></td>
 	<td><%= vacc.progress.period.school_year %></td>
 	<td><%= vacc.progress.user.name %></td>
-	<td><%= (vacc.status) ? vacc.status["Amount"] : 0.0 %></td>
+	<td><%= vacc.money.to_s %></td>
 	<!--<td>No</td>-->
 </tr>
 <% end %>

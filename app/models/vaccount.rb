@@ -5,8 +5,9 @@ class Vaccount
 	belongs_to :progress
 	
 	field :vacc, type: String #虛擬帳號
-  field :status, type: Hash #更新時回傳的資訊
+  field :status, type: Hash #更新時回傳的資訊 （最後一筆）
   field :active, type: Boolean, default: true  # 帳號是否啟動，用來決定是否要被sched_update_status
+  field :money, type: Integer, default: 0
 
 	# Create new virtual account. 
 	# Note that it will cover the older
@@ -33,6 +34,16 @@ class Vaccount
 		end
 		paychl = paychnl_desc(xml_doc.xpath('//PayChnl')[0].try(:content))
 		paystate = patstate_desc(xml_doc.xpath('//PayState')[0].try(:content))
+		amount = xml_doc.xpath('//Amount')[0].try(:content)
+		date = xml_doc.xpath('//PayDate')[0].try(:content)
+		
+		if self.try("status['PayDate']").present? # 檢查之前是否有繳款紀錄
+		  if amount.present? and self.status['PayDate'] != date # 檢查本次查詢結果是否為同一筆
+		    self.money += amount.to_i
+		  else
+		    self.money = amount.to_i  
+		  end
+		end
 		
 		self.status = {
 			"res"=>{
@@ -40,9 +51,10 @@ class Vaccount
 						"desc"=>xml_doc.xpath('//ResDesc')[0].try(:content)
 					},
 			"PjName"=>xml_doc.xpath('//PjName')[0].try(:content),
-			"Amount"=>xml_doc.xpath('//Amount')[0].try(:content), 
+			"Amount"=>amount, 
 			"PayChnl"=> paychl, 
-			"PayState" => paystate
+			"PayState" => paystate,
+			"PayDate" => date
 		}
 		self.save!
 		return 0

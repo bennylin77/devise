@@ -43,9 +43,12 @@
 		  <dt>繳款帳號</dt><dd><%=progress.vaccount.vacc %></dd>
 		  <dt>已繳/應繳</dt><dd><%=(progress.vaccount.status) ? progress.vaccount.status["Amount"] : 0 %> NT/ <%=progress.payment.to_s%> NT</dd>  
 		  <hr>
+		  <% course_payment_all = 0 %>		  
 		  <% progress.registered_courses.each do |s|%>
-		  <dt><%=s.course.title%></dt><dd>學費: <%=s.payment%> NT</dd>
-		  <%end%>		  
+		  <dt><%=s.course.title%></dt><dd><%=s.payment%> NT</dd>
+		  <% course_payment_all += s.payment%>
+		  <%end%>	
+		  <dt>報名費</dt><dd><%=(progress.payment - course_payment_all).to_s%> NT</dd>		  		  		  	  
 		</dl>	  	
 	</div>	
 	<%end%>
