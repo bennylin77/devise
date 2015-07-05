@@ -128,7 +128,7 @@ class SystemModulesController < ApplicationController
   		@row += "<td>#{vc.status["res"]["desc"]}</td>"
   		@row += "<td>#{vc.money}</td>"
   		@row += "<td>#{vc.status["PayChnl"]}</td>"
-  		@row += "<td>#{vc.status["PayDate"] || "N/A"}</td></tr>"
+  		@row += "<td>#{vc.last_transfer_time}</td></tr>"
   	end
   end
   
