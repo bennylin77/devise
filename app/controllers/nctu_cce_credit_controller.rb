@@ -1,12 +1,12 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
+  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export, :attendancePrint] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])} 
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}
-  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth]  
+  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth, :attendancePrint]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
       
@@ -222,6 +222,9 @@ class NctuCceCreditController < ApplicationController
   	@progress = Progress.find(params[:id])
   end
   
+  def attendancePrint
+   render layout: false
+  end  
  
 
 # ------------ booking --------------#
@@ -336,7 +339,7 @@ class NctuCceCreditController < ApplicationController
   end
   
   def user_print
-	render :layout=> false
+	 render :layout=> false
   end
   
   private

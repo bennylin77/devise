@@ -1,5 +1,5 @@
 <table class="table" border="1" id="user-info" style="text-align: center;">
-	<tr>
+  <tr>
     <th>個人2吋半身照</th>
     <td colspan="3">
     	<%unless @progress.user.head_pic.blank?%>
@@ -9,6 +9,10 @@
     	--
     	<%end%>    
     </td>  
+  </tr>  
+  <tr>
+    <th>學號</th>
+    <td colspan="3"><%=@progress.user.id.generation_time.strftime("%Y%m%d") %><%=@progress.user.id.to_s[-6, 6] %></td>
   </tr>  
   <tr>
     <th>姓名</th>

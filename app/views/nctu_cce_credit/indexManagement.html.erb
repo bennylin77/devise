@@ -1,12 +1,13 @@
 <%= render partial: "layouts/managementHeader", locals: {period: @period} %>
 <div class="container-fluid">
 	<div class="row">	
-		<div class="col-sm-4">
+		<div class="col-sm-5">
 		  	<%=link_to '刪除學分班', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此學分班？' } %>		
 		  	<%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>	
 		  	<%=link_to '匯出學員資料', "/nctu_cce_credit/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
+			<%=link_to "列印簽到表", "/nctu_cce_credit/attendancePrint?id="+@period.id.to_s, class: "btn btn-info" %>		
 		</div>		
-		<div class="col-sm-offset-6 col-sm-2">
+		<div class="col-sm-offset-5 col-sm-2">
 		  	<%=link_to '管理學員', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @period.id}, class: 'btn btn-default' %>
 		  	<%=link_to '設定/修改', {controller: 'nctu_cce_credit', action: 'editGroup', id: @period.group.id}, class: 'btn btn-default' %>
 		</div>		
@@ -16,6 +17,7 @@
 <div class="table-responsive">
 <table class="table table-striped table-hover ">
   <tr>
+  	<th>學號</th>
     <th>姓名</th>
     <th>聯絡電話(行動)</th>
     <th>email</th>
@@ -25,6 +27,7 @@
   </tr>	
 <%@progresses.each do |p|%>
 <tr id='link1' onclick="document.location='<%=Rails.configuration.easyregister_host%>nctu_cce_credit/showProgress?id=<%=p.id%>';">
+	<td><%=p.user.id.generation_time.strftime("%Y%m%d") %><%=p.user.id.to_s[-6, 6] %></td>  
     <td><%=p.user.name%></td>
     <td><%=p.user.mobile_phone_no%></td>
     <td><%=p.user.email%></td> 

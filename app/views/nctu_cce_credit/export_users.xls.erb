@@ -7,6 +7,7 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
+        <Cell><Data ss:Type="String">學號</Data></Cell>      	
         <Cell><Data ss:Type="String">姓名</Data></Cell>
 				<Cell><Data ss:Type="String">英文姓名</Data></Cell>
 				<Cell><Data ss:Type="String">Email</Data></Cell>
@@ -21,6 +22,7 @@
     <% @progresses.each do |progress|%>
 			<% user = progress.user%>
       <Row>
+        <Cell><Data ss:Type="String"><%=user.id.generation_time.strftime("%Y%m%d") %><%=user.id.to_s[-6, 6] %></Data></Cell>     	
         <Cell><Data ss:Type="String"><%=user.name%></Data></Cell>
 				<Cell><Data ss:Type="String"><%=user.name_en%></Data></Cell>
 				<Cell><Data ss:Type="String"><%=user.email%></Data></Cell>

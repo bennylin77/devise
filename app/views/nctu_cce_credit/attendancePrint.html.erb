@@ -1,0 +1,57 @@
+<body>
+<%@period.courses.each do |c| %>	
+<div class="a4_page">
+<h2>
+<%if @period.school_year%><%=@period.school_year%>學年<%end%>	    
+<%if @period.semester%><%=Hash[semesterOptions].rassoc(@period.semester).first%><%end%>
+<%=@period.group.title%>
+</h2>
+<h2>
+'<%=c.title%>' 簽到表
+</h2>
+<p>
+修課人數:
+<%=c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count%> 
+</p>
+<table class="table" border="1" id="user-info" style="text-align: center;">	
+	<tr><th>學號</th><th>姓名</th><th>簽名</th><th>學號</th><th>姓名</th><th>簽名</th></tr>	
+	<% c.registered_courses.where(:progress_id.in => Progress.gt(stage: 3).pluck(:id)).each_slice(2) do |r_cs|%> 
+		<tr>
+		<% r_cs.each_with_index do |r_c|%>		
+		    <td>
+		    	<%=r_c.progress.user.id.generation_time.strftime("%Y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6] %>
+		    </td>			
+		    <td><%=r_c.progress.user.name%></td>
+		    <td><br></td>
+		<%end%>		    
+		</tr>
+	<%end%>
+</table> 
+</div> 
+<%end%>  
+
+<script>
+	window.print();
+</script>
+<style>
+.a4_page { 
+	height:297mm; 
+	width:210mm; 
+	margin-left:auto; 
+	margin-right:auto;
+}
+h2, p{
+	text-align: center;
+}
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+   min-width: 33.5mm;
+   height: 10mm;
+}    
+</style>	
