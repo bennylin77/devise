@@ -6,6 +6,7 @@ class Vaccount
 	
 	field :vacc, type: String #虛擬帳號
   field :status, type: Hash #更新時回傳的資訊 （最後一筆）
+  field :last_transfer_time, type: String, default: "N/A"
   field :active, type: Boolean, default: true  # 帳號是否啟動，用來決定是否要被sched_update_status
   field :money, type: Integer, default: 0
 
@@ -26,7 +27,7 @@ class Vaccount
 	def update_status		 
 
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
-		#Rails.logger.debug http.body_str
+	#	Rails.logger.debug http.body_str
 		xml_doc = Nokogiri::XML(http.body_str)
 		if xml_doc == -1 #parse error, case by service maintaining 
 		  self.touch
@@ -36,14 +37,13 @@ class Vaccount
 		paystate = patstate_desc(xml_doc.xpath('//PayState')[0].try(:content))
 		amount = xml_doc.xpath('//Amount')[0].try(:content)
 		date = xml_doc.xpath('//PayDate')[0].try(:content)
+
+    if amount.present? and self.last_transfer_time != date # 檢查本次查詢結果是否為同一筆
+      self.money += amount.to_i
+    else
+      self.money = amount.to_i  
+    end
 		
-		if self.try("status['PayDate']").present? # 檢查之前是否有繳款紀錄
-		  if amount.present? and self.status['PayDate'] != date # 檢查本次查詢結果是否為同一筆
-		    self.money += amount.to_i
-		  else
-		    self.money = amount.to_i  
-		  end
-		end
 		
 		self.status = {
 			"res"=>{
@@ -56,7 +56,10 @@ class Vaccount
 			"PayState" => paystate,
 			"PayDate" => date
 		}
+		self.last_transfer_time = date
 		self.save!
+		
+		
 		return 0
 	end
 	
