@@ -33,7 +33,7 @@
 						<Cell><Data ss:Type="String"><%=reg_course.score.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.attendance.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.certificate_no%></Data></Cell>
-						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).try(:vacc) || "N/A"%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).try(:money) || "N/A"%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.payment.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String">
 							<% stat = progress.try(:vaccount).try(:status) %>

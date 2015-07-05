@@ -25,6 +25,7 @@
     <td><%=@progress.user.name_en%></td>    
   </tr>
   <tr>
+    <th>個人2吋半身照</th> 	
     <td>
     	<%unless @progress.user.head_pic.blank?%>
     	<%=link_to '下載',@progress.user.head_pic.url(:original)%>

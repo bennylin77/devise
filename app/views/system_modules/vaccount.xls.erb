@@ -17,7 +17,7 @@
 					<Cell><Data ss:Type="String"><%= vacc.vacc %></Data></Cell>
 					<Cell><Data ss:Type="String"><%= vacc.progress.period.school_year %></Data></Cell>
 					<Cell><Data ss:Type="String"><%= vacc.progress.user.name %> </Data></Cell>
-					<Cell><Data ss:Type="String"><%= (vacc.status) ? vacc.status["Amount"] : 0.0 %> </Data></Cell>
+					<Cell><Data ss:Type="String"><%= vacc.money.to_s %> </Data></Cell>
 				</Row>
 			<% end %>
     </Table>
