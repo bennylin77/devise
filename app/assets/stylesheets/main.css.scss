@@ -20,13 +20,7 @@ body {
 * Main content
 */
 .main {
-  padding: 30px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
+  padding: 50px 20px;
 }
 .main .page-header {
   margin-top: 0;
