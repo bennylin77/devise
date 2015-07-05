@@ -82,6 +82,7 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/destroyProgress'      
   get  'nctu_cce_credit/export_users'
   get  'nctu_cce_credit/user_print'
+  get  'nctu_cce_credit/attendancePrint'
  
   get  'periods/createCompletion' 
   get  'periods/showManagement'

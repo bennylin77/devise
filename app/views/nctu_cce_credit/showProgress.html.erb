@@ -21,6 +21,10 @@
 <div class="table-responsive">		
 <table class="table " id="user-info">
   <tr>
+    <th>學號</th>
+  <td><%=@progress.user.id.generation_time.strftime("%Y%m%d") %><%=@progress.user.id.to_s[-6, 6] %></td>  
+  </tr>		
+  <tr>
     <th>姓名</th>
     <td><%=@progress.user.name%></td>
     <th>英文姓名</th>
