@@ -17,10 +17,10 @@
 		<%= progress.period.group.title %> <%if progress.period.term%>(第<%=progress.period.term%>期)<%end%>
 	</td>
 	<td><%= vacc.progress.user.name %></td>
-	<td><%= vacc.money.to_s %> NT / <%=p.payment.to_s%> NT </td>
+	<td><%= vacc.money.to_s %> NT / <%=progress.payment.to_s%> NT </td>
 	<!--<td>No</td>-->
 	<td>
-	    <%case vacc.progress.period.group.system_module.serial_code%> 
+	    <%case progressperiod.group.system_module.serial_code%> 
 	    <%when GLOBAL_VAR['BASIC']%>
 	      <% if progress.stage < 3 %>
 		  	<%= link_to '設為報名成功', '/system_modules/succeed?id='+@system_module.id.to_s+'&progress_id='+vacc.progress.id.to_s, class: 'btn btn-primary'%>	      
