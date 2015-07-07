@@ -3,7 +3,7 @@
 	<th>虛擬帳號</th>
 	<th>所屬報名</th>
 	<th>所有人</th>
-	<th>內涵金額</th>
+	<th>內涵金額/須繳金額</th>
 	<!--<td>銷帳</td>-->
 	<th></th>	
 </tr>
@@ -17,7 +17,7 @@
 		<%= progress.period.group.title %> <%if progress.period.term%>(第<%=progress.period.term%>期)<%end%>
 	</td>
 	<td><%= vacc.progress.user.name %></td>
-	<td><%= vacc.money.to_s %></td>
+	<td><%= vacc.money.to_s %> NT / <%=p.payment.to_s%> NT </td>
 	<!--<td>No</td>-->
 	<td>
 	    <%case vacc.progress.period.group.system_module.serial_code%> 
