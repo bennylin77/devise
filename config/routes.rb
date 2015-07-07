@@ -104,6 +104,7 @@ Rails.application.routes.draw do
   post 'system_modules/check_account'
   get  'system_modules/vaccounts'
   get  'system_modules/export_summary'
+  get  'system_modules/succeed'
   
   post 'users/uploadFile'
   
