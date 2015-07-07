@@ -8,14 +8,18 @@
 	<th></th>	
 </tr>
 <% @vaccounts.each do |vacc| %>
+<% progress = vacc.progress %>
 <tr>
 	<td><%= vacc.vacc %></td>
-	<td><%= vacc.progress.period.school_year %></td>
+	<td>
+		<%if progress.period.school_year%><%=progress.period.school_year%>學年<%end%>	    
+		<%if progress.period.semester%><%=Hash[semesterOptions].rassoc(progress.period.semester).first%><%end%>	    
+		<%= progress.period.group.title %> <%if progress.period.term%>(第<%=progress.period.term%>期)<%end%>
+	</td>
 	<td><%= vacc.progress.user.name %></td>
 	<td><%= vacc.money.to_s %></td>
 	<!--<td>No</td>-->
 	<td>
-		<% progress = vacc.progress %>
 	    <%case vacc.progress.period.group.system_module.serial_code%> 
 	    <%when GLOBAL_VAR['BASIC']%>
 	      <% if progress.stage < 3 %>
