@@ -5,6 +5,7 @@
 	<th>所有人</th>
 	<th>內涵金額</th>
 	<!--<td>銷帳</td>-->
+	<th></th>	
 </tr>
 <% @vaccounts.each do |vacc| %>
 <tr>
@@ -13,6 +14,27 @@
 	<td><%= vacc.progress.user.name %></td>
 	<td><%= vacc.money.to_s %></td>
 	<!--<td>No</td>-->
+	<td>
+		<% progress = vacc.progress %>
+	    <%case vacc.progress.period.group.system_module.serial_code%> 
+	    <%when GLOBAL_VAR['BASIC']%>
+	      <% if progress.stage < 3 %>
+		  	<%= link_to '報名成功', '/system_modules/succeed?id='+@system_module.id.to_s+'&progress_id='+vacc.progress.id.to_s, class: 'btn btn-primary'%>	      
+	      <%end%>
+	    <%when GLOBAL_VAR['NCTU_CCE']%>
+	      <% if progress.stage < 4 %>  
+		  	<%= link_to '報名成功', '/system_modules/succeed?id='+@system_module.id.to_s+'&progress_id='+vacc.progress.id.to_s, class: 'btn btn-primary'%>	      	         
+	      <%end%>	      
+	    <%when GLOBAL_VAR['NCTU_CCE_credit']%>
+	      <% if progress.stage < 4 %>
+		  	<%= link_to '報名成功', '/system_modules/succeed?id='+@system_module.id.to_s+'&progress_id='+vacc.progress.id.to_s, class: 'btn btn-primary'%>	      	           
+	      <%end%>	      
+	    <%when GLOBAL_VAR['NCTU_CCE_camp']%>  
+	      <% if progress.stage < 4 %>  
+		  	<%= link_to '報名成功', '/system_modules/succeed?id='+@system_module.id.to_s+'&progress_id='+vacc.progress.id.to_s, class: 'btn btn-primary'%>	      	      
+	      <%end%>	      
+	    <%end%>		
+	</td>	
 </tr>
 <% end %>
 

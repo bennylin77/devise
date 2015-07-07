@@ -1,8 +1,8 @@
 class SystemModulesController < ApplicationController
   
   before_filter :authenticate_user!   
-  before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy]
-  before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy, :vaccounts] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
+  before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy, :vaccounts, :succeed]
+  before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy, :vaccounts, :succeed] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
   before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy] { |c| c.ModuleCheckAdmin()}  
 
   respond_to :html
@@ -111,6 +111,24 @@ class SystemModulesController < ApplicationController
     redirect_to controller: 'system_modules', action: 'userEdit', id: @system_module.id    
   end
 
+  def succeed    
+    progress = Progress.find(params[:progress_id])
+    case progress.period.group.system_module.serial_code 
+    when GLOBAL_VAR['BASIC']
+      progress.stage = 3
+    when GLOBAL_VAR['NCTU_CCE']
+      progress.stage = 4      
+    when GLOBAL_VAR['NCTU_CCE_credit']
+      progress.stage = 4      
+    when GLOBAL_VAR['NCTU_CCE_camp']  
+      progress.stage = 4      
+    end  
+    flash[:notice] = '更改成功'
+    progress.save!    
+        
+    redirect_to controller: 'system_modules', action: 'vaccounts', id: @system_module.id       
+  end
+
 ## vaccount
   def check_account
   	if request.post?
@@ -133,8 +151,8 @@ class SystemModulesController < ApplicationController
   end
   
   def vaccounts
-	  @sys_module = SystemModule.find(params[:id])
-	  @vaccounts = @sys_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
+	  @system_module = SystemModule.find(params[:id])
+	  @vaccounts = @system_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
 	  respond_to do |format|
 	     format.html {}
 			 format.xls{
