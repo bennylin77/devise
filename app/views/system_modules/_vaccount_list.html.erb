@@ -20,7 +20,7 @@
 	<td><%= vacc.money.to_s %> NT / <%=progress.payment.to_s%> NT </td>
 	<!--<td>No</td>-->
 	<td>
-	    <%case progressperiod.group.system_module.serial_code%> 
+	    <%case progress.period.group.system_module.serial_code%> 
 	    <%when GLOBAL_VAR['BASIC']%>
 	      <% if progress.stage < 3 %>
 		  	<%= link_to '設為報名成功', '/system_modules/succeed?id='+@system_module.id.to_s+'&progress_id='+vacc.progress.id.to_s, class: 'btn btn-primary'%>	      
