@@ -12,7 +12,7 @@
   </tr>  
   <tr>
     <th>學號</th>
-    <td colspan="3"><%=@progress.user.id.generation_time.strftime("%Y%m%d") %><%=@progress.user.id.to_s[-6, 6] %></td>
+    <td colspan="3"><%=@progress.user.id.generation_time.strftime("%Y%m%d") %><%=@progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %></td>
   </tr>  
   <tr>
     <th>姓名</th>
