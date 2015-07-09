@@ -19,7 +19,7 @@
 		<tr>
 		<% r_cs.each_with_index do |r_c|%>		
 		    <td>
-		    	<%=r_c.progress.user.id.generation_time.strftime("%Y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6] %>
+		    	<%=r_c.progress.user.id.generation_time.strftime("%Y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %>
 		    </td>			
 		    <td><%=r_c.progress.user.name%></td>
 		    <td><br></td>
