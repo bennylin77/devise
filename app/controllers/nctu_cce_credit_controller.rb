@@ -1,12 +1,13 @@
 class NctuCceCreditController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export, :attendancePrint] { |c| c.PeriodCheckUser(params[:id])}  
+  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export, :attendancePrint, :editCollaborators, :addCollaborator, :destroyCollaborator] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])} 
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}
-  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth, :attendancePrint]  
+  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth, 
+                                    :attendancePrint, :exportAttendance, :editCollaborators, :addCollaborator, :destroyCollaborator]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
       
@@ -125,6 +126,33 @@ class NctuCceCreditController < ApplicationController
     redirect_to controller: :nctu_cce_credit, action: :editCourses, id: @period.id        
   end
 
+  def editCollaborators
+  end
+
+  def addCollaborator
+    unless User.where(email: params[:email]).first.blank?  
+      if User.where(email: params[:email]).first.collaborators.where(period: @period).count == 0 and User.where(email: params[:email]).first != current_user
+        col = Collaborator.new     
+        col.user = User.where(email: params[:email]).first           
+        col.period = @period
+        col.save!
+        flash[:success]="成功新增共同管理者"              
+      else
+        flash[:error] = '此會員已是管理者'            
+      end    
+    else
+      flash[:error] = '無此會員信箱'  
+    end    
+    redirect_to controller: :nctu_cce_credit, action: :editCollaborators, id: @period.id            
+  end
+
+  def destroyCollaborator
+    col = Collaborator.find(params[:collaborator_id])
+    col.destroy!    
+    flash[:success] = '成功刪除共同管理者'
+    redirect_to controller: :nctu_cce_credit, action: :editCollaborators, id: @period.id            
+  end  
+
   def editScore
   end
     
@@ -221,7 +249,17 @@ class NctuCceCreditController < ApplicationController
   def showProgress
   	@progress = Progress.find(params[:id])
   end
-  
+	
+  def exportAttendance
+		
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now}簽到表.xls\" "	
+			 }
+		end	 
+  end  
+	
   def attendancePrint
    render layout: false
   end  

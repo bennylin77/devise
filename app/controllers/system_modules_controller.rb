@@ -2,7 +2,7 @@ class SystemModulesController < ApplicationController
   
   before_filter :authenticate_user!   
   before_action :set_system_module, only: [:show, :edit, :update, :destroy, :addAdmin, :userEdit, :userAdd, :userDestroy, :vaccounts, :succeed]
-  before_action only: [:userAdd, :userDestroy, :userInfo, :userRole, :userDestroy, :vaccounts, :succeed] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
+  before_action only: [:userAdd, :userDestroy, :userRole, :userDestroy, :vaccounts, :succeed] { |c| c.ModuleCheckUser(params[:id], GLOBAL_VAR['ROLE_ADMIN'])}   
   before_action only: [:index, :show, :new, :edit, :addAdmin, :create, :update, :destroy] { |c| c.ModuleCheckAdmin()}  
 
   respond_to :html

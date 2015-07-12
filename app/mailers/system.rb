@@ -20,22 +20,39 @@ class System < ActionMailer::Base
   def sendVerifyNotification(hash={}) 
     @user = hash[:user]
     @progress=hash[:progress]
-    subject = "EasyRegister #{@progress.period.group.title} 報名審核"    
-    mail( to: @user.email, subject: subject)    
+    subject = "EasyRegister #{@progress.period.group.title} 報名審核"   
+    cc_list = Array.new
+    cols = Collaborator.where(period: @progress.period)
+    cols.each do |c|
+      cc_list << c.user.email     
+    end     
+    mail( to: @user.email, subject: subject, cc: cc_list)    
   end   
 
   def sendUnverified(hash={})
     @user = hash[:user]
     @progress=hash[:progress]    
     subject = "EasyRegister #{@progress.period.group.title} 審核不通過/取消資格"
-    mail( to: @user.email, subject: subject, cc: @progress.period.user.email)
+    cc_list = Array.new
+    cc_list << @progress.period.user.email
+    cols = Collaborator.where(period: @progress.period)
+    cols.each do |c|
+      cc_list << c.user.email     
+    end     
+    mail( to: @user.email, subject: subject, cc: cc_list)
   end  
   
 	def sendVerified(hash={})
     @user = hash[:user]
     @progress=hash[:progress] 
     subject = "EasyRegister #{@progress.period.group.title} 審核通過"
-		mail( to: @user.email, subject: subject, cc: @progress.period.user.email)
+    cc_list = Array.new
+    cc_list << @progress.period.user.email
+    cols = Collaborator.where(period: @progress.period)
+    cols.each do |c|
+      cc_list << c.user.email     
+    end      
+		mail( to: @user.email, subject: subject, cc: cc_list)
 	end	 
 	
 	def sendFeedbackAsking(hash={})
@@ -55,6 +72,11 @@ class System < ActionMailer::Base
 		@user = hash[:user]
 		@progress=hash[:progress] 
 		subject = "EasyRegister #{@progress.user.name} 已匯款"
-		mail( to: @user.email, subject: subject)
+    cc_list = Array.new
+    cols = Collaborator.where(period: @progress.period)
+    cols.each do |c|
+      cc_list << c.user.email     
+    end 		
+		mail( to: @user.email, subject: subject, cc: cc_list)
 	end
 end

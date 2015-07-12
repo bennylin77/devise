@@ -4,6 +4,7 @@ class Period
 
 #  embeds_many :evaluations
 #  embeds_many :comments
+  has_many :collaborators, dependent: :destroy       
   has_many :progresses, dependent: :destroy  
   has_many :courses, dependent: :destroy   
   belongs_to :user  

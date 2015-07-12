@@ -83,7 +83,11 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/export_users'
   get  'nctu_cce_credit/user_print'
   get  'nctu_cce_credit/attendancePrint'
- 
+	get  'nctu_cce_credit/exportAttendance'
+  get  'nctu_cce_credit/editCollaborators' 
+  post 'nctu_cce_credit/addCollaborator' 
+  get  'nctu_cce_credit/destroyCollaborator' 
+  	
   get  'periods/createCompletion' 
   get  'periods/showManagement'
   get  'periods/indexManagement'
