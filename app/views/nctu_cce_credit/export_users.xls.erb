@@ -33,7 +33,7 @@
 				<Cell><Data ss:Type="String"><%=user.mobile_phone_no%></Data></Cell>
 				<Cell><Data ss:Type="String"><%=user.address%></Data></Cell>
 				<Cell><Data ss:Type="String">
-					<% progress.registered_courses.map{|c| c.course.title}.join(", ")%>
+					<%= progress.registered_courses.map{|c| c.course.title}.join(", ")%>
 				</Data></Cell>
       </Row>
     <% end %>

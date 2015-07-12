@@ -18,7 +18,7 @@ class User
                                     :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
   validates_attachment_size :qualification_proof , :less_than => 10.megabytes, :message=>"file size too big( <10mb ) "    
   
-  
+  has_many :collaborators    
   has_many :periods  
   has_many :progresses
   has_many :module_user_lists  

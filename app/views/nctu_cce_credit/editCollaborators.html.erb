@@ -1,0 +1,59 @@
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
+<%= render partial: "basic", locals: {period: @period} %>
+<br><br>
+
+<div class="container" >
+<%= form_tag  '/nctu_cce_credit/addCollaborator', method: 'post', class: "form-horizontal", role: "form" do %>
+    <%= hidden_field_tag  :id,  @period.id  %>	
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">新增共同管理者</label>
+		<div class="col-sm-5">
+			<%= text_field_tag :email, '', placeholder: '會員信箱', class: "form-control " %>
+		</div>
+		<div class="col-sm-2">
+			<%= submit_tag '加入',  class: "btn btn-primary"  %>
+		</div>				
+	</div>	    
+<% end %>
+</br>
+<table class="table table-striped ">
+  <tr>
+    <th>姓名</th>
+    <th>Email</th>    
+    <th></th>        
+  </tr>		
+<%@period.collaborators.order('id desc').each do |c| %>
+  <tr>
+    <td><%= c.user.name%></td>
+    <td><%= c.user.email%></td>    
+    <td><%= link_to '刪除', {controller: 'nctu_cce_credit', action: 'destroyCollaborator', collaborator_id: c.id, id: @period.id }, class: 'btn btn-danger' , data: { confirm: '您確定要刪除？' } %></td>        
+  </tr>	
+<%end%>
+</table>
+</div>
+
+<script>
+$(function(){ 
+	$( "#email" ).autocomplete({
+		source: function (request, response) {
+			$.ajax({
+        		url: "/system_modules/userInfo",
+        		data: {email: request.term},
+        		dataType: "json",
+        		success: function( data ) {
+            		response( $.map( data, function( item ) {
+	                	return {
+		                    label: item.label,
+		                    value: item.value
+	                	}
+            		}));
+        		}
+			});
+		},	
+		select: function(event, ui) {
+			$("#user_email").val(ui.item.value)
+        },
+		minLength: 2		
+	});		
+});	
+</script>
