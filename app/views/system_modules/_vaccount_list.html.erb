@@ -17,7 +17,7 @@
 		<%if progress.period.semester%><%=Hash[semesterOptions].rassoc(progress.period.semester).first%><%end%>	    
 		<%= progress.period.group.title %> <%if progress.period.term%>(第<%=progress.period.term%>期)<%end%>
 	</td>
-	<td><%= progress.user.id.generation_time.strftime("%y%m%d") %><%=progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %>	</td>	
+	<td><%= progress.user.id.generation_time.strftime("%y%m%d") %><%=progress.user.id.to_s[-6, 6].hex.to_s[-4, 4].rjust(8, '0') %>	</td>	
 	<td><%= vacc.progress.user.name %></td>
 	<td><%= vacc.money.to_s %> NT / <%=progress.payment.to_s%> NT </td>
 	<!--<td>No</td>-->
