@@ -26,7 +26,7 @@
 					<Row>
 						<Cell><Data ss:Type="String"><%=(idx==0) ? @group.title : "" %></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.course.title%></Data></Cell>
-						<Cell><Data ss:Type="String"><%=progress.user.id.generation_time.strftime("%Y%m%d") %><%=progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0')  %></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.user.id.generation_time.strftime("%y%m%d") %><%=progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0').to_s[-4, 4]  %></Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.user.id_no_TW%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.user.name%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=progress.user.name_en%></Data></Cell>

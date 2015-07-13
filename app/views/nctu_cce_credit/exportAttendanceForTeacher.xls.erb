@@ -246,7 +246,7 @@
 		<Row ss:AutoFitHeight="0">
 			<Cell><Data ss:Type="Number"><%=i+1%></Data></Cell>
 			<Cell ss:StyleID="s61"><Data ss:Type="String"><%=@period.group.title%></Data></Cell>
-			<Cell ss:StyleID="s62"><Data ss:Type="String"><%=r_c.progress.user.id.generation_time.strftime("%Y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %></Data></Cell>
+			<Cell ss:StyleID="s62"><Data ss:Type="String"><%=r_c.progress.user.id.generation_time.strftime("%y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0').to_s[-4, 4] %></Data></Cell>
 			<Cell ss:StyleID="s62"><Data ss:Type="String"><%=r_c.progress.user.name%></Data></Cell>
 			<Cell ss:StyleID="s63"/>
 			<Cell ss:StyleID="s64"/>
