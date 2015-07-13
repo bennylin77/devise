@@ -47,17 +47,15 @@
 					<Cell><Data ss:Type="String">簽名</Data></Cell>
 				</Row>
 			<% c.registered_courses.where(:progress_id.in => Progress.gt(stage: 3).pluck(:id)).each_slice(2) do |r_cs|%> 
-				
-				<% r_cs.each_with_index do |r_c,i| %>	
-					<% if i%2==0 %> <Row> <% end %>
-						<Cell><Data ss:Type="String">
-							<%=r_c.progress.user.id.generation_time.strftime("%Y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %>
-						</Data></Cell>	
-						<Cell><Data ss:Type="String"><%=r_c.progress.user.name%></Data></Cell>
-						<Cell><Data ss:Type="String"></Data></Cell>
-					<% if i==r_cs.count-1 || (i!=0 && i%1==0) %> </Row> <% end %>
+				<Row>
+				<% r_cs.each do |r_c| %>		
+					<Cell><Data ss:Type="String">
+						<%=r_c.progress.user.id.generation_time.strftime("%Y%m%d") %><%=r_c.progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %>
+					</Data></Cell>	
+					<Cell><Data ss:Type="String"><%=r_c.progress.user.name%></Data></Cell>
+					<Cell><Data ss:Type="String"></Data></Cell>
 				<% end %>		    
-				
+				</Row>
 			<% end %>
 			</Table>
 		</Worksheet>

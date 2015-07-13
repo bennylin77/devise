@@ -7,7 +7,7 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])} 
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}
   before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth, 
-                                    :attendancePrint, :exportAttendance, :editCollaborators, :addCollaborator, :destroyCollaborator]  
+                                    :attendancePrint, :exportAttendance, :exportAttendanceForTeacher, :editCollaborators, :addCollaborator, :destroyCollaborator]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
       
@@ -255,8 +255,19 @@ class NctuCceCreditController < ApplicationController
     respond_to do |format|
 			 format.xls{
 			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
-			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now}簽到表.xls\" "	
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now.strftime("%Y-%m-%d")}簽到表.xls\" "	
 			 }
+		end	 
+  end  
+	
+	def exportAttendanceForTeacher
+		
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now.strftime("%Y-%m-%d")}點名單.xls\" "	
+			 }
+			 format.html{}
 		end	 
   end  
 	
