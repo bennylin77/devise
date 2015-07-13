@@ -22,7 +22,7 @@
 <table class="table " id="user-info">
   <tr>
     <th>學號</th>
-  <td><%=@progress.user.id.generation_time.strftime("%Y%m%d") %><%=@progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0') %></td>  
+  <td><%=@progress.user.id.generation_time.strftime("%y%m%d") %><%=@progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0').to_s[-4, 4] %></td>  
   </tr>		
   <tr>
     <th>姓名</th>
