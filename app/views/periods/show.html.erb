@@ -34,6 +34,7 @@
 	  <td>報名人數 / 招生人數 <span class="glyphicon glyphicon-user" aria-hidden="true"></span></td>
 	  <td>費用 <span class="glyphicon glyphicon-usd" aria-hidden="true"></span></td>
 	  <td>地點 <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></td>
+	  <td>備註 <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></td>	  
 	  <td>課程時間 <span class="glyphicon glyphicon-time" aria-hidden="true"></span></td>
 	</tr>
 <%@period.courses.each do |c|%>
@@ -42,6 +43,7 @@
 	  <td><%unless c.no_of_users.blank?%><%= c.registered_courses.where(:progress_id.in => Progress.gte(stage: 2).pluck(:id)).count%>人 / <%=c.no_of_users %>人<%else%>--<%end%></td>
 	  <td><%unless c.price.blank?%><%=c.price %> NT<%else%>--<%end%></td>
 	  <td><%unless c.location.blank?%><%=c.location %><%else%>--<%end%></td>
+	  <td><%unless c.note.blank?%><%=c.note %><%else%>--<%end%></td>	  
 	  <td><%unless c.start_at.blank? or c.end_at.blank?%><%=c.start_at.strftime "%Y/%m/%d" %> ~ <%=c.end_at.strftime "%Y/%m/%d" %><%else%>--<%end%></td>
 	</tr>
 <%end%>	

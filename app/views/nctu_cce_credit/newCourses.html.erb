@@ -14,9 +14,10 @@
   	
 	<div class="form-group">
 		<label class="col-sm-2">課程名稱*</label>
-		<label class="col-sm-2">學費*</label>
+		<label class="col-sm-1">學費*</label>
 		<label class="col-sm-1">招生人數*</label>
 		<label class="col-sm-2">地點</label>		
+		<label class="col-sm-2">備註</label>			
 		<label class="col-sm-2">課程開始時間</label>
 		<label class="col-sm-2">課程結束時間</label>				
 	</div>  
@@ -42,18 +43,18 @@ var index = 0;
 	addCourse();
 <%else%>
 	<% @title.each_with_index do |t, i|%>
-		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>', '<%=@start_at[i]%>', '<%=@end_at[i]%>', '<%=@location[i]%>');	
+		addCourse('<%=t%>', '<%=@price[i]%>', '<%=@no_of_users[i]%>', '<%=@start_at[i]%>', '<%=@end_at[i]%>', '<%=@location[i]%>', '<%=@note[i]%>');	
 	<%end%>	
 <%end%>
 
-function addCourse(title, price, no_of_users, start_at, end_at, location) {
+function addCourse(title, price, no_of_users, start_at, end_at, location, note) {
 	var $div_course = $("<div>", {id: "course_"+index, class: "form-group"});
 	
 	var $col = $("<div>", {class: "col-sm-2"});					
 	var $input_title = $("<input>", {id: "course_title_"+index, class: "form-control", type:"text", name: "title[]", value: title, placeholder: "課程名稱" });
 	$col.append($input_title)
 	$div_course.append($col);	
-	$col = $("<div>", {class: "col-sm-2"});		
+	$col = $("<div>", {class: "col-sm-1"});		
 	var $input_price = $("<input>", {id: "course_price_"+index, class: "form-control", type:"text", name: "price[]", value: price, placeholder: "學費" });
 	$col.append($input_price)
 	$div_course.append($col);
@@ -65,7 +66,11 @@ function addCourse(title, price, no_of_users, start_at, end_at, location) {
 	var $input_location = $("<input>", {id: "course_location_"+index, class: "form-control", type:"text", name: "location[]", value: location, placeholder: "地點" });
 	$col.append($input_location)
 	$div_course.append($col);
-	
+	$col = $("<div>", {class: "col-sm-2"});		
+	var $input_note = $("<input>", {id: "course_note_"+index, class: "form-control", type:"text", name: "note[]", value: note, placeholder: "備註" });
+	$col.append($input_note)
+	$div_course.append($col);
+		
 	$col = $("<div>", {class: "col-sm-2"});		
 	var $input_start_at = $("<input>", {id: "course_start_at_"+index, class: "form-control", type:"text", name: "start_at[]", value: start_at, placeholder: "課程開始時間" });
 	$input_start_at.datetimepicker({

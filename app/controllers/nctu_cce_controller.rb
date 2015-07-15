@@ -6,7 +6,7 @@ class NctuCceController < ApplicationController
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
-  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth]  
+  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
         
@@ -47,8 +47,28 @@ class NctuCceController < ApplicationController
   
   def indexManagement
     @progresses = @period.progresses.order('stage desc').paginate(page: params[:page], per_page: 30)
-  end    
-  
+  end
+	
+  def exportAttendance
+		
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now.strftime("%Y-%m-%d")}簽到表.xls\" "	
+			 }
+		end	 
+  end  
+	
+	def exportAttendanceForTeacher
+		
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now.strftime("%Y-%m-%d")}點名單.xls\" "	
+			 }
+			 format.html{}
+		end	 
+  end  
   
   def editPeriod  
   end 

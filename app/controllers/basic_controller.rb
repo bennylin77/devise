@@ -6,7 +6,7 @@ class BasicController < ApplicationController
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
 
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}    
-  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth]  
+  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
   
@@ -243,6 +243,27 @@ class BasicController < ApplicationController
 	render :layout=> false
   end
   
+	def exportAttendance
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now.strftime("%Y-%m-%d")}簽到表.xls\" "	
+			 }
+		end	 
+  end  
+	
+	def exportAttendanceForTeacher
+		
+    respond_to do |format|
+			 format.xls{
+			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{Time.now.strftime("%Y-%m-%d")}點名單.xls\" "	
+			 }
+			 format.html{}
+		end	 
+  end  
+	
+	
   private    
   
   def set_period

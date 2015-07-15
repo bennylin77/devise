@@ -22,7 +22,10 @@ Rails.application.routes.draw do
   get  'basic/destroyProgress'
   get  'basic/export_users'
   get  'basic/user_print'
-  
+	
+  get  'basic/exportAttendance'
+	get  'basic/exportAttendanceForTeacher'
+	
   get  'nctu_cce/first'
   get  'nctu_cce/second'  
   post 'nctu_cce/second'   
@@ -50,7 +53,9 @@ Rails.application.routes.draw do
   get  'nctu_cce/destroyProgress'
   get  'nctu_cce/export_users'
   get  'nctu_cce/user_print'
-
+	get  'nctu_cce/exportAttendance'
+	get  'nctu_cce/exportAttendanceForTeacher'
+	
   get  'nctu_cce_credit/first' 
   get  'nctu_cce_credit/second'    
   post 'nctu_cce_credit/second' 

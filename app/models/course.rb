@@ -12,6 +12,7 @@ class Course
   field :start_at, type: Date  
   field :end_at, type: Date  
   field :location, type: String
+  field :note, type: String
   
   field :no_of_waiting_users, type: Integer, default: 0  
   field :waiting_start, type: Boolean, default: false  
