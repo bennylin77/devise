@@ -10,7 +10,7 @@
 		</Style>
 	</Styles>
 	<% @period.courses.each do |c| %>
-		<Worksheet ss:Name="<%=c.title.truncate(15)%>">
+		<Worksheet ss:Name="<%=c.title.gsub(':','')%>">
 			<Table>
 				<ss:Column ss:Width="80"/>
 				<ss:Column ss:Width="90"/>
