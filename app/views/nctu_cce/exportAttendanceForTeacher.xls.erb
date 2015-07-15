@@ -180,7 +180,7 @@
   </Style>
  </Styles>
  <% @period.courses.each do |c| %>
- <Worksheet ss:Name="<%=c.title.truncate(15)%>">
+ <Worksheet ss:Name="<%=c.title.gsub(':','')%>">
   <Table ss:ExpandedColumnCount="20" ss:ExpandedRowCount="66" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s15" ss:DefaultColumnWidth="54"
    ss:DefaultRowHeight="12">
