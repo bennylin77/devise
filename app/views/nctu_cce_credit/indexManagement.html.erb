@@ -2,7 +2,7 @@
 <div class="container-fluid">
 	<div class="row">	
 		<div class="col-sm-9">
-			<%=link_to '刪除學分班', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此學分班？' } %>		
+			<%=link_to '刪除班級', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此班級？' } %>		
 			<%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>	
 			<%=link_to '匯出學員資料', "/nctu_cce_credit/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
 			<!--<%=link_to "列印簽到表", "/nctu_cce_credit/attendancePrint?id="+@period.id.to_s, class: "btn btn-info" %>-->
