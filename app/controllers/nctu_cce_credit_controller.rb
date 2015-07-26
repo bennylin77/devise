@@ -16,7 +16,16 @@ class NctuCceCreditController < ApplicationController
     @group.periods.build()    
     @step = 2    
   end
-  
+  def exportScoreList
+		@course=Course.find(params[:id])
+		respond_to do |format|
+			format.xls{
+				response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '
+				response.headers['Content-Disposition'] = " attachment; filename=\"成績列表.xls\" "	
+			}
+		end
+	end
+	
   def newCourses
     @group = Group.new(group_params)      
     @step = 2     

@@ -1,0 +1,40 @@
+<h3 class="text-center">匯出成績證明</h3>
+<br>
+<div class="container" >
+	<%=form_tag "/system_modules/transcript",method:"POST", class: 'form-horizontal' do %>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-6">
+				<%=text_field_tag "id_no", params[:id_no], class: 'form-control', placeholder: '輸入身份證字號/居留證號碼'%>	
+			</div>
+			<div class="col-sm-2">
+				<%=submit_tag "查詢", class: 'btn btn-primary check-submit'%>
+			</div>		
+		</div>
+	<% end %>
+	<% if @user %>
+		<h4 class="">查詢結果</h4>
+		<ul>
+			<li>姓名:<%=@user.name%></li>
+			<li>身份證字號:<%=@user.id_no_TW%></li>
+			<li>Email:<%=@user.email %></li>
+			<li>聯絡電話:<%=@user.phone_no %></li>
+		</ul>
+		<table class="table table-striped" id="result-table">
+			<tr>
+				<th>班別</th>
+				<th colspan="2">語言</th>
+			</tr>
+			<% @user.progresses.each do |progress| %>
+			<tr>
+				<td><%= progress.period.group.title %></td>
+				<td>								
+					<%=link_to "中文","/system_modules/export_transcript.xml?progress_id=#{progress.id}&user_id=#{@user.id}&lang=ch",class:"btn btn-info"%>
+				</td>
+				<td>
+					<%=link_to "英文","/system_modules/export_transcript.xml?progress_id=#{progress.id}&user_id=#{@user.id}&lang=eng",class:"btn btn-info"%>
+				</td>
+			</tr>
+			<% end %>
+		</table>
+	<% end %>
+</div>

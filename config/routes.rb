@@ -93,7 +93,9 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/editCollaborators' 
   post 'nctu_cce_credit/addCollaborator' 
   get  'nctu_cce_credit/destroyCollaborator' 
-  	
+  
+	get 'nctu_cce_credit/exportScoreList' 
+	
   get  'periods/createCompletion' 
   get  'periods/showManagement'
   get  'periods/indexManagement'
@@ -115,8 +117,11 @@ Rails.application.routes.draw do
   get  'system_modules/vaccounts'
   get  'system_modules/export_summary'
   get  'system_modules/succeed'
-  
-  post 'users/uploadFile'
+  get  'system_modules/transcript'
+	post  'system_modules/transcript'
+  get  'system_modules/export_transcript'
+
+	post 'users/uploadFile'
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   resources :periods  

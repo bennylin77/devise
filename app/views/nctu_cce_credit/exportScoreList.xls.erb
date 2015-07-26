@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+	<Styles>
+		<Style ss:ID="header">
+		 <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+		</Style>
+	</Styles>
+
+	<Worksheet ss:Name="<%=@course.title.gsub(':','')%>">
+		<Table>
+			<ss:Column ss:Width="80"/>
+			<ss:Column ss:Width="90"/>
+			<ss:Column ss:Width="90"/>
+			<ss:Column ss:Width="80"/>
+			<ss:Column ss:Width="90"/>
+			<ss:Column ss:Width="90"/>
+			<% if @course.period.school_year %>  
+				<Row ss:Height="30">
+					<Cell ss:MergeAcross="5" ss:StyleID="header">
+					<Data ss:Type="String">
+						<%=@course.period.school_year%>學年
+						<% if @course.period.semester %>
+							<%=Hash[semesterOptions].rassoc(@course.period.semester).first%>
+						<% end %>
+					</Data>
+					</Cell>
+				</Row>
+			<% end %>
+			<Row ss:Height="30">
+				<Cell ss:MergeAcross="5" >
+				<Data ss:Type="String">
+					<%=@course.period.group.title%> - <%=@course.title%>
+					修課人數:<%=@course.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count%>
+				</Data>
+				</Cell>
+			</Row>			
+			<Row>
+				<Cell><Data ss:Type="String">姓名</Data></Cell>
+				<Cell><Data ss:Type="String">學員編號</Data></Cell>
+				<Cell><Data ss:Type="String">成績</Data></Cell>
+				<Cell><Data ss:Type="String">出席率</Data></Cell>
+				<Cell><Data ss:Type="String">證書字號</Data></Cell>
+			</Row>
+		<% @course.registered_courses.where(:progress_id.in => Progress.gt(stage: 3).pluck(:id)).each do |rc|%> 
+			<Row>			
+				<Cell><Data ss:Type="String"><%=rc.progress.user.name%></Data></Cell>
+				<Cell><Data ss:Type="String">
+					<%=rc.progress.user.id.generation_time.strftime("%y%m%d") %><%=rc.progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0').to_s[-4, 4] %>
+				</Data></Cell>	
+				<Cell><Data ss:Type="String"><%=rc.score%></Data></Cell>
+				<Cell><Data ss:Type="String"><%=rc.attendance%></Data></Cell>
+				<Cell><Data ss:Type="String"><%=rc.certificate_no%></Data></Cell>
+			</Row>
+		<% end %>
+		</Table>
+	</Worksheet>
+
+</Workbook> 

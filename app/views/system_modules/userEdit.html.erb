@@ -22,6 +22,7 @@
 <%= link_to '總匯款明細', "/system_modules/vaccounts?id="+params[:id], class: 'btn btn-default' %>
 <%= link_to '匯出問卷統計', "/system_modules/export_summary.xls?id=#{params[:id]}&type=answer&year=103", class: 'btn btn-default' %>
 <%= link_to '匯出及格人數統計', "/system_modules/export_summary.xls?id=#{params[:id]}&type=score&year=103", class: 'btn btn-default' %>
+<%= link_to '成績證明', "/system_modules/transcript?id=#{params[:id]}", class: 'btn btn-default' %>
 </br>
 </br>
 <table class="table table-striped ">

@@ -2,7 +2,7 @@
 <%= render partial: "user", locals: {period: @period} %>
 <br><br>
 <%@period.courses.each do |s|%>	
-<h3><%= s.title%></h3>
+<h3><%= s.title%>&nbsp;&nbsp;&nbsp;<%=link_to "匯出成績列表","/nctu_cce_credit/exportScoreList.xls?id=#{s.id}",class:"btn btn-info"%></h3>
 <div class="table-responsive">
 <table class="table table-striped ">
   <tr>

@@ -12,6 +12,15 @@ class SystemModulesController < ApplicationController
     respond_with(@system_modules)
   end
 
+	def transcript
+		if request.post?
+			@user=User.any_of({:id_no_TW=>/^#{params[:id_no]}/i},{:ARC_no_TW=>/^#{params[:id_no]}/i}).first
+		#else
+			#@system_module=SystemModule.find(params[:id])
+		end
+		
+	end
+	
   def show
     respond_with(@system_module)
   end
@@ -149,7 +158,20 @@ class SystemModulesController < ApplicationController
   		@row += "<td>#{vc.last_transfer_time}</td></tr>"
   	end
   end
-  
+	
+  def export_transcript
+		@user=User.find(params[:user_id])
+		@progress=@user.progresses.find(params[:progress_id])
+	  respond_to do |format|
+	     #format.html {}
+			format.xml{
+				response.headers['Content-Type'] = "application/vnd.ms-word"
+			 	response.headers['Content-Disposition'] = " attachment; filename=\"#{@user.name} 成績證明_#{params[:lang]}.doc\" "
+				render "export_transcript_#{params[:lang]}"#, :layout=>false
+			}
+		end
+  end
+	
   def vaccounts
 	  @system_module = SystemModule.find(params[:id])
 	  @vaccounts = @system_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
