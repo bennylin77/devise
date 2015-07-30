@@ -37,5 +37,5 @@ gem 'country_select', '~> 2.0'
 gem 'countries', :require => 'iso3166'
 
 gem "sqlite3"
-gem 'tiny_tds'
+gem 'tiny_tds', '~> 0.6.3.rc1'
 gem "activerecord-sqlserver-adapter"

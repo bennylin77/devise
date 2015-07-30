@@ -24,9 +24,9 @@ class Vaccount
 	end
 	
 	# 
-		def update_status		 
-		
-		@vacc=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).first
+	def update_status		 
+		#照時間倒序排
+		@vacc=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).order("VAccount_TranDateTime DESC")
 		
 		if @vacc.nil?
 			self.status = {
@@ -36,17 +36,23 @@ class Vaccount
 				}
 			}
 		else
+			amount=0
+			@vacc.each do |vac|
+				amount+=vac.VAccount_TranAmount.to_i
+			end
+			last_vacc=@vacc[0]
 			self.status = {
 				"res"=>{
 					"code"=> "0000",
 					"desc"=>"正常"
 				},
 				"PjName"=>"XXX清算專案",
-				"Amount"=>@vacc.VAccount_TranAmount,
-				"PayChnl"=> @vacc.VAccount_TranNote, 
-				"PayState" => @vacc.VAccount_AckStatus,
-				"PayDate" => @vacc.VAccount_TranDateTime
+				"Amount"=>amount,
+				"PayChnl"=> last_vacc.VAccount_TranNote, 
+				"PayState" => last_vacc.VAccount_AckStatus,
+				"PayDate" => last_vacc.VAccount_TranDateTime
 			}
+			
 			self.money=self.status["Amount"]
 			self.last_transfer_time=self.status["PayDate"]
 		end
