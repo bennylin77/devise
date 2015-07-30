@@ -24,6 +24,39 @@ class Vaccount
 	end
 	
 	# 
+		def update_status		 
+		
+		@vacc=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).first
+		
+		if @vacc.nil?
+			self.status = {
+				"res"=>{
+					"code"=> "1000",
+					"desc"=>"查無繳款紀錄"
+				}
+			}
+		else
+			self.status = {
+				"res"=>{
+					"code"=> "0000",
+					"desc"=>"正常"
+				},
+				"PjName"=>"XXX清算專案",
+				"Amount"=>@vacc.VAccount_TranAmount,
+				"PayChnl"=> @vacc.VAccount_TranNote, 
+				"PayState" => @vacc.VAccount_AckStatus,
+				"PayDate" => @vacc.VAccount_TranDateTime
+			}
+			self.money=self.status["Amount"]
+			self.last_transfer_time=self.status["PayDate"]
+		end
+		#self.last_transfer_time = date
+		self.save!
+		
+		return 0
+	end
+	
+=begin ##########old
 	def update_status		 
 
 		http = Curl.post(ESURL, {"OrgId"=> COMPANY_ORGID, "VirtualAccount"=>self.vacc})
@@ -33,6 +66,8 @@ class Vaccount
 		  self.touch
 		  return -1 
 		end
+		
+		
 		paychl = paychnl_desc(xml_doc.xpath('//PayChnl')[0].try(:content))
 		paystate = patstate_desc(xml_doc.xpath('//PayState')[0].try(:content))
 		amount = xml_doc.xpath('//Amount')[0].try(:content)
@@ -62,7 +97,7 @@ class Vaccount
 		
 		return 0
 	end
-	
+=end	
 	# check account for 95306
 	def check_account(str)
 		return false unless str.include? "95306"

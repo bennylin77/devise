@@ -102,7 +102,7 @@ Rails.application.routes.draw do
   get  'periods/progress'
   get  'periods/progressStatus'  
   get  'periods/export_vaccounts'
-  
+  get  "periods/nctuvaccount"
   
   get  'system_modules/addAdmin'
   post 'system_modules/addAdmin'

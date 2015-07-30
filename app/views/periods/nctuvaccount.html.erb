@@ -1,0 +1,31 @@
+
+<%=@zzs.column_names%>
+<table class="table">
+	<tr>
+	<% @zzs.column_names.each do |cn|%>
+			<th><%=cn%></th>
+	<% end %>
+	</tr>
+
+	<% @zzs.each do |key|%>
+		<tr>
+	<% @zzs.column_names.each do |cn|%>
+			<th><%=key[cn]%></th>
+	<% end %>
+	</tr>
+	<!--
+		<tr>
+			<td><%=key.VAccount_TranDate%></td>
+			<td><%=key.VAccount_TranAccount%></td>
+			<td><%=key.VAccount_TranAmount%></td>
+			<td><%=key.VAccount_ReceiveNum%></td>
+			<td><%=key.VAccount_AckStatus%></td>
+			<td><%=key.VAccount_BankCode%></td>
+			<td><%=key.VAccount_ATM%></td>
+			<td><%=key.VAccount_TranNote%></td>
+			<td><%=key.VAccount_PaidBy%></td>
+			<td><%=key.VAccount_Purpose%></td>
+		</tr>
+		-->
+	<% end %>
+</table>

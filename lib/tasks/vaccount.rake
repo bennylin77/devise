@@ -6,10 +6,7 @@ namespace :vaccount do
 			next if vacc.progress.blank? # 防髒資料
      #	p vacc.vacc
      	res = vacc.update_status
-     	if res==-1 # 伺服器維修中
-				p "can't connect to esun server "
-				return 
-			end
+     
 
      	if vacc.money.to_f >= vacc.progress.payment.to_f and vacc.progress.stage < 4
 				p "new pass #{vacc.vacc}"
@@ -26,6 +23,9 @@ namespace :vaccount do
   
   desc "test"
   task :test => :environment do
-  		
+  	vacc=Vaccount.create(active: true,vacc: "95306672277054")
+		vacc.update_status
+		puts vacc.to_json
+		vacc.destroy
   end
 end

@@ -1,0 +1,18 @@
+development:
+  adapter: sqlserver
+  mode: dblib
+  dataserver: ado
+  #host: 140.113.9.82
+  #port: 1633
+  database: NCTUVAccount
+  username: sa
+  password: Iadaniel2725
+production:
+  adapter: sqlserver
+  mode: dblib
+  dataserver: ado
+  #host: 140.113.9.82
+  #port: 1633
+  #database: NCTUVAccount
+  username: sa
+  password: Iadaniel2725

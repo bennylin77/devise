@@ -4,6 +4,11 @@ class PeriodsController < ApplicationController
   before_action :set_period, only: [:show, :edit, :update, :destroy, :createCompletion]
   before_action :set_progress, only: [:progressStatus]
   
+	def nctuvaccount
+		@zzs=Nctuvaccount.all.order("VAccount_TranDate DESC")
+		#@zzs=Nctuvaccount.where(:VAccount_TranAccount=>"95306672277054")
+	end
+	
   def index
     @periods = Period.all.order('id desc').paginate(per_page: 30, page: params[:page])
   end

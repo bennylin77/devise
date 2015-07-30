@@ -35,3 +35,7 @@ gem 'will_paginate-bootstrap'
 gem 'jquery-ui-sass-rails'
 gem 'country_select', '~> 2.0'
 gem 'countries', :require => 'iso3166'
+
+gem "sqlite3"
+gem 'tiny_tds'
+gem "activerecord-sqlserver-adapter"
