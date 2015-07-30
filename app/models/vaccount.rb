@@ -28,7 +28,7 @@ class Vaccount
 		#照時間倒序排
 		@vacc=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).order("VAccount_TranDateTime DESC")
 		
-		if @vacc.nil?
+		if @vacc.empty?
 			self.status = {
 				"res"=>{
 					"code"=> "1000",
