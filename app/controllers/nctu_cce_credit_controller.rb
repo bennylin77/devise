@@ -122,7 +122,27 @@ class NctuCceCreditController < ApplicationController
   def editCourses     
   end
   
-  def updateCourses  
+  def updateCourses 
+    @title = params[:title]
+    @price = params[:price]
+    @no_of_users = params[:no_of_users]    
+    @start_at = params[:start_at]   
+    @end_at = params[:end_at]     
+    @location = params[:location]   
+    @note = params[:note] 
+    unless params[:title].blank?    
+      params[:title].each_with_index do |t, i|
+        validations_result=validations([{type: 'presence', title: '課程名稱', data: t},     
+                                        {type: 'presence', title: '學費', data: params[:price][i]},   
+                                        {type: 'presence', title: '招生人數', data: params[:no_of_users][i]}                                                                                   
+                                        ])        
+        checkValidations(validations: validations_result, render: 'editCourses' )                                           
+      end
+      params[:title].each_with_index do |t, i|
+        @period.courses.create(title: t, price: params[:price][i], no_of_users: params[:no_of_users][i], start_at: params[:start_at][i], end_at: params[:end_at][i], location: params[:location][i], note: params[:note][i] )    
+      end       
+    end
+     
     @period.assign_attributes(period_params)        
     @period.courses.each do |ii|
       validations_result=validations([{type: 'presence', title: '課程名稱', data: ii.title},     

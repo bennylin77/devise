@@ -34,10 +34,12 @@
 						</tr>
 					</table>					
 					總計: <b><%=@progress.payment.to_s%></b> NT
+					<!--
 					<p class="text-danger">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					因玉山銀行系統的設定，如需要分多筆匯款，請每日匯一筆，避免同日連續匯款，造成不便盡請見諒。
-					</p>										
+					</p>
+					-->										
 				</td>
 				<td><%=@progress.period.payment_start_at.strftime("%Y/%m/%d %H:%M")%></td>
 				<td><%=@progress.period.payment_end_at.strftime("%Y/%m/%d %H:%M")%></td>
