@@ -1,0 +1,80 @@
+<%= render partial: "layouts/managementHeader", locals: {period: @period} %>
+<%= render partial: "user", locals: {period: @period} %>
+<br><br>
+<div class="table-responsive">
+<table class="table table-striped ">
+  <tr>
+    <th>姓名</th>   	
+    <th>虛擬帳號</th>   
+    <th>認領狀況</th>   
+    <th>銷帳狀況</th>   
+    <th>收據號碼</th>                	
+    <th>收據事由</th>  
+    <th></th>          
+  </tr>	
+	<%@period.progresses.each do |p| %>
+		<%unless p.vaccount.blank?%>
+		<tr>
+			<td><%= p.user.name%></td>
+			<td><%= p.vaccount.vacc%></td>
+			<td id='ack_status_<%=p.id %>'><%if p.vaccount.ack_status%>已認領<%else%>未認領<%end%></td>
+			<td><%if p.vaccount.is_cosed%>已銷帳<%else%>未銷帳<%end%></td>
+			<td><%=showBlank p.vaccount.receive_no%></td>
+		    <td>
+		    <%if !p.vaccount.is_cosed%>	
+		    	<%= text_field_tag 'purpose_'+p.id, p.vaccount.purpose, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
+			<%else%>
+				<%= p.vaccount.purpose%>
+			<%end%>
+			<td>
+			<%if !p.vaccount.ack_status%>	
+			<span id="ack_btn_<%=p.id%>" class="btn btn-primary" onclick="ackAjaxHandler('<%=p.id %>')">認領</span>				
+			<%end%>
+			</td>
+		</tr>												
+		<%end%>
+	<%end%>
+</table>	
+</div>
+
+
+<script>
+function purposeAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce_credit/updateVAccount",
+	type: "POST",
+	data: { id: id, val: $( "#purpose_"+id ).val(), type: 'purpose' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		if(message.success)
+			toastr['success'](message.message)		
+		else	
+			toastr['warning'](message.message)					
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}	
+function ackAjaxHandler(id)
+{
+	var request = $.ajax({
+	url: "/nctu_cce_credit/updateVAccount",
+	type: "POST",
+	data: { id: id, type: 'ack' },
+	dataType: "json"
+	});
+	request.done(function( message ) {
+		if(message.success)
+		{
+			toastr['success'](message.message)		
+			$('#ack_status_'+id).html('已認領')
+			$('#ack_btn_'+id).remove()		
+		}	
+		else	
+			toastr['warning'](message.message)					
+	});
+	request.fail(function( jqXHR, textStatus ) {
+	});	
+}
+</script>

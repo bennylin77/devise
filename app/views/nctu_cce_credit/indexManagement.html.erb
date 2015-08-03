@@ -1,17 +1,13 @@
 <%= render partial: "layouts/managementHeader", locals: {period: @period} %>
 <div class="container-fluid">
 	<div class="row">	
-		<div class="col-sm-9">
-			<%=link_to '刪除班級', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此班級？' } %>		
-			<%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>	
-			<%=link_to '匯出學員資料', "/nctu_cce_credit/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
-			<!--<%=link_to "列印簽到表", "/nctu_cce_credit/attendancePrint?id="+@period.id.to_s, class: "btn btn-info" %>-->
-			<%=link_to "匯出簽到表", "/nctu_cce_credit/exportAttendance.xls?id="+@period.id.to_s, class: "btn btn-info" %>
-			<%=link_to "匯出點名單", "/nctu_cce_credit/exportAttendanceForTeacher.xls?id="+@period.id.to_s, class: "btn btn-info" %>			
+		<div class="col-sm-3">
+			<%=link_to '刪除班級', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此班級？' } %>				
 		</div>		
-		<div class="col-sm-offset-1 col-sm-2">
+		<div class="col-sm-9 text-right">
 		  	<%=link_to '管理學員', {controller: 'nctu_cce_credit', action: 'sendMessage', id: @period.id}, class: 'btn btn-default' %>
-		  	<%=link_to '設定/修改', {controller: 'nctu_cce_credit', action: 'editGroup', id: @period.group.id}, class: 'btn btn-default' %>
+		  	<%=link_to '設定/修改班級', {controller: 'nctu_cce_credit', action: 'editGroup', id: @period.group.id}, class: 'btn btn-default' %>
+		  	<%=link_to '匯出資料表格', {controller: 'nctu_cce_credit', action: 'export', id: @period.id}, class: 'btn btn-default' %>		
 		</div>		
 	</div>
 </div>

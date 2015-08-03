@@ -9,7 +9,14 @@ class Vaccount
   field :last_transfer_time, type: String, default: "N/A"
   field :active, type: Boolean, default: true  # 帳號是否啟動，用來決定是否要被sched_update_status
   field :money, type: Integer, default: 0
-
+  
+  field :ack_status, type: Boolean, default: false #認領狀況  
+  field :paid_by, type: String #繳款人
+  field :purpose, type: String #收據事由
+  field :receive_no, type: String #收據號碼
+  field :is_cosed, type: Boolean, default: false #銷帳狀況   
+  
+  
 	# Create new virtual account. 
 	# Note that it will cover the older
 	def create_account(id) 
