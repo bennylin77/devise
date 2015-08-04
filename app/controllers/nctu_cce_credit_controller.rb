@@ -224,7 +224,10 @@ class NctuCceCreditController < ApplicationController
    
   def editVAccount
     #ado 這裡幫我連出納機器檢查 @period 裡的每一個vaccount 是不是銷帳了並且更新收據號碼-----start
-        
+		@period.progresses.each do |progress|
+			va=progress.vaccount
+			va.updateIsclosedAndReceiveNo
+		end
     #ado 這裡幫我連出納機器檢查 @period 裡的每一個vaccount 是不是銷帳了並且更新收據號碼-----end    
   end 
 
@@ -232,24 +235,25 @@ class NctuCceCreditController < ApplicationController
     vaccount = @progress.vaccount
     case params[:type]
     when 'purpose'
-      if !vaccount.is_cosed
+      if !vaccount.is_closed
         vaccount.purpose = params[:val]
+				vaccount.save!
         #ado 這裡幫我連出納機器改事由-----start
-        
+        vaccount.syncMssqlPurpose
         #ado 這裡幫我連出納機器改事由-----end        
-        vaccount.save!
+        
         render json: {success: true, message: '成功更改收據事由'}   
       else
         render json: {success: false, message: '已銷帳無法更改收據事由'}           
       end                  
     when 'ack'  
-      if !vaccount.is_cosed
+      if !vaccount.is_closed
         vaccount.paid_by = @progress.user.name
         vaccount.ack_status = true
-        #ado 這裡幫我連出納機器 改認領狀況 繳款人-----start
-        
-        #ado 這裡幫我連出納機器 改認領狀況 繳款人-----end            
         vaccount.save!
+				#ado 這裡幫我連出納機器 改認領狀況 繳款人-----start
+				vaccount.syncMssqlPaidByAndAck
+				#ado 這裡幫我連出納機器 改認領狀況 繳款人-----end     
         render json: {success: true, message: '成功認領'}   
       else
         render json: {success: false, message: '無法再認領'}           

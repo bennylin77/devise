@@ -14,7 +14,7 @@ class Vaccount
   field :paid_by, type: String #繳款人
   field :purpose, type: String #收據事由
   field :receive_no, type: String #收據號碼
-  field :is_cosed, type: Boolean, default: false #銷帳狀況   
+  field :is_closed, type: Boolean, default: false #銷帳狀況   
   
   
 	# Create new virtual account. 
@@ -29,8 +29,31 @@ class Vaccount
 		uniacc.push(gen_checksum(uniacc))
 		self.vacc =  uniacc.map(&:to_s).join('')
 	end
+	#def updateIsclosed
+		#@vacc=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc)
+	#end
+	def updateIsclosedAndReceiveNo
+		vaccs=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).order("VAccount_TranDateTime DESC")
+		return if vaccs.empty?
+		self.is_closed=vaccs[0].VAccount_IsClosed
+		self.receive_no=vaccs[0].VAccount_ReceiveNum
+		self.save
+	end
+	def syncMssqlPurpose
+		Nctuvaccount.where(:VAccount_TranAccount=>self.vacc) do |vc|
+			vc.VAccount_Purpose=self.purpose
+			vc.save
+		end
+	end
 	
-	# 
+	def syncMssqlPaidByAndAck
+		Nctuvaccount.where(:VAccount_TranAccount=>self.vacc) do |vc|
+			vc.VAccount_PaidBy=self.paid_by
+			vc.VAccount_AckStatus=self.ack_status ? "已認領" : "未認領"
+			vc.save
+		end
+	end
+	
 	def update_status		 
 		#照時間倒序排
 		@vacc=Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).order("VAccount_TranDateTime DESC")

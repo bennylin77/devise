@@ -1,6 +1,7 @@
 <%= render partial: "layouts/managementHeader", locals: {period: @period} %>
 <%= render partial: "user", locals: {period: @period} %>
 <br><br>
+<%=@vaccounts%>
 <div class="table-responsive">
 <table class="table table-striped ">
   <tr>
@@ -18,10 +19,10 @@
 			<td><%= p.user.name%></td>
 			<td><%= p.vaccount.vacc%></td>
 			<td id='ack_status_<%=p.id %>'><%if p.vaccount.ack_status%>已認領<%else%>未認領<%end%></td>
-			<td><%if p.vaccount.is_cosed%>已銷帳<%else%>未銷帳<%end%></td>
+			<td><%if p.vaccount.is_closed%>已銷帳<%else%>未銷帳<%end%></td>
 			<td><%=showBlank p.vaccount.receive_no%></td>
 		    <td>
-		    <%if !p.vaccount.is_cosed%>	
+		    <%if !p.vaccount.is_closed%>	
 		    	<%= text_field_tag 'purpose_'+p.id, p.vaccount.purpose, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
 			<%else%>
 				<%= p.vaccount.purpose%>

@@ -5,6 +5,7 @@ class PeriodsController < ApplicationController
   before_action :set_progress, only: [:progressStatus]
   
 	def nctuvaccount
+		
 		@zzs=Nctuvaccount.all.order("VAccount_TranDate DESC")
 		#@zzs=Nctuvaccount.where(:VAccount_TranAccount=>"95306672277054")
 	end
