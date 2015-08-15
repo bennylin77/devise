@@ -24,12 +24,14 @@ class User
   validates_attachment_content_type :id_no_TW_pic, :content_type => %w(image/jpeg image/jpg image/png application/pdf),
                                     :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
   validates_attachment_size :id_no_TW_pic, :less_than => 10.megabytes, :message=>"file size too big( <10mb ) "   
+  
   has_mongoid_attached_file :transcripts_copy,
       :path => ":rails_root/public/user/:attachment/:id/:style/:filename",
       :url => "/user/:attachment/:id/:style/:filename"
   validates_attachment_content_type :transcripts_copy, :content_type => %w(image/jpeg image/jpg image/png application/pdf),
                                     :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
   validates_attachment_size :transcripts_copy, :less_than => 10.megabytes, :message=>"file size too big( <10mb ) " 
+  
   has_mongoid_attached_file :work_proof,
       :path => ":rails_root/public/user/:attachment/:id/:style/:filename",
       :url => "/user/:attachment/:id/:style/:filename"

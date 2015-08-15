@@ -73,7 +73,7 @@ $('#twzipcode').twzipcode({
         '<%= image_tag current_user.head_pic.url,class: 'file-preview-image' %>'
 			<% end %>	
      ]		 
-    });	
+    });	    
   $("#user_qualification_proof").fileinput({
     uploadUrl: "/users/uploadFile?type=qualification_proof", // server upload action
     uploadAsync: true,
@@ -87,5 +87,47 @@ $('#twzipcode').twzipcode({
 			<% end %>	
      ]					 
     });	
+
+  $("#id_no_TW_pic").fileinput({
+    uploadUrl: "/users/uploadFile?type=id_no_TW_pic", // server upload action
+    uploadAsync: true,
+    maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
+    initialPreview: [
+			<% if !current_user.id_no_TW_pic.url["missing"] %>
+        '<%= image_tag current_user.id_no_TW_pic.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ]					 
+    });	
+    
+  $("#transcripts_copy").fileinput({
+    uploadUrl: "/users/uploadFile?type=transcripts_copy", // server upload action
+    uploadAsync: true,
+    maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
+    initialPreview: [
+			<% if !current_user.transcripts_copy.url["missing"] %>
+        '<%= image_tag current_user.transcripts_copy.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ]					 
+    });	
+ 
+  $("#work_proof").fileinput({
+    uploadUrl: "/users/uploadFile?type=work_proof", // server upload action
+    uploadAsync: true,
+    maxFileCount: 1	,
+    removeLabel: "刪除",
+    uploadLabel: "上傳",
+    browseLabel: "瀏覽",
+    initialPreview: [
+			<% if !current_user.work_proof.url["missing"] %>
+        '<%= image_tag current_user.work_proof.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ]					 
+    });	        
 
 </script>
