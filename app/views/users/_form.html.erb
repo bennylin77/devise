@@ -1,79 +1,197 @@
 <div class="container" >
 <%= form_for(@user, html: {class: "form-horizontal", role: "form"}) do |f| %>
  	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">Email</label>
-		<div class="col-sm-6">
+		<label class="col-sm-2 control-label">Email</label>
+		<div class="col-sm-8">
 			<%= f.email_field :email, class: "form-control", placeholder: 'Email' %>						
 		</div>
 	</div>	
- 	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">姓名</label>
-		<div class="col-sm-6">
-			<%= f.text_field :name, class: "form-control", placeholder: '姓名' %>			
-		</div>
-	</div>		 
 	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡電話</label>
-		<div class="col-sm-6">
-			<%= f.text_field :phone_no, class: "form-control", placeholder: "聯絡電話" %>
+		<label class="col-sm-2 control-label">姓名</label>
+		<div class="col-sm-3">
+			<%= f.text_field :name, placeholder: '姓名', class: "form-control" %>
 		</div>
-	</div>						
+		<label class="col-sm-2 control-label">英文姓名</label>
+		<div class="col-sm-3">
+			<%= f.text_field :name_en, placeholder: '英文姓名', class: "form-control" %>
+		</div>
+	</div>	 
 	<div class="form-group">
-		<label class="col-sm-offset-1 col-sm-2 control-label">聯絡地址</label>
-		<div class="form-inline col-sm-6">
+	  <label class="col-sm-2 control-label">個人2吋半身照</label>
+		<div class="col-sm-8">
+			<%=f.file_field :head_pic,  accept: "image/*"%>
+		</div> 
+	</div>	
+	<div class="form-group">
+		<label class="col-sm-2 control-label">出生年月日</label>
+		<div class="col-sm-3">
+			<%if current_user.birthday.blank?%>
+			<%= f.text_field :birthday, class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD', placeholder: "出生年月日" %>	
+			<%else%>
+			<%= f.text_field :birthday, value: current_user.birthday.strftime("%Y/%m/%d"),class: "form-control", id: 'datetimepicker_birthday', 'data-date-format'=> 'YYYY/MM/DD' %>				
+			<%end%>
+		</div>
+	    <script type="text/javascript">
+	            $(function () {
+	                $('#datetimepicker_birthday').datetimepicker({
+	                });
+	            });
+	    </script>	
+		<label class="col-sm-2 control-label">性別</label>
+		<div class="col-sm-3">
+		<label class="radio-inline">
+	  		<%=f.radio_button :gender, "true"%>男			
+		</label>
+		<label class="radio-inline">
+	 	 	<%=f.radio_button :gender, "false"%>女		
+		</label>			
+		</div>
+	</div>		
+	
+	
+<div class="form-group">
+		<label class="col-sm-2 control-label">國籍</label>
+		<div class="col-sm-8">
+			<%= f.country_select :nationality, {}, { selected: current_user.nationality, class: 'form-control'}%>
+		</div>
+	</div>	
+	<div class="form-group id_no_TW_container">
+		<label class="col-sm-2 control-label">身分證字號</label>
+		<div class="col-sm-8">
+			<%=f.text_field :id_no_TW, placeholder: '身分證字號(大寫)', class: "form-control"%>			
+		</div>
+	</div>		
+	<div class="form-group id_no_TW_pic_container">
+		<label class="col-sm-2 control-label">身分證影本</label>
+		<div class="col-sm-8">
+			<%= f.file_field :id_no_TW_pic,  accept: "image/*"%>			
+		</div>
+	</div>			
+	<div class="form-group ARC_no_TW_container">
+		<label class="col-sm-2 control-label">居留證號碼</label>
+		<div class="col-sm-8">
+			<%= f.text_field :ARC_no_TW, placeholder: 'ARC no.', class: "form-control" %>
+		</div>
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">聯絡電話(行動)</label>
+		<div class="col-sm-3">
+			<%= f.text_field :mobile_phone_no, class: "form-control", placeholder: '聯絡電話(行動)' %>
+		</div>
+		<label class="col-sm-2 control-label">聯絡電話(一般)</label>
+		<div class="col-sm-3">
+			<%= f.text_field :phone_no, class: "form-control", placeholder: '聯絡電話(一般)' %>
+		</div>			
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">聯絡地址</label>
+		<div class="form-inline col-sm-8">
 			<span id="twzipcode"></span>
 			<%= f.text_field :address, class: "form-control" %>
 		</div>
+	</div>
+  	<div class="form-group">
+		<label class="col-sm-2 control-label">最高(畢/肄/就讀)學校</label>
+		<div class="col-sm-3">
+			<%= f.text_field :hightest_education_school, class: "form-control", placeholder: '最高(畢/肄/就讀)學校' %>
+		</div>
+		<label class="col-sm-2 control-label">最高(科/系/所)</label>
+		<div class="col-sm-3">
+			<%= f.text_field :hightest_education_department, class: "form-control", placeholder: '最高(科/系/所)' %>
+		</div>			
 	</div>	
 	<div class="form-group">
-	  <label class="col-sm-offset-1 col-sm-2 control-label">個人2吋半身照</label>
-		<div class="col-sm-6">
-			<%=f.file_field :head_pic,  accept: "image/*"%>
+	  <label class="col-sm-2 control-label">學歷證明</label>
+		<div class="col-sm-8">
+			<%=f.file_field :qualification_proof%>
 		</div> 
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-offset-1 col-sm-2 control-label">學歷證明</label>
-		<div class="col-sm-6">
-			<%=f.file_field :qualification_proof,  accept: "image/*"%>
+	  <label class="col-sm-2 control-label">大學成績單影本</label>
+		<div class="col-sm-8">
+			<%=f.file_field :transcripts_copy%>
 		</div> 
+	</div>	
+	<hr>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">服務單位名稱</label>
+		<div class="col-sm-3">			
+			<%= f.text_field :work_name, class: "form-control", placeholder: '服務單位名稱' %>
+		</div>
+		<label class="col-sm-1 control-label">職稱</label>
+		<div class="col-sm-3">
+			<%= f.text_field :work_title, class: "form-control", placeholder: '職稱' %>
+		</div>			
+	</div>		
+	<div class="form-group">	
+		<label class="col-sm-2 control-label">服務單位聯絡電話</label>
+		<div class="col-sm-3">
+			<%= f.text_field :work_phone_no, class: "form-control", placeholder: '服務單位聯絡電話'  %>
+		</div>
+		<label class="col-sm-1 control-label">傳真</label>
+		<div class="col-sm-3">
+			<%= f.text_field :work_fax_no, class: "form-control", placeholder: '傳真' %>
+		</div>			
+	</div>		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">服務單位聯絡地址</label>
+		<div class="form-inline col-sm-8">
+			<span id="twzipcode_1"></span>
+			<%= f.text_field :work_address, class: "form-control" %>
+		</div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-offset-1 col-sm-2 control-label">身分證影本</label>
-		<div class="col-sm-6">
-			<%=f.file_field :id_no_TW_pic,  accept: "image/*"%>
+	  <label class="col-sm-2 control-label">在職證明書</label>
+		<div class="col-sm-8">
+			<%=f.file_field :work_proof%>
 		</div> 
-	</div>
+	</div>	
 	<div class="form-group">
-	  <label class="col-sm-offset-1 col-sm-2 control-label">大學成績單影本</label>
-		<div class="col-sm-6">
-			<%=f.file_field :transcripts_copy,  accept: "image/*"%>
-		</div> 
-	</div>
-	<div class="form-group">
-	  <label class="col-sm-offset-1 col-sm-2 control-label">在職證明書</label>
-		<div class="col-sm-6">
-			<%=f.file_field :work_proof,  accept: "image/*"%>
-		</div> 
+		<label class="col-sm-2 control-label">教育訓練聯絡人姓名</label>
+		<div class="col-sm-8">
+			<%= f.text_field :work_contact_name, class: "form-control", placeholder: '教育訓練聯絡人姓名' %>
+		</div>
+	</div>	
+	<div class="form-group">	
+		<label class="col-sm-2 control-label">教育訓練聯絡人電話</label>
+		<div class="col-sm-3">
+			<%= f.text_field :work_contact_phone_no, class: "form-control", placeholder: '教育訓練聯絡人電話'  %>
+		</div>
+		<label class="col-sm-1 control-label">Email</label>
+		<div class="col-sm-3">
+			<%= f.text_field :work_contact_email, class: "form-control", placeholder: '聯絡人Email' %>
+		</div>			
 	</div>			
 	<div class="form-group">
-		<div class="col-sm-offset-3 col-sm-6">
+		<div class="col-sm-offset-2 col-sm-6">
 			<%= f.submit '送出',  class: "btn btn-default"  %>
 		</div>
 	</div>
 <% end %>
 </div>
 <script>
-$('#twzipcode').twzipcode({
-	zipcodeName: 'user[postal]',
-    countyName: 'user[county]',
-    districtName: 'user[district]',
-    zipcodeIntoDistrict: true,
-    css: ['form-control', 'form-control'], 
-    <%unless @user.county.blank?%>
-	countySel: '<%=@user.county%>',
-	districtSel: '<%=@user.district%>'
-	<%end%>    
-});
+	$('#twzipcode').twzipcode({
+		zipcodeName: 'user[postal]',
+	    countyName: 'user[county]',
+	    districtName: 'user[district]',
+	    zipcodeIntoDistrict: true,
+	    css: ['form-control', 'form-control'], 
+	    <%unless @user.county.blank?%>
+		countySel: '<%=@user.county%>',
+		districtSel: '<%=@user.district%>'
+		<%end%>    
+	});
+	$('#twzipcode_1').twzipcode({
+		zipcodeName: 'user[work_postal]',
+	    countyName: 'user[work_county]',
+	    districtName: 'user[work_district]',
+	    zipcodeIntoDistrict: true,
+	    css: ['form-control', 'form-control'], 
+	    <%unless current_user.county.blank?%>
+		countySel: '<%=current_user.county%>',
+		districtSel: '<%=current_user.district%>'
+		<%end%>    
+	});
 <% @user.errors.full_messages.each do |message| %>
 	toastr['error']('<%=message%>')		
 <% end %>
@@ -147,4 +265,31 @@ $('#twzipcode').twzipcode({
      ]					 
     });	        
 
+    if($('#user_nationality').val()=='TW')
+    {
+    	$('.id_no_TW_container').show()
+    	$('.id_no_TW_pic_container').show()
+    	$('.ARC_no_TW_container').hide()    	
+    }
+   	else
+    {
+    	$('.id_no_TW_container').hide()
+    	$('.id_no_TW_pic_container').hide()    	
+    	$('.ARC_no_TW_container').show()    	
+    }    	
+   
+    $('#user_nationality').change(function() {
+  		if( $(this).val()=='TW' )
+  		{
+		    $('.id_no_TW_container').show()
+    		$('.id_no_TW_pic_container').show()		    
+		    $('.ARC_no_TW_container').hide()  			
+  		}
+  		else
+  		{
+    		$('.id_no_TW_container').hide()
+    		$('.id_no_TW_pic_container').hide()  
+		    $('.ARC_no_TW_container').show()   			
+  		} 		
+	});
 </script>
