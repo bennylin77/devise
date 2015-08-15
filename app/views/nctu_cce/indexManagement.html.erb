@@ -1,16 +1,13 @@
 <%= render partial: "layouts/managementHeader", locals: {period: @period} %>
 <div class="container-fluid">
 	<div class="row">	
-		<div class="col-sm-9">
-			<%=link_to '刪除班級', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此班級？' } %>	
-			<%=link_to '匯出帳單表', "/periods/export_vaccounts.xls?id=#{@period.id}", class: 'btn btn-info' %>		
-			<%=link_to '匯出學員資料', "/nctu_cce/export_users.xls?id=#{params[:id]}", class: 'btn btn-info' %>	
-			<%=link_to "匯出簽到表", "/nctu_cce/exportAttendance.xls?id="+@period.id.to_s, class: "btn btn-info" %>
-			<%=link_to "匯出點名單", "/nctu_cce/exportAttendanceForTeacher.xls?id="+@period.id.to_s, class: "btn btn-info" %>	
+		<div class="col-sm-3">
+			<%=link_to '刪除班級', {controller: 'nctu_cce', action: 'destroy', id: @period.id}, class: 'btn btn-danger', data: { confirm: '您確定要刪除此班級？' } %>				
 		</div>
-		<div class="col-sm-offset-1 col-sm-2">
+		<div class="col-sm-9 text-right">
 		  	<%=link_to '管理學員', {controller: 'nctu_cce', action: 'sendMessage', id: @period.id}, class: 'btn btn-default' %>
 		  	<%=link_to '設定/修改', {controller: 'nctu_cce', action: 'editGroup', id: @period.group.id}, class: 'btn btn-default' %>
+		  	<%=link_to '匯出資料表格', {controller: 'nctu_cce', action: 'export', id: @period.id}, class: 'btn btn-default' %>				
 		</div>	
 	</div>
 </div>
@@ -22,7 +19,7 @@
     <th>聯絡電話(行動)</th>
     <th>email</th>
     <th>虛擬帳號</th>
-    <th>內涵金額/須繳金額</th>     
+    <th>須繳金額/內涵金額</th>     
     <th>報名進度</th>    
     <th>候補狀態</th>            
   </tr>	
@@ -32,7 +29,7 @@
     <td><%=p.user.mobile_phone_no%></td>
     <td><%=p.user.email%></td>
 	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
-	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %> NT/<%=p.payment.to_s%> NT<%end%></td>      
+	<td><%if p.vaccount %><%=p.payment.to_s%> NT / <%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %> NT<%end%></td>      
     <td><%=CCEStageText p.stage%></td>
     <td>
     	<%if p.registered_courses.first %>

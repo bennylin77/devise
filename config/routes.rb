@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get  'nctu_cce/destroy'
   get  'nctu_cce/indexManagement'  
   get  'nctu_cce/showProgress'  
+  get  'nctu_cce/export'    
   get  'nctu_cce/editPeriod'  
   post 'nctu_cce/updatePeriod'     
   get  'nctu_cce/editGroup'  

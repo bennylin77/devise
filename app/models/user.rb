@@ -9,7 +9,7 @@ class User
       :styles => { :small => "200x200>", :medium => "500x500>" }
   validates_attachment_content_type :head_pic, :content_type => %w(image/jpeg image/jpg image/png), 
                                     :message=>"只接受 .jpeg .jpg .png 等圖檔"
-  validates_attachment_size :head_pic , :less_than => 10.megabytes, :message=>"file size too big( <10mb ) " 
+  validates_attachment_size :head_pic , :less_than => 10.megabytes, :message=>"file size too big( <10mb ) "   
   
   has_mongoid_attached_file :qualification_proof,
       :path => ":rails_root/public/user/:attachment/:id/:style/:filename",
@@ -17,6 +17,25 @@ class User
   validates_attachment_content_type :qualification_proof, :content_type => %w(image/jpeg image/jpg image/png application/pdf),
                                     :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
   validates_attachment_size :qualification_proof , :less_than => 10.megabytes, :message=>"file size too big( <10mb ) "    
+  
+  has_mongoid_attached_file :id_no_TW_pic,
+      :path => ":rails_root/public/user/:attachment/:id/:style/:filename",
+      :url => "/user/:attachment/:id/:style/:filename"
+  validates_attachment_content_type :id_no_TW_pic, :content_type => %w(image/jpeg image/jpg image/png application/pdf),
+                                    :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
+  validates_attachment_size :id_no_TW_pic, :less_than => 10.megabytes, :message=>"file size too big( <10mb ) "   
+  has_mongoid_attached_file :transcripts_copy,
+      :path => ":rails_root/public/user/:attachment/:id/:style/:filename",
+      :url => "/user/:attachment/:id/:style/:filename"
+  validates_attachment_content_type :transcripts_copy, :content_type => %w(image/jpeg image/jpg image/png application/pdf),
+                                    :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
+  validates_attachment_size :transcripts_copy, :less_than => 10.megabytes, :message=>"file size too big( <10mb ) " 
+  has_mongoid_attached_file :work_proof,
+      :path => ":rails_root/public/user/:attachment/:id/:style/:filename",
+      :url => "/user/:attachment/:id/:style/:filename"
+  validates_attachment_content_type :work_proof, :content_type => %w(image/jpeg image/jpg image/png application/pdf),
+                                    :message=>"只接受 .jpeg .jpg .png 圖檔或pdf文件"
+  validates_attachment_size :work_proof, :less_than => 10.megabytes, :message=>"file size too big( <10mb ) " 
   
   has_many :collaborators    
   has_many :periods  

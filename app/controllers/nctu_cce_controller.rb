@@ -1,12 +1,12 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
+  before_action only: [:export, :editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
-  before_action :set_period, only: [:indexManagement, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher]  
+  before_action :set_period, only: [:indexManagement, :export, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
         
@@ -49,8 +49,10 @@ class NctuCceController < ApplicationController
     @progresses = @period.progresses.order('stage desc').paginate(page: params[:page], per_page: 30)
   end
 	
-  def exportAttendance
-		
+  def export    
+  end	
+	
+  def exportAttendance		
     respond_to do |format|
 			 format.xls{
 			 	response.headers['Content-Type'] = 'application/vnd.ms-excel; charset="utf-8" '

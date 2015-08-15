@@ -35,9 +35,18 @@ class UsersController < ApplicationController
     if params[:type]=="head"
       current_user.head_pic = params[:user][:head_pic]
       data = current_user.head_pic
-    else
+    elsif params[:type]=="qualification_proof" 
       current_user.qualification_proof = params[:user][:qualification_proof]
       data = current_user.qualification_proof
+    elsif params[:type]=="id_no_TW_pic"       
+      current_user.id_no_TW_pic = params[:user][:id_no_TW_pic]
+      data = current_user.id_no_TW_pic
+    elsif params[:type]=="transcripts_copy"       
+      current_user.transcripts_copy = params[:user][:transcripts_copy]
+      data = current_user.transcripts_copy 
+    elsif params[:type]=="work_proof"             
+      current_user.work_proof = params[:user][:work_proof]
+      data = current_user.work_proof
     end 
     current_user.save!
     
