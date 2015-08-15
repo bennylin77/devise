@@ -58,9 +58,15 @@
 	<div class="form-group id_no_TW_container">
 		<label class="col-sm-offset-1 col-sm-2 control-label">身分證字號*</label>
 		<div class="col-sm-6">
-			<%= u.text_field :id_no_TW, placeholder: '身分證字號(大寫)', class: "form-control" %>
+			<%=u.text_field :id_no_TW, placeholder: '身分證字號(大寫)', class: "form-control"%>			
 		</div>
-	</div>	
+	</div>		
+	<div class="form-group id_no_TW_pic_container">
+		<label class="col-sm-offset-1 col-sm-2 control-label">身分證影本</label>
+		<div class="col-sm-6">
+			<%= u.file_field :id_no_TW_pic,  accept: "image/*"%>			
+		</div>
+	</div>			
 	<div class="form-group ARC_no_TW_container">
 		<label class="col-sm-offset-1 col-sm-2 control-label">居留證號碼*</label>
 		<div class="col-sm-6">
@@ -218,17 +224,30 @@
 	});
 	$("#user_head_pic").fileinput({
 	  uploadUrl: "/users/uploadFile?type=head", // server upload action
-    uploadAsync: true,
-    maxFileCount: 1	,
-    removeLabel: "刪除",
-    uploadLabel: "上傳",
-    browseLabel: "瀏覽",
-    initialPreview: [
+      uploadAsync: true,
+      maxFileCount: 1	,
+      removeLabel: "刪除",
+      uploadLabel: "上傳",
+      browseLabel: "瀏覽",
+      initialPreview: [
 			<% if !current_user.head_pic.url["missing"] %>
         '<%= image_tag current_user.head_pic.url,class: 'file-preview-image' %>'
 			<% end %>	
      ]		 
     });	
+	$("#user_id_no_TW_pic").fileinput({
+	  uploadUrl: "/users/uploadFile?type=id_no_TW_pic", // server upload action
+      uploadAsync: true,
+      maxFileCount: 1	,
+      removeLabel: "刪除",
+      uploadLabel: "上傳",
+      browseLabel: "瀏覽",
+      initialPreview: [
+			<% if !current_user.id_no_TW_pic.url["missing"] %>
+        '<%= image_tag current_user.id_no_TW_pic.url,class: 'file-preview-image' %>'
+			<% end %>	
+     ]		 
+    });	    
   $("#user_qualification_proof").fileinput({
     uploadUrl: "/users/uploadFile?type=qualification_proof", // server upload action
     uploadAsync: true,
@@ -246,11 +265,13 @@
     if($('#user_nationality').val()=='TW')
     {
     	$('.id_no_TW_container').show()
+    	$('.id_no_TW_pic_container').show()
     	$('.ARC_no_TW_container').hide()    	
     }
    	else
     {
     	$('.id_no_TW_container').hide()
+    	$('.id_no_TW_pic_container').hide()    	
     	$('.ARC_no_TW_container').show()    	
     }    	
    
@@ -258,11 +279,13 @@
   		if( $(this).val()=='TW' )
   		{
 		    $('.id_no_TW_container').show()
+    		$('.id_no_TW_pic_container').show()		    
 		    $('.ARC_no_TW_container').hide()  			
   		}
   		else
   		{
-		    $('.id_no_TW_container').hide()
+    		$('.id_no_TW_container').hide()
+    		$('.id_no_TW_pic_container').hide()  
 		    $('.ARC_no_TW_container').show()   			
   		} 		
 	});

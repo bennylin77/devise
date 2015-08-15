@@ -37,7 +37,24 @@
 			<%=f.file_field :qualification_proof,  accept: "image/*"%>
 		</div> 
 	</div>
-	
+	<div class="form-group">
+	  <label class="col-sm-offset-1 col-sm-2 control-label">身分證影本</label>
+		<div class="col-sm-6">
+			<%=f.file_field :id_no_TW_pic,  accept: "image/*"%>
+		</div> 
+	</div>
+	<div class="form-group">
+	  <label class="col-sm-offset-1 col-sm-2 control-label">大學成績單影本</label>
+		<div class="col-sm-6">
+			<%=f.file_field :transcripts_copy,  accept: "image/*"%>
+		</div> 
+	</div>
+	<div class="form-group">
+	  <label class="col-sm-offset-1 col-sm-2 control-label">在職證明書</label>
+		<div class="col-sm-6">
+			<%=f.file_field :work_proof,  accept: "image/*"%>
+		</div> 
+	</div>			
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">
 			<%= f.submit '送出',  class: "btn btn-default"  %>
@@ -88,7 +105,7 @@ $('#twzipcode').twzipcode({
      ]					 
     });	
 
-  $("#id_no_TW_pic").fileinput({
+  $("#user_id_no_TW_pic").fileinput({
     uploadUrl: "/users/uploadFile?type=id_no_TW_pic", // server upload action
     uploadAsync: true,
     maxFileCount: 1	,
@@ -102,7 +119,7 @@ $('#twzipcode').twzipcode({
      ]					 
     });	
     
-  $("#transcripts_copy").fileinput({
+  $("#user_transcripts_copy").fileinput({
     uploadUrl: "/users/uploadFile?type=transcripts_copy", // server upload action
     uploadAsync: true,
     maxFileCount: 1	,
@@ -116,7 +133,7 @@ $('#twzipcode').twzipcode({
      ]					 
     });	
  
-  $("#work_proof").fileinput({
+  $("#user_work_proof").fileinput({
     uploadUrl: "/users/uploadFile?type=work_proof", // server upload action
     uploadAsync: true,
     maxFileCount: 1	,
