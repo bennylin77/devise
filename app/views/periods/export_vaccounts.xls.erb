@@ -16,6 +16,7 @@
 				<Cell><Data ss:Type="String">分數</Data></Cell>
 				<Cell><Data ss:Type="String">出席率</Data></Cell>
 				<Cell><Data ss:Type="String">證書字號</Data></Cell>
+				<Cell><Data ss:Type="String">服務單位名稱</Data></Cell>				
 				<Cell><Data ss:Type="String">ATM虛擬帳號</Data></Cell>
 				<Cell><Data ss:Type="String">須繳金額</Data></Cell>
 				<Cell><Data ss:Type="String">內涵金額</Data></Cell>
@@ -33,7 +34,8 @@
 						<Cell><Data ss:Type="String"><%=reg_course.score.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.attendance.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.certificate_no%></Data></Cell>
-						<Cell><Data ss:Type="String"><%=progress.try(:vaccount).vacc%></Data></Cell>
+						<Cell><Data ss:Type="String"><%=progress.user.work_name%></Data></Cell>
+						<Cell><Data ss:Type="String"><%if progress.try(:vaccount)%><%=progress.try(:vaccount).vacc%><%end%></Data></Cell>
 						<Cell><Data ss:Type="String"><%=reg_course.payment.to_s%></Data></Cell>
 						<Cell><Data ss:Type="String">
 							<% stat = progress.try(:vaccount).try(:status) %>

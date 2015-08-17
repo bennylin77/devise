@@ -56,7 +56,7 @@ class PeriodsController < ApplicationController
   	end
   	
   	@group = @period.group
-  	@progresses = @period.progresses.order_by(:user=> :desc)
+  	@progresses = @period.progresses.where(:stage.gt => 2).order_by(:user=> :desc)
     time_str = Time.now.strftime("%Y%m%d%H%M")
     #@sys_module.groups.map{|g| g.periods.map{|i| i.progresses.map{|p| p.vaccount}}}.flatten.compact
   	respond_to do |format|
