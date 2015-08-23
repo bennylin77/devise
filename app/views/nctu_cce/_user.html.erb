@@ -9,7 +9,10 @@
 		  </li>				
 		  <li role="presentation" <%= active(controller: 'nctu_cce', action: 'editScore')%>>
 		  	<%=link_to '成績管理', {controller: '/nctu_cce', action: 'editScore', id: @period.id} %>
-		  </li>								  
+		  </li>
+			<li role="presentation" <%= active(controller: 'nctu_cce', action: 'editVAccount')%>>
+		  	<%=link_to '收據管理', {controller: '/nctu_cce', action: 'editVAccount', id: @period.id} %>
+		  </li>
 		</ul>	
 	</div>
 </div>	

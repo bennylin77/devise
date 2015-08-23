@@ -3,7 +3,7 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:export, :editPeriod, :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export, :attendancePrint, :editCollaborators, :addCollaborator, :destroyCollaborator] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
-  before_action only: [:destroyProgress, :verified, :updateVAccount] { |c| c.ProgressCheckPeriodUser(params[:id])}    
+  before_action only: [:destroyProgress, :verified, :updateVAccount, :add_course] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])} 
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}
   before_action :set_period, only: [:indexManagement, :export, :editPeriod, :updatePeriod, :editScore, :editVAccount, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth, 
@@ -225,8 +225,9 @@ class NctuCceCreditController < ApplicationController
   def editVAccount
     #ado 這裡幫我連出納機器檢查 @period 裡的每一個vaccount 是不是銷帳了並且更新收據號碼-----start
 		@period.progresses.each do |progress|
-			va=progress.vaccount
-			va.updateIsclosedAndReceiveNo
+			va=progress.try(:vaccount).try(:updateIsclosedAndReceiveNo)
+			
+			#va.updateIsclosedAndReceiveNo
 		end
     #ado 這裡幫我連出納機器檢查 @period 裡的每一個vaccount 是不是銷帳了並且更新收據號碼-----end    
   end 
@@ -320,6 +321,70 @@ class NctuCceCreditController < ApplicationController
   end
 	
 	def export	  
+	end
+	
+	def edit_fee
+		@progress = Progress.find(params[:id])
+		old_payment = @progress.payment
+		@progress.payment = params[:default_payment].to_i
+		if params[:registered_course_payments].present?
+			@progress.payment += params[:registered_course_payments].map(&:to_i).reduce(0, :+)
+		end
+		params[:registered_course_ids].each_with_index do |id, idx|
+			registered_course = @progress.registered_courses.find(id)
+			registered_course.payment = params[:registered_course_payments][idx].to_f
+			registered_course.save!
+		end
+    if old_payment != @progress.payment
+			@progress.stage=3
+		end
+		if @progress.payment==0
+			@progress.stage=4
+		end
+		@progress.save!    
+		flash[:success]="已成功更改金額!"
+    #System.sendVerified(user: @progress.user, progress: @progress).deliver         
+    redirect_to controller: 'nctu_cce_credit', action: 'showProgress', id: @progress.id
+  end
+	
+	def add_course
+		@progress = Progress.find(params[:id])
+		#@progress.registered_courses=[]
+		#@progress.period.courses.where(id: params[:c_id]).first.registered_courses = []
+		#@progress.period.save
+		action=params[:type]
+		if params[:c_id].blank? 
+			flash[:error]="未輸入course id"
+		else
+			case action
+				when "add"
+					if !@progress.registered_courses.where(course_id:params[:c_id]).empty? #can't add course which is already in registered_courses
+						flash[:error]="已加選此課程!"
+					else			
+						registered_course = RegisteredCourse.new  
+						@progress.registered_courses << registered_course
+						@progress.period.courses.where(id: params[:c_id]).first.registered_courses << registered_course 
+						registered_course.save 
+						@progress.period.save
+						flash[:success]="加選課程 #{registered_course.course.title} 成功!"
+					end
+				when "delete"
+					if @progress.registered_courses.where(course_id:params[:c_id]).empty? #can't delete course which isn't in registered_courses yet
+						flash[:error]="尚未選擇此課程!"
+					else			
+						@progress.registered_courses.where(course_id: params[:c_id]).destroy_all
+						@progress.period.courses.where(id: params[:c_id]).first.registered_courses.where(course_id: params[:c_id]).destroy_all
+						flash[:success]="退選課程 #{Course.find(params[:c_id]).title} 成功!"
+						if @progress.registered_courses.empty?
+							@progress.update(:stage=>1)
+						end
+					end
+					
+				else
+					flash[:error]="動作錯誤!"
+			end
+		end
+		redirect_to "/nctu_cce_credit/showProgress?id=#{params[:id]}"
 	end
 	
   def exportAttendance

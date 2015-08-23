@@ -1,12 +1,12 @@
 class NctuCceController < ApplicationController
   before_filter :authenticate_user!   
-  before_action only: [:export, :editPeriod , :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
+  before_action only: [:export, :editPeriod, :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
   before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
-  before_action :set_period, only: [:indexManagement, :export, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher]  
+  before_action :set_period, only: [:indexManagement, :export, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher, :editVAccount]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
   before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
         
@@ -325,6 +325,18 @@ class NctuCceController < ApplicationController
 	render :layout=> false
   end
   
+	# ---------- VAccount ------------# 
+	def editVAccount
+    #ado 這裡幫我連出納機器檢查 @period 裡的每一個vaccount 是不是銷帳了並且更新收據號碼-----start
+		@period.progresses.each do |progress|
+			va=progress.try(:vaccount).try(:updateIsclosedAndReceiveNo)
+			
+			#va.updateIsclosedAndReceiveNo
+		end
+    #ado 這裡幫我連出納機器檢查 @period 裡的每一個vaccount 是不是銷帳了並且更新收據號碼-----end    
+  end
+	
+	
   private
     
   def set_period
