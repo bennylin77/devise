@@ -6,7 +6,8 @@
 <table class="table table-striped ">
   <tr>
     <th>姓名</th>   	
-    <th>虛擬帳號</th>   
+    <th>虛擬帳號</th>
+		<th>已繳金額/須繳金額</th>
     <th>認領狀況</th>   
     <th>銷帳狀況</th>   
     <th>收據號碼</th>                	
@@ -18,12 +19,13 @@
 		<tr>
 			<td><%= p.user.name%></td>
 			<td><%= p.vaccount.vacc%></td>
+			<td><%= p.vaccount.money%>/<%= p.payment%></td>
 			<td id='ack_status_<%=p.id %>'><%if p.vaccount.ack_status%>已認領<%else%>未認領<%end%></td>
 			<td><%if p.vaccount.is_closed%>已銷帳<%else%>未銷帳<%end%></td>
 			<td><%=showBlank p.vaccount.receive_no%></td>
 		    <td>
 		    <%if !p.vaccount.is_closed%>	
-		    	<%= text_field_tag 'purpose_'+p.id, p.vaccount.purpose, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
+		    	<%= text_field_tag 'purpose_'+p.id, p.period.group.title, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
 			<%else%>
 				<%= p.vaccount.purpose%>
 			<%end%>

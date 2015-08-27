@@ -20,7 +20,7 @@
     <th>聯絡電話(行動)</th>
     <th>email</th>
     <th>虛擬帳號</th>
-    <th>內涵金額/須繳金額</th>        
+    <th>已繳金額/須繳金額</th>        
     <th>報名進度</th>        
   </tr>	
 <%@progresses.each do |p|%>
@@ -28,12 +28,12 @@
 	<td>
 		<%= p.user.id.generation_time.strftime("%y%m%d") %><%=p.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0').to_s[-4, 4] %>
 	</td>  
-    <td><%=p.user.name%></td>
-    <td><%=p.user.mobile_phone_no%></td>
-    <td><%=p.user.email%></td> 
+	<td><%=p.user.name%></td>
+	<td><%=p.user.mobile_phone_no%></td>
+	<td><%=p.user.email%></td> 
 	<td><%if p.vaccount %><%=p.vaccount.vacc %><%end%></td>
-	<td><%if p.vaccount %><%=p.payment.to_s%> NT / <%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %> NT<%end%></td>      
-    <td><%=CCEStageText p.stage%></td> 
+	<td><%if p.vaccount %><%=(p.vaccount.status) ? p.vaccount.status["Amount"] : 0.0 %> NT / <%=p.payment.to_s%> NT <%end%></td>      
+	<td><%=CCEStageText p.stage%></td> 
 </tr>
 <%end%>
 </table>

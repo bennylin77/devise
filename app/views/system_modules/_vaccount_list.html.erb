@@ -4,7 +4,7 @@
 	<th>所屬報名</th>
 	<th>學號</th>	
 	<th>所有人</th>
-	<th>內涵金額/須繳金額</th>
+	<th>已繳金額/須繳金額</th>
 	<!--<td>銷帳</td>-->
 	<th></th>	
 </tr>
@@ -19,7 +19,7 @@
 	</td>
 	<td><%= progress.user.id.generation_time.strftime("%y%m%d") %><%=progress.user.id.to_s[-6, 6].hex.to_s.rjust(8, '0').to_s[-4, 4] %>	</td>	
 	<td><%= vacc.progress.user.name %></td>
-	<td><%= vacc.money.to_s %> NT / <%=progress.payment.to_s%> NT </td>
+	<td><%= vacc.money.to_s %> NT/<%=progress.payment.to_s%> NT </td>
 	<!--<td>No</td>-->
 	<td>
 	    <%case progress.period.group.system_module.serial_code%> 
