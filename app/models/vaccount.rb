@@ -39,19 +39,18 @@ class Vaccount
 		self.receive_no=vaccs[0].VAccount_ReceiveNum
 		self.save
 	end
+	
 	def syncMssqlPurpose
-		Nctuvaccount.where(:VAccount_TranAccount=>self.vacc) do |vc|
-			vc.VAccount_Purpose=self.purpose
-			vc.save
-		end
+		Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).update_all(
+			:VAccount_Purpose=>self.purpose
+		)
 	end
 	
 	def syncMssqlPaidByAndAck
-		Nctuvaccount.where(:VAccount_TranAccount=>self.vacc) do |vc|
-			vc.VAccount_PaidBy=self.paid_by
-			vc.VAccount_AckStatus=self.ack_status ? "已認領" : "未認領"
-			vc.save
-		end
+		Nctuvaccount.where(:VAccount_TranAccount=>self.vacc).update_all(
+			:VAccount_PaidBy=>self.paid_by,
+			:VAccount_AckStatus=>self.ack_status ? "已認領" : "未認領"
+		)
 	end
 	
 	def update_status		 

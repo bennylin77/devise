@@ -20,7 +20,15 @@ namespace :vaccount do
      end
      
   end
-  
+	
+  desc "update purpose,PaidBy, Ack for bug on 20150829"
+  task :update_status => :environment do
+		Vaccount.where(active: false).each do |vacc|
+			vacc.syncMssqlPaidByAndAck if vacc.paid_by.present?
+			vacc.syncMssqlPurpose if vacc.purpose.present?
+		end
+  end
+	
   desc "test"
   task :test => :environment do
   	vacc=Vaccount.create(active: true,vacc: "95306672277054")
