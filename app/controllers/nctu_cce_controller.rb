@@ -152,7 +152,12 @@ class NctuCceController < ApplicationController
   def sendMessage
     if request.post?        
       params[:recipients].each do |r|
-        progress = @period.progresses.where(user_id: r).first                
+        progress = @period.progresses.where(user_id: r).first 
+        params[:content] = params[:content].gsub(/\{name\}/, User.find(r).name)  
+        unless progress.vaccount.blank?
+          params[:content] = params[:content].gsub(/\{vaccount\}/, progress.vaccount.vacc.to_s)  
+        end
+        params[:content] = params[:content].gsub(/\{payment\}/, progress.payment.to_s)                         
         System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user, progress: progress).deliver
       end    
       flash[:success]="成功寄出信件"          

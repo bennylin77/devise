@@ -19,13 +19,22 @@ class Vaccount
   
 	# Create new virtual account. 
 	# Note that it will cover the older
-	def create_account(id) 
+	def create_account(progress) 
 		# TO-DO: use id to generate code
 		uniacc = COMPANY_CODE.split('').map(&:to_i)
+		progress.id.generation_time.strftime("%m%d").each_char do |time|
+			uniacc.push(time.to_i)
+		end
+		id=progress.user.id_no_TW.blank? ? progress.user.ARC_no_TW : progress.user.id_no_TW
+		id[id.length-4..id.length-1].each_char do |id|
+			uniacc.push(id.to_i)
+		end
+=begin
 		rand = Random.new(Time.now.sec)
 		(1..8).each do |i|
 			uniacc.push(rand(0..9))
-		end	
+		end
+=end		
 		uniacc.push(gen_checksum(uniacc))
 		self.vacc =  uniacc.map(&:to_s).join('')
 	end

@@ -20,7 +20,7 @@ class Progress
 
 	def create_vaccount 
 		vacc = Vaccount.new
-		vacc.create_account(self.id)
+		vacc.create_account(self)
 		vacc.progress = self
 		vacc.save!
 	end

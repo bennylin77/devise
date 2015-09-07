@@ -38,6 +38,19 @@
     </div>	
   </div>  
   <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">插入欄位</label>
+    <div class="col-sm-3">
+ 	<select class="form-control insert_content">
+ 		<option value='{name}'>姓名</option>
+ 		<option value='{vaccount}'>虛擬帳號</option>
+ 		<option value='{payment}'>須繳金額</option>
+ 	</select>
+    </div>
+    <div class="col-sm-3">
+ 	<div class="btn btn-default insert">插入</div>
+    </div>    
+  </div>   
+  <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label">內容</label>
     <div class="col-sm-6">
     	<%= text_area_tag 'content', nil, class: 'form-control', rows: 3, cols: 10, placeholder: "內容"%>
@@ -89,4 +102,12 @@ $('#course_<%=c.id %>').change(function() {
    	$('.r_c_of_course_<%=c.id%>').prop('checked', false);
 });
 <%end%>
+
+$('.insert').click(function () {
+	var cursorPos = $('#content').prop('selectionStart');
+    var v = $('#content').val();
+    var textBefore = v.substring(0,  cursorPos );
+    var textAfter  = v.substring( cursorPos, v.length );
+    $('#content').val( textBefore+ $('.insert_content').val() +textAfter );   
+});
 </script>
