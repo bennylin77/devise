@@ -6,8 +6,10 @@ namespace :vaccount do
 			next if vacc.progress.blank? # 防髒資料
      #	p vacc.vacc
      	res = vacc.update_status
-     
-
+			if !vacc.is_closed
+        vacc.syncMssqlPurpose if vacc.purpose.present?
+				vacc.syncMssqlPaidByAndAck if vacc.paid_by.present?
+			end
      	if vacc.money.to_f >= vacc.progress.payment.to_f and vacc.progress.stage < 4
 				p "new pass #{vacc.vacc}"
 				vacc.progress.stage = 4 #vacc.progress.item.group.module
