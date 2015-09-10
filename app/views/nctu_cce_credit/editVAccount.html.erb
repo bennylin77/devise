@@ -23,12 +23,15 @@
 			<td id='ack_status_<%=p.id %>'><%if p.vaccount.ack_status%>已認領<%else%>未認領<%end%></td>
 			<td><%if p.vaccount.is_closed%>已銷帳<%else%>未銷帳<%end%></td>
 			<td><%=showBlank p.vaccount.receive_no%></td>
-		    <td>
-		    <%if !p.vaccount.is_closed%>	
-		    	<%= text_field_tag 'purpose_'+p.id, p.period.group.title, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
+		  <td>
+			<%if !p.vaccount.ack_status%>
+				<%= text_field_tag 'purpose_'+p.id, p.period.group.title, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
+		  <%elsif !p.vaccount.is_closed%>
+		   	<%= text_field_tag 'purpose_'+p.id, p.vaccount.purpose, class: "form-control", onchange: 'purposeAjaxHandler("'+p.id+'")', placeholder: "" %></td>
 			<%else%>
 				<%= p.vaccount.purpose%>
 			<%end%>
+			</td>
 			<td>
 			<%if !p.vaccount.ack_status%>	
 			<span id="ack_btn_<%=p.id%>" class="btn btn-primary" onclick="ackAjaxHandler('<%=p.id %>')">認領</span>				
@@ -64,7 +67,7 @@ function ackAjaxHandler(id)
 	var request = $.ajax({
 	url: "/nctu_cce_credit/updateVAccount",
 	type: "POST",
-	data: { id: id, type: 'ack' },
+	data: { id: id, type: 'ack', purpose_val: $( "#purpose_"+id ).val() },
 	dataType: "json"
 	});
 	request.done(function( message ) {

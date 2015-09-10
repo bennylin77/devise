@@ -249,6 +249,7 @@ class NctuCceCreditController < ApplicationController
       end                  
     when 'ack'  
       if !vaccount.is_closed
+        vaccount.purpose = params[:purpose_val]
         vaccount.paid_by = @progress.user.name
         vaccount.ack_status = true
         vaccount.save!
