@@ -7,7 +7,7 @@
 		    <h2 class="panel-title"><%= progress_block.period.group.title %> <%if progress_block.period.term%>(第<%=progress_block.period.term%>期)<%end%></h2>	    	    
 	    <%end%>	 
 	  </div>	  
-	  <div class="panel-body" style="min-height: 150px;">
+	  <div class="panel-body" style="min-height: 150px; word-break: break-all;">
 		    <p><%= truncate(progress_block.period.group.description, length: 60)%></p>
 			<strong><div id="clock_<%=progress_block.id%>"></div></strong>	  			    	 
 	  </div>  
