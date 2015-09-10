@@ -16,7 +16,7 @@
 <%if @period.semester%><%=Hash[semesterOptions].rassoc(@period.semester).first%><%end%>
 </h3>
 <p  style="font-size: 42px;"><%=@period.group.title%></p>
-<p><strong class="text-muted" ><%=simple_format @period.group.description%></strong></p>
+<p><strong class="text-muted" ><%=simple_format @period.group.description.html_safe%></strong></p>
 <ul class="list-group">
 <li class="list-group-item">	
 	<dl class="" style="font-size: 17px;">	
