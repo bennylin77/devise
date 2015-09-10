@@ -33,8 +33,9 @@
 			<%end%>
 			</td>
 			<td>
-			<%if !p.vaccount.ack_status%>	
+			
 			<span id="ack_btn_<%=p.id%>" class="btn btn-primary" onclick="ackAjaxHandler('<%=p.id %>')">認領</span>				
+			<%if !p.vaccount.ack_status%>	
 			<%end%>
 			</td>
 		</tr>												
