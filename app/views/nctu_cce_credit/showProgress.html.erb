@@ -286,7 +286,7 @@
 					<% end %>	
 				</div>
 				<div class="modal-footer">
-					<div class="pull-left">已付: <strong><%=@progress.vaccount.money%></strong> 總計: <strong><span id="total-cost">0</span></strong> </div>
+					<div class="pull-left">已付: <strong><%if @progress.vaccount%><%=@progress.vaccount.money%><%end%></strong> 總計: <strong><span id="total-cost">0</span></strong> </div>
 						<%=submit_tag "送出",class:"btn btn-primary"%>
 					</div>
 				</div>
