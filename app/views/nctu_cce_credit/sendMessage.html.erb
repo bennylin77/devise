@@ -45,6 +45,7 @@
  		<option value='{name}'>姓名</option>
  		<option value='{vaccount}'>虛擬帳號</option>
  		<option value='{payment}'>須繳金額</option>
+ 		<option value='{registered_course}'>報名的課程和金額</option> 		 		
  	</select>
     </div>
     <div class="col-sm-3">
@@ -54,7 +55,7 @@
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label">內容</label>
     <div class="col-sm-6">
-    	<%= text_area_tag 'content', nil, class: 'form-control', rows: 3, cols: 10, placeholder: "內容"%>
+    	<%= text_area_tag 'content', nil, class: 'form-control', rows: 10, cols: 10, placeholder: "內容"%>
     </div>
   </div>
   <div class="form-group">

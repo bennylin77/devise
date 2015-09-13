@@ -272,6 +272,11 @@ class NctuCceCreditController < ApplicationController
           params[:content] = params[:content].gsub(/\{vaccount\}/, progress.vaccount.vacc.to_s)  
         end
         params[:content] = params[:content].gsub(/\{payment\}/, progress.payment.to_s)  
+        registered_courses = ''
+        progress.registered_courses.each do |s|
+          registered_courses = registered_courses + s.course.title+' '+ s.payment.to_s + '元<br>'
+        end             
+        params[:content] = params[:content].gsub(/\{registered_course\}/, registered_courses)     
         System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user, progress: progress).deliver
       end 
       flash[:success]="成功寄出信件"                
@@ -553,7 +558,7 @@ class NctuCceCreditController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :birthday, :gender, :id_no_TW, :ARC_no_TW, :mobile_phone_no, :phone_no, :address, 
+    params.require(:user).permit(:name, :email_backup, :birthday, :gender, :id_no_TW, :ARC_no_TW, :mobile_phone_no, :phone_no, :address, 
                                  :postal, :county, :district, :name_en, :hightest_education_school, :hightest_education_department,
                                  :work_name, :work_title, :work_phone_no, :work_fax_no, :work_county, :work_district, :work_postal, :work_address,
                                  :work_contact_name, :work_contact_phone_no, :work_contact_email, :head_pic, :qualification_proof, :nationality)      

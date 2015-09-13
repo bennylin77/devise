@@ -4,6 +4,12 @@
 	<%unless @period.blank?%>
 		<%= hidden_field_tag 'id', @period.id %>
 	<%end%>
+	<div class="form-group">
+		<label class="col-sm-offset-1 col-sm-2 control-label">備用Email</label>
+		<div class="col-sm-6">
+			<%= u.text_field :email_backup, placeholder: '備用Email', class: "form-control" %>
+		</div>
+	</div>	
 	<div class="form-group text-danger">
 		<label class="col-sm-2 control-label">姓名*</label>
 		<div class="col-sm-3">
