@@ -12,12 +12,12 @@
 <br>
 <h3><%=c.title %></h3>
 <h4>修課人數:
-<%=c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count%> 
+<%=c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count %> 
 		答卷人數: 
-		<%= @period.progresses.where(stage: 5, feedback_done: true).count%>
+		<%= c.registered_courses.where(:progress_id.in => Progress.where(feedback_done: true).pluck(:id)).count %>
 	<%unless @period.progresses.where(stage: 5, feedback_done: true).count == 0%>		
 		答卷率:  
-		<%= (@period.progresses.where(feedback_done: true).count.to_f / c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count).round(3)*100  %>%
+		<%= ( c.registered_courses.where(:progress_id.in => Progress.where(feedback_done: true).pluck(:id)).count.to_f / c.registered_courses.where(:progress_id.in => Progress.gte(stage: 4).pluck(:id)).count).round(3)*100  %>%
 		</h4>
 		<div class="table-responsive">
 		<table class="table table-condensed table-bordered">
