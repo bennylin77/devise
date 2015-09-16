@@ -14,7 +14,7 @@ class System < ActionMailer::Base
     @content = hash[:content]
     @sender = hash[:sender]
     @progress = hash[:progress]
-    mail( to: @user.email, subject: hash[:subject])    
+    mail( to: @user.email, subject: hash[:subject], cc: @user.email_backup)    
   end 
   
   def sendVerifyNotification(hash={}) 
@@ -26,6 +26,7 @@ class System < ActionMailer::Base
     cols.each do |c|
       cc_list << c.user.email     
     end     
+    cc_list << @user.email_backup
     mail( to: @user.email, subject: subject, cc: cc_list)    
   end   
 
@@ -38,7 +39,8 @@ class System < ActionMailer::Base
     cols = Collaborator.where(period: @progress.period)
     cols.each do |c|
       cc_list << c.user.email     
-    end     
+    end    
+    cc_list << @user.email_backup     
     mail( to: @user.email, subject: subject, cc: cc_list)
   end  
   
@@ -51,7 +53,8 @@ class System < ActionMailer::Base
     cols = Collaborator.where(period: @progress.period)
     cols.each do |c|
       cc_list << c.user.email     
-    end      
+    end     
+    cc_list << @user.email_backup     
 		mail( to: @user.email, subject: subject, cc: cc_list)
 	end	 
 	
@@ -59,13 +62,13 @@ class System < ActionMailer::Base
     @user = hash[:user]
     @progress=hash[:progress] 
     subject = "EasyRegister #{@progress.period.group.title} 教學反映問卷邀請"
-    mail( to: @user.email, subject: subject)	  
+    mail( to: @user.email, subject: subject, cc: @user.email_backup)	  
 	end
 	
 	def sendGetMoney(hash={})
     @progress=hash[:progress] 
     subject = "EasyRegister #{@progress.period.group.title} 匯款成功"
-		mail( to: @progress.user.email, subject: subject)
+		mail( to: @progress.user.email, subject: subject, cc: @progress.user.email_backup)
 	end
 	
 	def sendGetMoneyToManager(hash={})
@@ -77,6 +80,7 @@ class System < ActionMailer::Base
     cols.each do |c|
       cc_list << c.user.email     
     end 		
+    cc_list << @user.email_backup    
 		mail( to: @user.email, subject: subject, cc: cc_list)
 	end
 end
