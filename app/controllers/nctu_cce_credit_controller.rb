@@ -384,7 +384,6 @@ class NctuCceCreditController < ApplicationController
 						flash[:error]="尚未選擇此課程!"
 					else			
 						@progress.registered_courses.where(course_id: params[:c_id]).destroy_all
-						@progress.period.courses.where(id: params[:c_id]).first.registered_courses.where(course_id: params[:c_id]).destroy_all
 						flash[:success]="退選課程 #{Course.find(params[:c_id]).title} 成功!"
 						if @progress.registered_courses.empty?
 							@progress.update(:stage=>1)
