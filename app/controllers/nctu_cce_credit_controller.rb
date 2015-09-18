@@ -266,18 +266,19 @@ class NctuCceCreditController < ApplicationController
   def sendMessage 
     if request.post?       
       params[:recipients].each do |r|
+        content = params[:content]
         progress = @period.progresses.where(user_id: r).first        
-        params[:content] = params[:content].gsub(/\{name\}/, User.find(r).name)  
+        content = content.gsub(/\{name\}/, User.find(r).name)  
         unless progress.vaccount.blank?
-          params[:content] = params[:content].gsub(/\{vaccount\}/, progress.vaccount.vacc.to_s)  
+          content = content.gsub(/\{vaccount\}/, progress.vaccount.vacc.to_s)  
         end
-        params[:content] = params[:content].gsub(/\{payment\}/, progress.payment.to_s)  
+        content = content.gsub(/\{payment\}/, progress.payment.to_s)  
         registered_courses = ''
         progress.registered_courses.each do |s|
           registered_courses = registered_courses + s.course.title+' '+ s.payment.to_s + '元<br>'
         end             
-        params[:content] = params[:content].gsub(/\{registered_course\}/, registered_courses)     
-        System.sendMessage(user: User.find(r), subject: params[:subject], content: params[:content], attachment: params[:attachment], sender: current_user, progress: progress).deliver
+        content = content.gsub(/\{registered_course\}/, registered_courses)     
+        System.sendMessage(user: User.find(r), subject: params[:subject], content: content, attachment: params[:attachment], sender: current_user, progress: progress).deliver
       end 
       flash[:success]="成功寄出信件"                
       redirect_to controller: :nctu_cce_credit, action: :sendMessage, id: @period.id     
