@@ -349,11 +349,13 @@ class NctuCceCreditController < ApplicationController
 		end
     if old_payment != @progress.payment
 			@progress.stage=3
+			@progress.vaccount.update(:active=>true)
 		end
 		if @progress.payment==0
 			@progress.stage=4
 		end
-		@progress.save!    
+		@progress.save!
+
 		flash[:success]="已成功更改金額!"
     #System.sendVerified(user: @progress.user, progress: @progress).deliver         
     redirect_to controller: 'nctu_cce_credit', action: 'showProgress', id: @progress.id

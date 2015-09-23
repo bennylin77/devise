@@ -9,7 +9,7 @@
 				審核通過&修改金額
 				</button>	
 			<%end%>	
-			<%if @progress.stage >= 2 and @progress.stage < 4 %>							
+			<%if @progress.stage == 3 %>							
 				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cancel-confirm">
 				審核不通過/取消資格
 				</button>			
