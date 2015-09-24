@@ -3,13 +3,13 @@ class NctuCceCreditController < ApplicationController
   before_action only: [:export, :editPeriod, :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :editCourses, :updateCourses, :vacc_export, :attendancePrint, :editCollaborators, :addCollaborator, :destroyCollaborator] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
-  before_action only: [:destroyProgress, :verified, :updateVAccount, :add_course] { |c| c.ProgressCheckPeriodUser(params[:id])}    
+  before_action only: [:destroyProgress, :verified, :updateVAccount, :add_course, :succeed] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])} 
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}
   before_action :set_period, only: [:indexManagement, :export, :editPeriod, :updatePeriod, :editScore, :editVAccount, :editFeedback, :askFeedback, :sendMessage, :destroy, :editCourses, :updateCourses, :first, :second, :third, :forth, :fifth, 
                                     :attendancePrint, :exportAttendance, :exportAttendanceForTeacher, :editCollaborators, :addCollaborator, :destroyCollaborator]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print, :updateVAccount] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print, :updateVAccount, :succeed] 
       
   def new
     @group = Group.new()
@@ -285,6 +285,13 @@ class NctuCceCreditController < ApplicationController
     end
   end  
   
+  def succeed    
+    @progress.stage = 4      
+    flash[:notice] = '更改成功'
+    @progress.save!            
+    redirect_to controller: 'nctu_cce_credit', action: 'showProgress', id: @progress.id
+  end  
+   
   def verified
     if params[:verify] == 'false'
       @progress.verified = false

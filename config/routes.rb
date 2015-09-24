@@ -56,7 +56,8 @@ Rails.application.routes.draw do
   get  'nctu_cce/user_print'
 	get  'nctu_cce/exportAttendance'
 	get  'nctu_cce/exportAttendanceForTeacher'
-	get 'nctu_cce/editVAccount'
+	get  'nctu_cce/editVAccount'
+	get  'nctu_cce/succeed'
   get  'nctu_cce_credit/first' 
   get  'nctu_cce_credit/second'    
   post 'nctu_cce_credit/second' 
@@ -98,9 +99,11 @@ Rails.application.routes.draw do
   get  'nctu_cce_credit/editCollaborators' 
   post 'nctu_cce_credit/addCollaborator' 
   get  'nctu_cce_credit/destroyCollaborator' 
-	get 'nctu_cce_credit/exportScoreList' 
-	get 'nctu_cce_credit/add_course'
+	get  'nctu_cce_credit/exportScoreList' 
+	get  'nctu_cce_credit/add_course'
 	post 'nctu_cce_credit/edit_fee'
+  get  'nctu_cce_credit/succeed'
+	
 	
   get  'periods/createCompletion' 
   get  'periods/showManagement'

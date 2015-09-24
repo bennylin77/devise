@@ -21,6 +21,7 @@
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-course">
 					加選課程
 				</button>
+				<%=link_to '報名成功', {controller: 'nctu_cce_credit', action: 'succeed', id: @progress.id}, class: 'btn btn-primary'%>		
 			<% end %>
 			<%=link_to "列印", "/nctu_cce_credit/user_print?id="+params[:id], :class=>"btn btn-info" %>
 		</div>

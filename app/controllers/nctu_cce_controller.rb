@@ -3,12 +3,12 @@ class NctuCceController < ApplicationController
   before_action only: [:export, :editPeriod, :updatePeriod, :askFeedback, :sendMessage, :indexManagement, :destroy, :vacc_export] { |c| c.PeriodCheckUser(params[:id])}  
   before_action only: [:cancel, :feedback] { |c| c.ProgressCheckUser(params[:id])}   
   before_action only: [:editGroup, :updateGroup] { |c| c.GroupCheckUser(params[:id])}  
-  before_action only: [:destroyProgress, :verified] { |c| c.ProgressCheckPeriodUser(params[:id])}    
+  before_action only: [:destroyProgress, :verified, :succeed] { |c| c.ProgressCheckPeriodUser(params[:id])}    
   before_action only: [:updateScore] {|c| c.RegisteredCourseCheckPeriodUser(params[:id])}
   before_action only: [:first, :second, :third, :forth, :fifth] {|c| c.checkStage(params[:id])}  
   before_action :set_period, only: [:indexManagement, :export, :editPeriod, :updatePeriod, :editScore, :editFeedback, :askFeedback, :sendMessage, :destroy, :first, :second, :third, :forth, :fifth, :exportAttendance, :exportAttendanceForTeacher, :editVAccount]  
   before_action :set_group, only: [:editGroup, :updateGroup]  
-  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print] 
+  before_action :set_progress, only: [:showProgress, :verified, :cancel, :destroyProgress, :feedback, :user_print, :succeed] 
         
   def new
     @group = Group.new()
@@ -164,6 +164,13 @@ class NctuCceController < ApplicationController
       flash[:success]="成功寄出信件"          
       redirect_to controller: :nctu_cce, action: :sendMessage, id: @period.id     
     end
+  end  
+  
+  def succeed    
+    @progress.stage = 4      
+    flash[:notice] = '更改成功'
+    @progress.save!            
+    redirect_to controller: 'nctu_cce', action: 'showProgress', id: @progress.id
   end  
   
   def verified
